@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>Recovering the password when No Service Password-Recovery is enabled on a router - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="Goal: Get into an 1811 that has the No Service Password-Recovery feature enabled. Limitation: Because this feature is enabled it simply means when &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tunnelsup.github.io/recovering-the-password-when-no-service-password-recovery-is-enabled-on-a-router">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Recovering the Password When No Service Password-Recovery Is Enabled on a Router</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-04T00:00:00-08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Goal: Get into an 1811 that has the No Service Password-Recovery feature enabled.</p>
+
+<p>Limitation: Because this feature is enabled it simply means when you do password recovery the entire config will be wiped.</p>
+
+<p>Problem: <a href="http://www.cisco.com/en/US/docs/ios/12_3/12_3y/12_3ya8/gtnsvpwd.html#wp1062060">Cisco&rsquo;s documentation on this is WRONG. </a></p>
+
+<p>Solution: Using SecureCRT and consoled into the router the break sequence is CTRL+BREAK (if you are on a lenovo laptop then hold CTRL then push Fn+BREAK). You have to send it at the right time. Look at the output below to see when to hit the break sequence.</p>
+
+<pre><code>
+System Bootstrap, Version 12.3(8r)YH13, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 2008 by cisco Systems, Inc.
+C1800 platform with 131072 Kbytes of main memory with parity disabled
+
+Readonly ROMMON initialized
+PASSWORD RECOVERY FUNCTIONALITY IS DISABLED
+program load complete, entry point: 0x80012000, size: 0xc0c0
+
+Initializing ATA monitor library.......
+program load complete, entry point: 0x80012000, size: 0xc0c0
+
+Initializing ATA monitor library.......
+
+program load complete, entry point: 0x80012000, size: 0x1974ba0
+Self decompressing the image : ######################################################################
+######################################################################
+######################################################################
+################################ [OK]
+
+Restricted Rights Legend
+
+Use, duplication, or disclosure by the Government is
+subject to restrictions as set forth in subparagraph
+(c) of the Commercial Computer Software - Restricted
+Rights clause at FAR sec. 52.227-19 and subparagraph
+(c) (1) (ii) of the Rights in Technical Data and Computer
+Software clause at DFARS sec. 252.227-7013.
+
+cisco Systems, Inc.
+170 West Tasman Drive
+San Jose, California 95134-1706
+
+Cisco IOS Software, C181X Software (C181X-ADVIPSERVICESK9-M), Version 15.0(1)M3, RELEASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2010 by Cisco Systems, Inc.
+Compiled Sun 18-Jul-10 00:57 by prod_rel_team
+Image text-base: 0x80012118, data-base: 0x82E13000
+<strong><span style="color: #ff0000;">[ 5 Second window begins here to send BREAK ]</span></strong>
+
+PASSWORD RECOVERY IS DISABLED.
+Do you want to reset the router to factory default
+configuration and proceed [y/n] ? <strong>y</strong>
+Reset router configuration to factory default.
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+Installed image archive
+Cisco 1811 (MPC8500) processor (revision 0x400) with 118784K/12288K bytes of memory.
+Processor board ID FTX141780Z7, with hardware revision 0000
+
+10 FastEthernet interfaces
+1 Serial interface
+1 terminal line
+1 Virtual Private Network (VPN) Module
+62720K bytes of ATA CompactFlash (Read/Write)
+[OK][OK]
+SETUP: new interface FastEthernet0 placed in "shutdown" state
+SETUP: new interface FastEthernet1 placed in "shutdown" state
+
+Press RET5 01:35:07.427: %LINK-5-CHANGED: Interface FastEthernet0, changed state to administratively down
+*Jan  5 01:35:07.431: %SYS-5-RESTART: System restarted --
+Cisco IOS Software, C181X Software (C181X-ADVIPSERVICESK9-M), Version 15.0(1)M3, RELEASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2010 by Cisco Systems, Inc.
+Compiled Sun 18-Jul-10 00:57 by prod_rel_team
+*Jan  5 01:35:07.431: %SNMP-5-COLDSTART: SNMP agent on host Router is undergoing a cold start
+*Jan  5 01:35:07.459: %CRYPTO-6-ISAKMP_ON_OFF: ISAKMP is OFF
+*Jan  5 01:35:07.459: %CRYPTO-6-GDOI_ON_OFF: GDOI is OFF
+*Jan  5 01:35:07.943: %LINK-5-CHANGED: Interface FastEthernet1, changed state to administratively down
+*Jan  5 01:35:08.823: %LINK-3-UPDOWN: Interface FastEthernet2, changed state to up
+*Jan  5 01:35:08.823: %LINK-3-UPDOWN: Interface FastEthernet3, changed state to up
+*Jan  5 01:35:08.823: %LINK-3-UPDOWN: Interface FastEthernet4, changed state to up
+*Jan  5 01:35:08.827: %LINK-3-UPDOWN: Interface FastEthernet5, changed state to up
+*Jan  5 01:35:08.827: %LINK-3-UPDOWN: Interface FastEthernet6, changed state to up
+*Jan  5 01:35:08.827: %LINK-3-UPDOWN: Interface FastEthernet7, changed state to up
+*Jan  5 01:35:08.831: %LINK-3-UPDOWN: Interface FastEthernet8, changed state to up
+*Jan  5 01:35:08.831: %LINK-3-UPDOWN: Interface FastEthernet9, changed state to up
+*Jan  5 01:35:09.823: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet2, changed state to down
+*Jan  5 01:35:09.823: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet3, changed state to down
+*Jan  5 01:35:09.823: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet4, changed state to down
+*Jan  5 01:35:09.827: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet5, changed state to down
+*Jan  5 01:35:09.827: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet6, changed state to down
+*Jan  5 01:35:09.827: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet7, changed state to down
+*Jan  5 01:35:09.831: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet8, changed state to down
+*Jan  5 01:35:09.831: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet9, changed state to down
+Router&gt;
+</code></pre>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-04T00:00:00-08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/break-sequence/'>break sequence</a>, <a class='category' href='/tup/tag/cisco/'>cisco</a>, <a class='category' href='/tup/tag/password-recovery/'>password recovery</a>, <a class='category' href='/tup/tag/router/'>router</a>, <a class='category' href='/tup/tag/troubleshooting/'>troubleshooting</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tunnelsup.github.io/recovering-the-password-when-no-service-password-recovery-is-enabled-on-a-router/" data-via="tunnelsup" data-counturl="http://tunnelsup.github.io/recovering-the-password-when-no-service-password-recovery-is-enabled-on-a-router/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tunnelsup.github.io/recovering-the-password-when-no-service-password-recovery-is-enabled-on-a-router/';
+        var disqus_url = 'http://tunnelsup.github.io/recovering-the-password-when-no-service-password-recovery-is-enabled-on-a-router/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>

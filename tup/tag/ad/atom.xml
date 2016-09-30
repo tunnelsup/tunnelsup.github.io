@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ad | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/ad/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA Identity Firewall]]></title>
+    <link href="http://tunnelsup.github.io/cisco-asa-identity-firewall/"/>
+    <updated>2013-06-15T16:01:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-asa-identity-firewall</id>
+    <content type="html"><![CDATA[<p>The Cisco ASA software 8.4.2 introduced something called Identity Firewall. The IDFW gives a new level of control to ACLs.</p>
+
+<h2>Permit/Deny flows using a user name or user group</h2>
+
+<p>You can now permit/deny traffic flows using a user name or user group.</p>
+
+<p>For instance, look at the last two options when making an ACL:</p>
+
+<p>```
+ASA-5505(config)# access-list MYACL ext permit ip ?
+configure mode commands/options:
+  A.B.C.D            Source IP address
+  any                Abbreviation for source address and mask of 0.0.0.0</p>
+
+<pre><code>                 0.0.0.0
+</code></pre>
+
+<p>  host               Use this keyword to configure source host
+  interface          Use interface address as source address
+  object             Keyword to enter source object name
+  object-group       Network object-group for source address
+  object-group-user  User object-group for source address
+  user               User for source address [&lt;domain_nickname>]&lt;user_name>
+  user-group         User-group for source address</p>
+
+<pre><code>                 [&lt;domain_nickname&gt;\\]&lt;user_group_name&gt;
+</code></pre>
+
+<p>```
+In order for the firewall to map an IP to a username it has to integrate with a domain controller and an AD agent. The AD agent is a program that Cisco has made that is installed on the AD server. It essentially sends the ASA a map of what user has connected with what IP. The ASA then can make decisions on who to block because it knows what each user&rsquo;s IP is.</p>
+
+<p>The ASA uses the global <code>user-identity</code> commands to configure this.</p>
+
+<p>To learn more about installing the AD agent review this link: <a href="http://www.cisco.com/en/US/docs/security/ibf/setup_guide/ad_agent_setup_guide.html">http://www.cisco.com/en/US/docs/security/ibf/setup_guide/ad_agent_setup_guide.html</a></p>
+
+<h2>Permit/Deny Domain Names</h2>
+
+<p>Also in 8.4.2 there is the ability to block a domain name. This is something we&rsquo;ve all been looking forward to for a long time.</p>
+
+<h4>Configure the ASA to resolve DNS</h4>
+
+<p>In order for the firewall to block a domain name it has to be able to resolve domain names. Use your own DNS server if you have it. Otherwise using a public DNS server will look something like this:</p>
+
+<p>```
+dns domain-lookup OUTSIDE
+DNS server-group DefaultDNS</p>
+
+<pre><code>name-server 4.2.2.2
+</code></pre>
+
+<p>```
+Make sure you can ping a url like google.com from the firewall to verify your ASA is resolving DNS correctly.</p>
+
+<h4>Create the object</h4>
+
+<p>Suppose we want to block access to Google.com. Create an object with google.com in it.</p>
+
+<p><code>
+object network OBJ-GOOGLE.COM
+ fqdn google.com
+</code></p>
+
+<h4>Add the object to an ACL</h4>
+
+<p>Now it&rsquo;s just a matter of adding it to the right ACL. Here is what the command looks like:</p>
+
+<p><code>
+access-list ACL-INSIDE line 1 extended deny ip any object OBJ-GOOGLE.COM
+</code></p>
+
+<p>This is what it should look like after you do a <code>show access-list</code><br>
+<code>
+access-list ACL-INSIDE line 1 extended deny ip any object OBJ-GOOGLE.COM 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any fqdn google.com (resolved) 0x827c8780
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.163 (google.com) (hitcnt=73) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.165 (google.com) (hitcnt=3) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.162 (google.com) (hitcnt=7) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.169 (google.com) (hitcnt=23) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.174 (google.com) (hitcnt=130) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.164 (google.com) (hitcnt=21) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.168 (google.com) (hitcnt=14) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.161 (google.com) (hitcnt=12) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.167 (google.com) (hitcnt=3) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.160 (google.com) (hitcnt=20) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.166 (google.com) (hitcnt=4) 0x8e6d59a8
+</code></p>
+
+<p>Notice the ASA resolved the domain name and added all of the IPs in the ACL. This will be updated based on the TTL of the DNS request it made to resolve the IP.</p>
+
+<p>And this is what the syslog looks like:</p>
+
+<p><code>Mar 23 2012 11:58:07: %ASA-4-106023: Deny tcp src INSIDE:172.16.2.21/2414 dst OUTSIDE:74.125.224.160/443(google.com) by access-group "ACL-INSIDE" [0x1e144444,0x1e144444]</code></p>
+
+<p>A cool thing about this solution is that it doesn&rsquo;t slow down the firewall at all. It does the DNS look up probably once every few hours for when the TTL expires and then stores the IPs in memory. In other words it does not do a DNS lookup for every packet that comes through the firewall, it does it before hand.</p>
+
+<p>What I also like about this solution is that this works for both HTTPS and HTTP. The firewall doesn&rsquo;t inspect domain names or URLs and it doesn&rsquo;t care if the packet is encrypted or not. The packet has to have a destination IP and that&rsquo;s what the firewall will check.</p>
+
+<p><strong> Special Note:</strong> This does not resolve all subdomain of google like www.google.com, mail.google.com, maps.google.com etc. You&rsquo;ll have to create a seperate object for each of these domains to cover all the bases.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ldap | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/ldap/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA VPN - Authorize user based on LDAP group]]></title>
+    <link href="http://tunnelsup.github.io/cisco-asa-vpn-authorize-user-based-on-ldap-group/"/>
+    <updated>2014-08-13T21:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-asa-vpn-authorize-user-based-on-ldap-group</id>
+    <content type="html"><![CDATA[<p>It is possible to authenticate to LDAP but then only allow a user in if they are in the right LDAP group. This post will explain how to authorize a
+user based on their LDAP group they are a member of.</p>
+
+<p>The theory for this task is to set a default group policy which has no access to the network, then create an LDAP map that maps a LDAP group to a group-policy.</p>
+
+<h3>Configure LDAP authentication</h3>
+
+<p>First what you&rsquo;ll need to do is make sure you have LDAP authentication working. Create a aaa-server that uses the LDAP protocol. The configuration may look like this:</p>
+
+<p><code>
+aaa-server LDAP protocol ldap
+aaa-server LDAP (INSIDE) host 10.10.10.1
+ ldap-base-dn DC=example,DC=com
+ ldap-scope subtree
+ ldap-naming-attribute sAMAccountName
+ ldap-login-password *****
+ ldap-login-dn CN=svc_asavpn,OU=users,OU=chi,DC=example,DC=com
+</code></p>
+
+<p>The <code>ldap-base-dn</code> will be where where the ASA starts looking for an authenticated user. I recommend setting this as the first level of your AD tree.</p>
+
+<p>The <code>ldap-scope subtree</code> tells LDAP to look for this user in any subtree. The other option is just a single subtree up.</p>
+
+<p>The next 3 commands are setting up the LDAP user that will be used to bind to LDAP. The <code>ldap-naming-attribute</code> command says we&rsquo;ll be using the sAMAccountName as the identifier of our login name. The <code>ldap-login-password</code> is the LDAP password for the user we are using to bind to LDAP. In this case the user is svc_asavpn. The <code>ldap-login-dn</code> tells LDAP where that user lives. It&rsquo;s important to know the full path of that user as indicated in the commands above.</p>
+
+<p>Once you have those commands in the easiest way to test the connectivity is to use the <code>test</code> command. It looks something like this:</p>
+
+<p><code>
+CHIASA# test aaa-server authentication LDAP username svc_asavpn password p@ssw0rd
+Server IP Address or name: 10.10.10.1
+INFO: Authentication Successful
+</code></p>
+
+<p>It&rsquo;s important that this test is successful. Failure to get LDAP working successfully here will result in harder to troubleshoot problems later.</p>
+
+<p>You may be able to get additional help by turning on <code>debug ldap 255</code> then trying the test again.</p>
+
+<h3>Create Group-Policies for the VPN</h3>
+
+<p>Create two group policies. One that has no access and denies the user from logging in, and one that has the correct permissions to allow a user to login.</p>
+
+<p>First create the group for no access</p>
+
+<p><code>
+group-policy NoAccess internal
+group-policy NoAccess attributes
+ vpn-simultaneous-logins 0
+</code></p>
+
+<p>We just want a group policy that doesn&rsquo;t allow anyone to login so if we restrict the login count to 0 nobody will ever be able to login.</p>
+
+<p>Next create the group policy that will allow the user access.</p>
+
+<p><code>
+group-policy GRPPOL-RA-VPN internal
+group-policy GRPPOL-RA-VPN attributes
+ dns-server value 10.10.10.1
+ vpn-simultaneous-logins 3
+ vpn-tunnel-protocol ssl-client
+</code></p>
+
+<p>Note that sometimes we need to explicitly say the max simultaneous logins is more than 0 since we made it 0 earlier it may get inherited.</p>
+
+<h3>Create the Tunnel Group</h3>
+
+<p><code>
+tunnel-group GRP-RA-VPN type remote-access
+tunnel-group GRP-RA-VPN general-attributes
+ address-pool POOL-RA-VPN
+ authentication-server-group LDAP
+ default-group-policy NoAccess
+</code></p>
+
+<p>We&rsquo;ve set the authentication group to be the aaa LDAP server we configured in step one. Also take note we&rsquo;ve set the default group policy to be the NoAccess one.</p>
+
+<h3>Create an LDAP map</h3>
+
+<p>An LDAP map will look at the LDAP settings that user has and if there&rsquo;s a match will assign them to a specific group-policy (amongst other options). Essentially we are saying deny all users from VPN access, unless they are a memberOf the specified group and if so assign them to a different group-policy.</p>
+
+<p><code>
+ldap attribute-map MAP-ANYCONNECT-LOGIN
+  map-name  memberOf Group-Policy
+  map-value memberOf CN=vpn_users,OU=groups,OU=chi,DC=example,DC=com GRPPOL-RA-VPN
+</code></p>
+
+<p>Since these are seldom used commands lets break them down all the way.</p>
+
+<p><code>memberOf</code> is the specific LDAP flag we are going to be looking for. We want to check if this user is a memberOf a group.</p>
+
+<p><code>Group-Policy</code> says that if there&rsquo;s a match, lets assign them a new group-policy. In older version of ASA (&lt;8.2.5) use this instead: IETF-Radius-Class.</p>
+
+<p><code>CN=vpn_users,OU=groups,OU=chi,DC=example,DC=com</code> is the location of the group in AD to check if the user is a memberOf.</p>
+
+<p><code>GRPPOL-RA-VPN</code> is the name of the group-policy we will assign them to if there is a match.</p>
+
+<p><code>map-name</code> is more like indicating the type of map attribute to check against and what will be assigned if there&rsquo;s a match.</p>
+
+<p><code>map-value</code> defines the values to be checking against and assigning to. You can have multiple map-value commands in one LDAP map.</p>
+
+<p>Now apply the LDAP map.</p>
+
+<p><code>
+aaa-server LDAP (INSIDE) host 10.10.10.1
+ ldap-attribute-map MAP-ANYCONNECT-LOGIN
+</code></p>
+
+<h3>Test to verify it&rsquo;s working</h3>
+
+<p>You can try to login to the VPN using an LDAP account or you can try the <code>test</code> command that was talked about earlier. If you have <code>debug ldap 255</code> on you&rsquo;ll see the following in a successfully authenticated message:</p>
+
+<p><code>
+[-2147483628]   memberOf: value = CN=vpn_users,OU=groups,OU=chi,DC=example,DC=com
+[-2147483628]           mapped to Group-Policy: value = GRPPOL-RA-VPN
+[-2147483628]           mapped to LDAP-Class: value = GRPPOL-RA-VPN
+</code></p>
+
+<p>If you&rsquo;re seeing that message it means the user was given the proper group-policy to login with. You can also verify the test by successfully logging in via a VPN session and check if the user has the right group-policy when looking at the user doing <code>show vpn-sessiondb anyconnect</code>.</p>
+]]></content>
+  </entry>
+  
+</feed>

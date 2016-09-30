@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: vi | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/vi/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[vim Editor: How to Add a Colored Theme]]></title>
+    <link href="http://tunnelsup.github.io/vim-editor-how-to-add-a-colored-theme/"/>
+    <updated>2015-02-14T09:59:00-08:00</updated>
+    <id>http://tunnelsup.github.io/vim-editor-how-to-add-a-colored-theme</id>
+    <content type="html"><![CDATA[<p>The vim editor can take advantage of color schemes to help emphasize specific elements of code.</p>
+
+<p><img src="/images/vimcolors.png" alt="Vim Colors" /></p>
+
+<h3>Adding a theme</h3>
+
+<p>First make sure you have vim installed and not just vi. You can test this by typing &lsquo;vim&rsquo; at the command line and see if the editor loads.</p>
+
+<p>Add the following to ~/.vimrc to make desert the default theme.</p>
+
+<p><code>
+colorscheme desert
+</code></p>
+
+<p>After restarting your shell (logout and login again again) your vim sessions will have the desert color scheme. Desert is the scheme that&rsquo;s pictured at the top of this article. Some other stock themes are:</p>
+
+<ul>
+<li>blue</li>
+<li>delek</li>
+<li>evening</li>
+<li>murphy</li>
+<li>slate</li>
+<li>darkblue</li>
+<li>desert</li>
+<li>koehler</li>
+<li>pablo</li>
+<li>ron</li>
+<li>torte</li>
+<li>default</li>
+<li>elflord</li>
+<li>morning</li>
+<li>peachpuff</li>
+<li>shine</li>
+<li>zellner</li>
+</ul>
+
+
+<h3>Modifying a theme</h3>
+
+<p>If you want to change just a specific color in a theme you can do so by editing the theme itself. For instance if we want to change the comments in the desert theme to green we can do the following.</p>
+
+<p>Edit /usr/share/vim/vim73/colors/desert.vim</p>
+
+<p>Search and replace the following two lines so they now say green:</p>
+
+<p><code>
+hi Comment  guifg=green
+hi Comment  ctermfg=green
+</code></p>
+
+<h3>Adding even more themes</h3>
+
+<p>Tired of the default themes? Need something more? Try some of these other themes:</p>
+
+<p><a href="http://www.vimninjas.com/2012/08/26/10-vim-color-schemes-you-need-to-own/">http://www.vimninjas.com/2012/08/26/10-vim-color-schemes-you-need-to-own/</a></p>
+
+<p><a href="https://github.com/morhetz/gruvbox">https://github.com/morhetz/gruvbox</a></p>
+
+<h3>Other vim settings I use</h3>
+
+<p>Unrelated to color themes but related to vim settings. Here are the other settings in my ~/.vimrc file.</p>
+
+<p><code>
+set tabstop=4
+set shiftwidth=4
+set smartindent
+set backspace=indent,eol,start
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

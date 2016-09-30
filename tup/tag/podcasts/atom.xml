@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: podcasts | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/podcasts/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[7 Security Podcasts You Should be Listening to]]></title>
+    <link href="http://tunnelsup.github.io/7-security-podcasts-you-should-be-listening-to/"/>
+    <updated>2014-12-13T17:29:00-08:00</updated>
+    <id>http://tunnelsup.github.io/7-security-podcasts-you-should-be-listening-to</id>
+    <content type="html"><![CDATA[<p>Here&rsquo;s a list of the 7 best security podcasts on network security and hacking.</p>
+
+<h2>Daily Podcasts</h2>
+
+<h4>1. Internet Storm Center StormCasts</h4>
+
+<p><a href="https://isc2.sans.org/podcastdetail.html?id=4265">https://isc2.sans.org/podcastdetail.html?id=4265</a></p>
+
+<p>Listen to a <strong>daily</strong> wrapup of events from the SANS Internet Storm Center.</p>
+
+<h2>Weekly Podcasts</h2>
+
+<h4>2. Risky Business</h4>
+
+<p><a href="http://risky.biz/netcasts/risky-business">http://risky.biz/netcasts/risky-business</a></p>
+
+<p>Probably the best produced security podcast and my favorite of the bunch. Show starts with news, delivered by people who are very familiar with each story. Then the show does two interviews with a security expert, then a vendor.</p>
+
+<h4>3. Down the Security Rabbit Hole</h4>
+
+<p><a href="http://podcast.wh1t3rabbit.net/">http://podcast.wh1t3rabbit.net/</a></p>
+
+<p>Weekly security podcast covering news and events in the security realm. They often do interviews with security professionals and go over more of the business aspect of security.</p>
+
+<h4>4. Sophos Chet Chat</h4>
+
+<p><a href="http://www.sophos.com/en-us/company/podcasts.aspx">http://www.sophos.com/en-us/company/podcasts.aspx</a></p>
+
+<p>Sophos brings you impressive antivirus software and other security products. Two expert Sophos engineers do a weekly podcast covering security news and other security topics.</p>
+
+<h4>5. Security Weekly</h4>
+
+<p><a href="http://securityweekly.com/">http://securityweekly.com/</a></p>
+
+<p>Formerly PaulDotCom, listen/watch Paul give his weekly security podcast in which he discusses security news, research, hacker techniques, and technical how-tos.</p>
+
+<h4>6. Defensive Security Podcasts</h4>
+
+<p><a href="https://www.defensivesecurity.org/category/podcast">https://www.defensivesecurity.org/category/podcast</a></p>
+
+<p>A weekly discussion of security events in the news.</p>
+
+<h4>7. Southern Fried Security Podcast</h4>
+
+<p><a href="http://www.southernfriedsecurity.com/">http://www.southernfriedsecurity.com/</a></p>
+
+<p>A weekly discussion of security events in the news.</p>
+
+<h2>Still not enough?</h2>
+
+<p>There is a monthly <a href="http://www.cigital.com/silver-bullet">Cigital Silver Bullet</a> podcast which has good interviews.</p>
+
+<p>Like Bruce Schnier&rsquo;s articles but don&rsquo;t have time to read them? Get caught up with the <a href="http://crypto-gram.libsyn.com/">Crypto-Gram Security Podcast</a> where someone reads the latest articles to you.</p>
+
+<p>Try the <a href="https://www.grc.com/securitynow.htm">Security Now</a> podcast by Steve Gibson and Leo Laporte. It&rsquo;s one of my least favories because the content is not very rich and slowly delivered over the 2 hour show.</p>
+
+<p>There&rsquo;s also a <a href="https://www.trustedsec.com/podcast/">TrustedSec</a> podcast. I have a hard time tolerating this one becuase sometimes they like to spend 15 minutes just talking about the weather, before getting into anything security related.</p>
+
+<p><a href="http://www.pvcsec.com/">PVC Security Podcast</a> explores many topics in information security and often interviews guests and talks about interesting articles and current events.</p>
+
+<p><a href="http://www.timothydeblock.com/eis">Enterprise Information Security Podcast</a> covers many of the fundamental topics in the information security space. Often the show teaches or tackles a single question such as &ldquo;What is MS08-067?&rdquo;</p>
+]]></content>
+  </entry>
+  
+</feed>

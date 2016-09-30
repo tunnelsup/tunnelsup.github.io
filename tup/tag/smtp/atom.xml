@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: smtp | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/smtp/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[SMTP error 451]]></title>
+    <link href="http://tunnelsup.github.io/smtp-error-451/"/>
+    <updated>2015-02-21T17:11:00-08:00</updated>
+    <id>http://tunnelsup.github.io/smtp-error-451</id>
+    <content type="html"><![CDATA[<p>SMTP error 451 will occur on a mail server when there is a local error to the mail server that is processing the message. This error may also be referenced as 4.5.1. The error code can either be visible from the mail logs on the mail server or in response to a message that generated the error.</p>
+
+<p>See this page for a full list of <a href="/smtp-error-codes/">SMTP error codes</a>.</p>
+
+<h3>Common reasons for this error</h3>
+
+<ul>
+<li>The recipient mail server is overwhelmed and was unable to accept the message. Try again later.</li>
+<li>DNS error. Mail servers should verify they only receive mail from valid domains. Check SPF records of sending server. Verify sender domain resolve properly and is using a FQDN when initiating the EHLO handshake.</li>
+<li>If recipient mail server is using LDAP for mailbox lookups it may be unable to contact the LDAP server.</li>
+<li>Message has been blocked by anti-spam filter on receiving mail server.</li>
+</ul>
+
+
+<h4>Error messages</h4>
+
+<p>Here are some common error messages seen when SMTP error code 451 shows up:</p>
+
+<p><code>
+SMTP error 451 Unable to complete command, DNS not available or timed out
+</code></p>
+
+<p><code>
+451 Domain of sender address does not resolve
+</code></p>
+
+<p><code>
+451 Error getting LDAP results in map
+</code></p>
+
+<p><code>
+451 4.7.1 Greylisting in action, please come back in 00:02:00 [minutes]
+</code></p>
+
+<p><code>
+The message that you sent has been delayed. The reason given for the delay : 451 Temporary local problem - please try later.
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SMTP error 550]]></title>
+    <link href="http://tunnelsup.github.io/smtp-error-550/"/>
+    <updated>2015-02-21T12:53:00-08:00</updated>
+    <id>http://tunnelsup.github.io/smtp-error-550</id>
+    <content type="html"><![CDATA[<p>When email is rejected due to SMTP error 550 (also known as SMTP error 5.5.0), this usually means the message could not be delivered because the mailbox is unavailable. This is almost always a problem with the receiving mail server and never a problem with the sending client.</p>
+
+<p>See this page for a full list of <a href="/smtp-error-codes/">SMTP error codes</a>.</p>
+
+<h2>The usual suspects</h2>
+
+<p>SMTP error 550 is usually caused by one of the following:</p>
+
+<ul>
+<li>Recipient&rsquo;s email address has a typo</li>
+<li>No such recipient address exists on the receiving server</li>
+<li>Anti-spam filtering on receiving server has blocked the message</li>
+<li>Outbound mail filtering on the sending server has blocked the message</li>
+<li>Message rejected by sending SMTP server due to SMTP authentication failure</li>
+<li>Receiving mail server is down</li>
+<li>Recipient&rsquo;s mailbox is suspended, disabled, inactive, or closed</li>
+<li>Recipient&rsquo;s mail server does not have MX records configured correctly</li>
+</ul>
+
+
+<p>Here are a few troubleshooting steps to resolve SMTP error 550.</p>
+
+<h3>Check that recipient address is valid</h3>
+
+<p>Sometimes the 550 error simply means the recipient address is not found or not valid. In this case check that the user does exist and that there isn&rsquo;t a typo in the address.</p>
+
+<p>If running postfix you can see this in /var/log/mail.log:</p>
+
+<p><code>
+postfix/smtpd[28384]: NOQUEUE: reject: RCPT from mail-ie0-f171.google.com[209.85.223.171]: 550 5.1.1 &lt;nosuchuser@example.com&gt;: Recipient address rejected: User unknown in virtual mailbox table; from=&lt;someuser@gmail.com&gt; to=&lt;nosuchuser@example.com&gt; proto=ESMTP helo=&lt;mail-ie0-f171.google.com&gt;
+</code></p>
+
+<p>In fact the user gets a reply email often from the server with the reason explained further also.</p>
+
+<p>Postfix response to sender:</p>
+
+<p><code>
+550 5.1.1 &lt;nosuchuser@example.com&gt;: Recipient address rejected: User unknown in virtual mailbox table
+</code></p>
+
+<p>GMail response to sender:</p>
+
+<p><code>
+The error that the other server returned was:
+550-5.1.1 The email account that you tried to reach does not exist. Please try
+550-5.1.1 double-checking the recipient's email address for typos or
+550-5.1.1 unnecessary spaces.
+</code></p>
+
+<h3>Check that there aren&rsquo;t any anti-spam filters blocking</h3>
+
+<p>Mail servers can sometimes reject a message with error 550 due to an anti-spam filter blocking the message. The mail server admin may be able to add the address to a whitlelist in order to allow the message through if it is being blocked by an anti-spam filter.</p>
+
+<p>Reject messages may look like this:</p>
+
+<p><code>
+22.222.22.222 does not like recipient.
+</code></p>
+
+<p><code>
+550-Previous (cached) callout verification failure
+</code></p>
+
+<p><code>
+550 Sender verify failed
+</code></p>
+
+<p><code>
+Remote host said: 550-Verification failed for someuser@example.com
+</code></p>
+
+<h3>Check outbound mail rules aren&rsquo;t blocking</h3>
+
+<p>Some organizations have outbound mail rules set up. This is where mail is inspected before leaving the sender&rsquo;s network. A device like Cisco Ironport or MessageLabs can do outbound inspection. This is set up to prevent specific data leaving the network (like social security numbers), stop outbound spam, and other potentially bad situations. SMTP error 550 may generate from one of these systems that is inspecting outbound mail.</p>
+
+<p><code>
+Response: 550 Cyberoam Anti Spam Engine has identified
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SMTP Error Codes]]></title>
+    <link href="http://tunnelsup.github.io/smtp-error-codes/"/>
+    <updated>2015-02-14T11:05:00-08:00</updated>
+    <id>http://tunnelsup.github.io/smtp-error-codes</id>
+    <content type="html"><![CDATA[<p>The following table displays the SMTP error or response codes. This is sometimes written like &ldquo;512&rdquo; and sometimes written like &ldquo;5.1.2&rdquo;. These two ways of writing the code are synonymous.</p>
+
+<table class="table">
+    <thead>
+        <th>Code</th>
+        <th>Meaning</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>211</td>
+            <td>Indicates the system status or system help reply</td>
+        </tr>
+        <tr>
+            <td>214</td>
+            <td>Help message</td>
+        </tr>
+        <tr>
+            <td>220</td>
+            <td>Service ready</td>
+        </tr>
+        <tr>
+            <td>221</td>
+            <td>Service closing transmission channel</td>
+        </tr>
+        <tr>
+            <td>250</td>
+            <td>Requested mail action ok, completed</td>
+        </tr>
+        <tr>
+            <td>251</td>
+            <td>User not local</td>
+        </tr>
+        <tr>
+            <td>252</td>
+            <td>Cannot VRFY user, but will still accept message and attempt to deliver</td>
+        </tr>
+        <tr>
+            <td>354</td>
+            <td>Start mail input</td>
+        </tr>
+        <tr>
+            <td>421</td>
+            <td>Service not available, closing transmission channel</td>
+        </tr>
+        <tr>
+            <td>450</td>
+            <td>Requested mail action not taken: mailbox unavailable</td>
+        </tr>
+        <tr>
+            <td>451</td>
+            <td><a href="http://tunnelsup.github.io/smtp-error-451/">Requested mail action aborted: local error</a></td>
+        </tr>
+        <tr>
+            <td>452</td>
+            <td>Requested action not taken: insufficient storage</td>
+        </tr>
+        <tr>
+            <td>500</td>
+            <td>Syntax error - command not recognized</td>
+        </tr>
+        <tr>
+            <td>501</td>
+            <td>Syntax error in command, parameters, or message fields</td>
+        </tr>
+        <tr>
+            <td>502</td>
+            <td>Command not implemented</td>
+        </tr>
+        <tr>
+            <td>503</td>
+            <td>Bad sequence of commands or authentication required to use command</td>
+        </tr>
+        <tr>
+            <td>504</td>
+            <td>Command parameter not implemented</td>
+        </tr>
+        <tr>
+            <td>510</td>
+            <td>Bad email address</td>
+        </tr>       
+        <tr>
+            <td>511</td>
+            <td>Bad email address</td>
+        </tr>
+        <tr>
+            <td>512</td>
+            <td>Unable to resolve recipient domain (DNS error)</td>
+        </tr>
+        <tr>
+            <td>513</td>
+            <td>Address type is incorrect</td>
+        </tr>
+        <tr>
+            <td>523</td>
+            <td>Message too large for recipient's mailbox</td>
+        </tr>
+
+        <tr>
+            <td>530</td>
+            <td>Authentication required or server blacklisted by recipient or no such recipient mailbox</td>
+        </tr>
+        <tr>
+            <td>541</td>
+            <td>Recipient address rejected - blocked by antispam, intrusion prevention, or mail filtering</td>
+        </tr>
+        <tr>
+            <td>550</td>
+            <td><a href="http://tunnelsup.github.io/smtp-error-550/">Recipient mailbox unavailable</a></td>
+        </tr>
+        <tr>
+            <td>551</td>
+            <td>Invalid recipient address; relay denied</td>
+        </tr>
+        <tr>
+            <td>552</td>
+            <td>Size of incoming message exceeds storage limit</td>
+        </tr>
+        <tr>
+            <td>553</td>
+            <td>Mailbox name invalid or authentication required or reverse DNS lookup failure</td>
+        </tr>
+        <tr>
+            <td>554</td>
+            <td>Transaction failed - address doesn't exist or rejected due to blacklist</td>
+        </tr>
+
+    </tbody>
+</table>
+
+
+<h4>Further reading</h4>
+
+<p>Official documentation:<br>
+<a href="https://www.iana.org/assignments/smtp-enhanced-status-codes/smtp-enhanced-status-codes.xhtml">https://www.iana.org/assignments/smtp-enhanced-status-codes/smtp-enhanced-status-codes.xhtml</a></p>
+
+<p>More helpful information for each reply code:<br>
+<a href="http://www.answersthatwork.com/Download_Area/ATW_Library/Networking/Network__3-SMTP_Server_Status_Codes_and_SMTP_Error_Codes.pdf">http://www.answersthatwork.com/Download_Area/ATW_Library/Networking/Network__3-SMTP_Server_Status_Codes_and_SMTP_Error_Codes.pdf</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MX Record problem: Reverse DNS does not match SMTP Banner]]></title>
+    <link href="http://tunnelsup.github.io/mx-record-problem-reverse-dns-does-not-match-smtp-banner/"/>
+    <updated>2012-11-30T00:00:00-08:00</updated>
+    <id>http://tunnelsup.github.io/mx-record-problem-reverse-dns-does-not-match-smtp-banner</id>
+    <content type="html"><![CDATA[<p>Today I was given a problem that our Cisco Ironport was not accepting email from outside people sending mail to inside people (backstory: this occurred right after we moved our Ironport to a different location). I looked in Ironport and spotted a lot of messages failing to be delivered. Specifically the error in Ironport was:
+<code>Message 1006902 aborted: Receiving aborted</code></p>
+
+<p>I spent a long time doing packet captures to try to troubleshoot and determined the remote end was sending a reset which made me think this is the sender&rsquo;s problem and not mine. However I was wrong.</p>
+
+<p>The next thing I checked was the MX Record at <a href="http://mxtoolbox.com">MXToolbox.com</a> (a great site for looking up DNS records and stuff). Specifically the SMTP test showed this:</p>
+
+<p><img src="/images/mxfail.png" alt="MX failing - IMG" /></p>
+
+<p>Specifically I didn&rsquo;t like seeing this warning:
+<strong>SMTP Reverse DNS Mismatch &mdash;&ndash; Warning &ndash; Reverse DNS does not match SMTP Banner</strong>
+and
+<strong>SMTP TLS &mdash;&ndash; Warning &ndash; Does not support TLS</strong></p>
+
+<p>But what does that mean? I specifically wanted to know what two strings are being compared that resulted in a mismatch. Well in the case above the two strings it was comparing were <strong>***********************</strong> and <strong>mail3.example.com</strong>. For some reason this took me a long time to realize the ********************* was the banner&hellip; You can see it in the image above after 220.</p>
+
+<p>Looking around on the internet it turns out that our Cisco ASA we have in front of the Ironport has <code>inspect esmtp</code> turned on (which is on by default).</p>
+
+<p>Issue the following commands to turn off the inspect:</p>
+
+<p><code>
+policy-map global_policy
+ class inspection_default
+  no inspect esmtp
+</code></p>
+
+<p>Upon turning that inspect off the issue immediately cleared up and the results were this:</p>
+
+<p><img src="/images/mxpass.png" alt="MX passing - IMG" /></p>
+
+<p>Mail was then flowing into the Ironport properly and being delivered as expected. Looking back at the problem if I would have looked at the logs in the ASA I would have seen these syslogs:</p>
+
+<p><code>%ASA-4-108004: ESMTP Classification: Dropped connection for ESMTP Request from outside:75.75.75.75/35314 to DMZ:10.0.25.101/25; matched Class 4: header line length gt 998</code></p>
+
+<p><code>%ASA-4-507003: tcp flow from outside:75.75.75.75/35314 to PUBLIC_DMZ:10.0.25.101/25 terminated by inspection engine, reason - inspector disconnected, dropped packet.</code></p>
+]]></content>
+  </entry>
+  
+</feed>

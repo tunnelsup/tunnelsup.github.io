@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: misc | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/misc/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to set a static IP on Mac OSX]]></title>
+    <link href="http://tunnelsup.github.io/how-to-set-a-static-ip-on-mac-osx/"/>
+    <updated>2016-09-22T21:28:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-set-a-static-ip-on-mac-osx</id>
+    <content type="html"><![CDATA[<p>Are you using a Macbook Pro or Macbook Air and want to know how to show the change the interface to use a static IP? Follow the steps below to complete this.</p>
+
+<h2>1. Go to Preferences</h2>
+
+<p>Click the Apple icon in the top left corner and click System Preferences.</p>
+
+<p><img src="/images/mac-set-ip1.png" alt="Static IP" /><br></p>
+
+<h2>2. Go to Network Settings</h2>
+
+<p>Now find the <code>Network</code> icon and click it.</p>
+
+<p><img src="/images/mac-set-ip2.png" alt="Static IP" /><br></p>
+
+<h2>3. Change the Settings</h2>
+
+<p>Find the interface you want to change the settings on and click it. Then select the interface settings you want to us. To set a static IP select the options <code>Manually</code> and fill in the fields. You can also set it to be DHCP where you&rsquo;ll be assigned an address automatically by a router.
+<img src="/images/mac-set-ip3.png" alt="Static IP" /><br></p>
+
+<p>If you need to change the DNS settings, click <code>advanced</code>.</p>
+
+<p>Once done click apply and your settings should be applied right away.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using For and While Loops in Python]]></title>
+    <link href="http://tunnelsup.github.io/using-for-and-while-loops-in-python/"/>
+    <updated>2016-09-20T17:48:00-07:00</updated>
+    <id>http://tunnelsup.github.io/using-for-and-while-loops-in-python</id>
+    <content type="html"><![CDATA[<p>Here are some tools to use to do loops in the Python language.</p>
+
+<h2>The While Loop</h2>
+
+<p>The <code>while</code> statement will continually cycle through the block of code until the condition is no longer true.</p>
+
+<p>A forever loop:</p>
+
+<p>```python
+while True:</p>
+
+<pre><code>print('This will never end!')
+</code></pre>
+
+<p>```</p>
+
+<p>To use a while loop to cycle through something 5 times, you could use this code.</p>
+
+<p>```python
+repeat = 1
+while repeat &lt;= 5:</p>
+
+<pre><code>print('Loop number: ' + str(repeat))
+repeat += 1
+</code></pre>
+
+<p>```</p>
+
+<h3>Using Continue and Break</h3>
+
+<p>The <code>continue</code> statement is used when you want to go back to the beginning of the <code>while</code> loop.</p>
+
+<p>The <code>break</code> statement is used when you want to leave the <code>while</code> loop all together.</p>
+
+<p>```python
+while True:</p>
+
+<pre><code>if(we_want_to_start_the_loop_over == True):
+    continue
+if(we_want_to_end_the_loop == True):
+    break
+</code></pre>
+
+<p>```</p>
+
+<h2>The For Loop</h2>
+
+<p>Another way to do a loop is using a <code>for</code> statement.</p>
+
+<h3>Using Range</h3>
+
+<p>Here is an example:</p>
+
+<p>```python
+sum = 0
+for num in range(10):</p>
+
+<pre><code>sum = sum+num
+</code></pre>
+
+<p>print(sum)
+```</p>
+
+<p>This will loop through 10 times because of the <code>range(10)</code> method and print out the value <strong>45</strong>.</p>
+
+<p>The <code>range()</code> method allows 3 arguments to be passed to it. Here are 3 ways to use it:</p>
+
+<p>```python
+for i in range(10):       # will go from 0 to 10 counting by ones</p>
+
+<p>for i in range(5, 10):    # will go from 5 to 10 counting by ones</p>
+
+<p>for i in range(5, 1, -1): # will go from 5 to 1 counting backwards 1 at a time</p>
+
+<p>```</p>
+
+<h3>For Each Item in a List</h3>
+
+<p>If you want to do something with the values of a list, you can cycle through it like this.</p>
+
+<p>```python
+grades = [&lsquo;A&rsquo;, &lsquo;C&rsquo;, &lsquo;B&rsquo;, &lsquo;F&rsquo;]
+for grade in grades:</p>
+
+<pre><code>print(grade)
+</code></pre>
+
+<p>```</p>
+
+<h3>Using Enumerate</h3>
+
+<p>If you want to iterate through a list and make edits to the list you can do this:</p>
+
+<p>```python
+grades = [&lsquo;A&rsquo;, &lsquo;C&rsquo;, &lsquo;B&rsquo;, &lsquo;F&rsquo;]
+for n,i in enumerate(grades):</p>
+
+<pre><code>if i=='F':
+    grades[n]='A'
+</code></pre>
+
+<p>```</p>
+
+<p>This changes all your F grades to As!</p>
+
+<h3>Looping Through all Keys</h3>
+
+<p>If using a dictionary, you can loop through all keys this way:</p>
+
+<p>```python
+inventory = {&lsquo;apples&rsquo;: 7, &lsquo;peaches&rsquo;: 4}
+for fruit in inventory:</p>
+
+<pre><code>print("We have " + str(inventory[fruit]) + ' ' + fruit)
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using Regular Expressions in Python]]></title>
+    <link href="http://tunnelsup.github.io/using-regular-expressions-in-python/"/>
+    <updated>2016-09-14T21:44:00-07:00</updated>
+    <id>http://tunnelsup.github.io/using-regular-expressions-in-python</id>
+    <content type="html"><![CDATA[<p>If you need to do pattern matching on a string within Python, using a regular expression will be the best way to do it. Here are some basic examples to help you with this.</p>
+
+<h2>Import Library</h2>
+
+<p>To use any of the regular expressions you&rsquo;ll need to add this library:</p>
+
+<p><code>
+import re
+</code></p>
+
+<h2>Regex Compiler</h2>
+
+<p>Create the regex object using the <code>compile()</code> method.</p>
+
+<p><code>python
+phone_regex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+</code></p>
+
+<p>This creates or defines the regex object which we can then use against a string.</p>
+
+<p>The <code>r</code> here indicates a raw string.</p>
+
+<p>I recommend building and testing your regex with a tool like <a href="http://regexpal.com.">http://regexpal.com.</a></p>
+
+<h2>Matching Regex Objects</h2>
+
+<p>Once the regex object is defined you can use the <code>search()</code> method like this:</p>
+
+<p><code>python
+phone_regex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+search_results = phone_regex.search('My number is 310-429-4019.')
+</code></p>
+
+<p>The results of this are:</p>
+
+<p>```</p>
+
+<blockquote><blockquote><blockquote><p>print(&lsquo;Results: &rsquo; + search_results.group())
+Results: 310-429-4019
+```</p></blockquote></blockquote></blockquote>
+
+<p>The <code>search()</code> method will return the <strong>first</strong> match it finds in the string.</p>
+
+<p>The results are stored in the <code>group()</code> method of your variable.</p>
+
+<h2>Using Parenthesis to Form Groups</h2>
+
+<p>If you need to match on a larger string but want to only extract a portion of the string, you can use parenthesis to make more groups.</p>
+
+<p><code>python
+phone_regex = re.compile(r'(\d\d\d)-(\d\d\d-\d\d\d\d)')
+search_results = phone_regex.search('Call me at 310-429-4019.')
+</code>
+This has created 4 groups shown here:</p>
+
+<p>```python</p>
+
+<blockquote><blockquote><blockquote><p>print(&lsquo;Results: &rsquo; + search_results.group())
+Results: 310-429-4019
+print(&lsquo;Results: &rsquo; + search_results.group(0))
+Results: 310-429-4019
+print(&lsquo;Results: &rsquo; + search_results.group(1))
+Results: 310
+print(&lsquo;Results: &rsquo; + search_results.group(2))
+Results: 429-4019
+```</p></blockquote></blockquote></blockquote>
+
+<h2>Without Regex Compile</h2>
+
+<p>An alternative way to do this is to skip the regex <code>compile()</code> method and use this syntax instead:</p>
+
+<p><code>python
+my_string = "Name: Fred, Occupation: Bronto Crane Operator"
+parse_data = re.search('Name: (\w*), Occupation: (.*)', my_string)
+</code></p>
+
+<p>Results:</p>
+
+<p>```python</p>
+
+<blockquote><blockquote><blockquote><p>print(parse_data.group())
+Name: Fred, Occupation: Bronto
+print(parse_data.group(1))
+Fred
+print(parse_data.group(2))
+Bronto Crane Operator
+```</p></blockquote></blockquote></blockquote>
+
+<h2>Ignore Case</h2>
+
+<p>Use the <code>re.IGNORECASE</code> option to ignore capitalization. Example:</p>
+
+<p><code>python
+fred_regex = re.compile(r'fred', re.IGNORECASE)
+search_results = fred_regex.search('His name is Fred.')
+</code></p>
+
+<p>This produces the following results:</p>
+
+<p>```</p>
+
+<blockquote><blockquote><blockquote><p>print(search_results.group())
+Fred
+```</p></blockquote></blockquote></blockquote>
+
+<p>Pro Tip: You can use the shortcut <code>re.I</code> instead of <code>re.IGNORECASE</code>.</p>
+
+<h2>Using findall()</h2>
+
+<p>While the <code>search()</code> method finds the first occurrence, the <code>findall()</code> method returns every occurrence.</p>
+
+<p><code>python
+phone_regex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+search_results = phone_regex.findall('You can call me at 310-429-4019 or 310-777-4777.')
+</code></p>
+
+<p>This turns the <code>search_results</code> variable into a list and has the following results:</p>
+
+<p>```python</p>
+
+<blockquote><blockquote><blockquote><p>print(search_results)
+[&lsquo;310-429-4019&rsquo;, &lsquo;310-777-4777&rsquo;]
+print(search_results[0])
+310-429-4019
+print(search_results[1])
+310-777-4777
+```</p></blockquote></blockquote></blockquote>
+
+<h2>Substituting Using a Regex</h2>
+
+<p>You can use the <code>sub()</code> method to substitute a string matching a regex. Example:</p>
+
+<p><code>python
+phone_regex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+scrubbed_phone_numbers = phone_regex.sub('XXX-XXX-XXXX', 'My number is 310-429-4019.')
+print(scrubbed_phone_numbers)
+</code></p>
+
+<p>This prints <code>My number is XXX-XXX-XXXX.</code>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to set a static IP in linux]]></title>
+    <link href="http://tunnelsup.github.io/how-to-set-a-static-ip-in-linux/"/>
+    <updated>2016-09-12T16:32:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-set-a-static-ip-in-linux</id>
+    <content type="html"><![CDATA[<p>The following will work for any debian base linux distro. That includes <strong>Ubuntu</strong>, <strong>Kali</strong>, <strong>Raspberry Pi (Raspian Jessie)</strong>, <strong>TAILS</strong>, and many more.</p>
+
+<h2>Edit Interface Settings</h2>
+
+<p>Edit the config:</p>
+
+<p><code>
+sudo vi /etc/network/interfaces
+</code></p>
+
+<p>Find the interface you wish to make static and add the following lines:</p>
+
+<p>```
+auto eth0
+iface eth0 inet static</p>
+
+<pre><code>    address 192.168.1.100
+    network 192.168.1.0
+    netmask 255.255.255.0
+    broadcast 192.168.1.255
+    gateway 192.168.1.1
+</code></pre>
+
+<p>```</p>
+
+<ul>
+<li><code>address</code> is the IP you want to assign this host</li>
+<li><code>network</code> is the network portion of this subnet. It&rsquo;s usually the same as your static IP but ending in <code>.0</code></li>
+<li><code>netmask</code> is the netmask of your subnet. This is usually <code>255.255.255.255</code></li>
+<li><code>broadcast</code> is the broadcast IP of this subnet. It&rsquo;s usually the same as your static IP but ending in <code>.255</code></li>
+<li><code>gateway</code> is the next hop for this system to go. This is usually a router&rsquo;s IP and it must be in the same subnet as the host address.</li>
+</ul>
+
+
+<h2>Configure DNS</h2>
+
+<p>To resolve hostnames to IP addresses you must configure a DNS server. You can do this by editing the following:</p>
+
+<p><code>
+vi /etc/resolv.conf
+</code></p>
+
+<p>Add your DNS servers to this file or use Google&rsquo;s public DNS servers like this:</p>
+
+<p><code>
+nameserver 4.2.2.2
+nameserver 4.2.2.3
+</code></p>
+
+<h2>Restart networking</h2>
+
+<p>To make these change effective you must restart the networking service. That can be done by doing one of the following:</p>
+
+<p><code>
+sudo /etc/init.d/networking restart
+</code></p>
+
+<p>If that doesn&rsquo;t work try:</p>
+
+<p><code>
+sudo /etc/init.d/networking reload
+</code></p>
+
+<p>If that doesn&rsquo;t work try:</p>
+
+<p><code>
+sudo systemctl restart ifup@eth0
+</code></p>
+
+<h2>Check settings</h2>
+
+<p>Now check if the settings took by running the following command:</p>
+
+<p><code>
+ifconfig
+</code></p>
+
+<p>The output looks like this:</p>
+
+<p>```
+eth0      Link encap:Ethernet  HWaddr d8:eb:97:bd:53:4e</p>
+
+<pre><code>      inet addr:192.168.1.100  Bcast:192.168.1.255  Mask:255.255.255.0
+      inet6 addr: fe80::daeb:97ff:febd:534e/64 Scope:Link
+      UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+      RX packets:47436 errors:0 dropped:3117 overruns:0 frame:0
+      TX packets:13017 errors:0 dropped:0 overruns:0 carrier:0
+      collisions:0 txqueuelen:1000
+      RX bytes:5982679 (5.7 MiB)  TX bytes:1837349 (1.7 MiB)
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to do an SNMP walk]]></title>
+    <link href="http://tunnelsup.github.io/how-to-do-an-snmp-walk/"/>
+    <updated>2016-08-24T15:53:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-do-an-snmp-walk</id>
+    <content type="html"><![CDATA[<p>Sometimes you need to manually SNMP poll a device. Here is how to do that.</p>
+
+<h2>Do an entire pull</h2>
+
+<p>To conduct a full SNMP walk and get all OIDs, do the following from a linux command line:</p>
+
+<p><code>
+snmpwalk -v 2c -c publicstring 192.168.1.1
+</code></p>
+
+<p>In the example above we indicate the SNMP version (-v) is 2c, the community string (-c) is publicstring and the IP to SNMP poll is 192.168.1.1.</p>
+
+<p>This will return all OIDs that are pollable on that system.</p>
+
+<h2>Poll a single MIB</h2>
+
+<p>You can add a mib to the end of the snmpwalk command to poll a single mib and get only that result. Here is an example:</p>
+
+<p><code>
+snmpwalk -v 2c -c publicstring 192.168.1.1 mib-2.47.1.1.1.1.5.7
+</code></p>
+
+<p>You can also poll an attribute such as sysDescr like so:</p>
+
+<p><code>
+snmpwalk -v 2c -c publicstring 192.168.1.1 mib-2.47.1.1.1.1.5.7
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ruby | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/ruby/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Using salted SHA hashes with Dovecot authentication]]></title>
+    <link href="http://tunnelsup.github.io/using-salted-sha-hashes-with-dovecot-authentication/"/>
+    <updated>2015-02-08T13:25:00-08:00</updated>
+    <id>http://tunnelsup.github.io/using-salted-sha-hashes-with-dovecot-authentication</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve finally figured out how to do this. The <a href="http://wiki2.dovecot.org/Authentication/PasswordSchemes">Dovecot documentation</a> is absolutely horrible which is sad because it should be encouraged to always salt your password hashes yet they make it very difficult to figure out.</p>
+
+<p>Dovecot is a IMAP and POP3 plugin for Postfix. Postfix doesn&rsquo;t do authentication on its own so it&rsquo;s often found that SASL authentication gets passed to Dovecot for both IMAP mail checking and creating dynamic relay lists.</p>
+
+<h3>Goal</h3>
+
+<p>We want to get Dovecot authentication to use salted SHA password hashes. The password hashes are stored in a mysql database and were created using ruby, python, or php.</p>
+
+<p>You should never be saving user passwords. It&rsquo;s better to only store the hash of a user&rsquo;s passwords. But don&rsquo;t stop there, add some complexity to the hash. By salting the password hash it significantly complicates the cracking process. It&rsquo;s also best practices to have a unique salt for every password hash.</p>
+
+<h3>Format of the hash</h3>
+
+<p>The Dovecot documentation says the password hash must be in the following format when presented to Dovecot for comparing. (It can be in base64 or hex.)</p>
+
+<p><code>{SSHA256.hex}4a847fefc4f9ab450f16783c5025d64313942a1ceb2599707cdb65940ba901e513fa442f</code></p>
+
+<p>This is a string with the following in it:</p>
+
+<ul>
+<li><code>{SSHA256}</code> This is the beginning of the string which tells Dovecot what kind of hash this is. In this case &lsquo;SSH256&rsquo; means Salted SHA 256 bit.</li>
+<li><code>4a847fefc4f9ab450f16783c5025d64313942a1ceb2599707cdb65940ba901e5</code> is the salted hash. Dovecot knows only that portion is the salted hash because a SHA256 hash will be 32 bytes long.</li>
+<li><code>13fa442f</code> is the salt. Dovecot knows this is the salt because it assumes everything after the hash will be the salt because we indicated &ldquo;SSHA&rdquo; which is a salted SHA hash.</li>
+</ul>
+
+
+<p>You can actually verify this against Dovecot with the following command line:</p>
+
+<p><code>
+$ doveadm pw -t {SSHA256.hex}4a847fefc4f9ab450f16783c5025d64313942a1ceb2599707cdb65940ba901e513fa442f -p pass
+{SSHA256.hex}4a847fefc4f9ab450f16783c5025d64313942a1ceb2599707cdb65940ba901e513fa442f (verified)
+</code></p>
+
+<p>The command above asks the Dovecot authentication compare program to check the hash given against the password &ldquo;pass&rdquo;. The result is <strong>verified</strong> which means this password matches the hash.</p>
+
+<h3>Create the hash</h3>
+
+<p>The are many ways to create the hash. You can use php, python, ruby, bash, or even mysql itself to hash the password. In the cases below we are creating a base64 hash.</p>
+
+<h5>Ruby</h5>
+
+<p>Using ruby or ruby on rails we can create the hash this way:</p>
+
+<p><code>ruby
+salt = SecureRandom.hex(32) # Creates a 64 byte random hex string
+hash = Base64.strict_encode64(Digest::SHA512.digest("password"+salt) + salt)
+</code></p>
+
+<p>You can test this code using the rails console.</p>
+
+<h5>Python</h5>
+
+<p>Using python or any of the python web frameworks like django we can create the hash this way:</p>
+
+<p>```python
+import base64
+import hashlib
+import os</p>
+
+<p>salt = os.urandom(64) # Creates a random 64 byte string
+shahash = hashlib.sha512()
+shahash.update(&ldquo;password&rdquo;)
+shahash.update(salt)</p>
+
+<p>shahashsalt = &lsquo;{}{}&rsquo;.format(shahash.digest(), salt)</p>
+
+<p>hash = base64.b64encode(hashsalt)
+```</p>
+
+<p>You can test this code from the python console. Thanks to <a href="https://gist.github.com/garrettreid/8329796">this gist</a> for helping me out with this.</p>
+
+<h5>PHP</h5>
+
+<p><a href="http://stackoverflow.com/questions/6713521/how-to-securely-generate-ssha256-or-ssha512-hashes-in-php">This stackoverflow question</a> goes over how to create the hash in PHP. I have not tested this one though.</p>
+
+<h3>Test the hash using Dovecot</h3>
+
+<p>Suppose the following:<br>
+Our salt is: <code>2fec1ee0940e7c436ef2037e89e4c06ca20b281a90dbb2d6cbd3534aa4ce7e19</code><br>
+Our password is: <code>test</code></p>
+
+<p>This would result in the following <strong>salted</strong> hash:<br>
+<code>text
+4a1e8a61780f449ef6cbc883b5cf57279d32fd004cb7298ddb6f8c46bf246187c03f1bf9447044708767a826e65f977e5c95a490abf8f2c3ca90c7a0ea2b89e8
+</code></p>
+
+<p>And when concatenating the salt to the end and converting to base64 we&rsquo;d get this:<br>
+<code>text
+Sh6KYXgPRJ72y8iDtc9XJ50y/QBMtymN22+MRr8kYYfAPxv5RHBEcIdnqCbmX5d+XJWkkKv48sPKkMeg6iuJ6DJmZWMxZWUwOTQwZTdjNDM2ZWYyMDM3ZTg5ZTRjMDZjYTIwYjI4MWE5MGRiYjJkNmNiZDM1MzRhYTRjZTdlMTk=
+</code></p>
+
+<p>We can test this string using the <code>doveadm pw</code> command from the linux command line (provided Dovecot is installed):</p>
+
+<p><code>
+$ doveadm pw -t {SSHA512}Sh6KYXgPRJ72y8iDtc9XJ50y/QBMtymN22+MRr8kYYfAPxv5RHBEcIdnqCbmX5d+XJWkkKv48sPKkMeg6iuJ6DJmZWMxZWUwOTQwZTdjNDM2ZWYyMDM3ZTg5ZTRjMDZjYTIwYjI4MWE5MGRiYjJkNmNiZDM1MzRhYTRjZTdlMTk= -p test
+{SSHA512}Sh6KYXgPRJ72y8iDtc9XJ50y/QBMtymN22+MRr8kYYfAPxv5RHBEcIdnqCbmX5d+XJWkkKv48sPKkMeg6iuJ6DJmZWMxZWUwOTQwZTdjNDM2ZWYyMDM3ZTg5ZTRjMDZjYTIwYjI4MWE5MGRiYjJkNmNiZDM1MzRhYTRjZTdlMTk= (verified)
+</code></p>
+
+<p>The <code>-t</code> indicates we are going to give the hash and the <code>-p</code> indicates which password to use for hashing. The hash we give indicates this is a <strong>S</strong>alted SHA512 and is long enough to indicate the salted hash with the salt appended to the end of the string. So doveadm will take the first 64 bytes of the hash off and the rest of the bytes are the salt. It will then hash the word &ldquo;test&rdquo; with SHA512 using the salt provided and then test that against the hash provided. The result is <strong>verified</strong> which means the hashes match.</p>
+
+<h3>Configure Dovecot</h3>
+
+<p>Suppose the username and hashed password is stored in the mysql table &ldquo;users&rdquo;. Let&rsquo;s now configure Dovecot to get that information for it&rsquo;s authentication.</p>
+
+<p>First make sure Dovecot is handling the authentication by configuring Postfix. Add the lines to <code>/etc/postfix/main.conf</code>:</p>
+
+<p><code>
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+</code></p>
+
+<p>Edit the <code>/etc/dovecot/conf.d/10-auth.conf</code> file and make sure the following are in it:</p>
+
+<p><code>
+auth_mechanisms = plain login
+!include auth-sql.conf.ext
+</code></p>
+
+<p>Edit the <code>/etc/dovecot/conf.d/auth-sql.conf.ext</code> file and put the following in it:</p>
+
+<p><code>
+passdb {
+  driver = sql
+  args = /etc/dovecot/dovecot-sql.conf.ext
+}
+</code></p>
+
+<p>Edit the <code>/etc/dovecot/dovecot-sql.conf.ext</code> file and put the following in it:</p>
+
+<p>```
+driver = mysql</p>
+
+<p>connect = host=127.0.0.1 dbname=mydatabase user=sqluser password=sqluserpassword</p>
+
+<p>default_pass_scheme = SSHA512</p>
+
+<p>password_query = SELECT username as user, CONCAT(&ldquo;{SSHA512}&rdquo;, password_hash) as password FROM users WHERE username=&lsquo;%n&rsquo;;
+```</p>
+
+<p>You&rsquo;ll have to adjust the <code>connect</code> and <code>password_query</code> parameters to be what your database requires for the properly mysql authentication and lookups. Take note here that Dovecot expects this command to return a <code>user</code> and <code>password</code> column in the result. So if your mysql columns don&rsquo;t say that, use the <code>as</code> mysql command to fix that. Also note that we are adding <code>{SSHA512}</code> to the front of the <code>password</code> because this is what Dovecot wants.</p>
+
+<p>Once that is done restart Dovecot by doing <code>sudo services dovecot restart</code>.</p>
+
+<h3>Verify/Troubleshoot</h3>
+
+<p>At this point you should be able to authenticate to Dovecot with your password which is stored using a salted hash algorithm.</p>
+
+<p>If this isn&rsquo;t working for you then check <code>/var/log/mail.log</code> to see if there are any errors. Turn on additional debugging by editing the file <code>/etc/dovecot/conf.d/10-logging.conf</code> and add/uncomment this line:</p>
+
+<p><code>auth_debug_passwords = yes</code></p>
+
+<p>Now when you check mail.log you may see the following:</p>
+
+<p><code>text
+auth-worker(27083): sql(testuser,1.1.1.1): Password mismatch
+auth-worker(27083): Debug: sql(testuser,1.1.1.1): SSHA512.HEX(test) != '3b98564e1ae8ec5d70cb7b9ea457e1ad833628da9f37211e73d1dc80b8c4c271d65de63a5e4fdde4e0c62cc13995619a3ba22441a892c06f4395d5f46e3fe3df5db034e27bda3045ef9e6057eb4799ea9c05d35c6a3b361697b20689ce44b16d5db034e27bda3045ef9e6057eb4799ea9c05d35c6a3b361697b20689ce44b16d'
+</code></p>
+
+<p>This will show you the hash that&rsquo;s being checked and the hashing type Dovecot is trying. You can test this manually by using the <code>doveadm pw</code> command covered above in the Test section of this page.</p>
+
+<p>My biggest problem was creating a salted hash the correct way. Verify that the hash you&rsquo;re creating works against <code>doveadm pw</code> before adding the Dovecot configuration.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Postfix to send incoming mail to Rails]]></title>
+    <link href="http://tunnelsup.github.io/getting-postfix-to-send-incoming-mail-to-rails/"/>
+    <updated>2014-04-07T18:48:00-07:00</updated>
+    <id>http://tunnelsup.github.io/getting-postfix-to-send-incoming-mail-to-rails</id>
+    <content type="html"><![CDATA[<p>Goal: Let&rsquo;s build a ruby on rails email web app that interfaces with postfix to send and receive email.</p>
+
+<p>This is a lot harder than it sounds. I gave this a try at two different times in my life and spent hours and hours troubleshooting to finally come up with a working solution. This is probably too big of a topic for one blog post but I&rsquo;m going to try to do it anyways!</p>
+
+<p>This guide is using Ubuntu 12.04 as the operating system.</p>
+
+<h2>Setup Ruby on Rails</h2>
+
+<p>Use the <a href="https://rvm.io/rvm/install">standard RVM installation</a> method to install RVM + Ruby + Rails. None of these commands use <code>sudo</code>. For me this task included these commands</p>
+
+<p><code>
+curl -L get.rvm.io | bash -s stable
+source ~/.rvm/scripts/rvm
+rvm requirements
+rvm install ruby
+rvm use 2.1.1 --default
+rvm rubygems current
+gem install rails
+</code></p>
+
+<h4>Install MySQL</h4>
+
+<p>This guide uses mysql as the database because that&rsquo;s something that is supported by both rails and postfix. So install mysql by doing:</p>
+
+<p><code>
+sudo apt-get install mysql-server
+</code>
+Create a new user and give them permissions to edit a new database. These commands will create 2 new databases, give a user access to those databases, then allow the user to login using a password specified.</p>
+
+<p><code>mysql
+mysql -uroot
+create database projectname_development;
+create database projectname_test;
+grant all privileges on projectname_development.* to projectname;
+grant all privileges on projectname_test.* to projectname;
+grant usage on *.* to projectname@localhost identified by 'NEW_db_passw0rd';
+</code></p>
+
+<h4>Create a new Rails app</h4>
+
+<p>Then you can go through the motions of creating the application by doing <code>rails new projectname -d mysql</code> which will create a new app and use the mysql database. You&rsquo;ll want to make sure the app can connect to the database so configure config/database.yml to give it the right credentials.</p>
+
+<p>We&rsquo;ll need two models to get started; a user model and messages model. The users model will be used to lookup if this user/email address is valid later. The messages model will be where the incoming mail is stored.</p>
+
+<p>To keep it simple the users model only needs a user <code>id</code> and <code>email_address</code>.
+The messages model will <code>belong to users</code> and have a <code>to</code>, <code>from</code>, <code>subject</code> and <code>body</code> field.</p>
+
+<p>You might as well create the app all the way to the point where a user can login and look at their inbox. Where their inbox is simply displaying all of that user&rsquo;s messages.</p>
+
+<h2>Create a Ruby script to handle incoming mail</h2>
+
+<p>Before we get going on postfix we need a place for postfix to send the mail when it comes in. To handle this I&rsquo;m going to use two different scripts. The first being a lean script that is only moving the email from postfix to a resque worker queue. What is resque? It&rsquo;s a gem that can be installed which is great at handling background jobs. To me, handling email is a great background job it can be doing.</p>
+
+<p>First let&rsquo;s put the gems in the <code>Gemfile</code> that we&rsquo;ll be using:</p>
+
+<p><code>
+gem 'resque', :require =&gt; "resque/server"
+gem 'mail', :require =&gt; false
+gem 'redis', :require =&gt; false
+</code></p>
+
+<p>We say <code>:require =&gt; false</code> because they aren&rsquo;t needed in the rails app but we want to track them in the Gemfile so we know we need to install them to the system.</p>
+
+<p>Since resque uses redis we need to include that gem too. Redis is a key value storage mechanism that stores the data that&rsquo;s in the resque queue. Redis has a nice front end server we&rsquo;ll use later and it may be helpful to troubleshoot/watch the queue so let&rsquo;s install that too.</p>
+
+<p><code>
+sudo apt-get install redis-server
+</code></p>
+
+<p>The <a href="https://github.com/plataformatec/mail_form">mail gem</a> is used because it&rsquo;s good at handling mail strings. It makes things handy later when we are processing the email in rails.</p>
+
+<p>Don&rsquo;t forget &lsquo;bundle install&rsquo; to install these new gems.</p>
+
+<h4>Create a script to receive the email from postfix and add it to the resque worker queue</h4>
+
+<p>This script is what will be called from postfix later. You can put it in <strong>lib/email_receiver</strong></p>
+
+<p>```ruby</p>
+
+<h1>!/usr/bin/env ruby</h1>
+
+<p>require &lsquo;rubygems&rsquo;
+require &lsquo;resque&rsquo;
+require &lsquo;redis&rsquo;
+require &lsquo;mail&rsquo;</p>
+
+<p>class EmailReceive
+  @queue = :incoming_email_queue</p>
+
+<p>  def initialize(content)</p>
+
+<pre><code>mail    = Mail.read_from_string(content)
+body    = mail.body.decoded
+from    = mail.from.first
+to      = mail.to.first 
+subject = mail.subject 
+
+
+if mail.multipart?
+  part = mail.parts.select { |p| p.content_type =~ /text\/plain/ }.first rescue nil
+  unless part.nil?
+    message = part.body.decoded
+  end
+else
+  message = mail.decoded
+end 
+
+unless message.nil?
+  Resque.enqueue(EmailReceive, from, to, subject, message)
+end
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>EmailReceive.new($stdin.read)
+```</p>
+
+<h4>Create a Resque worker script to process the email queue</h4>
+
+<p>This script will be ran by Resque whenever it has stuff in its queue. You can put it in <strong>lib/resque_process_email.rb</strong></p>
+
+<p>```ruby
+class InvalidReplyUser    &lt; StandardError ; end</p>
+
+<p>class EmailReceive
+  @queue = :incoming_email_queue</p>
+
+<p>  def self.perform(from, to, subject, body)</p>
+
+<pre><code>user = User.find(2)
+if user.nil?
+  raise InvalidReplyUser, "User with email = #{from} is not a member of the app."
+end 
+
+params = {
+  :body     =&gt; body,
+  :to       =&gt; to,
+  :subject  =&gt; subject,
+  :from     =&gt; from
+}
+
+message = user.messages.new(params)
+unless message.save
+  raise RuntimeError, "Unable to save message. Errors: #{message.errors.inspect}"
+end
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>That should be familiar ruby code at this point. The main points to know about resque is that there needs to be a class, a queue and the self.perform action with the same variables that were sent to it using the enqueue function in the previous script. Take note that in that example we are just putting all incoming mail into the user with id of 2. You can improve upon what user to find so the email is saved for the right person.</p>
+
+<h4>Start Resque</h4>
+
+<p>Create a file in your application named <strong>lib/tasks/resque.rake</strong> and add the following to it:</p>
+
+<p><code>ruby
+require "resque/tasks"
+task "resque:setup" =&gt; :environment
+require "/home/user/rails/projectname/lib/resque_process_email.rb"
+</code></p>
+
+<p>This will make sure the resque worker has access to the rails environment and knows what task is his.</p>
+
+<p>Next start the resque job by doing:</p>
+
+<p><code>
+rake resque:work QUEUE='*'
+</code></p>
+
+<p>The &lsquo;*&rsquo; means to start all workers. You could specify the EmailReceive worker instead if you wish. This command needs to always be running in order for resque to process the queue.</p>
+
+<p>It is important to note that any changes done to resque_process_email.rb will require the rake resque task to be restarted.</p>
+
+<h4>Test functionality of the listening scripts</h4>
+
+<p>Take a quick sample email and put it into a file like sample.email. Something that looks like this:</p>
+
+<p>```
+From <a href="&#109;&#97;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x61;&#x6c;&#105;&#x63;&#x65;&#x40;&#x79;&#111;&#117;&#x72;&#x64;&#111;&#109;&#x61;&#x69;&#110;&#46;&#99;&#111;&#109;">&#97;&#x6c;&#x69;&#99;&#x65;&#64;&#121;&#111;&#117;&#x72;&#x64;&#x6f;&#x6d;&#x61;&#105;&#110;&#x2e;&#99;&#111;&#x6d;</a>  Sun Apr  6 18:18:26 2014
+Return-Path: <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#97;&#108;&#105;&#99;&#x65;&#x40;&#x79;&#x6f;&#117;&#x72;&#x64;&#111;&#x6d;&#x61;&#105;&#x6e;&#46;&#x63;&#x6f;&#109;">&#97;&#x6c;&#105;&#x63;&#101;&#64;&#121;&#x6f;&#117;&#x72;&#x64;&#111;&#x6d;&#x61;&#105;&#110;&#46;&#x63;&#x6f;&#109;</a>
+X-Original-To: <a href="&#x6d;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#98;&#111;&#x62;&#64;&#121;&#111;&#117;&#114;&#x64;&#x6f;&#109;&#97;&#x69;&#x6e;&#x2e;&#x63;&#x6f;&#109;">&#x62;&#x6f;&#98;&#64;&#x79;&#111;&#x75;&#114;&#x64;&#111;&#109;&#x61;&#x69;&#110;&#x2e;&#99;&#111;&#109;</a>
+Delivered-To: <a href="&#x6d;&#97;&#105;&#108;&#x74;&#111;&#58;&#98;&#111;&#98;&#x40;&#x79;&#111;&#117;&#114;&#x64;&#x6f;&#x6d;&#x61;&#105;&#x6e;&#46;&#99;&#x6f;&#109;">&#98;&#x6f;&#x62;&#64;&#x79;&#x6f;&#x75;&#114;&#x64;&#x6f;&#x6d;&#97;&#105;&#110;&#46;&#99;&#x6f;&#x6d;</a>
+Received: by smtp.yourdomain.com (Postfix, from userid 1000)</p>
+
+<pre><code>    id A3D17282CF9; Sun,  6 Apr 2014 18:18:26 -0700 (PDT)
+</code></pre>
+
+<p>Subject: testing the ruby scripts
+To: <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x62;&#111;&#x62;&#64;&#121;&#x6f;&#117;&#x72;&#x64;&#111;&#x6d;&#97;&#105;&#x6e;&#46;&#x63;&#111;&#109;">&#x62;&#111;&#98;&#x40;&#121;&#x6f;&#117;&#114;&#100;&#x6f;&#x6d;&#x61;&#105;&#110;&#46;&#99;&#111;&#109;</a>
+X-Mailer: mail (GNU Mailutils 2.2)
+Message-Id: <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#x32;&#x30;&#x31;&#52;&#48;&#x34;&#48;&#55;&#x30;&#x31;&#49;&#56;&#x32;&#54;&#46;&#x41;&#x33;&#68;&#x31;&#55;&#50;&#x38;&#50;&#67;&#x46;&#x39;&#x40;&#x73;&#109;&#116;&#112;&#x2e;&#x79;&#x6f;&#x75;&#x72;&#100;&#x6f;&#109;&#x61;&#x69;&#110;&#x2e;&#99;&#x6f;&#109;">&#x32;&#48;&#49;&#x34;&#48;&#52;&#48;&#x37;&#48;&#x31;&#49;&#x38;&#x32;&#54;&#x2e;&#x41;&#x33;&#x44;&#x31;&#55;&#50;&#x38;&#50;&#67;&#x46;&#x39;&#x40;&#115;&#x6d;&#116;&#112;&#x2e;&#121;&#111;&#117;&#x72;&#100;&#111;&#109;&#97;&#105;&#110;&#46;&#x63;&#111;&#x6d;</a>
+Date: Sun,  6 Apr 2014 18:18:26 -0700 (PDT)
+From: <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#x61;&#x6c;&#105;&#99;&#101;&#64;&#121;&#111;&#x75;&#x72;&#x64;&#x6f;&#x6d;&#97;&#105;&#x6e;&#46;&#99;&#x6f;&#109;">&#97;&#108;&#105;&#99;&#x65;&#x40;&#121;&#111;&#117;&#x72;&#x64;&#111;&#x6d;&#x61;&#105;&#x6e;&#46;&#99;&#111;&#x6d;</a> (alice)</p>
+
+<p>Hello, this is the body of the email.</p>
+
+<p>```</p>
+
+<p>If you put that into sample.email then you can run a command to test your ruby script by doing this:</p>
+
+<p><code>
+cat ~/sample.email | ruby /path/to/projectname/lib/email_receiver_script
+</code></p>
+
+<p>If all is right, the email should have been processed by the script and ended up in the database.</p>
+
+<p>If it makes it through your first script but not through the resque queue you have some cool tools to help you troubleshoot. Specifically there is a web gui to shows the resque worker queue. You can enable it by doing the following to your rails app.</p>
+
+<p><strong>routes.rb</strong></p>
+
+<p><code>
+mount Resque::Server, :at =&gt; "/resque"
+</code></p>
+
+<p>You also need to make sure the Gemfile says <code>gem 'resque', :require =&gt; "resque/server"</code>. Once you do that and restart your rails app try going to <a href="http://hostname:3000/resque">http://hostname:3000/resque</a></p>
+
+<p>It should be the gui to the Resque jobs. If it says something like cannot connect to redis then that means you don&rsquo;t have redis-server installed and need to go back and re-read how to install that earlier in this post.</p>
+
+<p>From the resque gui you can dig down into any failed jobs and troubleshoot why something failed. It&rsquo;s very helpful and will tell you why something is broken.</p>
+
+<h3>Create a RVM wrapper for your rails project</h3>
+
+<p>Ok here comes the tricky part. RVM? Wrapper? These are things I&rsquo;ll never understand but I&rsquo;ll try to explain what I know. RVM is the ruby version manager we used to install ruby and rails remember? <a href="http://rvm.io/integration/init-d">A wrapper</a> is a way to create a ruby environment so that we can use that environment from other users/services (like postfix) to execute standalone ruby scripts.</p>
+
+<p>Start by creating a new gemset:</p>
+
+<p><code>
+rvm gemset create my_app
+</code></p>
+
+<p>You should verify the location of your gemset. Doing <code>which ruby</code> may give you a clue to where it may be. For me it was at
+/home/alice/.rvm/wrappers/ruby-2.1.1@my_app</p>
+
+<p>Now go into your the directory of where your rails app lives and install the gems into that gemset using this command:</p>
+
+<p><code>
+rvm 2.1.1@my_app do bundle install
+</code></p>
+
+<p>Once that is done test that your script still works. This time switching &lsquo;ruby&rsquo; with the new gemset version of ruby. Here is one way to test it if you still have the sample.email from earlier:</p>
+
+<p><code>
+cat ~/sample.email | /home/alice/.rvm/wrappers/ruby-2.1.1@my_app/ruby /path/to/projectname/lib/email_receiver_script
+</code></p>
+
+<p>Troubleshoot until the email is arriving into the database as expected.</p>
+
+<h2>Setup Postfix</h2>
+
+<p>Whew, we&rsquo;ve covered a lot and are on the home stretch now. Now we&rsquo;ll switch gears and get into postfix. Postfix is a MTA (mail transit authority). It listens on port 25 for incoming mail and accepts it and forwards it to where it needs to go. We could probably get away without needing an MTA if we were doing just outbound mail. But rails can&rsquo;t handle incoming mail very well so we need some kind of MTA to handle incoming mail. So let&rsquo;s first install postfix.</p>
+
+<p><code>
+sudo apt-get install postfix postfix-mysql mailutils
+</code>
+Notice we are also installing the postfix-mysql package so that postfix can interface with our database.</p>
+
+<p>After it installs configure it by doing the following command:</p>
+
+<p><code>
+sudo dpkg-reconfigure postfix
+</code></p>
+
+<p>You&rsquo;ll want to choose internet site, then the domain for your site you want to accept mail for. Also choose your domain as the final destination. You can say no to synchronous updates forced and choose the defaults for the rest of the options.</p>
+
+<p>If the system you are on doesn&rsquo;t block outbound port 25 then you can test sending mail outbound with the following command:</p>
+
+<p><code>
+date | mail -s test someone@some_external_domain.com
+</code></p>
+
+<p>If you didn&rsquo;t get the email then check the logs to try to figure out what&rsquo;s wrong.</p>
+
+<p><code>
+sudo tail -f /var/log/mail.log
+</code></p>
+
+<h4>Configure Virtual Mailboxes</h4>
+
+<p>By default, postfix will only accept mail for users that have full accounts on that linux machine. We don&rsquo;t want this, we want to accept mail for any of the users we have in our rails app, or database. Edit the following two files.</p>
+
+<p><strong>/etc/postfix/main.cf</strong></p>
+
+<p><code>
+virtual_mailbox_domains = beebin.com
+virtual_mailbox_base = /var/mail
+virtual_mailbox_maps = mysql:/etc/postfix/mysql_mailbox_maps
+virtual_uid_maps = static:155
+virtual_gid_maps = static:1001
+</code></p>
+
+<p>Create file: <strong>/etc/postfix/mysql_mailbox_maps</strong></p>
+
+<p><code>
+user=projectname
+password=NEW_db_passw0rd
+dbname=projectname_development
+hosts=127.0.0.1
+query = SELECT user_id FROM users WHERE email_address='%s'
+</code></p>
+
+<p>Now we need to set some permissions for postfix.</p>
+
+<p><code>
+sudo groupadd -g155 vmail
+sudo useradd -c "Virtual Mail User" -g155 -u155 -s/bin/false vmail
+</code></p>
+
+<p>Restart postfix by doing <code>sudo /etc/init.d/postfix restart</code>.</p>
+
+<p>If you&rsquo;ve created a user in your rails app and given them an email <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#111;&#58;&#x62;&#x6f;&#x62;&#x40;&#x79;&#111;&#x75;&#x72;&#x64;&#111;&#109;&#x61;&#105;&#x6e;&#x2e;&#99;&#111;&#109;">&#x62;&#111;&#98;&#x40;&#121;&#x6f;&#x75;&#x72;&#100;&#x6f;&#109;&#97;&#x69;&#x6e;&#x2e;&#x63;&#111;&#x6d;</a> then we can test that mail is being accepted for them. Try sending a test mail to that address with this command:</p>
+
+<p><code>
+date | mail -s test bob@yourdomain.com
+</code></p>
+
+<p>Watch the <code>/var/log/mail.log</code> to see if the message was delivered. It should have the keyword &lsquo;delivered&rsquo; in the logs with a &lsquo;removed&rsquo; log also meaning the email is out of the queue of postfix.</p>
+
+<h4>Configure Postfix to deliver message to ruby</h4>
+
+<p>This is probably the hardest part of the whole process and you&rsquo;ll probably spend the most amount of time troubleshooting this. I hope I can explain it well for you.</p>
+
+<p>Our last step is to add a header_check and filter</p>
+
+<p><strong>/etc/postfix/main.cf</strong></p>
+
+<p><code>
+header_checks = regexp:/etc/postfix/header_checks
+</code></p>
+
+<p>Create file: <strong>/etc/postfix/header_checks</strong></p>
+
+<p><code>
+/To:.*@yourdomain.com.*/ FILTER send_to_ruby_filter:
+</code></p>
+
+<p>Add these two lines to the end of <strong>/etc/postfix/master.cf</strong></p>
+
+<p><code>
+send_to_ruby_filter unix -     n       n       -       -       pipe
+ flags=Xhq user=alice argv=/home/alice/.rvm/wrappers/ruby-2.1.1@my_app/ruby /path/to/projectname/lib/email_receiver_script
+</code></p>
+
+<p>Save it and restart postfix.
+<code>sudo /etc/init.d/postfix restart</code></p>
+
+<p>What we&rsquo;ve done here is tell postfix to check the headers of all emails and if the to: field has @yourdomain.com it must mean it&rsquo;s incoming mail so send it to the &lsquo;send_to_ruby_filter&rsquo;. We define the &lsquo;send_to_ruby_filter&rsquo; in master.cf and there we indicate a pipe command. This means output the mail message to whatever we indicate in the argv parameter. The flags Xhq means mark the mail as delivered, ignore case and preserver whitespace. See <a href="http://www.postfix.org/pipe.8.html">man pipe</a> for more details about the flag meanings.</p>
+
+<p>Now you can send a test email and see if it made it. Here&rsquo;s how to send a test email again:</p>
+
+<p><code>
+date | mail -s test bob@yourdomain.com
+</code></p>
+
+<p>Watch <code>/var/log/mail.log</code> for errors. Check your resque jobs to make sure it got processed. Look into the database to see if the data is there. If all is right it should be working!</p>
+
+<p>So now if your system accepts incoming port 25 and dns is set up correctly you should be getting inbound emails from the internet into your rails app. Whew, what an adventure it&rsquo;s been!</p>
+
+<h3>Additional links</h3>
+
+<p>Some other brave souls have tried to do this same thing. Here are their attempts.</p>
+
+<p><a href="http://blog.sosedoff.com/2011/08/10/processing-emails-with-postfix-and-rails/">Dan Thoughts &ndash; Processing emails with Postfix and Rails</a></p>
+
+<p><a href="http://jasonseifer.com/2009/04/24/receving-email-with-rails">Jason Seifer &ndash; Receiving Email with Rails</a></p>
+
+<p><a href="http://library.edgecase.com/configuring-postfix-to-deliver-email-to-ruby">The EdgeCase Library &ndash; Configuring Postfix to Deliver Mail to Ruby</a></p>
+]]></content>
+  </entry>
+  
+</feed>

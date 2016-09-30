@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: asp | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/asp/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Learning about ASP tables, SPI and VPN contexts]]></title>
+    <link href="http://tunnelsup.github.io/learning-about-asp-tables-spi-and-vpn-contexts/"/>
+    <updated>2011-10-19T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/learning-about-asp-tables-spi-and-vpn-contexts</id>
+    <content type="html"><![CDATA[<p>After a lengthy phone call with Cisco TAC I learned an interesting link between a few commands on an ASA for analyzing tunnels.</p>
+
+<p>Suppose we are REALLY having trouble getting a tunnel up. You are sure the traffic is hitting the firewall that should be encrypted but the tunnel is just not even attempting phase one. These show commands may help identify a problem.</p>
+
+<p>Suppose our tunnel allows traffic from the 10.100.0.0/16 inside subnet to the 10.10.15.0/24 remote subnet.</p>
+
+<pre><code>ASA# <strong><span style="color: #993366;">PACKET-TRACER INPUT INSIDE ICMP 10.100.10.100 8 0 10.10.15.15. DETAILED</span></strong>
+...
+Phase: 12
+Type: VPN
+Subtype: encrypt
+Result: ALLOW
+Config:
+Additional Information:
+Forward Flow based lookup yields rule:
+out id=0xd9354580, priority=70, domain=encrypt, deny=false
+hits=2198, <strong><span style="color: #0000ff;">user\_data=0x922fac</span></strong>, cs_id=0xd8c45e10, reverse, flags=0x0, protocol=0
+src ip=10.100.0.0, mask=255.255.0.0, port=0
+dst ip=10.10.15.0, mask=255.255.255.0, port=0, dscp=0x0
+</pre>
+
+
+<p></code></p>
+
+<p>Take note of the &ldquo;user_data&rdquo; value above. Grab that, and capitalize the hex letters to use this command:</p>
+
+<pre><code>ASA# <strong><span style="color: #993366;">SHOW ASP TABLE VPN-CONTEXT DETAIL | begin</span></strong> <strong><span style="color: #0000ff;">922FAC</span></strong>
+<strong><span style="color: #0000ff;">VPN CTX  = 0x00922FAC</span></strong>
+Peer IP  = 10.10.15.0
+Pointer  = 0xD91404E8
+State    = UP
+Flags    = ENCR+ESP
+SA       = 0x1664DD33
+<strong><span style="color: #ff0000;">SPI      = 0xE5C56C30</span></strong>
+Group    = 47
+Pkts     = 362631
+Bad Pkts = 0
+Bad SPI  = 0
+Spoof    = 0
+Bad Crypto = 0
+Rekey Pkt  = 44
+Rekey Call = 44
+VPN Filter = &lt;none&gt;
+</pre>
+
+
+<p></code>
+Above is the Context, SA and SPI of the tunnel we are dealing with. You can see the flags above are ENCR which means this is the encaps or outbound packets. Also verify that there are &ldquo;Pkts&rdquo; increasing.</p>
+
+<p>You can then verify that SPI is the same that is used in the IPSEC SA (if you have one up) by using this command:</p>
+
+<pre><code>ASA# <strong><span style="color: #993366;">SHOW CRYPTO IPSEC SA PEER 66.162.66.162</span></strong>
+access-list ACL-PPP-VPN extended permit ip 10.100.0.0 255.255.0.0 10.10.15.0 255.255.255.0
+local ident (addr/mask/prot/port): (10.100.0.0/255.255.0.0/0/0)
+remote ident (addr/mask/prot/port): (10.10.15.0/255.255.255.0/0/0)
+current\_peer: 66.162.66.162
+#pkts encaps: 402798, #pkts encrypt: 403786, #pkts digest: 403786
+#pkts decaps: 306215, #pkts decrypt: 306215, #pkts verify: 306215
+#pkts compressed: 0, #pkts decompressed: 0
+#pkts not compressed: 402798, #pkts comp failed: 0, #pkts decomp failed: 0
+#pre-frag successes: 988, #pre-frag failures: 0, #fragments created: 1976
+#PMTUs sent: 0, #PMTUs rcvd: 0, #decapsulated frgs needing reassembly: 2693
+#send errors: 0, #recv errors: 0
+local crypto endpt.: 202.2.202.2, remote crypto endpt.: 66.162.66.162
+path mtu 1500, ipsec overhead 74, media mtu 1500
+<strong><span style="color: #ff0000;">current outbound spi: E5C56C30</span></strong>
+current inbound spi : A40D0530
+inbound esp sas:
+spi: 0xA40D0530 (2752316720)
+transform: esp-aes esp-sha-hmac no compression
+in use settings ={L2L, Tunnel, }
+slot: 0, conn\_id: 180224, crypto-map: mymap
+sa timing: remaining key lifetime (kB/sec): (4372199/2855)
+IV size: 16 bytes
+replay detection support: Y
+Anti replay bitmap:
+0xFFFFFFFF 0xFFFFFFFF
+outbound esp sas:
+<strong> <span style="color: #ff0000;">spi: 0xE5C56C30</span></strong> (3854920752)
+transform: esp-aes esp-sha-hmac no compression
+in use settings ={L2L, Tunnel, }
+slot: 0, conn_id: 180224, crypto-map: mymap
+sa timing: remaining key lifetime (kB/sec): (4299344/2855)
+IV size: 16 bytes
+replay detection support: Y
+Anti replay bitmap:
+0x00000000 0x00000001
+</pre>
+
+
+<p></code></p>
+
+<p>So that&rsquo;s just another tool that can be used at troubleshooting  a VPN tunnel on an ASA. There are a lot of opportunities to learn here. If your packet tracer doesn&rsquo;t pick up on any encryption then you&rsquo;ve got a problem probably with the VPN ACL or enabing IPSec on a particular interface. If your asp table isn&rsquo;t forming an SPI or isn&rsquo;t getting Pkts then you&rsquo;ve got a problem to examine probably with IPSec portion of the tunnel. If your IPSEC SA has a different SPI than your asp table then you&rsquo;ve got a problem to examine that is probably related to mismatched VPN ACLs or NAT'ing incorrectly between the two devices.</p>
+
+<p>&nbsp;</p>
+]]></content>
+  </entry>
+  
+</feed>

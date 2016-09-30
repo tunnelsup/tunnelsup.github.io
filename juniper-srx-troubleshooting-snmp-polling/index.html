@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>Juniper SRX troubleshooting SNMP polling - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="Having trouble doing an SNMP walk on a Juniper SRX? Here are some troubleshooting tips to help solve the problem. Configure the SRX for SNMP First &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tunnelsup.github.io/juniper-srx-troubleshooting-snmp-polling">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Juniper SRX Troubleshooting SNMP Polling</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-26T15:46:00-07:00" pubdate data-updated="true">Aug 26<span>th</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Having trouble doing an SNMP walk on a Juniper SRX? Here are some troubleshooting tips to help solve the problem.</p>
+
+<h2>Configure the SRX for SNMP</h2>
+
+<p>First things first, make sure the config is set up right on the SRX so it&rsquo;s accepting SNMP polling.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>set snmp name SRX-HOSTNAME
+</span><span class='line'>set snmp community myCommunityString authorization read-write
+</span><span class='line'>set snmp community myCommunityString clients 10.1.60.0/24
+</span><span class='line'>set security zones security-zone TRUST interfaces ge-0/0/0.0 host-inbound-traffic system-services snmp</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In these commands we set an SNMP name, then give permission for the 10.1.60.0/24 network to do SNMP polling. We are also setting the community string to &lsquo;myCommunityString.&rsquo;</p>
+
+<p>After this is configured we should be able to get on a linux device in the 10.1.60.0/24 network and issue the following command:</p>
+
+<p><code>snmpwalk -c myCommunityString -v 2c 192.168.55.55</code></p>
+
+<p>A large amount of data should come back listing all of the SNMP data. If that didn&rsquo;t work try some of the troubleshooting tips below.</p>
+
+<h2>SNMP walk yourself</h2>
+
+<p>The SRX has the ability to do an SNMP poll on itself with the following command</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>show snmp mib walk jnxMibs</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This command should spit out a lot of data showing all of the jnxMibs in the database. <a href="http://www.juniper.net/techpubs/en_US/junos12.3/topics/reference/general/snmp-junos-faq.html">Juniper has documentation if this doesn&rsquo;t poll</a>:</p>
+
+<p>What can I do if the MIB OID query is not responding?</p>
+
+<p>There can be various reasons why the MIB OID query stops responding. One reason could be that the MIB itself is unresponsive. To verify that the MIB responds, use the show snmp mib walk | get MIB name | MIB OID command:</p>
+
+<blockquote><p>If the MIB responds, the communication issue exists between the SNMP master and SNMP agent. Possible reasons for this issue include network issues, an incorrect community configuration, an incorrect SNMP configuration, and so on.
+If the MIB does not respond, enable SNMP traceoptions to log PDUs and errors. All incoming and outgoing SNMP PDUs are logged. Check the traceoptions output to see if there are any errors.</p>
+
+<p>If you continue to have problems with the MIB OID query, technical product support is available through the Juniper Networks Technical Assistance Center (JTAC).</p></blockquote>
+
+<h2>Turn on Traceoptions</h2>
+
+<p>Turning on traceoptions for SNMP will help see what the SRX is doing when it gets the SNMP poll request. Turn on traceoptions with the following edit commands:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>edit snmp traceoptions
+</span><span class='line'>set file trace_snmp
+</span><span class='line'>set flag all</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Try your SNMP walk again from a linux machine and then take a look at the log with <code>show log trace_snmp</code>.</p>
+
+<p><strong>If</strong> you don&rsquo;t see anything showing up in the trace options there&rsquo;s one of two things wrong.</p>
+
+<ul>
+<li>Security settings are restricting SNMP polls from coming into the interface you&rsquo;re coming in on. Verify which interface you&rsquo;re polling and check that host-inbound-traffic is permitted. See the Configure SNMP section at the top of this blog post to understand that command.</li>
+<li>The SNMP poll may not even be arriving at the SRX. It&rsquo;s possible the SNMP poll is being blocked somewhere or doesn&rsquo;t know how to make it to the SRX. Verify routing is working correctly and that port 161 isn&rsquo;t blocked.</li>
+</ul>
+
+
+<p><strong>If</strong> you are seeing some stuff happening in the logs when trying the SNMP walk command take a look at the following to understand the output.</p>
+
+<h3>Understanding the snmp traceoptions results</h3>
+
+<p>Let&rsquo;s look at a successfull SNMP poll that shows up in the traceoptions log.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>Aug 25 20:49:29 snmpd[5f07] &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07] &gt;&gt;&gt; Get-Request
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07] &gt;&gt;&gt;  Source:      10.1.60.200
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07] &gt;&gt;&gt;  Destination: 192.168.55.55
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07] &gt;&gt;&gt;  Version:     SNMPv2
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07] &gt;&gt;&gt;  Request_id:  0x5f07
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07] &gt;&gt;&gt;  Community:   myCommunityString
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07] &gt;&gt;&gt;  Error:       status=0 / vb_index=0
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07] &gt;&gt;&gt;   OID  : ifOperStatus.578
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07] &gt;&gt;&gt;   OID  : ifName.578
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07] &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;
+</span><span class='line'>Aug 25 20:49:29 jnx_ifEntry_stat_actual_lookup: sync request for ae0.50
+</span><span class='line'>Aug 25 20:49:29 jnx_ifEntry_stat_actual_lookup: sync request for ae0.50
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt; Get-Response
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;  Source:      10.1.60.200
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;  Destination: 192.168.55.55
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;  Version:     SNMPv2
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;  Request_id:  0x5f07
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;  Community:   myCommunityString
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;  Error:       status=0 / vb_index=0
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;   OID  : ifOperStatus.578
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;   type : Number
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;   value: 1
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;   OID  : ifName.578
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;   type : OctetString
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;   value: "ae0.50"
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;   HEX  : 61 65 30 2e  35 30
+</span><span class='line'>Aug 25 20:49:29 snmpd[5f07]  &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When there are <code>&gt;&gt;&gt;</code> symbols it means that was an incoming SNMP request. When there are <code>&lt;&lt;&lt;</code> it means that&rsquo;s a SNMP response. In the case above we see the SNMP request come in from 10.1.60.200 going to the SRX at 192.168.55.55 using SNMP string myCommunityString. Within the same second we see the SRX responding with the information requested in the SNMP poll.</p>
+
+<p>If the logs are showing the request but no response it may mean that the SNMP configuration doesn&rsquo;t have this source IP listed in the client. See the section on configuring SNMP at the top of this post to verify the network is present.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-26T15:46:00-07:00" pubdate data-updated="true">Aug 26<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/juniper/'>juniper</a>, <a class='category' href='/tup/tag/snmp/'>snmp</a>, <a class='category' href='/tup/tag/troubleshooting/'>troubleshooting</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tunnelsup.github.io/juniper-srx-troubleshooting-snmp-polling/" data-via="tunnelsup" data-counturl="http://tunnelsup.github.io/juniper-srx-troubleshooting-snmp-polling/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tunnelsup.github.io/juniper-srx-troubleshooting-snmp-polling/';
+        var disqus_url = 'http://tunnelsup.github.io/juniper-srx-troubleshooting-snmp-polling/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>

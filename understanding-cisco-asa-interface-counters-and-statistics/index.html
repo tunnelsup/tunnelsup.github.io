@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>Understanding Cisco ASA interface counters and statistics - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="Upon doing a show interface command a lot of valuable information is displayed regarding the packets and errors on that interface. USS-ASA/pri/act# &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tunnelsup.github.io/understanding-cisco-asa-interface-counters-and-statistics">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Understanding Cisco ASA Interface Counters and Statistics</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-29T13:00:00-07:00" pubdate data-updated="true">Jul 29<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Upon doing a show interface command a lot of valuable information is displayed regarding the packets and errors on that interface.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>USS-ASA/pri/act# sh int GigabitEthernet0/1
+</span><span class='line'>Interface GigabitEthernet0/1 "inside", is up, line protocol is up
+</span><span class='line'>  Hardware is i82546GB rev03, BW 1000 Mbps, DLY 10 usec
+</span><span class='line'>        Full-Duplex(Full-duplex), 100 Mbps(100 Mbps)
+</span><span class='line'>        Input flow control is unsupported, output flow control is off
+</span><span class='line'>        MAC address 442b.442b.442b, MTU 1500
+</span><span class='line'>        IP address 172.16.250.26, subnet mask 255.255.255.240
+</span><span class='line'>        16433456 packets input, 2581392514 bytes, 0 no buffer
+</span><span class='line'>        Received 111 broadcasts, 0 runts, 0 giants
+</span><span class='line'>        0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+</span><span class='line'>        0 pause input, 0 resume input
+</span><span class='line'>        0 L2 decode drops
+</span><span class='line'>        24943232 packets output, 28662026144 bytes, 430 underruns
+</span><span class='line'>        0 pause output, 0 resume output
+</span><span class='line'>        0 output errors, 0 collisions, 0 interface resets
+</span><span class='line'>        0 late collisions, 0 deferred
+</span><span class='line'>        0 input reset drops, 0 output reset drops, 0 tx hangs
+</span><span class='line'>        input queue (blocks free curr/low): hardware (255/230)
+</span><span class='line'>        output queue (blocks free curr/low): hardware (254/0)
+</span><span class='line'>  Traffic Statistics for "inside":
+</span><span class='line'>        16433456 packets input, 2214576498 bytes
+</span><span class='line'>        24943662 packets output, 28202920165 bytes
+</span><span class='line'>        28768 packets dropped
+</span><span class='line'>      1 minute input rate 178 pkts/sec,  18825 bytes/sec
+</span><span class='line'>      1 minute output rate 267 pkts/sec,  306674 bytes/sec
+</span><span class='line'>      1 minute drop rate, 0 pkts/sec
+</span><span class='line'>      5 minute input rate 255 pkts/sec,  16417 bytes/sec
+</span><span class='line'>      5 minute output rate 422 pkts/sec,  548955 bytes/sec
+</span><span class='line'>      5 minute drop rate, 0 pkts/sec</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&rsquo;s break this down line by line.</p>
+
+<h2>General Interface Details</h2>
+
+<p><code>Interface GigabitEthernet0/1 "inside", is up, line protocol is up</code><br>
+Interface number, name, status. The &ldquo;is up&rdquo; status can be up or administratively down. The like protocol status is either up (indicating there is a working cable plugged into the interface) or down (indicating the cable is either unplugged or incorrect).</p>
+
+<p><code>Hardware is i82546GB rev03, BW 1000 Mbps, DLY 10 usec</code><br>
+Hardware is the chip type used in the interface. The valid options here are:<br></p>
+
+<ul>
+<li>i82542 &ndash; Intel PCI Fiber Gigabit card used on PIX platforms</li>
+<li>i82543 &ndash; Intel PCI-X Fiber Gigabit card used on PIX platforms</li>
+<li>i82546GB &ndash; Intel PCI-X Copper Gigabit used on ASA platforms</li>
+<li>i82547GI &ndash; Intel CSA Copper Gigabit used as backplane on ASA platforms</li>
+<li>i82557 &ndash; Intel PCI Copper Fast Ethernet used on ASA platforms</li>
+<li>i82559 &ndash; Intel PCI Copper Fast Ethernet used on PIX platforms</li>
+<li>VCS7380 &ndash; Vitesse Four Port Gigabit Switch used in SSM-4GE</li>
+</ul>
+
+
+<p>Displayed on this line is also the maximum bandwidth and delay that can be on this interface.</p>
+
+<p><code>Full-Duplex(Full-duplex), 100 Mbps(100 Mbps)</code><br>
+Duplex and speed settings. If the line is down, the configured values are displayed. If the line is up the negotiated or actual values will be in parenthesis.</p>
+
+<p><code>Input flow control is unsupported, output flow control is off</code><br>
+Optional message. Some examples are:<br>
+If you do not configure a name, you see the following message: Available but not configured via nameif<br>
+If an interface is a member of a redundant interface, you see the following message: Active member of Redundant5<br>
+On a multi context firewall, in the system context you might see the following message: Available for allocation to a context<br></p>
+
+<p><code>MAC address 442b.442b.442b, MTU 1500</code><br>
+This is the interfaces MAC address and configured MTU. If the interface name is not set the MTU will display &ldquo;MTU not set&rdquo;.</p>
+
+<p><code>IP address 172.16.16.16, subnet mask 255.255.255.240</code><br>
+This is the interfaces IP address and subnet mask.</p>
+
+<h2>Input Statistics</h2>
+
+<p><code>16433456 packets input, 2581392514 bytes, 0 no buffer</code><br>
+The number of packets and bytes received on this interface. The &ldquo;no buffer&rdquo; indicates the number of failures from block allocations.</p>
+
+<p><code>Received 111 broadcasts, 0 runts, 0 giants</code><br>
+The number of broadcast packets received.<br>
+<strong>Runts</strong> are the number of packets that are discarded because they are smaller than the minimum packet size, which is 64 bytes. Runts are usually caused by collisions. They might also be caused by poor wiring and electrical interference. <br>
+<strong>Giants</strong> are the number of packets that are discarded because they exceed the maximum packet size. For example, any Ethernet packet that is greater than 1518 bytes is considered a giant.</p>
+
+<p><code>0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort</code><br>
+<strong>Input errors</strong> are the number of total input errors, including the types listed below. Other input-related errors can also cause the input error count to increase, and some datagrams might have more than one error; therefore, this sum might exceed the number of errors listed for the types below. <br>
+<strong>CRC errors</strong> are the number of Cyclical Redundancy Check errors. When a station sends a frame, it appends a CRC to the end of the frame. This CRC is generated from an algorithm based on the data in the frame. If the frame is altered between the source and destination, the ASA notes that the CRC does not match. A high number of CRCs is usually the result of collisions or a station transmitting bad data.<br>
+<strong>Frame errors</strong> are bad frames that have packets with an incorrect length or bad frame checksums. This error is usually the result of collisions or a malfunctioning Ethernet device.<br>
+<strong>Overrun errors</strong> are the number of times that the ASA was incapable of handing received data to a hardware buffer because the input rate exceeded the ASA capability to handle the data. <br>
+<strong>Ignored errors</strong> are not used. The value is always 0.<br>
+<strong>Abort errors</strong> are not used. The value is always 0.<br></p>
+
+<p><code>0 pause input, 0 resume input</code><br>
+<strong>Pause input</strong> packets are unknown.<br>
+<strong>Resume input</strong> packets are unknown.</p>
+
+<p><code>0 L2 decode drops</code><br>
+<strong>L2 decode drop</strong> packets are the number of packets dropped because the name is not configured (nameif command) or a frame with an invalid VLAN id is received.</p>
+
+<h2>Output Statistics</h2>
+
+<p><code>24943232 packets output, 28662026144 bytes, 430 underruns</code><br>
+Number of packets and bytes output from this interface.<br>
+<strong>Undderrun errors</strong> are the number of times that the transmitter ran faster than the ASA could handle. <br></p>
+
+<p><code>0 pause output, 0 resume output</code><br>
+<strong>Pause output</strong> packets are unknown.<br>
+<strong>Resume output</strong> packets are unknown.</p>
+
+<p><code>0 output errors, 0 collisions, 0 interface resets</code><br>
+<strong>Output errors</strong> are the number of frames not transmitted because the configured maximum number of collisions was exceeded. This counter should only increment during heavy network traffic. <br>
+<strong>Collisions</strong> are the number of messages retransmitted due to an Ethernet collision (single and multiple collisions). This usually occurs on an overextended LAN (Ethernet or transceiver cable too long, more than two repeaters between stations, or too many cascaded multiport transceivers). A packet that collides is counted only once by the output packets. <br>
+<strong>Interface resets</strong> are the number of times an interface has been reset. If an interface is unable to transmit for three seconds, the ASA resets the interface to restart transmission. During this interval, connection state is maintained. An interface reset can also happen when an interface is looped back or shut down<br></p>
+
+<p><code>0 late collisions, 0 deferred</code><br>
+<strong>Late collisions</strong> is when the number of frames that were not transmitted because a collision occurred outside the normal collision window. A late collision is a collision that is detected late in the transmission of the packet. Normally, these should never happen. When two Ethernet hosts try to talk at once, they should collide early in the packet and both back off, or the second host should see that the first one is talking and wait. If you get a late collision, a device is jumping in and trying to send the packet on the Ethernet while the ASA is partly finished sending the packet. The ASA does not resend the packet, because it may have freed the buffers that held the first part of the packet. This is not a real problem because networking protocols are designed to cope with collisions by resending packets. However, late collisions indicate a problem exists in your network. Common problems are large repeated networks and Ethernet networks running beyond the specification. <br>
+<strong>Deferred</strong> packets are the number of frames that were deferred before transmission due to activity on the link.<br></p>
+
+<p><code>0 input reset drops, 0 output reset drops, 0 tx hangs</code><br>
+<strong>Input reset drops</strong> are the number of packets dropped in the RX ring when a reset occurs. <br>
+<strong>Output reset drops</strong> are the number of packets dropped in the TX ring when a reset occurs. <br>
+<strong>TX hangs</strong> is unknown.<br></p>
+
+<p><code>input queue (blocks free curr/low): hardware (255/230)</code><br>
+The number of packets in the input queue. Values in the parenthesis are: blocks free currently / the lowest number of blocks free.</p>
+
+<p><code>output queue (blocks free curr/low): hardware (254/0)</code><br>
+The number of packets in the output queue. Values in the parenthesis are: blocks free currently / the lowest number of blocks free.</p>
+
+<h2>Additional Interface Statistics</h2>
+
+<p><code>Traffic Statistics for "inside":</code><br>
+<code>16433456 packets input, 2214576498 bytes</code><br>
+The number of packets and bytes received.</p>
+
+<p><code>24943662 packets output, 28202920165 bytes</code><br>
+The number of packets and bytes sent.</p>
+
+<p><code>28768 packets dropped</code><br>
+The number of packets dropped. Typically this counter increments for packets dropped on the accelerated security path (ASP), for example, if a packet is dropped due to an access list deny.
+See the &lsquo;show asp drop&rsquo; command for reasons for potential drops on an interface.</p>
+
+<p><code>1 minute input rate 178 pkts/sec,  18825 bytes/sec</code><br>
+<code>1 minute output rate 267 pkts/sec,  306674 bytes/sec</code><br>
+<code>1 minute drop rate, 0 pkts/sec</code><br>
+<code>5 minute input rate 255 pkts/sec,  16417 bytes/sec</code><br>
+<code>5 minute output rate 422 pkts/sec,  548955 bytes/sec</code><br>
+<code>5 minute drop rate, 0 pkts/sec</code><br>
+Various interface bandwidth statistics.</p>
+
+<hr>
+
+
+<br><br><br>
+
+
+<p>Source: <a href="http://www.cisco.com/en/US/docs/security/asa/asa84/command/reference/s3.html#wp1497263">Cisco Documentation</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-29T13:00:00-07:00" pubdate data-updated="true">Jul 29<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/asa/'>asa</a>, <a class='category' href='/tup/tag/cisco/'>cisco</a>, <a class='category' href='/tup/tag/counters/'>counters</a>, <a class='category' href='/tup/tag/interface/'>interface</a>, <a class='category' href='/tup/tag/statistics/'>statistics</a>, <a class='category' href='/tup/tag/tips/'>tips</a>, <a class='category' href='/tup/tag/troubleshooting/'>troubleshooting</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tunnelsup.github.io/understanding-cisco-asa-interface-counters-and-statistics/" data-via="tunnelsup" data-counturl="http://tunnelsup.github.io/understanding-cisco-asa-interface-counters-and-statistics/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tunnelsup.github.io/understanding-cisco-asa-interface-counters-and-statistics/';
+        var disqus_url = 'http://tunnelsup.github.io/understanding-cisco-asa-interface-counters-and-statistics/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>

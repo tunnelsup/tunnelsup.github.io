@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: eclipse | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/eclipse/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Troubleshooting AnyConnect and Eclipse IDE]]></title>
+    <link href="http://tunnelsup.github.io/troubleshooting-anyconnect-and-eclipse-ide/"/>
+    <updated>2014-12-04T13:36:00-08:00</updated>
+    <id>http://tunnelsup.github.io/troubleshooting-anyconnect-and-eclipse-ide</id>
+    <content type="html"><![CDATA[<p>Eclipse is an IDE used to build Android applications. One of our developers was trying to use the CVS connection within Eclipse to push their code to a server over the VPN. However this was failing.</p>
+
+<h2>Problem</h2>
+
+<p>Cannot connect to CVS in Eclipse when on Cisco AnyConnect VPN.</p>
+
+<p>The developer&rsquo;s workflow was this:</p>
+
+<ol>
+<li>Logging into AnyConnect VPN</li>
+<li>Going into Eclipse IDE</li>
+<li>Connecting to CVS from within Eclipse IDE via the CVS plugin</li>
+</ol>
+
+
+<p>The CVS server wouldn&rsquo;t connect. But if the developer would try connecting to CVS via windows explorer (not within the IDE) while on the VPN is DOES work.</p>
+
+<h2>Resolution</h2>
+
+<p>Cisco AnyConnect isn&rsquo;t the problem. It&rsquo;s a setting within Eclipse that must be changed.</p>
+
+<p>Try adding the following to <code>eclipse.ini</code>:</p>
+
+<p><code>
+openFile
+-vmargs
+-Djava.net.preferIPv4Stack=true
+</code></p>
+
+<p>Then restart Eclipse and try again.</p>
+
+<h4>Small rant</h4>
+
+<p>I HATE being a firewall admin when I have to troubleshoot individual applications. I worked on this for a week and was officially stumped and told the user to find another way. But then I found this on a forum and it worked for them. Cisco, get your act together with AnyConnect. Make it work! I think it&rsquo;s your fault because these problems didn&rsquo;t exist on the old legacy VPN client!</p>
+]]></content>
+  </entry>
+  
+</feed>

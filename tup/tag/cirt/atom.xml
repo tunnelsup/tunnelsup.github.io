@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: cirt | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/cirt/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Who Makes up a Computer Security Incident Response Team]]></title>
+    <link href="http://tunnelsup.github.io/who-makes-up-an-computer-security-incident-response-team/"/>
+    <updated>2016-05-25T10:50:00-07:00</updated>
+    <id>http://tunnelsup.github.io/who-makes-up-an-computer-security-incident-response-team</id>
+    <content type="html"><![CDATA[<p>The incident response team is who is engaged when an network security incident has occurred in your network. There are two types of IR teams, SWAT style and dedicated.</p>
+
+<p><a href="https://twitter.com/hacks4pancakes">Lesley Carhart</a> defines an IR team goal as:</p>
+
+<blockquote><p>The goal of an incident response team is to reduce the time and money lost due to an incident.</p></blockquote>
+
+<h2>SWAT Teams</h2>
+
+<p>In smaller organizations, where security incidents are not very common or severe, a SWAT team works best. This is simply an adhoc group of people who are most familiar with the impacted systems. Such as the system admins and network admins. Once the incident is contained, these people go back to their normal jobs.</p>
+
+<h2>Dedicated Teams</h2>
+
+<p>In a dedicated incident response team, the roles are more specifically defined. This team is also sometimes known as a Computer Incident Response Team (CIRT), or Computer Security Incident Response Team (CSIRT).</p>
+
+<p>Roles of a CSIRT:
+<img src="/images/dfirteam.png" alt="CIRT Team Roles" /></p>
+
+<h4>SOC Monitoring Team</h4>
+
+<p>While not exactly part of the IR team, the security operations center is usually where security incidents are first detected. This team will monitor logs and events 24/7 and hunt for threats in the network. They will report the incidents they find to the IR team.</p>
+
+<h4>Incident Handlers</h4>
+
+<p>It&rsquo;s difficult to work towards resolving an incident while also giving reports to leadership or other stake holders. The incident handler makes sure the proper teams are engaged to respond to the incident, and they also give updates to leadership and other teams who may be interested in knowing about the the incident status. They may join conference calls to relay information to different teams.</p>
+
+<h4>Malware Investigator</h4>
+
+<p>Sometimes an AV scan can&rsquo;t find the malware on a system. Malware investigators will find the malware and possibly extract it to further study it. They are very familiar with what is normal on a system compared to what is not normal. They also will be able to tell what activity the malware has, such as spreading or any command and control it may be trying to do.</p>
+
+<h4>Digital Forensics</h4>
+
+<p>This team will try to find more information about what the system experienced during the incident. Did records get deleted or moved? Who accessed this system? What actions did users take on that system? Did they leave anything behind, like keyloggers or rootkits? What connections did it made? Knowing these things may be important to determining how wide spread the incident is or the extent of the damage.</p>
+
+<p>In the case of a PCI certified organization getting breached, the organization must be able to replay the attack so they can prove they understand how the attacker accessed the network. A digital forensics specialist will help significantly with this type of investigation.</p>
+
+<h4>Threat Intelligence Team</h4>
+
+<p>This team will get to know who the adversary is, what their motive was, what their target was, and what techniques they used. Finding who did the attack may be helpful for carrying out legal responses to the attacker. Finding out what their motive is will help the risk manager know why we are a target for attacks. Finding out what techniques were used will help the SOC identify future attacks. This team can spend 6 months or longer investigating a single incident to feel confident with the assessment results. They will use all the evidence the malware and forensics teams find, as well as work with other teams to collect as much evidence as possible to create their assessment. They will often use Open Source Intelligence (OSINT) to research adversaries, malware history, APT reports, etc.</p>
+
+<h4>IT Staff</h4>
+
+<p>Often, the best person to spot something being abnormal is the person who owns that system. They are also usually the most familiar with that system and can help with any troubleshooting or information gathering that may need to be done on the system.</p>
+
+<h4>Security Engineer</h4>
+
+<p>Security engineers and architects should be working towards making the network more secure by reviewing past incidents and then putting configurations in place to protect against future attacks. Once an organization is hit once from a specific attack, the organization should learn what that is and put safeguards in place to not be hit by that same attack again. This is where security engineering can protect the network proactivly.</p>
+
+<h4>Pen Testers</h4>
+
+<p>If an attack supposedly got int through a non-secure website, a pen tester can try to recreate that attack to see if it is possible. Sometimes the system owners believe their application is secure and it takes a pen tester to show them it isn&rsquo;t. Also, a pen tester can learn from the adversary what type of attack was conducted and attempt to use that attack on other systems to see if they are vulnerable too.</p>
+
+<h4>Leadership</h4>
+
+<p>The leadership team is one of the most important because without proper leadership, the security team will be limited and without vision or direction. Proper buy in from leadership is crucial in order for the rest of the organization to respect and see value in the IR team. Leadership may also be called in to make decisions that may impact business such as taking down key servers that are infected which may stop business for hours or days. It&rsquo;s also important for leadership to take action on communicating breaches to customers. Leadership will also decide the course of action when responding to an attack. This may be calling the police, or FBI, or even attacking back.</p>
+
+<h4>Various Other Teams</h4>
+
+<p>Teams such as HR, Legal, and Branding all make up the IR team if there are incidents that impact these parts of the organization. Security can impact the entire organization and these teams are specialized in their own areas and should be aware of problems in those areas. These teams can also help navigate how to resolve some incidents such as firing an employee which was caught showing malicious activity inside the network.</p>
+
+<h2>Further Information</h2>
+
+<p>To learn more about this topic, check out this free 3 hour long workshop on youtube by <a href="https://twitter.com/hacks4pancakes">Lesley Carhart</a> called <strong><a href="https://www.youtube.com/watch?v=LYGi12N6oFQ">Building an Incident Response Program</a></strong>.</p>
+]]></content>
+  </entry>
+  
+</feed>

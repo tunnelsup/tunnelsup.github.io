@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /kb.html
+Disallow: /search/
+Disallow: /tup/
+Disallow: /blog/
+Disallow: /404.html
+Disallow: /images/XBee-Quick-Reference-Guide.pdf
+Disallow: /images/ASALicensingCheatSheet.pdf
+
+
+
+Sitemap: http://tunnelsup.github.io/sitemap.xml 

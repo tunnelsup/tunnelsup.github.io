@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: xbee | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/xbee/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[XBee S2 Quick Reference Guide/Cheat Sheet and Video Tutorials to Getting Started]]></title>
+    <link href="http://tunnelsup.github.io/xbee-guide/"/>
+    <updated>2012-11-30T00:00:00-08:00</updated>
+    <id>http://tunnelsup.github.io/xbee-guide</id>
+    <content type="html"><![CDATA[<p>When I first got started with XBee I had a hard time getting the right information to help me on the projects I was working on. I put my project on hold and spent a few months simply trying to understand XBee specifically using it with arduino. Below is a cheat sheet or quick reference guide that I use now to reference whenever I&rsquo;m working on a project. It has pretty much all of the information I need to effectively use the XBee in whatever project I&rsquo;m working on.</p>
+
+<p><img class="center" src="/images/xbee.png">
+Download: <a href="/images/xbee.png">[PNG Image]</a> - <a href="/images/XBee-Quick-Reference-Guide.pdf">[PDF File]</a></p>
+
+<p>If you find any problems with this please leave a comment below and I will update the guide periodically.</p>
+
+<h2>Video Tutorial Course: XBee Basics</h2>
+
+<p>I have created 5 videos that walk you through everything on the quick reference guide above. This way you can use the guide effectively as well as learn all about XBees. Links to each lesson is below.</p>
+
+<ul>
+<li><a href="http://www.youtube.com/watch?v=odekkumB3WQ">Video 1: Overview of XBee and how to configure it</a></li>
+<li><a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=mPx3TjzvE9U"> Video 2: XBee with both sides in AT mode (transparent communication)</a></li>
+<li><a href="http://www.youtube.com/watch?v=jh-GIaghIjw"> Video 3: API mode &ndash; Digital Input from remote sensor</a></li>
+<li><a href="http://www.youtube.com/watch?v=rnBx2yqKn_E"> Video 4: API mode &ndash; Analog reading from remote sensor</a></li>
+<li><a href="http://www.youtube.com/watch?v=CzH146rR-7I"> Video 5: API mode &ndash; Digital output to remote sensor</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

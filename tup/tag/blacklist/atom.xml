@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: blacklist | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/blacklist/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA Botnet License]]></title>
+    <link href="http://tunnelsup.github.io/cisco-asa-botnet-license/"/>
+    <updated>2013-05-08T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-asa-botnet-license</id>
+    <content type="html"><![CDATA[<p>Information regarding the Cisco ASA Botnet License.</p>
+
+<h2>What is it?</h2>
+
+<p>Botnet Traffic Filter is an extra license that can be applied to a Cisco ASA firewall that provides detection and automatic blocking of known bots and botnets. The firewall grabs updates from Cisco&rsquo;s website to know which IPs to look for and block.</p>
+
+<p>Besides stopping outside botnets from coming into the network the botnet filter is also very effective at identifying which hosts may have malicious software within the network. It will stop internal hosts from going out to a known botnet IP. It has the ability to listen for call-home or command/control behavior seen within the network.</p>
+
+<h2>License</h2>
+
+<p>It is time based. The SKU is something like L-ASA55xx-BOT-1YR=</p>
+
+<p>It costs between $200-$1500 per year. I will only fully work on version 8.2.2 and up.</p>
+
+<p>Purchase license. Apply it using the activation-key command.</p>
+
+<p>Requires the 3DES/AES license (this license is free but does not ship with an ASA).</p>
+
+<h2>Initial Configuration</h2>
+
+<p>The firewall needs to communicate to update-manifests.ironport.com. This means it has to have a valid DNS lookup mechanism. To get this going do something like the following:</p>
+
+<p><code>
+dns domain-lookup INSIDE
+DNS server-group DefaultDNS
+name-server 10.2.2.2
+</code></p>
+
+<p>There are over 70,000 DNS names that are in the Cisco database and only 5000 IP addresses. To effectively look at each domain name, DNS snooping must be turned on. To do that issue the following commands:</p>
+
+<p>```
+class-map dynamic-filter_snoop_class
+  match port udp eq domain</p>
+
+<p>policy-map global_policy
+  class dynamic-filter_snoop_class</p>
+
+<pre><code>inspect dns preset_dns_map dynamic-filter-snoop
+</code></pre>
+
+<p>```</p>
+
+<p>Next turn on the dynamic-filters. I like to start by blocking everything that is blacklisted and whitelist the CEO&rsquo;s IP from being blocked. Do this by issuing the following commands:</p>
+
+<p><code>
+dynamic-filter updater-client enable
+dynamic-filter use-database
+dynamic-filter enable interface OUTSIDE
+dynamic-filter drop blacklist interface OUTSIDE
+dynamic-filter whitelist
+address 10.1.4.4 255.255.255.255
+</code></p>
+
+<h2>Checking to see what&rsquo;s happening</h2>
+
+<p>Verify the ASA is downloading the rules:</p>
+
+<p><code>
+show dynamic-filter updater-client
+</code></p>
+
+<br />
+
+
+<p>Verify traffic is being inspected:</p>
+
+<p><code>
+show dynamic-filter statistics
+</code></p>
+
+<p>The show command above will tell you the <code>Total conns classified</code>. This number will only go up if traffic hits a whitelist blacklist or greylist. Cisco has a bugid CSCti70280 which is super confusing because it makes us think this isn&rsquo;t intended behavior.</p>
+
+<br />
+
+
+<p>View which hosts are being blocked:</p>
+
+<p><code>
+show dynamic-filter reports infected-host all
+</code></p>
+
+<br />
+
+
+<p>A good test to conduct to see if your botnet is working is to look at the output of <code>show dynamic-filter data</code> and look for one of the hosts that&rsquo;s in the &ldquo;sample contents from database&rdquo;. Try to get to one of those hosts on port 80 making sure your traffic will go through this firewall. You should then see your statistics going up and if you&rsquo;re blocking blacklisted hosts then your session should be blocked.</p>
+
+<br />
+
+
+<p>More information on Cisco&rsquo;s website:</p>
+
+<p><a href="http://www.cisco.com/en/US/docs/security/asa/asa82/configuration/guide/conns_botnet.html#wp1129967">http://www.cisco.com/en/US/docs/security/asa/asa82/configuration/guide/conns_botnet.html#wp1129967</a></p>
+]]></content>
+  </entry>
+  
+</feed>

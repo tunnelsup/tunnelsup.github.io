@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ha | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/ha/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Configuring HA on Juniper SRX through JunOS]]></title>
+    <link href="http://tunnelsup.github.io/configuring-ha-on-juniper-srx-through-junos/"/>
+    <updated>2013-07-01T11:21:00-07:00</updated>
+    <id>http://tunnelsup.github.io/configuring-ha-on-juniper-srx-through-junos</id>
+    <content type="html"><![CDATA[<p>This post will cover how to conduct HA (high availability) failover configurations for the Juniper SRX. This post will only cover a simple active/passive configuration. It will not cover more advanced deployments like layer 2 HA or active/active HA.</p>
+
+<h2>Requirements</h2>
+
+<ul>
+<li>A maximum of 2 SRXs is allowed to be clustered at once.</li>
+<li>Both SRX devices must have matching hardware and software. This includes having matching modules in the same slots.</li>
+<li>This configuration requires the two SRXs to be directly connected to each other using <strong>two</strong> ethernet links. Generally these are simply normal ethernet ports that are on the SRX. One link is for control one link is for data.</li>
+<li>A reboot is required whenever putting a device into cluster mode or taking it out of cluster mode.</li>
+</ul>
+
+
+<h2>Goal of Active/Passive Failover Configuration</h2>
+
+<p>We will be using the diagram below to configure two SRX devices in Active/Passive failover mode.</p>
+
+<p><img src="/images/junos-ha.png" alt="Junos HA IMG" /></p>
+
+<p>Terminology:</p>
+
+<ul>
+<li><strong>node 0/node 1</strong>: Setting the node number distinguishes which SRX is which. Regardless of failover state, node 0 will always remain node 0 and node 1 will always be node 1. The firewalls can take turns being primary and secondary.</li>
+<li><strong>fxp0</strong>: This interface is used to manage the devices.</li>
+<li><strong>fxp1</strong>: This interface connects the two SRX&rsquo;s together. This is called the &lsquo;control-link&rsquo; and sends HA control data between the two SRXs including heartbeats and configuration synchronization. If this link goes down the secondary SRX is disabled from the cluster. It does this to avoid having 2 default gateways. To re-enable the secondary SRX you need to reboot the node. Each SRX model has a different port that is required to be used for fxp1. Review your systems documentation for details around that. Here is the <a href="https://www.juniper.net/techpubs/en_US/release-independent/junos/topics/concept/services-gateway-srx240-basic-configuration-preparing.html">documentation for SRX240 indicating the FXP1 port location</a>.</li>
+<li><strong>fab0/fab1</strong>: On both SRX devices is a fab port. These ports are known as the data links. The packets that are sent between the two SRXs on this port are called RTOs (real time objects). These objects contain session states.</li>
+<li><strong>cluster-id</strong>: (Not displayed in diagram) The cluster-id is simply the number assigned to your cluster configuration. Cluster-id 0 is reserved. Any other number is valid.</li>
+<li><strong>reth1</strong>: Redundant Pseudo Interface. A number of reth interfaces can be configured. This is a pseudo interface which will create a virtual mac address. It will normally contain 1 physical interface on each node which are called children nodes. When sending traffic to the reth interface IP, the traffic will be picked up by the primary node.</li>
+<li><strong>RG0</strong>: (Not displayed) Redundancy Group. Within the redundancy group configuration is where weights and thresholds are configured that will trigger a failover event.</li>
+<li><strong>interface names</strong>: The device used in the diagram is an SRX5800 with 2 FPC cards plugged into it. It has a maximum of 12 FPC slots. When connected in cluster mode, the standby unit&rsquo;s interfaces will be +1 more than the max number of FPC slots in the primary. In this case the primary interfaces will be ge-0/0/0 to ge-0/0/11, ge-1/0/0 to ge-1/0/11 and the secondary will be ge-12/0/0 to ge-12/0/11, ge-13/0/0 &ndash; ge-13/0/11. If we were to plug another SPC into slot 12 of both SRXs it would then show up as ge-11/0/0 and ge-23/0/0.</li>
+</ul>
+
+
+<p>In this diagram, when the host at 10.20.20.2 needs to get out to the internet it will have a default gateway of 10.20.20.1 which is the IP of the reth1 interface. The reth1 interface will be on whatever node is acting as primary. That node will then forward it&rsquo;s packet out the internet interface to it&rsquo;s destination. That stateful connection will then be transferred over to the secondary node. In the even the primary node goes down, the secondary node will assume the IP of the reth1 interface and become primary. It will already have it&rsquo;s stateful connection table and configuration synced from the old primary node.</p>
+
+<h2>Configuration</h2>
+
+<h3>Removing Interfaces and Hostname</h3>
+
+<p>Before configuring the HA, the SRX needs to remove the config for the host-name and the interfaces that are part of the fab, reth, fx1 and fx0 ports.</p>
+
+<p><code>
+delete interfaces ge-0/0/0
+delete system host-name
+</code></p>
+
+<h3>Setting up the Nodes</h3>
+
+<p>The following config will need to be added to both SRX boxes.</p>
+
+<p>```
+set group node0 system hostname srx1
+set group node0 interfaces fxp0 unit 0 family inet address 10.99.99.1/24</p>
+
+<p>set group node1 system hostname srx2
+set group node1 interfaces fxp0 unit 0 family inet address 10.99.99.2/24</p>
+
+<p>set apply-groups ${node}
+```</p>
+
+<p>The last command is run so that the individual configs for each node, set by the above commands, are applied only to that node. (required)</p>
+
+<h3>Enabling HA</h3>
+
+<p>Once the nodes are set up in the previous step that is all that is needed for the very basic HA configuration. Now we just need to reboot each box telling it to go into HA mode.</p>
+
+<p>This is the step where the node is tied to the device. This command indicates the system the command was executed on will be that node number in the command.</p>
+
+<p>Conduct on srx1:<br>
+user@srx1> <code>set chassis cluster cluster-id 1 node 0 reboot</code><br></p>
+
+<p>Conduct on srx2:<br>
+user@srx2> <code>set chassis cluster cluster-id 1 node 1 reboot</code><br></p>
+
+<p>Once they both reboot you can check the status by issuing the command: <br>
+<code>show chassis cluster status</code></p>
+
+<p>```
+Cluster ID: 1
+Node                    Priority                Status      Preempt     Manual failover</p>
+
+<p>Redundancy group: 0,    Failover count: 1</p>
+
+<pre><code>node0                   1                   primary     no          no
+node1                   1                   secondary   no          no
+</code></pre>
+
+<p>```</p>
+
+<p>Another show command is <code>show chassis cluster interfaces</code> which will indicate the status of the interfaces in the cluster.</p>
+
+<h3>Assign the Fabric Interfaces</h3>
+
+<p>At this point you will only need to conduct the configurations on the primary node. All configuration changes will be sync&rsquo;d between both SRXs.</p>
+
+<p>Connect the two SRX boxes together. In our example we&rsquo;ll simply choose ge-0/0/3 on both boxes. Because it&rsquo;s in cluster mode, the secondary SRX&rsquo;s ge-0/0/3 will be ge-0/0/15. Both SRX&rsquo;s have 12 ports in this case.</p>
+
+<p><code>
+set interfaces fab0 fabric-options member-interfaces ge-0/0/3
+set interfaces fab1 fabric-options member-interfaces ge-0/0/15
+</code></p>
+
+<p>At this point, HA is on and the two SRX systems have their data link and control link up. Next we will make rules for determining when a failover will occur and then creating a pseudo interface to send traffic through the system.</p>
+
+<h3>Configure Redundancy Groups</h3>
+
+<p>By default RG0 is created which will monitor the routing engine of each SRX. However if there is a need to monitor the interfaces another RG can be created.</p>
+
+<p>We&rsquo;ll set up RG1 to monitor ge-0/0/0.</p>
+
+<p>The formula for RG and failover is as follows:<br></p>
+
+<blockquote><p>RGx value = RGx threshold &ndash; interface weight</p></blockquote>
+
+<p>We&rsquo;ll set the RG1 node0 threshold to be 200 and the interface to be 150. This means if that single interface goes down on node 0, the RG1 value will be 50, while the node 1 RG1 will be 100. Because of this new value the SRX cluster will failover. Because of this type of control, the admin can choose the exact scenario to cause a failover. By default the interface weight is 255.</p>
+
+<p><code>
+set chassis cluster redundancy-group 1 node 0 priority 200
+set chassis cluster redundancy-group 1 node 1 priority 100
+set chassis cluster redundancy-group 1 interface-monitor ge-0/0/0 weight 150
+</code>
+RG0 refers to the routing engine. RG1 is created above.</p>
+
+<p><em>Optional</em>: Adjust the heartbeat intervals.</p>
+
+<p><code>
+set chassis cluster heartbeat-interval &lt;# of ms&gt;
+set chassis cluster heartbeat-threshold &lt;# of intervals&gt;
+</code>
+By setting the heartbeat levels will tune the firewalls to failover at a time you specify. A heartbeat will be sent out every # of milliseconds defined. If the firewall doesn&rsquo;t hear from it&rsquo;s mate after # number of intervals a failover will occur.</p>
+
+<h3>Configure <code>reth1</code> as the Pseudo Interface</h3>
+
+<p>Now it&rsquo;s time to create the reth1 interface. This is the interface will exist on whatever node is primary. First identify the physical interface that will be tied to reth1, then define the properties for reth1.</p>
+
+<p><code>
+set interfaces ge-0/0/0 gigether-options redundant-parent reth1
+set interfaces ge-12/0/0 gigether-options redundant-parent reth1
+set interfaces reth1 description TRUST
+set interfaces reth1 redundant-ether-options redundancy-group 1
+set interfaces reth1 unit 0 family inet address 10.20.20.1/24
+set chassis cluster reth-count 2
+</code>
+Note: The last command will tell the SRX to create 2 reth interfaces, reth0 and reth1. If we specified a reth-count of 3, it would then create a reth0, reth1 and a reth2 interface. We simply made 2 here because the diagram says reth1. If it said reth0 then we could have just had a count of 1.</p>
+
+<p>At this point the SRX&rsquo;s are configured in HA and have reth1 acting as the pseudo interface and the same IP will be present on whatever device is primary.</p>
+
+<h3>Add a Policy to reth1</h3>
+
+<p>You can create a policy and when you assign reth1 to a zone it will inherit those policies.</p>
+
+<p><code>
+set security zones security-zone UNTRUST interfaces ge-1/0/0
+set security zones security-zone UNTRUST interfaces ge-13/0/0
+set security zones security-zone TRUST interfaces reth1.0
+</code></p>
+
+<h3>Routing for the UNTRUST</h3>
+
+<p>Since our UNTRUST interfaces are pointing to the internet and in our case 2 different carriers we can set some routing for this by having the preferred route be for node 0&rsquo;s default gateway.</p>
+
+<p><code>
+set routing-options static route 0/0 qualified-next-hop 1.1.1.2
+set routing-options static route 0/0 qualified-next-hop 2.2.2.2 preference 10
+</code></p>
+
+<p>At this point the two SRXs are configured for failover, and the primary is actively accepting packets for 10.20.20.1. This completes the failover configuration.</p>
+
+<h2>Show Commands</h2>
+
+<p>See what&rsquo;s going on in the logs. Failover logs will show up in the JSRP (JunOS software Services Redundancy Protocol) logs.<br>
+<code>show log jsrp</code></p>
+
+<p><code>show chassis cluster status</code></p>
+
+<p><code>show chassis cluster statistics</code></p>
+
+<p><code>show chassis cluster interfaces</code></p>
+
+<p>Traceoptions:</p>
+
+<p><code>
+set chassis cluster traceoptions flag cli
+set chassis cluster traceoptions flag configurations
+set chassis cluster traceoptions flag heartbeat
+</code></p>
+
+<h2>Controlling the Cluster</h2>
+
+<p>Conduct a manual failover<br>
+<code>request chassis cluster failover redundancy-group 1 node 1</code></p>
+
+<p>Fail the units backover after a manual failover. This is called resetting the cluster.<br>
+<code>request chassis cluster failover reset redundancy-group 1</code></p>
+
+<p>Disable cluster (requires reboot). Do this to both nodes.<br>
+<code>set chassis cluster disable reboot</code></p>
+
+<p>From node 0, reboot node 1<br>
+<code>set chassis cluster cluster-id 1 node 1 reboot</code></p>
+
+<h2>Further reading</h2>
+
+<p><a href="http://www.juniper.net/support/tools/srxha/">Config generator to build HA configs from Juniper</a></p>
+
+<p><a href="http://kb.juniper.net/InfoCenter/index?page=content&amp;id=KB15504">Juniper KB on configuring clustering on an SRX</a></p>
+
+<p><a href="https://www.juniper.net/techpubs/software/junos-security/junos-security10.0/junos-security-swconfig-security/id-11293.html">Juniper article: Understanding Failover</a></p>
+
+<p><a href="https://www.juniper.net/techpubs/software/junos-security/junos-security10.2/junos-security-swconfig-security/topic-43696.html">Juniper article: Understand Chassis Cluster Control Link Heartbeats</a></p>
+
+<p><a href="http://jsrx.juniperwiki.com/index.php?title=JSRP">JSRP on Juniper Wiki</a></p>
+]]></content>
+  </entry>
+  
+</feed>

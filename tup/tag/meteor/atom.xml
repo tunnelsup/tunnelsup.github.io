@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: meteor | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/meteor/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Sending Google Analytics data from Meteor.js server side]]></title>
+    <link href="http://tunnelsup.github.io/sending-google-analytics-data-from-meteor-dot-js-server-side/"/>
+    <updated>2015-01-01T15:50:00-08:00</updated>
+    <id>http://tunnelsup.github.io/sending-google-analytics-data-from-meteor-dot-js-server-side</id>
+    <content type="html"><![CDATA[<p>Recently I&rsquo;ve created a website that responds with HTML and also has an API that responds with JSON data. The website was create in Meteor.js and I wanted to integrate it into Google Analytics. Having it send Google Analytics statistics on the client side was easy and straight forward. However when it came time to send statistics to Google Analytics from the Meteor.js server side of the application I had to spend quite a bit of time finding an answer.</p>
+
+<h2>Use the Google Analytics Measurements Protocol</h2>
+
+<p>Check out the Google Developers section on Google Analytics regarding the Measurements Protocol.</p>
+
+<p><a href="https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide#page">https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide#page</a></p>
+
+<h2>Use the Meteor HTTP.call() function</h2>
+
+<p><a href="http://docs.meteor.com/#/full/http_call">http://docs.meteor.com/#/full/http_call</a></p>
+
+<p>Don&rsquo;t forget, as of Meteor 1.2 this isn&rsquo;t on by default. It needs to be added by doing the following from the command prompt:</p>
+
+<p><code>meteor add http</code></p>
+
+<h2>Putting it all together</h2>
+
+<p>Here are the results of my code in order to trigger a page view every time the user visits the /api route of my web app.</p>
+
+<p>```javascript
+if (Meteor.isServer) {
+  Meteor.startup(function () {</p>
+
+<pre><code>Router.map(function() {
+    this.route('methodExample', {
+        path: '/api',
+        where: 'server',
+        action: function() {
+
+            // Send Google Analytics
+            HTTP.call("POST", "https://www.google-analytics.com/collect?",
+                       {params: {
+                          'v': '1',
+                          'tid': 'UA-XXXXXX-Y',
+                          'cid': '555',
+                          't': 'pageview',
+                          'dp': 'api'
+                        }}
+            );
+        }
+    });
+});
+</code></pre>
+
+<p>  });
+}
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Deploying Meteor 1.0 to Heroku]]></title>
+    <link href="http://tunnelsup.github.io/deploying-meteor-1-dot-0-to-heroku/"/>
+    <updated>2014-12-24T18:44:00-08:00</updated>
+    <id>http://tunnelsup.github.io/deploying-meteor-1-dot-0-to-heroku</id>
+    <content type="html"><![CDATA[<p>Heroku doesn&rsquo;t have an official document as of yet for deploying a <a href="http://meteor.com">meteor</a> application on their platform. However meteor does just use node.js under the hood, so a specailly crafted buildpack can actually make it run there&hellip; for the most part.</p>
+
+<h3>Meteor BuildPack Horse</h3>
+
+<p><a href="https://github.com/AdmitHub/meteor-buildpack-horse">https://github.com/AdmitHub/meteor-buildpack-horse</a></p>
+
+<p>This buildpack worked for the most part.</p>
+
+<p>First start by checking your application into git with the basic following:</p>
+
+<p><code>
+git init
+git add .
+git commit -m 'Initial commit'
+</code></p>
+
+<p>Then create the heroku app with this command:</p>
+
+<p><code>
+heroku create --stack cedar --buildpack https://github.com/AdmitHub/meteor-buildpack-horse.git
+</code></p>
+
+<p>Now create a remote for Heroku doing this:</p>
+
+<p><code>
+heroku git:remote -a &lt;name of heroku app&gt;
+</code></p>
+
+<p>Next you need to push the application by doing a git push:</p>
+
+<p><code>
+git push heroku master
+</code></p>
+
+<p>Now you need to set the ROOT_URL by doing this</p>
+
+<p><code>
+heroku config:add ROOT_URL=https://&lt;name of app&gt;.herokuapp.com
+</code></p>
+
+<p>Now you should be able to navigate to your URL and it should work.</p>
+
+<p>This actually auto set me up for a free MongoLab account on Heroku and my database was up and running with 0 configuration. Wow!</p>
+
+<h3>Meteorite Build Pack</h3>
+
+<p>Found here: <a href="https://github.com/oortcloud/heroku-buildpack-meteorite">https://github.com/oortcloud/heroku-buildpack-meteorite</a></p>
+
+<p>This one I couldn&rsquo;t get to work with version 1.0.2.1. I would get errors after deploying to heroku that something went wrong with the application.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: acl | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/acl/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA Max ACL Limit]]></title>
+    <link href="http://tunnelsup.github.io/cisco-asa-max-acl-limit/"/>
+    <updated>2015-10-18T16:16:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-asa-max-acl-limit</id>
+    <content type="html"><![CDATA[<p>The Cisco ASA firewall doesn&rsquo;t have any hard limits for the number of Access Control Entries (ACEs). However, this is bound by the memory of the model. Each ACE uses at least 212 bytes of RAM.</p>
+
+<p>Once you reach or get close to the maximum number of ACEs, the performance of the ASA decreases by 10-15%.</p>
+
+<p>Use this table below to stay within the maximum number of allowed Access List Entries.</p>
+
+<p>An easy trick to find out how many ACEs an ACL has is to use this command: <code>show access-list | include elements</code>.</p>
+
+<table class="table">
+        <tr>
+            <td><strong>Model</strong></td>
+            <td><strong>Max Recommended ACEs</strong></td>
+            <td><strong>Tested ACEs</strong></td>
+        </tr>
+
+    <tr>
+        <td>5505</td>
+        <td>25k</td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>5510</td>
+        <td>80k</td>
+        <td>80k</td>
+    </tr>
+    <tr>
+        <td>5512-X</td>
+        <td>100k</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>5515-X</td>
+        <td>100k</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>5520</td>
+        <td>200k</td>
+        <td>300k</td>
+    </tr>
+    <tr>
+        <td>5525-X</td>
+        <td>200k</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>5540</td>
+        <td>500k</td>
+        <td>700k</td>
+    </tr>
+    <tr>
+        <td>5545-X</td>
+        <td>300k</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>5550</td>
+        <td>700k</td>
+        <td>700k</td>
+    </tr>
+    <tr>
+        <td>5555-X</td>
+        <td>500k</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>5580</td>
+        <td>750k</td>
+        <td>1 mil+</td>
+    </tr>
+    <tr>
+        <td>5585 10/20/40/60</td>
+        <td>500k/750k/1 mil/2 mil</td>
+        <td>500k/750k/1 mil/2 mil</td>
+    </tr>
+    <tr>
+        <td>ASA SM</td>
+        <td>2 mil</td>
+        <td>2 mil</td>
+    </tr>
+
+
+</table>
+
+
+<p>Source: Cisco Live! 2014 presentation.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: blocks | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/blocks/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA Understanding the show blocks command]]></title>
+    <link href="http://tunnelsup.github.io/cisco-asa-understanding-the-show-blocks-command/"/>
+    <updated>2015-11-11T21:58:00-08:00</updated>
+    <id>http://tunnelsup.github.io/cisco-asa-understanding-the-show-blocks-command</id>
+    <content type="html"><![CDATA[<p>The <code>show blocks</code> command is a handy command for checking the memory usage on a Cisco PIX or ASA. But what does the output mean?</p>
+
+<p>```
+PrimaryASA# sh blocks
+  SIZE    MAX    LOW    CNT</p>
+
+<pre><code>  4   1600  1579   1599
+ 80    400   357    400
+ 56   1012   964   1012
+</code></pre>
+
+<p>   1550   2453     0   1682
+```</p>
+
+<p>Each column has a different meaning.</p>
+
+<h3>SIZE column</h3>
+
+<p>This column defines where that memory is used within the firewall.</p>
+
+<ul>
+<li><code>4</code> memory reserved for certain traffic like DNS, IKE, TFTP (Traffic that is small and bursty)</li>
+<li><code>80</code> used to store failover hello’s and TCP intercept acks</li>
+<li><code>256</code> more stateful failover messages</li>
+<li><code>1550</code> memory used to process for Ethernet (10M and 100M) packets as they pass through the firewall</li>
+<li><code>16384</code> memory used for gigabit Ethernet</li>
+</ul>
+
+
+<h3>MAX column</h3>
+
+<p>Shows the max amount of memory available for that function.</p>
+
+<h3>LOW column</h3>
+
+<p>Shows the lowest number of blocks that have been available since firewall booted or blocks were cleared.</p>
+
+<h3>CNT column</h3>
+
+<p>The available number of blocks right now.</p>
+
+<h2>Troubleshooting</h2>
+
+<p>Use <code>clear blocks</code> to reset the LOW and CNT values.</p>
+
+<p>The following syslog will appear if the ASA starts running low on free memory.</p>
+
+<p><code>
+asa-3-321007: System is low on free memory blocks of size 1550 (10 CNT out of 7196 MAX)
+</code></p>
+
+<p>You can see from the output above that memory block 1550 is what is being utilized heavily. This is the gigabit ethernet memory store. Try to find what interface is triggering this high usage with <code>show blocks interface</code>.</p>
+
+<p><img src="/images/showblocks.png" alt="ASA show blocks IMG" /></p>
+]]></content>
+  </entry>
+  
+</feed>

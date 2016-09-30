@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ios | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/ios/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Packet capture for Cisco IOS Router]]></title>
+    <link href="http://tunnelsup.github.io/packet-capture-for-cisco-ios-router/"/>
+    <updated>2015-11-11T23:05:00-08:00</updated>
+    <id>http://tunnelsup.github.io/packet-capture-for-cisco-ios-router</id>
+    <content type="html"><![CDATA[<p>Having the ability to conduct packet captures is a valuable tool for troubleshooting connectivity issues within a network. IOS routers 12.4(20)T and up has the Embedded Packet Capture (EPC) built in to it.</p>
+
+<p><a href="/packet-captures-on-cisco-asa/">How to do packet captures on a Cisco ASA</a></p>
+
+<p><a href="/cisco-ios-packet-captures-with-ethanalyzer/">How to do packet capture on Cisco Nexus OS</a></p>
+
+<h3>Routers</h3>
+
+<p>(All commands can be done from the exec mode except for creating the ACL which requires config mode)</p>
+
+<p>Define the capture point/interface/direction</p>
+
+<p><code>
+monitor capture point ip cef CAPTURE FastEthernet0 both
+</code></p>
+
+<p>Define the buffer and size and how to react when it fills up</p>
+
+<p><code>
+monitor capture buffer CAPBUF size 512 max-size 1024 circular
+</code></p>
+
+<p>Create an ACL to hit on the interesting traffic and assign it to the capture buffer</p>
+
+<p><code>
+monitor capture buffer CAPBUF filter access-list ACL-CAP
+</code></p>
+
+<p>Associate the capture point with the capture buffer</p>
+
+<p><code>
+monitor capture point associate CAPTURE CAPBUF
+</code></p>
+
+<p>Start the packet capture</p>
+
+<p><code>
+monitor capture point start CAPTURE
+</code></p>
+
+<p>To stop it:</p>
+
+<p><code>
+monitor capture point stop CAPTURE
+</code></p>
+
+<p>Now show what you’ve collected:</p>
+
+<p><code>
+show monitor capture buffer CAPBUF [dump]
+</code></p>
+
+<p>It is probably easier to read this in wireshark so here is how to export it:</p>
+
+<p><code>
+monitor buffer export CAPBUF tftp://192.168.1.21/myrouter.pcap
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco Nexus Packet Captures with Ethanalyzer]]></title>
+    <link href="http://tunnelsup.github.io/cisco-ios-packet-captures-with-ethanalyzer/"/>
+    <updated>2015-11-11T22:46:00-08:00</updated>
+    <id>http://tunnelsup.github.io/cisco-ios-packet-captures-with-ethanalyzer</id>
+    <content type="html"><![CDATA[<p>There is a lesser known built in packet capture tool in Nexus OS called Ethanalyzer.</p>
+
+<p>Valid for Nexus models
+7k, 6k, 5k, 3k, 1kv</p>
+
+<p><a href="/packet-captures-on-cisco-asa/">How to do packet captures on a Cisco ASA</a></p>
+
+<p><a href="/packet-capture-for-cisco-ios-router/">How to do packet capture on Cisco IOS Router</a></p>
+
+<h2>Capturing packets on the data-plane</h2>
+
+<p>To capture specific IP flows.</p>
+
+<p>Any traffic that is logged in an interface ACL can then be seen in the ethanalyzer.</p>
+
+<p>```
+ip access-list ACL-CAPTURE
+permit ip 10.0.0.250/32 10.1.7.250/32 log
+permit ip any any</p>
+
+<p>int vlan 50
+  ip access-group ACL-CAPTURE in</p>
+
+<p>ethanalyzer local interface inband display-filter ip.src==10.0.0.250 limit-captured-frames 50
+```</p>
+
+<ul>
+<li>Use <a href="http://packetlife.net/media/library/13/Wireshark_Display_Filters.pdf">wireshark display-filters</a>! This will change what’s displayed.</li>
+<li>Use capture filters to change what is captured</li>
+<li>Command only available from the default VDC.</li>
+</ul>
+
+
+<p>Use this command to create a pcap</p>
+
+<p><code>
+ethanalyzer local interface inband write MYCAPTURE.pcap display-filter ip.src==10.0.0.250 limit-captured-frames 50
+</code></p>
+
+<p>This will save the pcap file to the nexus which you can then use the <code>copy flash ftp</code> command to move it off the device.</p>
+
+<h3>Limitation</h3>
+
+<p>It only runs in the default VDC. If you do not have access to the admin or default VDC you cannot use this command. You can still capture from another VDC by setting an interface ACL and log the traffic you want in the VDC you want. Then you can go to the default VDC and run ethanalyzer to see your traffic.</p>
+
+<h3>References:</h3>
+
+<p>Using Ethanalyzer<br>
+<a href="https://supportforums.cisco.com/docs/DOC-31148">https://supportforums.cisco.com/docs/DOC-31148</a></p>
+
+<p>Understanding wireshark relating to Cisco Catalyst and IOS devices<br>
+<a href="http://www.cisco.com/en/US/docs/switches/lan/catalyst3850/software/release/3se/consolidated_guide/configuration_guide/b_consolidated_3850_3se_cg_chapter_01100110.html">http://www.cisco.com/en/US/docs/switches/lan/catalyst3850/software/release/3se/consolidated_guide/configuration_guide/b_consolidated_3850_3se_cg_chapter_01100110.html</a></p>
+
+<p>Using the “monitor capture” command on IOS devices<br>
+<a href="http://www.cisco.com/en/US/docs/ios-xml/ios/epc/command/monitor_capture_through_show_monitor_capture.html">http://www.cisco.com/en/US/docs/ios-xml/ios/epc/command/monitor_capture_through_show_monitor_capture.html</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco IOS VPN error: peer does not do paranoid keepalives]]></title>
+    <link href="http://tunnelsup.github.io/cisco-ios-vpn-error-peer-does-not-do-paranoid-keepalives/"/>
+    <updated>2013-07-13T10:37:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-ios-vpn-error-peer-does-not-do-paranoid-keepalives</id>
+    <content type="html"><![CDATA[<p>Recently I was troubleshooting a VPN tunnel and the tunnel appeared to be at MM_NO_STATE whenever I&rsquo;d try to bring the tunnel up. I turned on <code>debug crypto isakmp</code> and saw the following output:</p>
+
+<p>```
+ISAKMP: Created a peer struct for 77.77.77.77, peer port 500
+ISAKMP: New peer created peer = 0x66440AA0 peer_handle = 0x8007F09C
+ISAKMP: Locking peer struct 0x66440AA0, refcount 1 for isakmp_initiator
+ISAKMP: local port 500, remote port 500
+ISAKMP: set new node 0 to QM_IDLE    <br/>
+ins.ert sa successfully sa = 66825864
+ISAKMP:(0):Can not start Aggressive mode, trying Main mode.
+ISAKMP:(0):found peer pre-shared key matching 77.77.77.77</p>
+
+<p>ISAKMP:(0): beginning Main Mode exchange
+ISAKMP:(0): processing SA payload. message ID = 0
+ISAKMP:(0): processing vendor id payload
+ISAKMP:(0): vendor ID seems Unity/DPD but major 123 mismatch
+ISAKMP:(0): vendor ID is NAT-T v2
+ISAKMP:(0): processing vendor id payload
+ISAKMP:(0): vendor ID seems Unity/DPD but major 194 mismatch
+ISAKMP:(0):found peer pre-shared key matching 77.77.77.77
+ISAKMP:(0): local preshared key found
+ISAKMP : Scanning profiles for xauth &hellip;
+ISAKMP:(0):Checking ISAKMP transform 2 against priority 3 policy
+ISAKMP:      encryption 3DES-CBC
+ISAKMP:      hash SHA
+ISAKMP:      default group 2
+ISAKMP:      auth pre-share
+ISAKMP:      life type in seconds
+ISAKMP:      life duration (VPI) of  0x0 0x1 0x51 0x80
+ISAKMP:(0):Encryption algorithm offered does not match policy!
+ISAKMP:(0):atts are not acceptable. Next payload is 0
+ISAKMP:(0):Checking ISAKMP transform 2 against priority 5 policy
+ISAKMP:      encryption 3DES-CBC
+ISAKMP:      hash SHA
+ISAKMP:      default group 2
+ISAKMP:      auth pre-share
+ISAKMP:      life type in seconds
+ISAKMP:      life duration (VPI) of  0x0 0x1 0x51 0x80
+ISAKMP:(0):atts are acceptable. Next payload is 0
+ISAKMP:(0): processing vendor id payload
+ISAKMP:(0): vendor ID seems Unity/DPD but major 123 mismatch
+ISAKMP:(0): vendor ID is NAT-T v2
+ISAKMP:(0): processing vendor id payload
+ISAKMP:(0): vendor ID seems Unity/DPD but major 194 mismatch
+ISAKMP:(0):Input = IKE_MESG_INTERNAL, IKE_PROCESS_MAIN_MODE
+ISAKMP:(0):Old State = IKE_I_MM2  New State = IKE_I_MM2</p>
+
+<p>ISAKMP:(0): sending packet to 77.77.77.77 my_port 500 peer_port 500 (I) MM_SA_SETUP
+ISAKMP:(0):Input = IKE_MESG_INTERNAL, IKE_PROCESS_COMPLETE
+ISAKMP:(0):Old State = .IKE_I_MM2  New State = IKE_I_MM3</p>
+
+<p>ISAKMP (0:0): received packet from 77.77.77.77 dport 500 sport 500 Global (I) MM_SA_SETUP
+ISAKMP:(0):Input = IKE_MESG_FROM_PEER, IKE_MM_EXCH
+ISAKMP:(0):Old State = IKE_I_MM3  New State = IKE_I_MM4</p>
+
+<p>ISAKMP:(0): processing KE payload. message ID = 0
+ISAKMP:(0): processing NONCE payload. message ID = 0
+ISAKMP:(0):found peer pre-shared key matching 77.77.77.77
+ISAKMP:(9577): processing vendor id payload
+ISAKMP:(9577): vendor ID is Unity
+ISAKMP:(9577): processing vendor id payload
+ISAKMP:(9577): vendor ID seems Unity/DPD but major 181 mismatch
+ISAKMP:(9577): vendor ID is XAUTH
+ISAKMP:(9577): processing vendor id payload
+ISAKMP:(9577): speaking to another IOS box!
+ISAKMP:(9577): processing vendor id payload
+ISAKMP:(9577):vendor ID seems Unity/DPD but hash mismatch
+ISAKMP:received payload type 20
+ISAKMP:received payload type 20
+ISAKMP:(9577):Input = IKE_MESG_INTERNAL, IKE_PROCESS_MAIN_MODE
+ISAKMP:(9577):Old State = IKE_I_MM4  New State = IKE_I_MM4</p>
+
+<p>ISAKMP:(9577):Send initial contact
+ISAKMP:(9577):SA is doing pre-shared key authentication using id type ID_IPV4_ADDR
+ISAKMP (0:9577): ID payload</p>
+
+<pre><code>next-payload : 8
+type         : 1 
+address      : 122.122.122.122 
+protocol     : 17. 
+port         : 500 
+length       : 12
+</code></pre>
+
+<p>ISAKMP:(9577):Total payload length: 12
+ISAKMP:(9577): sending packet to 77.77.77.77 my_port 500 peer_port 500 (I) MM_KEY_EXCH
+ISAKMP:(9577):Input = IKE_MESG_INTERNAL, IKE_PROCESS_COMPLETE
+ISAKMP:(9577):Old State = IKE_I_MM4  New State = IKE_I_MM5</p>
+
+<p>ISAKMP (0:9577): received packet from 77.77.77.77 dport 500 sport 500 Global (I) MM_KEY_EXCH
+ISAKMP:(9577): processing ID payload. message ID = 0
+ISAKMP (0:9577): ID payload</p>
+
+<pre><code>next-payload : 8
+type         : 1 
+address      : 77.77.77.77 
+protocol     : 17 
+port         : 0 
+length       : 12
+</code></pre>
+
+<p>ISAKMP:(0):: peer matches <em>none</em> of the profiles
+ISAKMP:(9577): processing HASH payload. message ID = 0
+ISAKMP:received payload type 17
+ISAKMP:(9577): processing vendor id payload
+ISAKMP:(9577): vendor ID is DPD
+ISAKMP:(9577):SA authentication status: authenticated
+ISAKMP:(9577):SA has been authenticated with 77.77.77.77
+ISAKMP: Trying to insert a peer 122.122.122.122/77.77.77.77/500/,  and inserted successfully 66440AA0.
+ISAKMP:(9577):Input = IKE_MESG_FROM_PEER, IKE_MM_EXCH
+ISAKMP:(9577):Old State = IKE_I_MM5  New State = IKE_I_MM6</p>
+
+<p>ISAKMP (0:9577): received packet from 77.77.77.77 dport 500 sport 500 Global (I) MM_KEY_EXCH
+ISAKMP: set new node 1201896175 to QM_IDLE    <br/>
+ISAKMP:(9577): processing NOTIFY RESPONDER_LIFETIME protocol 1
+ISAKMP:(9577):SA authentication status: authenticated
+ISAKMP:(9577): processing responder lifetime
+ISAKMP:(9577): start processing isakmp responder lifetime
+ISAKMP:(9577): restart ike sa timer to 3600 secs
+ISAKMP:(9577):deleting node 1201896175 error FALSE reason &ldquo;Informational (in) state 1&rdquo;
+ISAKMP:(9577):Input = IKE_MESG_FROM_PEER, IKE_INFO_NOTIFY
+ISAKMP:(9577):Old State = IKE_I_MM6  New State = IKE_I_MM6</p>
+
+<p>ISAKMP:(9577):Input = IKE_MESG_INTERNAL, IKE_PROCESS_MAIN_MODE
+ISAKMP:(9577):Old State = IKE_I_MM6  New State = IKE_I_MM6</p>
+
+<p>ISAKMP:(9577):Input = IKE_MESG_INTERNAL, IKE_PROCESS_COMPLETE
+ISAKMP:(9577):Old State = IKE_I_MM6  New State = IKE_P1_COMPLETE</p>
+
+<p>ISAKMP:(9577):beginning Quick Mode exchange, M-ID of -889293300
+ISAKMP:(9577):QM Initiator gets spi
+ISAKMP:(9577): sending packet to 77.77.77.77 my_port 500 peer_port 500 (I) QM_IDLE    <br/>
+ISAKMP:(9577):Node -889293300, Input = IKE_MESG_INTERNAL, IKE_INIT_QM
+ISAKMP:(9577):Old State = IKE_QM_READY  New State = IKE_QM_I_QM1
+ISAKMP:(9577):Input = IKE_MESG_INTERNAL, IKE_PHASE1_COMPLETE
+ISAKMP:(9577):Old State = IKE_P1_COMPLETE  New State = IKE_P1_COMPLETE</p>
+
+<p>ISAKMP (0:9577): received packet from 77.77.77.77 dport 500 sport 500 Global (I) QM_IDLE    <br/>
+ISAKMP: set new node -469585405 to QM_IDLE    <br/>
+ISAKMP:(9577): processing HASH payload. message ID = -469585405
+ISAKMP:(9577): processing NOTIFY PROPOSAL_NOT_CHOSEN protocol 3
+ISAKMP:(9577):deleting node -469585405 error FALSE reason &ldquo;Informational (in) state 1&rdquo;
+ISAKMP:(9577):Input = IKE_MESG_FROM_PEER, IKE_INFO_NOTIFY
+ISAKMP:(9577):Old State = IKE_P1_COMPLETE  New State = IKE_P1_COMPLETE</p>
+
+<p>ISAKMP (0:9577): received packet from 77.77.77.77 dport 500 sport 500 Global (I) QM_IDLE    <br/>
+ISAKMP: set new node -1042074812 to QM_IDLE    <br/>
+ISAKMP:(9577): processing HASH payload. message ID = -1042074812
+ISAKMP:(9577): processing DELETE payload. message ID = -1042074812
+ISAKMP:(9577):peer does not do paranoid keepalives.</p>
+
+<p>ISAKMP:(9577):deleting SA reason &ldquo;No reason&rdquo; state (I) QM_IDLE       (peer 77.77.77.77)
+ISAKMP:(9577):deleting node -1042074812 error FALSE reason &ldquo;Informational (in) state 1&rdquo;</p>
+
+<p>ISAKMP: set new node 1453291904 to QM_IDLE    <br/>
+ISAKMP:(9577): sending packet to 77.77.77.77 my_port 500 peer_port 500 (I) QM_IDLE    <br/>
+ISAKMP:(9577):purging node 1453291904
+ISAKMP:(9577):Input = IKE_MESG_INTERNAL, IKE_PHASE1_DEL
+ISAKMP:(9577):Old State = IKE_P1_COMPLETE  New State = IKE_DEST_SA</p>
+
+<p>ISAKMP:(9577):deleting SA reason &ldquo;No reason&rdquo; state (I) QM_IDLE       (peer 77.77.77.77)
+ISAKMP: Unlocking peer struct 0x66440AA0 for isadb_mark_sa_deleted(), count 0
+ISAKMP: Deleting peer node by peer_reap for 77.77.77.77: 66440AA0
+ISAKMP:(9577):deleting node -889293300 error FALSE reason &ldquo;IKE deleted&rdquo;
+ISAKMP:(9577):deleting node 1201896175 error FALSE reason &ldquo;IKE deleted&rdquo;
+ISAKMP:(9577):deleting node -469585405 error FALSE reason &ldquo;IKE deleted&rdquo;
+ISAKMP:(9577):deleting node -1042074812 error FALSE reason &ldquo;IKE deleted&rdquo;
+ISAKMP:(9577):Input = IKE_MESG_FROM_PEER, IKE_MM_EXCH
+ISAKMP:(9577):Old State = IKE_DEST_SA  New State = IKE_DEST_SA</p>
+
+<p>ISAKMP:(0): sending packet to 77.77.77.77 my_port 500 peer_port 500 (I) MM_NO_STATE
+ISAKMP (0:0): received packet from 77.77.77.77 dport 500 sport 500 Global (I) MM_NO_STATE
+```</p>
+
+<p>I see this router going through each of the MM states.</p>
+
+<p><code>IKE_I_MM2</code> &ndash;> <code>IKE_I_MM3</code> &ndash;> <code>IKE_I_MM4</code> &ndash;> <code>IKE_I_MM5</code> &ndash;> <code>IKE_I_MM6</code> &ndash;> <code>QM_IDLE</code></p>
+
+<p>This looks great. It&rsquo;s completing the entire Phase one key exchange process. So I know nothing is wrong with my ISAKMP settings.</p>
+
+<p>Shortly after it becomes QM_IDLE it starts deleting SAs and says:</p>
+
+<p><code>ISAKMP:(9577):peer does not do paranoid keepalives.</code></p>
+
+<p>This sounds like the keepalives between both systems is mismatched but actually what solved this problem is that <strong>one side had PFS on while the other did not</strong>. When we disabled PFS on both sides the tunnel was able to establish perfectly.</p>
+
+<p>If you had this same problem and you used a different way to resolve it, let me know in the comments below.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Encrypt Passwords on Cisco Router]]></title>
+    <link href="http://tunnelsup.github.io/encrypt-passwords-on-cisco-router/"/>
+    <updated>2013-06-17T22:26:00-07:00</updated>
+    <id>http://tunnelsup.github.io/encrypt-passwords-on-cisco-router</id>
+    <content type="html"><![CDATA[<p>By default, when adding a username and password to a Cisco router or switch, the password will show up as clear text. So the question then becomes:</p>
+
+<h3>How do you encrypt the password on a Cisco Router?</h3>
+
+<p>You should avoid creating a username like this:<br>
+<code>username TESTUSER password TESTPASS</code></p>
+
+<p>This will result in a clear text password in the configuration. To encrypt all of the passwords after that has been done you can do the following command:</p>
+
+<p><code>service password-encryption</code></p>
+
+<p>However that only does a very weak encryption. It only does a type 7 encryption which is incredibly easy to decipher. A quick google search and you&rsquo;ll find many password decrypting tools to break those types of passwords.</p>
+
+<p>A more secure password encryption is to use the <code>secret</code> command as in the following:<br>
+<code>username TESTUSER secret TESTPASS</code></p>
+
+<p>This will create level 5 encryption by default and doesn&rsquo;t even require you to use the &lsquo;service password-encryption&rsquo; command.</p>
+]]></content>
+  </entry>
+  
+</feed>

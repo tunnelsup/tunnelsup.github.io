@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 506e | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/506e/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Upgrade a Cisco PIX 506E to run 7.1 PIX code]]></title>
+    <link href="http://tunnelsup.github.io/upgrade-a-cisco-pix-506e-to-run-7-1-pix-code/"/>
+    <updated>2012-08-04T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/upgrade-a-cisco-pix-506e-to-run-7-1-pix-code</id>
+    <content type="html"><![CDATA[<p>The Cisco PIX 506E is only supposed to run code up to 6.3.5. It is however possible to go higher. In order to do this you need to have your PIX 506E have 64MB of RAM. In order for me to do this I had to double up my current RAM. The PIX 506E had only 28MB of RAM however the 506E has two memory slots and can easily upgrade to 64MB if you have another stick (or PIX you aren&rsquo;t using).</p>
+
+<p>Version 7.1.2 is chosen as the best code because it fits on the system which has 8MB of flash. This means there will be no room left for an ASDM. At some point in the 7.x versions, Cisco put instructions in the firmware to prevent 8.0 code to run if the model is PIX506e. This can actually be overcome by rewriting the .bin file (using lzma) to change any CRC check to PIX506E instead of PIX515E. There are a total of 6 CRC checks that need to be switched to conduct this. This post does not cover how to upgrade above 7.1.2.</p>
+
+<p>Once I had the memory installed this was my console output during my upgrade procedure.</p>
+
+<p>SETUP: TFTP Server:192.168.5.1
+PIX: 192.168.5.2
+Consoled into PIX.</p>
+
+<pre><code>CISCO SYSTEMS PIX FIREWALL
+Embedded BIOS Version 4.3.207 01/02/02 16:12:22.73
+Compiled by morlee
+64 MB RAM
+
+PCI Device Table.
+Bus Dev Func VendID DevID Class Irq
+00 00 00 8086 7192 Host Bridge
+00 07 00 8086 7110 ISA Bridge
+00 07 01 8086 7111 IDE Controller
+00 07 02 8086 7112 Serial Bus 9
+00 07 03 8086 7113 PCI Bridge
+00 0D 00 8086 1209 Ethernet 11
+00 0E 00 8086 1209 Ethernet 10
+
+Cisco Secure PIX Firewall BIOS (4.2) #0: Mon Dec 31 08:34:35 PST 2001
+Platform PIX-506E
+System Flash=E28F640J3 @ 0xfff00000
+
+Use BREAK or ESC to interrupt flash boot.
+Use SPACE to begin flash boot immediately.
+Reading 1974784 bytes of image from flash.
+#################################################################################################################
+<strong>64MB RAM</strong>
+mcwa i82559 Ethernet at irq 11 MAC: 001a.a2a4.5c33
+mcwa i82559 Ethernet at irq 10 MAC: 001a.a2a4.5c32
+System Flash=E28F640J3 @ 0xfff00000
+BIOS Flash=am29f400b @ 0xd8000
+
+-----------------------------------------------------------------------
+     ||        ||
+     ||        ||
+    ||||      ||||
+..:||||||:..:||||||:..
+c i s c o S y s t e m s
+Private Internet eXchange
+-----------------------------------------------------------------------
+Cisco PIX Firewall
+
+Cisco PIX Firewall Version <strong>6.3(5)</strong>
+Licensed Features:
+Failover: Disabled
+VPN-DES: Enabled
+VPN-3DES-AES: Enabled
+Maximum Physical Interfaces: 2
+Maximum Interfaces: 4
+Cut-through Proxy: Enabled
+Guards: Enabled
+URL-filtering: Enabled
+Inside Hosts: Unlimited
+Throughput: Unlimited
+IKE peers: Unlimited
+
+This PIX has a Restricted (R) license.
+
+Cryptochecksum(unchanged): 6a5b0c6c fd46250c 3dd9bb06 a6df7e62
+Type help or '?' for a list of available commands.
+pixfirewall&gt;<strong><span style="color: #ff0000;"> en</span></strong>
+Password:
+pixfirewall(config)#<strong><span style="color: #ff0000;"> no dhcpd address 192.168.1.2-192.168.1.254 inside</span></strong>
+DHCPD disabled on inside interface because address pool is removed
+pixfirewall(config)# <strong><span style="color: #ff0000;">no dhcpd enable inside</span></strong>
+pixfirewall(config)# <span style="color: #ff0000;"><strong>ip address inside 192.168.5.2 255.255.255.0</strong></span>
+pixfirewall(config)# <strong><span style="color: #ff0000;">ping 192.168.5.1</span></strong>
+192.168.5.1 response received -- 0ms
+192.168.5.1 response received -- 0ms
+192.168.5.1 response received -- 0ms
+pixfirewall(config)# <strong><span style="color: #ff0000;">exit</span></strong>
+pixfirewall# <strong><span style="color: #ff0000;">wr mem</span></strong>
+Building configuration...
+Cryptochecksum: 5ca481c6 1487c90e c50ead2b a3088231
+[OK]
+pixfirewall# <strong><span style="color: #ff0000;">clear flashfs</span></strong>
+pixfirewall# <strong><span style="color: #ff0000;">sh flash</span></strong>
+flash file system: version:0 magic:0x0
+file 0: origin: 0 length:0
+file 1: origin: 0 length:0
+file 2: origin: 0 length:0
+file 3: origin: 0 length:0
+file 4: origin: 0 length:0
+file 5: origin: 0 length:0
+pixfirewall# <strong><span style="color: #ff0000;">reboot</span></strong>
+Proceed with reload? [confirm]
+
+Rebooting..ÿ
+
+CISCO SYSTEMS PIX FIREWALL
+Embedded BIOS Version 4.3.207 01/02/02 16:12:22.73
+Compiled by morlee
+64 MB RAM
+
+PCI Device Table.
+Bus Dev Func VendID DevID Class Irq
+00 00 00 8086 7192 Host Bridge
+00 07 00 8086 7110 ISA Bridge
+00 07 01 8086 7111 IDE Controller
+00 07 02 8086 7112 Serial Bus 9
+00 07 03 8086 7113 PCI Bridge
+00 0D 00 8086 1209 Ethernet 11
+00 0E 00 8086 1209 Ethernet 10
+
+Cisco Secure PIX Firewall BIOS (4.2) #0: Mon Dec 31 08:34:35 PST 2001
+Platform PIX-506E
+<span style="color: #000000;"> System Flash=E28F640J3 @ 0xfff00000</span>
+
+<strong>Use BREAK or ESC to interrupt flash boot</strong>.
+Use SPACE to begin flash boot immediately.
+<span style="color: #ff0000;"><strong>[Hit ESC]</strong></span>
+Flash boot interrupted.
+0: i8255X @ PCI(bus:0 dev:14 irq:10)
+1: i8255X @ PCI(bus:0 dev:13 irq:11)
+
+Using 1: i82557 @ PCI(bus:0 dev:13 irq:11), MAC: 001a.a2a4.5c33
+Use ? for help.
+monitor&gt; <strong><span style="color: #ff0000;">address 192.168.5.2</span></strong>
+address 192.168.5.2
+monitor&gt; <strong><span style="color: #ff0000;">server 192.168.5.1</span></strong>
+server 192.168.5.1
+monitor&gt; <strong><span style="color: #ff0000;">file pix712.bin</span></strong>
+file pix712.bin
+monitor&gt; <strong><span style="color: #ff0000;">tftp</span></strong>
+tftp pix712.bin@192.168.5.1...............................................................................
+Received 6764544 bytes
+
+Cisco PIX Security Appliance admin loader (3.0) #0: Tue Mar 14 16:46:07 PST 2006
+#############################################################
+64MB RAM
+
+Total NICs found: 2
+mcwa i82559 Ethernet at irq 11 MAC: 001a.a2a4.5c33
+mcwa i82559 Ethernet at irq 10 MAC: 001a.a2a4.5c32
+BIOS Flash=am29f400b @ 0xd8000
+Old file system detected. Attempting to save data in flash
+
+Initializing flashfs...
+flashfs[7]: Checking block 0...block number was (-2131)
+flashfs[7]: erasing block 0...done.
+flashfs[7]: Checking block 1...block number was (-12656)
+flashfs[7]: erasing block 1...done.
+flashfs[7]: Checking block 2...block number was (-31472)
+flashfs[7]: erasing block 2...done.
+flashfs[7]: Checking block 3...block number was (32183)
+flashfs[7]: erasing block 3...done.
+flashfs[7]: Checking block 4...block number was (27050)
+flashfs[7]: erasing block 4...done.
+flashfs[7]: Checking block 5...block number was (10385)
+flashfs[7]: erasing block 5...done.
+flashfs[7]: Checking block 6...block number was (27686)
+flashfs[7]: erasing block 6...done.
+flashfs[7]: Checking block 7...block number was (1814)
+flashfs[7]: erasing block 7...done.
+flashfs[7]: Checking block 8...block number was (22750)
+flashfs[7]: erasing block 8...done.
+flashfs[7]: Checking block 9...block number was (11436)
+flashfs[7]: erasing block 9...done.
+flashfs[7]: Checking block 10...block number was (10399)
+flashfs[7]: erasing block 10...done.
+flashfs[7]: Checking block 11...block number was (-4384)
+flashfs[7]: erasing block 11...done.
+flashfs[7]: Checking block 12...block number was (10801)
+flashfs[7]: erasing block 12...done.
+flashfs[7]: Checking block 13...block number was (3939)
+flashfs[7]: erasing block 13...done.
+flashfs[7]: Checking block 14...block number was (29271)
+flashfs[7]: erasing block 14...done.
+flashfs[7]: Checking block 15...block number was (3)
+flashfs[7]: erasing block 15...done.
+flashfs[7]: Checking block 16...block number was (-12561)
+flashfs[7]: erasing block 16...done.
+flashfs[7]: Checking block 17...block number was (-17835)
+flashfs[7]: erasing block 17...done.
+flashfs[7]: Checking block 18...block number was (25075)
+flashfs[7]: erasing block 18...done.
+flashfs[7]: Checking block 19...block number was (18017)
+flashfs[7]: erasing block 19...done.
+flashfs[7]: Checking block 20...block number was (21479)
+flashfs[7]: erasing block 20...done.
+flashfs[7]: Checking block 21...block number was (-3643)
+flashfs[7]: erasing block 21...done.
+flashfs[7]: Checking block 22...block number was (-18350)
+flashfs[7]: erasing block 22...done.
+flashfs[7]: Checking block 23...block number was (25412)
+flashfs[7]: erasing block 23...done.
+flashfs[7]: Checking block 24...block number was (8285)
+flashfs[7]: erasing block 24...done.
+flashfs[7]: Checking block 25...block number was (-11600)
+flashfs[7]: erasing block 25...done.
+flashfs[7]: Checking block 26...block number was (-32046)
+flashfs[7]: erasing block 26...done.
+flashfs[7]: Checking block 27...block number was (1769)
+flashfs[7]: erasing block 27...done.
+flashfs[7]: Checking block 28...block number was (-28376)
+flashfs[7]: erasing block 28...done.
+flashfs[7]: Checking block 29...block number was (-19639)
+flashfs[7]: erasing block 29...done.
+flashfs[7]: Checking block 30...block number was (-20657)
+flashfs[7]: erasing block 30...done.
+flashfs[7]: Checking block 31...block number was (3744)
+flashfs[7]: erasing block 31...done.
+flashfs[7]: Checking block 32...block number was (-11933)
+flashfs[7]: erasing block 32...done.
+flashfs[7]: Checking block 33...block number was (17275)
+flashfs[7]: erasing block 33...done.
+flashfs[7]: Checking block 34...block number was (23299)
+flashfs[7]: erasing block 34...done.
+flashfs[7]: Checking block 35...block number was (-13460)
+flashfs[7]: erasing block 35...done.
+flashfs[7]: Checking block 36...block number was (10511)
+flashfs[7]: erasing block 36...done.
+flashfs[7]: Checking block 37...block number was (-10457)
+flashfs[7]: erasing block 37...done.
+flashfs[7]: Checking block 38...block number was (30155)
+flashfs[7]: erasing block 38...done.
+flashfs[7]: Checking block 39...block number was (7950)
+flashfs[7]: erasing block 39...done.
+flashfs[7]: Checking block 40...block number was (-13108)
+flashfs[7]: erasing block 40...done.
+flashfs[7]: Checking block 41...block number was (-13108)
+flashfs[7]: erasing block 41...done.
+flashfs[7]: Checking block 42...block number was (-13108)
+flashfs[7]: erasing block 42...done.
+flashfs[7]: Checking block 43...block number was (-13108)
+flashfs[7]: erasing block 43...done.
+flashfs[7]: Checking block 44...block number was (-13108)
+flashfs[7]: erasing block 44...done.
+flashfs[7]: Checking block 45...block number was (-13108)
+flashfs[7]: erasing block 45...done.
+flashfs[7]: Checking block 46...block number was (-13108)
+flashfs[7]: erasing block 46...done.
+flashfs[7]: Checking block 47...block number was (-13108)
+flashfs[7]: erasing block 47...done.
+flashfs[7]: Checking block 48...block number was (-13108)
+flashfs[7]: erasing block 48...done.
+flashfs[7]: Checking block 49...block number was (-13108)
+flashfs[7]: erasing block 49...done.
+flashfs[7]: Checking block 50...block number was (-13108)
+flashfs[7]: erasing block 50...done.
+flashfs[7]: Checking block 51...block number was (-13108)
+flashfs[7]: erasing block 51...done.
+flashfs[7]: Checking block 52...block number was (-13108)
+flashfs[7]: erasing block 52...done.
+flashfs[7]: Checking block 53...block number was (-13108)
+flashfs[7]: erasing block 53...done.
+flashfs[7]: Checking block 54...block number was (-13108)
+flashfs[7]: erasing block 54...done.
+flashfs[7]: Checking block 55...block number was (-13108)
+flashfs[7]: erasing block 55...done.
+flashfs[7]: Checking block 56...block number was (-13108)
+flashfs[7]: erasing block 56...done.
+flashfs[7]: Checking block 57...block number was (-13108)
+flashfs[7]: erasing block 57...done.
+flashfs[7]: Checking block 58...block number was (-13108)
+flashfs[7]: erasing block 58...done.
+flashfs[7]: Checking block 59...block number was (-13108)
+flashfs[7]: erasing block 59...done.
+flashfs[7]: Checking block 60...block number was (-13108)
+flashfs[7]: erasing block 60...done.
+flashfs[7]: Checking block 61...block number was (0)
+flashfs[7]: erasing block 61...done.
+flashfs[7]: 0 files, 1 directories
+flashfs[7]: 0 orphaned files, 0 orphaned directories
+flashfs[7]: Total bytes: 7870464
+flashfs[7]: Bytes used: 1024
+flashfs[7]: Bytes available: 7869440
+flashfs[7]: flashfs fsck took 53 seconds.
+flashfs[7]: Initialization complete.
+
+Saving the configuration
+!
+Saving a copy of old configuration as downgrade.cfg
+!
+Saved the activation key from the flash image
+Saved the default firewall mode (single) to flash
+The version of image file in flash is not bootable in the current version of
+software.
+Use the downgrade command first to boot older version of software.
+The file is being saved as image_old.bin anyway.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Upgrade process complete
+Need to burn loader....
+Erasing sector 0...[OK]
+Burning sector 0...[OK]
+
+Licensed features for this platform:
+Maximum Physical Interfaces : 2
+Maximum VLANs : 2
+Inside Hosts : Unlimited
+Failover : Not supported
+VPN-DES : Enabled
+VPN-3DES-AES : Enabled
+Cut-through Proxy : Enabled
+Guards : Enabled
+URL Filtering : Enabled
+Security Contexts : 0
+GTP/GPRS : Disabled
+VPN Peers : Unlimited
+
+This platform does not support Failover.
+
+--------------------------------------------------------------------------
+      .            .
+      |            |
+     |||          |||
+   .|| ||.     . || ||.
+.:||| | |||:..:||| | |||:.
+C i s c o S y s t e m s
+--------------------------------------------------------------------------
+
+Cisco PIX Security Appliance Software Version 7.1(2)
+
+****************************** Warning *******************************
+This product contains cryptographic features and is
+subject to United States and local country laws
+governing, import, export, transfer, and use.
+Delivery of Cisco cryptographic products does not
+imply third-party authority to import, export,
+distribute, or use encryption. Importers, exporters,
+distributors and users are responsible for compliance
+with U.S. and local country laws. By using this
+product you agree to comply with applicable laws and
+regulations. If you are unable to comply with U.S.
+and local laws, return the enclosed items immediately.
+
+A summary of U.S. laws governing Cisco cryptographic
+products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by
+sending email to export@cisco.com.
+******************************* Warning *******************************
+
+Copyright (c) 1996-2006 by Cisco Systems, Inc.
+
+Restricted Rights Legend
+
+Use, duplication, or disclosure by the Government is
+subject to restrictions as set forth in subparagraph
+(c) of the Commercial Computer Software - Restricted
+Rights clause at FAR sec. 52.227-19 and subparagraph
+(c) (1) (ii) of the Rights in Technical Data and Computer
+Software clause at DFARS sec. 252.227-7013.
+
+Cisco Systems, Inc.
+170 West Tasman Drive
+San Jose, California 95134-1706
+
+timeout sip-disconnect 0:02:00 sip-invite 0:03:00
+^
+ERROR: % Invalid input detected at '^' marker.
+*** Output from config line 40, "timeout sip-disconnect 0..."
+ERROR: This command is no longer needed. The LOCAL user database is always enabled.
+*** Output from config line 48, "aaa-server LOCAL protoco..."
+ERROR: This command is no longer needed. The 'floodguard' feature is always enabled.
+*** Output from config line 55, "floodguard enable"
+
+Cryptochecksum (unchanged): 5ca481c6 1487c90e c50ead2b a3088231
+INFO: converting 'fixup protocol dns maximum-length 512' to MPF commands
+INFO: converting 'fixup protocol ftp 21' to MPF commands
+INFO: converting 'fixup protocol h323_h225 1720' to MPF commands
+INFO: converting 'fixup protocol h323_ras 1718-1719' to MPF commands
+INFO: converting 'fixup protocol http 80' to MPF commands
+INFO: converting 'fixup protocol netbios 137-138' to MPF commands
+INFO: converting 'fixup protocol rsh 514' to MPF commands
+INFO: converting 'fixup protocol rtsp 554' to MPF commands
+INFO: converting 'fixup protocol sip 5060' to MPF commands
+INFO: converting 'fixup protocol skinny 2000' to MPF commands
+INFO: converting 'fixup protocol smtp 25' to MPF commands
+INFO: converting 'fixup protocol sqlnet 1521' to MPF commands
+INFO: converting 'fixup protocol sunrpc_udp 111' to MPF commands
+INFO: converting 'fixup protocol tftp 69' to MPF commands
+INFO: converting 'fixup protocol sip udp 5060' to MPF commands
+INFO: converting 'fixup protocol xdmcp 177' to MPF commands
+************************************************************************
+** **
+<strong>** *** WARNING *** WARNING *** WARNING *** WARNING *** WARNING *** **</strong>
+** **
+<strong> ** ----&gt; Current image running from RAM only!</strong>
+en
+Password:
+pixfirewall# <strong><span style="color: #ff0000;">sh ver</span></strong>
+
+Cisco PIX Security Appliance Software Version <strong>7.1(2)</strong>
+
+Compiled on Tue 14-Mar-06 17:00 by dalecki
+System image file is "Unknown, monitor mode tftp booted image"
+Config file at boot was "startup-config"
+
+pixfirewall up 15 secs
+
+Hardware: PIX-506E, 64 MB RAM, CPU Pentium II 300 MHz
+Flash E28F640J3 @ 0xfff00000, 8MB
+BIOS Flash AM29F400B @ 0xfffd8000, 32KB
+
+0: Ext: Ethernet0 : address is 001a.a2a4.5c32, irq 10
+1: Ext: Ethernet1 : address is 001a.a2a4.5c33, irq 11
+
+Licensed features for this platform:
+Maximum Physical Interfaces : 2
+Maximum VLANs : 2
+Inside Hosts : Unlimited
+Failover : Not supported
+VPN-DES : Enabled
+VPN-3DES-AES : Enabled
+Cut-through Proxy : Enabled
+Guards : Enabled
+pixfirewall# <strong><span style="color: #ff0000;">sh flash</span></strong>
+
+Directory of flash:/
+
+4 -rw- 1830 16:23:18 Aug 04 2012 downgrade.cfg
+7 -rw- 1978424 16:23:34 Aug 04 2012 image_old.bin
+
+7870464 bytes total (5884928 bytes free)
+pixfirewall# <strong><span style="color: #ff0000;">delete downgrade.cfg</span></strong>
+
+Delete filename [downgrade.cfg]?
+
+Delete flash:/downgrade.cfg? [confirm]
+
+pixfirewall# <strong><span style="color: #ff0000;">delete image_old.bin</span></strong>
+
+Delete filename [image_old.bin]?
+
+Delete flash:/image_old.bin? [confirm]
+
+pixfirewall# <strong><span style="color: #ff0000;">sh ip</span></strong>
+System IP Addresses:
+Interface Name IP address Subnet mask Method
+Ethernet1 inside 192.168.5.2 255.255.255.0 CONFIG
+Current IP Addresses:
+Interface Name IP address Subnet mask Method
+Ethernet1 inside 192.168.5.2 255.255.255.0 CONFIG
+pixfirewall# <strong><span style="color: #ff0000;">copy tftp://192.168.5.1/pix712.bin flash</span></strong>
+
+Address or name of remote host [192.168.5.1]?
+
+Source filename [pix712.bin]?
+
+Destination filename [pix712.bin]?
+
+Accessing tftp://192.168.5.1/pix712.bin...!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Writing file flash:/pix712.bin...
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+6764544 bytes copied in 72.900 secs (93952 bytes/sec)
+pixfirewall# <strong><span style="color: #ff0000;">sh flash</span></strong>
+
+Directory of flash:/
+
+4 -rw- 6764544 16:29:38 Aug 04 2012 pix712.bin
+
+7870464 bytes total (1101312 bytes free)
+pixfirewall# <strong><span style="color: #ff0000;">show run | i boot</span></strong>
+pixfirewall# <strong><span style="color: #ff0000;">config t</span></strong>
+pixfirewall(config)# <strong><span style="color: #ff0000;">boot system pix712.bin</span></strong>
+INFO: Converting pix712.bin to flash:/pix712.bin
+pixfirewall(config)# <strong><span style="color: #ff0000;">exit</span></strong>
+pixfirewall# <strong><span style="color: #ff0000;">wr mem</span></strong>
+Building configuration...
+Cryptochecksum: 1c4473b8 dc713c6f 0b1336b3 b45dea54
+
+1765 bytes copied in 0.430 secs
+[OK]
+pixfirewall#<strong><span style="color: #ff0000;"> show run | i boot</span></strong>
+boot system flash:/pix712.bin
+pixfirewall# <strong><span style="color: #ff0000;">reload</span></strong>
+Proceed with reload? [confirm]
+pixfirewall#
+
+***
+*** --- START GRACEFUL SHUTDOWN ---
+Shutting down isakmp
+Shutting down File system
+
+***
+*** --- SHUTDOWN NOW ---
+
+Rebooting....
+
+CISCO SYSTEMS PIX FIREWALL
+Embedded BIOS Version 4.3.207 01/02/02 16:12:22.73
+Compiled by morlee
+64 MB RAM
+
+PCI Device Table.
+Bus Dev Func VendID DevID Class Irq
+00 00 00 8086 7192 Host Bridge
+00 07 00 8086 7110 ISA Bridge
+00 07 01 8086 7111 IDE Controller
+00 07 02 8086 7112 Serial Bus 9
+00 07 03 8086 7113 PCI Bridge
+00 0D 00 8086 1209 Ethernet 11
+00 0E 00 8086 1209 Ethernet 10
+
+Cisco Secure PIX Firewall BIOS (4.2) #0: Mon Dec 31 08:34:35 PST 2001
+Platform PIX-506E
+System Flash=E28F640J3 @ 0xfff00000
+
+Use BREAK or ESC to interrupt flash boot.
+Use SPACE to begin flash boot immediately.
+Reading 123392 bytes of image from flash.
+
+PIX Flash Load Helper
+
+Initializing flashfs...
+flashfs[0]: 6 files, 3 directories
+flashfs[0]: 0 orphaned files, 0 orphaned directories
+flashfs[0]: Total bytes: 7870464
+flashfs[0]: Bytes used: 6770176
+flashfs[0]: Bytes available: 1100288
+flashfs[0]: Initialization complete.
+
+Reading image flash:/pix712.bin
+Launching image flash:/pix712.bin
+###############################################
+
+64MB RAM
+
+Total NICs found: 2
+mcwa i82559 Ethernet at irq 11 MAC: 001a.a2a4.5c33
+mcwa i82559 Ethernet at irq 10 MAC: 001a.a2a4.5c32
+BIOS Flash=am29f400b @ 0xd8000
+
+Initializing flashfs...
+flashfs[7]: 6 files, 3 directories
+flashfs[7]: 0 orphaned files, 0 orphaned directories
+flashfs[7]: Total bytes: 7870464
+flashfs[7]: Bytes used: 6770176
+flashfs[7]: Bytes available: 1100288
+flashfs[7]: flashfs fsck took 9 seconds.
+flashfs[7]: Initialization complete.
+
+Need to burn loader....
+Erasing sector 0...[OK]
+Burning sector 0...[OK]
+
+Licensed features for this platform:
+Maximum Physical Interfaces : 2
+Maximum VLANs : 2
+Inside Hosts : Unlimited
+Failover : Not supported
+VPN-DES : Enabled
+VPN-3DES-AES : Enabled
+Cut-through Proxy : Enabled
+Guards : Enabled
+URL Filtering : Enabled
+Security Contexts : 0
+GTP/GPRS : Disabled
+VPN Peers : Unlimited
+
+This platform does not support Failover.
+
+--------------------------------------------------------------------------
+      .            .
+      |            |
+     |||          |||
+   .|| ||.      .|| ||.
+.:||| | |||:..:||| | |||:.
+C i s c o S y s t e m s
+--------------------------------------------------------------------------
+
+Cisco PIX Security Appliance Software Version 7.1(2)
+
+****************************** Warning *******************************
+This product contains cryptographic features and is
+subject to United States and local country laws
+governing, import, export, transfer, and use.
+Delivery of Cisco cryptographic products does not
+imply third-party authority to import, export,
+distribute, or use encryption. Importers, exporters,
+distributors and users are responsible for compliance
+with U.S. and local country laws. By using this
+product you agree to comply with applicable laws and
+regulations. If you are unable to comply with U.S.
+and local laws, return the enclosed items immediately.
+
+A summary of U.S. laws governing Cisco cryptographic
+products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by
+sending email to export@cisco.com.
+******************************* Warning *******************************
+
+Copyright (c) 1996-2006 by Cisco Systems, Inc.
+
+Restricted Rights Legend
+
+Use, duplication, or disclosure by the Government is
+subject to restrictions as set forth in subparagraph
+(c) of the Commercial Computer Software - Restricted
+Rights clause at FAR sec. 52.227-19 and subparagraph
+(c) (1) (ii) of the Rights in Technical Data and Computer
+Software clause at DFARS sec. 252.227-7013.
+
+Cisco Systems, Inc.
+170 West Tasman Drive
+San Jose, California 95134-1706
+
+Cryptochecksum (unchanged): 1c4473b8 dc713c6f 0b1336b3 b45dea54
+Type help or '?' for a list of available commands.
+pixfirewall&gt; <strong><span style="color: #ff0000;">sh ver</span></strong>
+
+Cisco PIX Security Appliance Software Version <strong>7.1(2)</strong>
+
+Compiled on Tue 14-Mar-06 17:00 by dalecki
+System image file is "flash:/pix712.bin"
+Config file at boot was "startup-config"
+
+pixfirewall up 7 secs
+
+Hardware: PIX-506E, 64 MB RAM, CPU Pentium II 300 MHz
+Flash E28F640J3 @ 0xfff00000, 8MB
+BIOS Flash AM29F400B @ 0xfffd8000, 32KB
+
+0: Ext: Ethernet0 : address is 001a.a2a4.5c32, irq 10
+1: Ext: Ethernet1 : address is 001a.a2a4.5c33, irq 11
+
+Licensed features for this platform:
+Maximum Physical Interfaces : 2
+Maximum VLANs : 2
+Inside Hosts : Unlimited
+Failover : Not supported
+VPN-DES : Enabled
+VPN-3DES-AES : Enabled
+Cut-through Proxy : Enabled
+Guards : Enabled
+pixfirewall&gt; <strong><span style="color: #ff0000;">en</span></strong>
+Password:
+pixfirewall# <strong><span style="color: #ff0000;">sh flash</span></strong>
+
+Directory of flash:/
+
+4 -rw- 6764544 16:29:38 Aug 04 2012 <strong>pix712.bin</strong>
+
+7870464 bytes total (1100288 bytes free)
+pixfirewall#
+pixfirewall#
+</code></pre>
+
+]]></content>
+  </entry>
+  
+</feed>

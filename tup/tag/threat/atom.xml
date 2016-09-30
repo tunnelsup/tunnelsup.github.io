@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: threat | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/threat/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[What is the Diamond Model?]]></title>
+    <link href="http://tunnelsup.github.io/what-is-the-diamond-model/"/>
+    <updated>2016-04-20T18:01:00-07:00</updated>
+    <id>http://tunnelsup.github.io/what-is-the-diamond-model</id>
+    <content type="html"><![CDATA[<p>The Diamond Model of Intusion Analysis is a great tool to help threat intelligence teams determine the capabilities, opportunities, and hostile intent of an adversary.</p>
+
+<p><img src="http://tunnelsup.github.io/images/diamond.png"></p>
+
+<p>Here is a brief introduction video to the Diamond Model:</p>
+
+<iframe width="770" height="460" src="https://www.youtube.com/embed/3PoQLOJr5WI" frameborder="0" allowfullscreen></iframe>
+
+
+<p>Additional links:</p>
+
+<p><a href="http://www.dtic.mil/docs/citations/ADA586960">http://www.dtic.mil/docs/citations/ADA586960</a></p>
+]]></content>
+  </entry>
+  
+</feed>

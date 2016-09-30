@@ -1,0 +1,845 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: video | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/video/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Things You Can Do to Make Security Worse]]></title>
+    <link href="http://tunnelsup.github.io/things-you-can-do-to-make-security-worse/"/>
+    <updated>2016-05-19T17:58:00-07:00</updated>
+    <id>http://tunnelsup.github.io/things-you-can-do-to-make-security-worse</id>
+    <content type="html"><![CDATA[<p>Organizations go out of their way to make security worse in their network. Are you one of these organizations? Watch the video to find out.</p>
+
+<iframe width="770" height="460" src="https://www.youtube.com/embed/9EAi_O4JKZk" frameborder="0" allowfullscreen></iframe>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[What is the Diamond Model?]]></title>
+    <link href="http://tunnelsup.github.io/what-is-the-diamond-model/"/>
+    <updated>2016-04-20T18:01:00-07:00</updated>
+    <id>http://tunnelsup.github.io/what-is-the-diamond-model</id>
+    <content type="html"><![CDATA[<p>The Diamond Model of Intusion Analysis is a great tool to help threat intelligence teams determine the capabilities, opportunities, and hostile intent of an adversary.</p>
+
+<p><img src="http://tunnelsup.github.io/images/diamond.png"></p>
+
+<p>Here is a brief introduction video to the Diamond Model:</p>
+
+<iframe width="770" height="460" src="https://www.youtube.com/embed/3PoQLOJr5WI" frameborder="0" allowfullscreen></iframe>
+
+
+<p>Additional links:</p>
+
+<p><a href="http://www.dtic.mil/docs/citations/ADA586960">http://www.dtic.mil/docs/citations/ADA586960</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Online Security Conferences]]></title>
+    <link href="http://tunnelsup.github.io/online-security-conferences/"/>
+    <updated>2016-01-10T08:36:00-08:00</updated>
+    <id>http://tunnelsup.github.io/online-security-conferences</id>
+    <content type="html"><![CDATA[<p>Every month there are numerous cyber security conferences somewhere in the world. Many of them post their talks on YouTube after the conference. Below is a list of talks from security conferences. It&rsquo;s like attending a free virtual security conference!</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Conference</th>
+            <th>Date Held</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+
+
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm_4V8VDudQyBFp8b91rBHTj">BSides Augusta</a></td>
+            <td>Sep 10, 2016</td>
+            <td>Augusta, GA, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PL9fPq3eQfaaAvXV3hJc4yHuNxoviVckoE">DEFCON 24</a></td>
+            <td>Aug 4-7, 2016</td>
+            <td>Las Vegas, NV, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLH15HpR5qRsXm0-rMacuWBxWcB2fmsmEw">Black Hat 2016</a></td>
+            <td>July 30 - Aug 4, 2016</td>
+            <td>Las Vegas, NV USA</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLpr-xdpM8wG-Kf1_BOnT2LFZU8_SXfpKL">AppSecEU 2016</a></td>
+            <td>July 2016</td>
+            <td>Rome, Italy</td>
+        </tr>
+
+        <tr>
+            <td><a href="http://www.irongeek.com/i.php?page=videos/oisf2016/mainlist">OISF 2016</a></td>
+            <td>July 2016</td>
+            <td>Ohio USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLmfJypsykTLXdowhmaHaDJGlxmOBAGMYA">SteelCon 2016</a></td>
+            <td>July 15-17, 2016</td>
+            <td>Sheffield, UK</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.irongeek.com/i.php?page=videos/bsidescleveland2016/mainlist">BSides Cleveland</a></td>
+            <td>July 2016</td>
+            <td>Cleveland, OH USA</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm9HnVtDwMQ_JN1bCTuOedMh">Converge 2016</a></td>
+            <td>July 2016</td>
+            <td>Detroit, MI USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm-AtNWUBV2eI_zNDGHRrbhk">BSides Detroit 2016</a></td>
+            <td>July 2016</td>
+            <td>Detroit, MI USA</td>
+        </tr>
+
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm9NT-zQ9jHdYRhtGOASAYT7">ShowMeCon 2016</a></td>
+            <td>June 13-14, 2016</td>
+            <td>St. Louis, MO USA</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm_fAztb-LmQapZiEM08cV-6">CircleCityCon 2016</a></td>
+            <td>June 10-12, 2016</td>
+            <td>Indianpolis, IN, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLmv8T5-GONwR_nTZuUyHN3AhIAOchFbU0">Hack In the Box (HITB)</a></td>
+            <td>May 23-27, 2016</td>
+            <td>Amsterdam Netherlands</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLrwRJhfJmJRjDYmKTU9DY7XsG09QOBhwl">BSides Cincinnati 2016</a></td>
+            <td>May 21, 2016</td>
+            <td>Cincinnati, OH, USA</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm96tDIXITUOBMjPrNunM4ux">NolaCon 2016</a></td>
+            <td>May 20-22, 2016</td>
+            <td>New Orleans, LA, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLuUtcRxSUZUpg-z0MkDrFrwMiiFMVr1yI">NorthSec 2016</a></td>
+            <td>May 17-22, 2016</td>
+            <td>Montreal, Canada</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLfouvuAjspTokaa-LdUHqszL-KACkCsKT">SANS Cyber Threat Hunting Summit</a></td>
+            <td>April 2016</td>
+            <td>New Orleans, LA USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm8OerdQZyQAdi7GG1ufgRaw">BSides Nashville</a></td>
+            <td>April 15, 2016</td>
+            <td>Nashville TN, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="http://www.irongeek.com/i.php?page=videos/aide2016/mainlist">AIDE 2016</a></td>
+            <td>April 20, 2016</td>
+            <td>Charleston, WV, USA</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm82NKVBiHsntgwhpxVu8ZD9">Central Ohio Infosec Summit</a></td>
+            <td>Apr 1, 2016</td>
+            <td>Ohio, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/user/TROOPERScon">TROOPERS 16</a></td>
+            <td>Mar 14, 2016</td>
+            <td>Heidelberg, Germany</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm8zJ6vqc98h375xgP-z4xtr">CypherCon 2016</a></td>
+            <td>Mar 13, 2016</td>
+            <td>Milwaukee, WI, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm_vceoN_dHHm44mpT_UbaWF">BSides SF</a></td>
+            <td>Mar 1st, 2016</td>
+            <td>San Francisco, CA, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLeUGLKUYzh_jqwnzJ7zOu7gPSX1FTmR1m">RSA 2016 (Keynotes)</a></td>
+            <td>Feb 29th, 2016</td>
+            <td>San Francisco, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/user/irongeek/search?query=bsides+indy&nohtml5=False">BSides Indy</a></td>
+            <td>Feb 21, 2016</td>
+            <td>Indianpolis, IN, USA</td>
+        </tr>
+        <tr>
+            <td><a href="http://www.irongeek.com/i.php?page=videos/bsideshuntsville2016/mainlist">BSides Huntsville</a></td>
+            <td>Feb 6, 2016</td>
+            <td>Huntsville AL, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/channel/UCIdV7bE97mSPTH1mOi_yUrw">Usenix Enigma Conference 2016</a></td>
+            <td>Jan 25, 2016</td>
+            <td>San Francisco, CA, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.irongeek.com/i.php?page=videos/bsidescolumbus2016/mainlist">BSides Columbus</a></td>
+            <td>Jan 18, 2016</td>
+            <td>Columbus, OH, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLJgHiyD1pZg70X3X3zjmdmZg3u0eqDFJ4">Schmoocon 2016</a></td>
+            <td>Jan 2016</td>
+            <td>Washington, DC, USA</td>
+        </tr>
+
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PL_IxoDz1Nq2YahR4DU9q5GWsSTle-mETW">Chaos Communication Congress 2015 (32C3)</a></td>
+            <td>Dec 27-30, 2015</td>
+            <td>Hamburg, Germany</td>
+        </tr>
+        <tr>
+            <td><a href="https://vimeo.com/noconname/videos">No Con Name 2015 [Spanish]</a></td>
+            <td>Dec 12, 2015</td>
+            <td>Barcelona, Spain</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLdIqs92nsIzQvvbTiWLLjZOVE7jPBDomw">Passwords 2015</a></td>
+            <td>Dec 7-9, 2015</td>
+            <td>Cambridge, UK</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLnwq8gv9MEKj6p8VtgCwFdh8uthLp75M3">DefCamp 2015</a></td>
+            <td>Nov 19-20, 2015</td>
+            <td>Bucharest, Romania</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLxyG_Sh7NFechTfZb2DLQEUvy3FbaR3gD">BSides Winnipeg 2015</a></td>
+            <td>Nov 14-15, 2015</td>
+            <td>Winnipeg, Canada</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLsEd7GTJqlRA2M6hwNzxbwPN04pf0F73U">BSides Charleston 2015</a></td>
+            <td>Nov 14, 2015</td>
+            <td>Charleston, NC, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PL02T0JOKYEq52plvmxiJ1cSbwUgHHvP7H">BSides Toronto 2015</a></td>
+            <td>Nov. 7, 2015</td>
+            <td>Toronto, Canada</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PL-XyPQsyOrNEoJ4xC4Q5OY24Y5I-lUTRz">Code Blue 2015</a></td>
+            <td>Oct 28, 2015</td>
+            <td>Tokyo, Japan</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/channel/UCEiHGeWgdIoLCzTLm_izCoQ/videos">Saint Con 2015</a></td>
+            <td>Oct 27-30, 2015</td>
+            <td>Ogden, UT, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLtb1FJdVWjUfZ9fWxPPCrOO7LUquB3WrB">BruCon 2015</a></td>
+            <td>Oct 26, 2015</td>
+            <td>Brussels, Belgium</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLLEf-wPc7TyY6I8AtHvrSEAj3UNjRnpOZ">SkyDogCon 2015</a></td>
+            <td>Oct 23-25, 2015</td>
+            <td>Nashville, TN, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://vimeo.com/album/3682874">Ekoparty [Spanish]</a></td>
+            <td>Oct 21, 2015</td>
+            <td>Buenos Aires, Argentina</td>
+        </tr>
+
+        <tr>
+            <td><a href="http://sector.ca/presentations">Sector 2015</a></td>
+            <td>Oct 19-21, 2015</td>
+            <td>Toronto, Canada</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLghf5UNZbzG0zLarfwpw4PxPTS0IWo8vB">CERT.pl Secure 2015</a></td>
+            <td>Oct 14, 2015</td>
+            <td>Warsaw, Poland</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLmv8T5-GONwSuEm2XTeIVi6toZ8stS6J2">HITB SecConf 2015</a></td>
+            <td>Oct 13, 2015</td>
+            <td>Singapore, Maylasia</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm86xYFgU3fRB84vvii9oAh0">Louisville Infosec 2015</a></td>
+            <td>Sep. 28, 2015</td>
+            <td>Louisville, KY, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLn8ut0t_rVT89PJEnacaOYrmRJQc0TeiQ">DerbyCon 5.0</a></td>
+            <td>Sep 23-27, 2015</td>
+            <td>Louisville, KY, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLpr-xdpM8wG93dG_L9QKs0W1cD-esQEzU">OWASP AppSec USA 2015</a></td>
+            <td>Sep 22-25, 2015</td>
+            <td>San Francisco, CA, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm_tRDcxhP9vldVoJhTkwdnt">BSides Augusta 2015</a></td>
+            <td>Sep 12, 2015</td>
+            <td>Augusta, GA, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLeeS-3Ml-rpoNWewUnljPP7QN4USn4c7H">Crypto 2015</a></td>
+            <td>Aug 16-20, 2015</td>
+            <td>Santa Barbara, CA, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PL_IxoDz1Nq2ZrTckdtMUV4no50_-b9OkL">Chaos Communication Camp 2015 [German]</a></td>
+            <td>Aug 13-17, 2015</td>
+            <td>Zehdenick, Germany</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLbRoZ5Rrl5lfeRixThHzgGYj1wu80JOh3">USENIX Security 2015</a></td>
+            <td>Aug 12-14, 2015</td>
+            <td>Washington, D.C., USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PL9fPq3eQfaaBuHqVvDzPoWxznYYmyx5UX">DEF CON 23</a></td>
+            <td>Aug 6-9, 2015</td>
+            <td>Las Vegas, NV, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLH15HpR5qRsXF78lrpWP2JKpPJs_AFnD7">Black Hat 2015</a></td>
+            <td>Aug 1-6, 2015</td>
+            <td>Las Vegas, NV, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm97gwg__BfWirG5NnkAAENL">BSides Detroit 2015</a></td>
+            <td>July 16-18, 2015</td>
+            <td>Detroit, MI, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLmfJypsykTLX9mDeChQ7fovybwYzQgr6j">SteelCon 2015</a></td>
+            <td>Jul 3-5, 2015</td>
+            <td>Sheffield, UK</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm87UHyX3fVU_NnSRjM8CUUw">BSides Cleveland 2015</a></td>
+            <td>Jun 20, 2015</td>
+            <td>Cleveland, OH, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm9TV35bUYvhjUpdAR8iPT5R">CircleCityCon 2015</a></td>
+            <td>Jun 12-14, 2015</td>
+            <td>Indianapolis, IN, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm9zsNKfwujM4JgEk1wOc44m">ShowMeCon 2015</a></td>
+            <td>Jun 8-9, 2015</td>
+            <td>St. Charles, MO, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLcrUMxzVpi6waVMFpbc2MFrbE5uB_EPJU">BSides London 2015</a></td>
+            <td>Jun 3, 2015</td>
+            <td>London, UK</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLJ7_KHVHtAm9YhIzWa_2A61dmFv8cTDO2">HITB AMS SecConfg 2015</a></td>
+            <td>May 26-29, 2015</td>
+            <td>Amsterdam, Netherlands</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLuUtcRxSUZUpQAa54H6PKkfX6A48ruzhh">NorthSec Montreal 2015</a></td>
+            <td>May 19-22, 2015</td>
+            <td>Montreal, Canada</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLpr-xdpM8wG-ZTcHhFfAeBthNVZVEtkg9">OWASP AppSec EU 2015</a></td>
+            <td>May 19-22, 2015</td>
+            <td>Amsterdam, Netherlands</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLUOjNfYgonUsE3qq9AyqlFL1sXzZXFrtg">Rooted CON 2015 [Spanish]</a></td>
+            <td>May 5-7, 2015</td>
+            <td>Madrid, Spain</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLREOJpYTa6C5Mia5gJawJyx0WnEPvaudE">SAS Global Forum 2015</a></td>
+            <td>Apr 26-29, 2015</td>
+            <td>Dallas, TX, USA</td>
+        </tr>
+
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLeUGLKUYzh_hr2_j0RNVSD6wZQIhdfoGe">RSA 2015 (Keynotes)</a></td>
+            <td>Apr 20-24, 2015</td>
+            <td>San Francisco, CA, USA</td>
+        </tr>
+
+
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLu1bAtIWt2VbXiy4kNWdtVkWiRWvPoeD6">BSides Orlando</a></td>
+            <td>Apr 11, 2015</td>
+            <td>Orlando, FL, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://vimeo.com/user18478112/videos/sort:date">Infiltrate 2015</a></td>
+            <td>Apr 2015</td>
+            <td>Miami Beach, FL, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLKpjtdatAwij7ajFwQSkmxFm43N9U_T3E">SyScan 2015</a></td>
+            <td>Mar 21-27, 2015</td>
+            <td>Singapore, Singapore</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/channel/UCuJ0qrx-oNq2hxrUX5IYd9A/videos">BSides SLC 2015</a></td>
+            <td>Mar 21, 2015</td>
+            <td>Salt Lake City, UT, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLdh5UOMgeDvkWYaZcUrFagUY2zUtfMafR">Carolina Con 2015</a></td>
+            <td>Mar 4, 2015</td>
+            <td>Raleigh, NC, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm9EMEAOlWO40tv4A-2JERPb">BSides San Francisco 2015</a></td>
+            <td>Feb 28, 2015</td>
+            <td>San Francisco, CA, USA</td>
+        </tr>   
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLXoRjc8jI5RQ5Rr--h0BnuYh17fuQyJwv">DEFCON | OWASP Lucknow InfoSec Conference</a></td>
+            <td>Feb 22, 2015</td>
+            <td>Lucknow, India</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm_by2u3gZUlcPPU0IQtvRTS">BSides Tampa 2015</a></td>
+            <td>Feb 21, 2015</td>
+            <td>Tampa Bay, FL, USA</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/user/nullcon/search?query=2015">NullCon Goa 2015</a></td>
+            <td>Feb 4-5, 2015</td>
+            <td>Goa, India</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLfouvuAjspToHlyi9rnayB1WXFVmH037C">Cyber Threat Intelligence Summit 2015</a></td>
+            <td>Feb 2-9, 2015</td>
+            <td>Washington D.C., USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLpr-xdpM8wG-xWNB98Q2uLN7O8E91xJzK">OWASP AppSec California 2015</a></td>
+            <td>Jan 26-28, 2015</td>
+            <td>Santa Monica, CA, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm-L0fEgmLzf3Rmyt45M5qw0">BSides Columbus 2015</a></td>
+            <td>Jan 19, 2015</td>
+            <td>Columbus, OH, USA</td>
+        </tr>
+        
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLStO1VqVBvmHyVc71QLOCBKugWQyyM7WE">ShmooCon 2015</a></td>
+            <td>Jan 16-18, 2015</td>
+            <td>Washington D.C., USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLSNlEg26NNpzyo5SOikogTjmACDFghLQP">FloCon 2015</a></td>
+            <td>Jan 12-15 2015</td>
+            <td>Portland, OR, USA</td>
+        </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <tr>
+            <td><a href=""></a></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+
+    </tbody>
+</table>
+
+
+<h2>Other Video Caches</h2>
+
+<p><a href="http://www.irongeek.com/">IronGeek &ndash; Adrian Crenshaw records a lot of these conferences. His site has more conferences and more detail for each talk.</a></p>
+
+<p>Rapid 7 <a href="https://www.rapid7.com/resources/videos/">videos</a> and <a href="https://www.rapid7.com/resources/webcasts/us.jsp">webcasts</a> are updated weekly and have a wide variety of topics.</p>
+
+<p><a href="https://www.youtube.com/watch?v=Go77RsVYujc&list=PLp3eqXqiGKwZ7OHGpk-a2VZ2xH2OyGtyf">Popular SANS Institute &amp; Security Videos</a></p>
+
+<p><a href="https://www.youtube.com/user/robtlee73/playlists">SANS Digital Forensics</a> has numerous playlists with lots of great content.</p>
+
+<p><a href="https://www.youtube.com/user/ISC2TV">(ISC)<sup>2</sup> YouTube channel</a></p>
+
+<p><a href="https://www.youtube.com/channel/UC3iAdvT7XGI7LtZxu4qHgRg">HP Security Research Playlist</a></p>
+
+<p><a href="https://www.youtube.com/playlist?list=PLTmfTMRCZvynGaHqbvALoJ2hGJvKvCJ9V">Cyberwarfare &amp; Computer Security Playlist</a></p>
+
+<p><a href="https://www.youtube.com/user/RSAConference/playlists">RSA Keynotes, Lectures, and Sessions</a></p>
+
+<p><a href="https://www.ciscolive.com">Cisco Live &ndash; Requires a CCO login but has most videos from Cisco Live events.</a></p>
+
+<p><a href="http://www.securitytube.net/">Security Tube</a> &ndash; A website that looks for security videos on youtube and provides links to them.</p>
+
+<h2>List of Security Conferences</h2>
+
+<p><a href="https://www.concise-courses.com/security/conferences-of-2015/">2015</a><br>
+<a href="https://www.concise-courses.com/security/conferences-of-2016/">2016</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[XBee S2 Quick Reference Guide/Cheat Sheet and Video Tutorials to Getting Started]]></title>
+    <link href="http://tunnelsup.github.io/xbee-guide/"/>
+    <updated>2012-11-30T00:00:00-08:00</updated>
+    <id>http://tunnelsup.github.io/xbee-guide</id>
+    <content type="html"><![CDATA[<p>When I first got started with XBee I had a hard time getting the right information to help me on the projects I was working on. I put my project on hold and spent a few months simply trying to understand XBee specifically using it with arduino. Below is a cheat sheet or quick reference guide that I use now to reference whenever I&rsquo;m working on a project. It has pretty much all of the information I need to effectively use the XBee in whatever project I&rsquo;m working on.</p>
+
+<p><img class="center" src="/images/xbee.png">
+Download: <a href="/images/xbee.png">[PNG Image]</a> - <a href="/images/XBee-Quick-Reference-Guide.pdf">[PDF File]</a></p>
+
+<p>If you find any problems with this please leave a comment below and I will update the guide periodically.</p>
+
+<h2>Video Tutorial Course: XBee Basics</h2>
+
+<p>I have created 5 videos that walk you through everything on the quick reference guide above. This way you can use the guide effectively as well as learn all about XBees. Links to each lesson is below.</p>
+
+<ul>
+<li><a href="http://www.youtube.com/watch?v=odekkumB3WQ">Video 1: Overview of XBee and how to configure it</a></li>
+<li><a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=mPx3TjzvE9U"> Video 2: XBee with both sides in AT mode (transparent communication)</a></li>
+<li><a href="http://www.youtube.com/watch?v=jh-GIaghIjw"> Video 3: API mode &ndash; Digital Input from remote sensor</a></li>
+<li><a href="http://www.youtube.com/watch?v=rnBx2yqKn_E"> Video 4: API mode &ndash; Analog reading from remote sensor</a></li>
+<li><a href="http://www.youtube.com/watch?v=CzH146rR-7I"> Video 5: API mode &ndash; Digital output to remote sensor</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Arduino Power Usage Project]]></title>
+    <link href="http://tunnelsup.github.io/arduino-power-usage-project/"/>
+    <updated>2011-09-19T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/arduino-power-usage-project</id>
+    <content type="html"><![CDATA[<p>I wanted to see how much power I am consuming in my home at any given moment, so I created this project using arduino.  It features a simple display of LEDs: red representing high energy usage, yellow moderate usage, and green low usage.</p>
+
+<iframe src="http://www.youtube.com/embed/ZAjG0oVoZ-4" frameborder="0" width="420" height="315"></iframe>
+
+
+<h3>Parts List:</h3>
+
+<p><img src="/images/ArduinoMega-150x150.jpg" alt="Arduino Mega - IMG" /></p>
+
+<p><img src="/images/arduino_ethernet_connect1-150x150.jpg" alt="Ethernet Shield - IMG" /></p>
+
+<p><img src="/images/mtu-ct-150x150.jpg" alt="TED - IMG" /></p>
+
+<p><img src="/images/TEDGateway-150x150.jpg" alt="TED Gateway - IMG" /></p>
+
+<ul>
+    <li>Arduino Mega</li>
+    <li>Arduino EthernetShield V1.1</li>
+    <li>TED 5000</li>
+    <li>Linux Webserver</li>
+    <li>9 LEDs (with jumpers and resistors)</li>
+</ul>
+
+
+<h3>Diagram of how they all fit together:</h3>
+
+<p><img src="/images/powerprojectgraphic.png" alt="Project Diagram - IMG" /></p>
+
+<h5>STEP 1 &ndash; TED</h5>
+
+<p><img class="alignnone size-medium wp-image-194" style="float: right;" title="ted-footprints" src="http://tunnelsup.github.io/images/ted-footprints-200x300.jpg" alt="" width="200" height="300" />Get <a href="http://www.theenergydetective.com/">TED (The Energy Detective) </a>working at your house. This is a nifty little unit that has a device called an MTU that sits in your electrical panel to monitor your mains and how much electricity they use. Then it sends that data through the electrical wiring in your house to the gateway. The gateway then has an ethernet cable connected to to it and plugs into your home network.</p>
+
+<p>The TED gateway makes a call every 5 seconds to get a reading from the MTU which is the device sitting in the main electrical panel. In my case, the TED gateway has an IP address of 172.16.200.216. Upon going to that website it has nice graphical display of real time power usage. The picture on the right is what the live kw usage shows on the TED software.</p>
+
+<p>Upon doing some investigations with firebug I found that the website was drawing its information from an xml file called &ldquo;/api/LiveData.xml&rdquo;. This is the xml file that is updated every 5 seconds from the sensor outside.  I examined the xml file and found the current power reading is within the <PowerNow> xml value.</p>
+
+<h5>STEP 2 &ndash; PERL</h5>
+
+<p>Now I thought it would be smart for me to write a perl script on a server that basically goes to TED&rsquo;s XML file that has the data I need and extract just that bit. I&rsquo;m not very good with perl and just wanted something to get the job done so I apologize if this is ugly or isn&rsquo;t effecient. I put this perl script in my cgi-bin directory of my webserver so it can be called remotely. Really the purpose of this is to scrub the data from the xml file and make this a much smaller input for the arduino. The xml file from TED was rather large for arduino to handle every 5 seconds. Here is the perl program I wrote.</p>
+
+<p>```</p>
+
+<h1>!/usr/bin/perl</h1>
+
+<p>use LWP::UserAgent;
+use <a href="HTTP::Request;">HTTP::Request;</a>
+my $agent = LWP::UserAgent->new(env_proxy => 1,keep_alive => 1, timeout => 30);
+my $url = &ldquo;<a href="http://172.16.200.217/api/LiveData.xml">http://172.16.200.217/api/LiveData.xml</a>&rdquo;;
+my $header = <a href="HTTP::Request-">HTTP::Request-</a>>new(GET => $url);
+my $request = <a href="HTTP::Request-">HTTP::Request-</a>>new(&lsquo;GET&rsquo;, $url, $header);
+my $response = $agent->request($request);</p>
+
+<p>if ($response->is_success){
+   print &ldquo;Content-type: text/html\r\n\r\n&rdquo;;
+   if ($response->content=~/<PowerNow>(\d*)&lt;\/PowerNow>/) {</p>
+
+<pre><code>  print $1;
+</code></pre>
+
+<p>   }
+} else {
+ print &ldquo;No response&rdquo;;
+}
+```</p>
+
+<h5>STEP 3 &ndash; ARDUINO</h5>
+
+<p>So now I just need the arduino to make a webcall to my webserver located at 172.16.200.200/cgi-bin/powerget.cgi and then display the LEDs depending on what value comes back. I wired the arduino to a breadboard with 9 LEDS. It looks like this.</p>
+
+<p><img src="/images/IMG_7145-300x225.jpg" alt="Arduino - IMG" /></p>
+
+<p>There are 3 green, 3 yellow and 3 red lights. More lights will light up depending on how much energy is being used. Key to reading lights:</p>
+
+<ol>
+    <li>Below 100W</li>
+    <li>Between 100-500W</li>
+    <li>Between 500-1000W</li>
+    <li>Between 1000-1500W</li>
+    <li>Between 1500-5000W</li>
+    <li>Between 5000-7500W</li>
+    <li>Between 7500-10,000W</li>
+    <li>Between 10,000-12,500W</li>
+    <li>Above 15,000W</li>
+</ol>
+
+
+<p>&nbsp;</p>
+
+<p>Arduino code:</p>
+
+<p>```</p>
+
+<h1>include &lt;EtherShield.h></h1>
+
+<h1>define HTTPPATH &ldquo;/cgi-bin/powerget.cgi&rdquo;</h1>
+
+<h1>define PORT 80</h1>
+
+<h1>define HOSTNAME &ldquo;&rdquo;  //unknown what this value is for yet</h1>
+
+<h1>define BUFFER_SIZE 550</h1>
+
+<p>byte buf[BUFFER_SIZE+1];
+byte websrvip[4] = { 172,16,200,200 }; // set destination IP
+byte mymac[6] = {0x54,0x55,0x58,0x10,0x00,0x25};
+byte myip[4] = {172,16,200,77}; // Arduino&rsquo;s IP
+byte gwip[4] = {172,16,200,2}; // Default gateway.
+byte conn = 0; // used to track connections
+int packetlength = 0; //used in loop
+int powernow = 0; //global current value of power consumption
+const byte numofLEDs = 9;
+byte ledStates[numofLEDs];
+const byte ledPins[numofLEDs] =  {23,24,25,26,27,28,29,30,31}; // the number of the LED pins
+unsigned long timetosend;</p>
+
+<p>EtherShield es=EtherShield();</p>
+
+<p>void browserresult_callback(byte statuscode,word pos){</p>
+
+<pre><code>// Get specific data from the web call (assuming power is never over 99,999W)
+char currentpower[5] = {buf[240], buf[241], buf[242], buf[243], buf[244]};
+// convert the string to an integer to do math on it
+powernow = atoi(currentpower);
+conn = 1; // If conn == 1 then the program knows the network connection worked
+</code></pre>
+
+<p>}</p>
+
+<p>void setup(){</p>
+
+<p>  es.ES_enc28j60Init(mymac); //initialize enc28j60</p>
+
+<p>  //init the ethernet/ip layer:
+  es.ES_init_ip_arp_udp_tcp(mymac, myip, PORT);</p>
+
+<p>  // init the web client:
+  es.ES_client_set_gwip(gwip);
+  es.ES_client_set_wwwip(websrvip);</p>
+
+<p>  // init the pins for LEDs
+  for (byte i = 0; i &lt; numofLEDs; i++) {
+   pinMode(ledPins[i], OUTPUT);
+  }</p>
+
+<p>}</p>
+
+<p>void loop()
+{
+  // handle ping and wait for a tcp packet
+  // calling this routine powers the sending and receiving of data
+  //defined as: uint16_t ES_enc28j60PacketReceive(uint16_t len, uint8_t* packet);
+  packetlength = es.ES_enc28j60PacketReceive(BUFFER_SIZE, buf);
+  es.ES_packetloop_icmp_tcp(buf,packetlength);</p>
+
+<p>  if( millis() &ndash; timetosend > 5000) // every 5 seconds
+  {</p>
+
+<pre><code>  timetosend = millis(); //this number should overload every 50 days or so...
+  //request data from web server place data in buf[] 
+  es.ES_client_browse_url(PSTR(HTTPPATH), NULL , PSTR(HOSTNAME), &amp;browserresult_callback);
+
+  // reset all LEDs back to off
+  for (byte i = 0; i &lt; numofLEDs; i++) {
+    ledStates[i] = LOW;
+    digitalWrite(ledPins[i], ledStates[i]);
+  }
+  // Set which LEDs should be on 
+  if (conn == 1) {
+    if ((powernow &gt; 100) &amp;&amp; numofLEDs&gt;0) ledStates[0] = HIGH;
+    if ((powernow &gt; 500) &amp;&amp; numofLEDs &gt; 1) ledStates[1] = HIGH;
+    if ((powernow &gt; 1000) &amp;&amp; numofLEDs &gt; 2) ledStates[2] = HIGH;
+    if ((powernow &gt; 1500) &amp;&amp; numofLEDs &gt; 3) ledStates[3] = HIGH;
+    if ((powernow &gt; 5000) &amp;&amp; numofLEDs &gt; 4) ledStates[4] = HIGH;
+    if ((powernow &gt; 7500) &amp;&amp; numofLEDs &gt; 5) ledStates[5] = HIGH;
+    if ((powernow &gt; 10000) &amp;&amp; numofLEDs &gt; 6) ledStates[6] = HIGH;
+    if ((powernow &gt; 12500) &amp;&amp; numofLEDs &gt; 7) ledStates[7] = HIGH;
+    if ((powernow &gt; 15000) &amp;&amp; numofLEDs &gt; 8) ledStates[8] = HIGH;
+  } else {
+    // If network outage - turn on the top LED only to indicate a problem
+    if (ledStates[numofLEDs-1] = HIGH);
+  }
+  conn = 0; 
+
+  // Turn on all the LEDs that need to be on
+  for (byte i = 0; i &lt; numofLEDs; i++) {
+   digitalWrite(ledPins[i], ledStates[i]);
+  }
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>A few notes about using that ethernet shield with the arduino mega. First of all I used the Ethershield library located here:
+<a href="http://blog.thiseldo.co.uk/?p=504"> <a href="http://blog.thiseldo.co.uk/?p=504">http://blog.thiseldo.co.uk/?p=504</a></a></p>
+
+<p>Second, I had to hack ethernet board to get the two boards to talk to each other (this was really aggravating and I wish I had a different ethershield to work with). The hack I used was to bend certain pins that we don&rsquo;t need to use and run jumpers to pins we do need to use. I followed the directions here to accomplish this:
+<a href="http://mcukits.com/2009/04/06/arduino-ethernet-shield-mega-hack/"> <a href="http://mcukits.com/2009/04/06/arduino-ethernet-shield-mega-hack/">http://mcukits.com/2009/04/06/arduino-ethernet-shield-mega-hack/</a></a></p>
+
+<p>Now unfortunately I still wasn&rsquo;t done. The ethershield library thinks you have a duemilanove so I had to make one last adjustment. <span style="color: #292929; font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;"><span class="Apple-style-span" style="font-size: 14px; line-height: 17px;">  </span></span></p>
+
+<p>In the file:  enc28j60.h (usually found in arduino\libraries\EtherShield)</p>
+
+<p>I changed the definitions for the SPI interface.  Changed the ports to be as follows:</p>
+
+<p>```</p>
+
+<h1>define DEFAULT_ENC28J60_CONTROL_CS    53</h1>
+
+<h1>define SPI_MOSI                       51</h1>
+
+<h1>define SPI_MISO                       50</h1>
+
+<h1>define SPI_SCK                        52</h1>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>Chromaterm - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="About Chromaterm is a terminal colorization tool that runs on linux and is produced by TunnelsUp.com. It essentially acts as a wrapper for the linux &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tunnelsup.github.io/chromaterm">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Chromaterm</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-16T22:31:00-07:00" pubdate data-updated="true">Jun 16<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>About</h2>
+
+<p>Chromaterm is a terminal colorization tool that runs on linux and is produced by TunnelsUp.com. It essentially acts as a wrapper for the linux shell. Once it starts it then starts a new shell. Any activity within that new shell will be ran through Chromaterm. Chromaterm listens for keywords, that are user defined, and will highlight them with user defined colors.</p>
+
+<p>This can be extremely helpful especially when accessing Cisco routers and firewalls from a central Linux server. Colorizing the ssh screen of a Cisco CLI output is very convenient.</p>
+
+<h2>Screenshots</h2>
+
+<p>Below are screenshots of using chromaterm while SSH&rsquo;d into a Cisco firewall.<br>
+<img src="/images/chroma1.PNG" alt="Chromaterm IMG" /><br>
+<img src="/images/chroma2.PNG" alt="Chromaterm IMG" /><br>
+<img src="/images/chroma3.PNG" alt="Chromaterm IMG" /></p>
+
+<h2>Install</h2>
+
+<p>Installation is easy.</p>
+
+<ul>
+<li><p><a href="https://github.com/tunnelsup/chromaterm">Download the files from github</a>. Either by using the download link or by doing <code>git clone https://github.com/tunnelsup/chromaterm.git</code></p></li>
+<li><p><code>cd chromaterm/src/</code> Go into the src directory.</p></li>
+<li><p><code>./configure</code> Configure the program.</p></li>
+<li><p><code>make</code> Create the binary called ct.</p></li>
+<li><p><code>make install</code> Optional. It will move ct to the ~ directory.</p></li>
+</ul>
+
+
+<p>Once installation is complete a new file called <code>ct</code> will be in the src/ directory. Move this to your home directory. You can start the program by doing the following:</p>
+
+<p><code>./ct &lt;config_file&gt;</code></p>
+
+<h2>Creating the Config file</h2>
+
+<p>Use your text editor of choice to create a file called ct.cfg and put the following in it.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>#run session bash
+</span><span class='line'>#config regex on
+</span><span class='line'>#event {SESSION DISCONNECTED} {#end}
+</span><span class='line'>
+</span><span class='line'>#highlight {&#037;d.&#037;d.&#037;d.&#037;d} {bold yellow}
+</span><span class='line'>#highlight { any } {bold white}
+</span><span class='line'>#highlight {&#123;permit(ted)*}} {bold green}
+</span><span class='line'>#highlight {&#123;(d|D)eny}} {bold red}
+</span><span class='line'>#highlight {&#123; (E|e)rr..}} {bold white}
+</span><span class='line'>#highlight {INSIDE} {bold blue}
+</span><span class='line'>#highlight {OUTSIDE} {bold green}
+</span><span class='line'>#highlight {DMZ} {bold magenta}
+</span><span class='line'>
+</span><span class='line'>#substitute {^Cisco %1 Version %2, %3} {Cisco %1 &lt;134&gt;Version %2&lt;088&gt;, %3}
+</span><span class='line'>#substitute {&#037;1pkts encaps: %d, %3} {&#037;1pkts encaps: &lt;150&gt;%2&lt;088&gt;, %3}
+</span><span class='line'>#substitute {&#037;1pkts decaps: %d, %3} {&#037;1pkts decaps: &lt;120&gt;%2&lt;088&gt;, %3}
+</span><span class='line'>#substitute {&#037;1 uptime is %2} {&#037;1 uptime is &lt;150&gt;%2&lt;088&gt;}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>highlight</code> keyword will simply look for the text in the first argument and colorize it using the color chosen in the second argument.</p>
+
+<p>The <code>substitute</code> keyword will search and replace text display. %1, %2 etc are variables that are stored. They can then be called later to colorize a variable.</p>
+
+<h2>Usage</h2>
+
+<p>You will need a terminal program that can handle VT100 and ANSI color codes. Such programs that can do this are putty, SecureCRT, or any native Linux terminal.</p>
+
+<p>Start chromaterm using the following command: <code>./ct ct.cfg</code></p>
+
+<p>Once Chromaterm is running use the <code>#help</code> command to display help. Some useful help commands:</p>
+
+<p><code>#help highlight</code><br>
+<code>#help substitute</code><br>
+<code>#help colors</code><br>
+<code>#help colordemo</code></p>
+
+<p>To exit chromaterm type:<br>
+<code>#end</code></p>
+
+<p>You can then edit the ct.cfg file to your satisfaction to add more keyword highlighting or change colors. A sample ct.cfg file is included in the files which is what I use as my config.</p>
+
+<p>Now that it&rsquo;s running you can test it by telnetting or ssh&#8217;ing into a device and watch how highlighted keywords defined in the config file will become colorized.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-16T22:31:00-07:00" pubdate data-updated="true">Jun 16<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/chromaterm/'>chromaterm</a>, <a class='category' href='/tup/tag/misc/'>misc</a>, <a class='category' href='/tup/tag/tips/'>tips</a>, <a class='category' href='/tup/tag/tools/'>tools</a>, <a class='category' href='/tup/tag/workflow/'>workflow</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tunnelsup.github.io/chromaterm/" data-via="tunnelsup" data-counturl="http://tunnelsup.github.io/chromaterm/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tunnelsup.github.io/chromaterm/';
+        var disqus_url = 'http://tunnelsup.github.io/chromaterm/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>

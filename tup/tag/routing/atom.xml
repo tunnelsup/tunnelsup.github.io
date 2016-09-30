@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: routing | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/routing/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Route Add Windows - A Guide to Windows Routing]]></title>
+    <link href="http://tunnelsup.github.io/route-add-windows-a-guide-to-windows-routing/"/>
+    <updated>2016-04-25T08:41:00-07:00</updated>
+    <id>http://tunnelsup.github.io/route-add-windows-a-guide-to-windows-routing</id>
+    <content type="html"><![CDATA[<p>Sometimes you need to manually add, change, or remove a route on a Windows machine. Here is quick guide to help you accomplish these tasks.</p>
+
+<p>First start by opening a CMD prompt by going to start then typing <code>cmd</code>.</p>
+
+<p>These commands should work for Win XP, Win Vista, Win 98, Win NT, Win 2000, Win 2008, Win 2012, Win 7, Win 8, Win 10.</p>
+
+<h2>Show the Current Routing Table</h2>
+
+<p>```</p>
+
+<h1>C:>route print</h1>
+
+<p>Interface List
+ 11&hellip;54 ee 75 5b e3 c9 &hellip;&hellip;Intel&reg; Ethernet Connection (3) I218-LM</p>
+
+<h1> 13&hellip;5c e0 c5 7f e4 c8 &hellip;&hellip;Intel&reg; Dual Band Wireless-AC 7265</h1>
+
+<h1>IPv4 Route Table</h1>
+
+<p>Active Routes:
+Network Destination        Netmask          Gateway       Interface  Metric</p>
+
+<pre><code>      0.0.0.0          0.0.0.0   192.168.177.1    192.168.177.30     10
+    127.0.0.0        255.0.0.0         On-link         127.0.0.1    306
+ 192.168.60.0    255.255.255.0         On-link      192.168.60.1    276
+ 192.168.60.1  255.255.255.255         On-link      192.168.60.1    276
+</code></pre>
+
+<p>   192.168.60.255  255.255.255.255         On-link      192.168.60.1    276</p>
+
+<pre><code>192.168.177.0    255.255.255.0         On-link     192.168.177.1    276
+192.168.177.1  255.255.255.255         On-link     192.168.177.1    276
+</code></pre>
+
+<h1>  192.168.177.255  255.255.255.255         On-link     192.168.177.1    276</h1>
+
+<p>Persistent Routes:
+  None</p>
+
+<p>```</p>
+
+<p>The default route is represented by A destination/netmask of <code>0.0.0.0</code>. If there isn&rsquo;t a route with a more specific destination and netmask, the default route is used.</p>
+
+<p>Use this <a href="/subnet-calculator/">subnet calculator</a> if you need help subnetting.</p>
+
+<h2>Add a Static Route</h2>
+
+<p>To add a route to the routing table use the <code>route add</code> command. An example looks like this:</p>
+
+<p><code>
+route add 10.0.0.0 mask 255.0.0.0 192.168.177.1
+</code></p>
+
+<p>You can optionally add a <code>metric 2</code> to the end if you want to add a specific weight to the route. The routes with the lowest metric will take precedence over higher metrics. By default, static routes have a metric of 6.</p>
+
+<p>You can also optionally add a <code>IF 2</code> to the end. This will force the route to use interface 2. You can see what interface numbers you have with the <code>route print</code> command.</p>
+
+<p>```
+Active Routes:
+Network Destination        Netmask          Gateway       Interface  Metric</p>
+
+<pre><code>     10.0.0.0        255.0.0.0         On-link     172.16.177.30      6
+</code></pre>
+
+<p>```</p>
+
+<h2>Remove a Static Route</h2>
+
+<p>To remove a route you must use the <code>route delete</code> command and the destination.</p>
+
+<p><code>
+route delete 10.0.0.0
+</code></p>
+
+<h2>Change a Static Route</h2>
+
+<p>If you simply want to update a static route you can use the <code>route change</code> command.</p>
+
+<p><code>
+route CHANGE 157.0.0.0 MASK 255.0.0.0 157.55.80.5 METRIC 2 IF 2
+</code></p>
+
+<h2>Troubleshooting</h2>
+
+<p>If you get the following error:
+<code>The requested operation requires elevation.</code></p>
+
+<p>To resolve this you will need administrator access to the system. Go to the start menu and when you type <code>cmd</code> right click on the cmd.exe program and click <code>Run As Administrator</code>. This opens a CMD prompt with more privileges.</p>
+
+<p>For any further help you can use the built in help the route command provides. Simply type <code>route</code> and hit enter.</p>
+
+<p>```
+C:>route</p>
+
+<p>Manipulates network routing tables.</p>
+
+<p>ROUTE [-f] [-p] [-4|-6] command [destination]</p>
+
+<pre><code>              [MASK netmask]  [gateway] [METRIC metric]  [IF interface]
+</code></pre>
+
+<p>  -f           Clears the routing tables of all gateway entries.  If this is</p>
+
+<pre><code>           used in conjunction with one of the commands, the tables are
+           cleared prior to running the command.
+</code></pre>
+
+<p>  -p           When used with the ADD command, makes a route persistent across</p>
+
+<pre><code>           boots of the system. By default, routes are not preserved
+           when the system is restarted. Ignored for all other commands,
+           which always affect the appropriate persistent routes. This
+           option is not supported in Windows 95.
+</code></pre>
+
+<p>  -4           Force using IPv4.</p>
+
+<p>  -6           Force using IPv6.</p>
+
+<p>  command      One of these:</p>
+
+<pre><code>             PRINT     Prints  a route
+             ADD       Adds    a route
+             DELETE    Deletes a route
+             CHANGE    Modifies an existing route
+</code></pre>
+
+<p>  destination  Specifies the host.
+  MASK         Specifies that the next parameter is the &lsquo;netmask&rsquo; value.
+  netmask      Specifies a subnet mask value for this route entry.</p>
+
+<pre><code>           If not specified, it defaults to 255.255.255.255.
+</code></pre>
+
+<p>  gateway      Specifies gateway.
+  interface    the interface number for the specified route.
+  METRIC       specifies the metric, ie. cost for the destination.</p>
+
+<p>All symbolic names used for destination are looked up in the network database
+file NETWORKS. The symbolic names for gateway are looked up in the host name
+database file HOSTS.</p>
+
+<p>If the command is PRINT or DELETE. Destination or gateway can be a wildcard,
+(wildcard is specified as a star &lsquo;*&rsquo;), or the gateway argument may be omitted.</p>
+
+<p>If Dest contains a * or ?, it is treated as a shell pattern, and only
+matching destination routes are printed. The &lsquo;<em>&rsquo; matches any string,
+and &lsquo;?&rsquo; matches any one char. Examples: 157.</em>.1, 157.<em>, 127.</em>, <em>224</em>.</p>
+
+<p>Pattern match is only allowed in PRINT command.
+Diagnostic Notes:</p>
+
+<pre><code>Invalid MASK generates an error, that is when (DEST &amp; MASK) != DEST.
+Example&gt; route ADD 157.0.0.0 MASK 155.0.0.0 157.55.80.1 IF 1
+         The route addition failed: The specified mask parameter is invalid.
+</code></pre>
+
+<p> (Destination &amp; Mask) != Destination.</p>
+
+<p>Examples:</p>
+
+<pre><code>&gt; route PRINT
+&gt; route PRINT -4
+&gt; route PRINT -6
+&gt; route PRINT 157*          .... Only prints those matching 157*
+
+&gt; route ADD 157.0.0.0 MASK 255.0.0.0  157.55.80.1 METRIC 3 IF 2
+         destination^      ^mask      ^gateway     metric^    ^
+                                                     Interface^
+  If IF is not given, it tries to find the best interface for a given
+  gateway.
+&gt; route ADD 3ffe::/32 3ffe::1
+
+&gt; route CHANGE 157.0.0.0 MASK 255.0.0.0 157.55.80.5 METRIC 2 IF 2
+
+  CHANGE is used to modify gateway and/or metric only.
+
+&gt; route DELETE 157.0.0.0
+&gt; route DELETE 3ffe::/32
+</code></pre>
+
+<p>```</p>
+
+<p>Check out this article for more <a href="/using-the-windows-command-line-like-a-pro/">cool Windows CLI commands</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>

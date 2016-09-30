@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: sublime text | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/sublime-text/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to open Sublime Text from the command line using Mac OSX]]></title>
+    <link href="http://tunnelsup.github.io/how-to-open-sublime-text-from-the-command-line-using-mac-osx/"/>
+    <updated>2014-11-08T19:32:00-08:00</updated>
+    <id>http://tunnelsup.github.io/how-to-open-sublime-text-from-the-command-line-using-mac-osx</id>
+    <content type="html"><![CDATA[<p>To open Sublime Text from a command line or terminal in Mac OSX requires a small configuration change but is possible.</p>
+
+<h3>Identify the executable</h3>
+
+<p>Try this command from the command prompt:</p>
+
+<p><code>/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl</code></p>
+
+<p>It should open Sublime Text from the command line. This path might be slightly different on some installs like it may say <code>Sublime\ Text\ 2.app</code>. So if you get no such file then look around a little to find the right path.</p>
+
+<h3>Create a symbolic link</h3>
+
+<p>From the command line confirm that <code>/usr/local/bin</code> is in your path by doing the following command:</p>
+
+<p><code>echo $PATH</code></p>
+
+<p>If it is there then create a symbolic link in that directory that points to the subl program. Here is the command to do this:</p>
+
+<p><code>sudo ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl</code></p>
+
+<p>This is the same path that we identified in step one.</p>
+
+<p>After that you should be able to simply type <code>subl</code> at a command line prompt and open the program.</p>
+
+<h3>Using the command</h3>
+
+<p>To open a single file:<br>
+<code>subl /path/to/filename.txt</code></p>
+
+<p>To open a whole directory:<br>
+<code>subl .</code></p>
+
+<p>To see additonal command usage:<br>
+<code>subl --help</code></p>
+
+<p>Additional command line usage can be seen here:<br>
+<a href="http://www.sublimetext.com/docs/2/osx_command_line.html">subl command for ST2</a><br>
+<a href="http://www.sublimetext.com/docs/3/osx_command_line.html">subl command for ST3</a></p>
+]]></content>
+  </entry>
+  
+</feed>

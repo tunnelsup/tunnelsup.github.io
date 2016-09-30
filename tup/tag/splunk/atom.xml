@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: splunk | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/splunk/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Troubleshooting High CPU on a Cisco ASA]]></title>
+    <link href="http://tunnelsup.github.io/troubleshooting-high-cpu-on-a-cisco-asa/"/>
+    <updated>2014-04-28T19:03:00-07:00</updated>
+    <id>http://tunnelsup.github.io/troubleshooting-high-cpu-on-a-cisco-asa</id>
+    <content type="html"><![CDATA[<p>Is your ASA having a High CPU issue? Here&rsquo;s some methods for troubleshooting the issue.</p>
+
+<h2>Find out what process is causing the CPU to be high</h2>
+
+<p>To see what the current CPU usage is:</p>
+
+<p><code>
+asa# show cpu usage
+CPU utilization for 5 seconds = 94%; 1 minute: 92%; 5 minutes: 92%
+</code></p>
+
+<ul>
+<li>Under normal conditions the CPU should stay below 50% (baseline as per network); if the CPU reaches 100% the firewall will start dropping packets</li>
+<li>FWSM CPU is used for limited traffic processing; during ACL compilation CPU is expected to be near 100% until ACL is compiled</li>
+<li>The show cpu usage command displays the CPU over time as a running average</li>
+</ul>
+
+
+<p>Now take a look at what the top process is that&rsquo;s causing it.</p>
+
+<p><code>
+asa# show processes cpu-usage sorted non-zero
+PC           Thread        5Sec     1Min     5Min    Process
+0x08298b79   0x6e5d4e14    82.1%    82.3%    83.6%   Dispatch Unit
+0x090f20ad   0x6e5ca0b0     0.1%     0.0%     0.0%   ssh
+0x09192b79   0x6e5bd330     0.1%     0.0%     0.0%   snmp
+0x08ca2340   0x6e5cdca0     0.1%     0.1%     0.1%   Unicorn Admin Handler
+0x0913e27c   0x6e5cb1d0     0.1%     0.1%     0.1%   Logger
+0x09155cba   0x6e5a71fc     0.0%     0.0%     0.4%   ssh
+</code></p>
+
+<p>Notice what process is taking up the most of the CPU. In this case it&rsquo;s Dispatch Unit.</p>
+
+<p>This command was first Introduced in Cisco ASA Version 7.2(4.11), 8.0(4.5), 8.1(1.100), 8.2(1)50</p>
+
+<h2>Troubleshooting High CPU related to Dispatch Unit</h2>
+
+<p>In short, dispatch unit is the process that processes traffic. In general when this is high it means that traffic is overwhelming the firewall and the firewall can&rsquo;t keep up. This could be due to too much traffic hitting a specific ACL, policy, class or other ASP drop reason.</p>
+
+<p>If you have a high CPU due to dispatch unit you first must identify what traffic is causing this. If you normally don&rsquo;t have a high CPU then it shouldn&rsquo;t be too hard to identify what traffic is causing this problem.</p>
+
+<p>Let&rsquo;s start by examining the following show commands:</p>
+
+<p><code>show interface</code>
+Do you see any input or output errors? If so, take a look at the <a href="http://www.tunnelsup.com/understanding-cisco-asa-interface-counters-and-statistics/">meaning of interface counters</a> post to determine what the drops are.</p>
+
+<p><code>show traffic</code>
+Does any interface have an unusually high amount of packets/bytes going through it?</p>
+
+<p><code>show perfmon</code>
+Does any stat seem crazy high?</p>
+
+<p><code>show service-policy</code>
+Are any of the inspects rising very quickly?</p>
+
+<p>Another thing to use is Splunk or a syslog collector to determine what is happening on the device. If you are using Splunk to collect logs from this ASA you could do a search like so:</p>
+
+<p><code>&lt;ASA-IP&gt;  | stats count by error_code event_desc | sort 10 -count</code></p>
+
+<p>This will show you something like this:</p>
+
+<p><code>
+error_code  event_desc                                                                                                      count
+419002        Received duplicate TCP SYN with different initial sequence number.                                                87874
+106023        Deny protocol src by access_group acl_ID                                                                        7390
+305013        Asymmetric NAT rules matched for forward and reverse flows; Connection denied due to NAT reverse path failure.    618
+420003        IPS requested to reset TCP connection from ifc_in:SIP/SPORT to ifc_out:DIP/DPORT                                439
+420002        IPS requested to drop ICMP packets ifc_in:SIP to ifc_out:DIP (typeICMP_TYPE, code ICMP_CODE)                    73
+</code></p>
+
+<p>In the case above you can see that syslog message 419002 is triggering a crazy amount of syslogs. Investigate that syslog message to find what the biggest traffic flow is that is responsible for that. You could do a Splunk search like so:</p>
+
+<p><code>&lt;ASA-IP&gt; error_code="419002" | stats count by src_ip dest_ip dest_port | sort -count</code></p>
+
+<p>With a search like that you may get a result like this:</p>
+
+<p><code>
+src_ip             dest_ip         dest_port     count
+10.21.21.21        10.100.100.1    8530        80598
+192.168.49.168    192.168.200.112    80            237
+192.168.49.168    192.168.200.112    443            235
+</code></p>
+
+<p>Now you know that the flow between <code>10.21.21.21</code> and <code>10.100.100.1</code> is doing a large amount of SYN flooding. Try shunning that source IP for a while to see if traffic dies down. Or find the offending user and tell them to stop.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA Botnet License]]></title>
+    <link href="http://tunnelsup.github.io/cisco-asa-botnet-license/"/>
+    <updated>2013-05-08T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-asa-botnet-license</id>
+    <content type="html"><![CDATA[<p>Information regarding the Cisco ASA Botnet License.</p>
+
+<h2>What is it?</h2>
+
+<p>Botnet Traffic Filter is an extra license that can be applied to a Cisco ASA firewall that provides detection and automatic blocking of known bots and botnets. The firewall grabs updates from Cisco&rsquo;s website to know which IPs to look for and block.</p>
+
+<p>Besides stopping outside botnets from coming into the network the botnet filter is also very effective at identifying which hosts may have malicious software within the network. It will stop internal hosts from going out to a known botnet IP. It has the ability to listen for call-home or command/control behavior seen within the network.</p>
+
+<h2>License</h2>
+
+<p>It is time based. The SKU is something like L-ASA55xx-BOT-1YR=</p>
+
+<p>It costs between $200-$1500 per year. I will only fully work on version 8.2.2 and up.</p>
+
+<p>Purchase license. Apply it using the activation-key command.</p>
+
+<p>Requires the 3DES/AES license (this license is free but does not ship with an ASA).</p>
+
+<h2>Initial Configuration</h2>
+
+<p>The firewall needs to communicate to update-manifests.ironport.com. This means it has to have a valid DNS lookup mechanism. To get this going do something like the following:</p>
+
+<p><code>
+dns domain-lookup INSIDE
+DNS server-group DefaultDNS
+name-server 10.2.2.2
+</code></p>
+
+<p>There are over 70,000 DNS names that are in the Cisco database and only 5000 IP addresses. To effectively look at each domain name, DNS snooping must be turned on. To do that issue the following commands:</p>
+
+<p>```
+class-map dynamic-filter_snoop_class
+  match port udp eq domain</p>
+
+<p>policy-map global_policy
+  class dynamic-filter_snoop_class</p>
+
+<pre><code>inspect dns preset_dns_map dynamic-filter-snoop
+</code></pre>
+
+<p>```</p>
+
+<p>Next turn on the dynamic-filters. I like to start by blocking everything that is blacklisted and whitelist the CEO&rsquo;s IP from being blocked. Do this by issuing the following commands:</p>
+
+<p><code>
+dynamic-filter updater-client enable
+dynamic-filter use-database
+dynamic-filter enable interface OUTSIDE
+dynamic-filter drop blacklist interface OUTSIDE
+dynamic-filter whitelist
+address 10.1.4.4 255.255.255.255
+</code></p>
+
+<h2>Checking to see what&rsquo;s happening</h2>
+
+<p>Verify the ASA is downloading the rules:</p>
+
+<p><code>
+show dynamic-filter updater-client
+</code></p>
+
+<br />
+
+
+<p>Verify traffic is being inspected:</p>
+
+<p><code>
+show dynamic-filter statistics
+</code></p>
+
+<p>The show command above will tell you the <code>Total conns classified</code>. This number will only go up if traffic hits a whitelist blacklist or greylist. Cisco has a bugid CSCti70280 which is super confusing because it makes us think this isn&rsquo;t intended behavior.</p>
+
+<br />
+
+
+<p>View which hosts are being blocked:</p>
+
+<p><code>
+show dynamic-filter reports infected-host all
+</code></p>
+
+<br />
+
+
+<p>A good test to conduct to see if your botnet is working is to look at the output of <code>show dynamic-filter data</code> and look for one of the hosts that&rsquo;s in the &ldquo;sample contents from database&rdquo;. Try to get to one of those hosts on port 80 making sure your traffic will go through this firewall. You should then see your statistics going up and if you&rsquo;re blocking blacklisted hosts then your session should be blocked.</p>
+
+<br />
+
+
+<p>More information on Cisco&rsquo;s website:</p>
+
+<p><a href="http://www.cisco.com/en/US/docs/security/asa/asa82/configuration/guide/conns_botnet.html#wp1129967">http://www.cisco.com/en/US/docs/security/asa/asa82/configuration/guide/conns_botnet.html#wp1129967</a></p>
+]]></content>
+  </entry>
+  
+</feed>

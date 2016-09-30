@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: interface | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/interface/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[View Interface Statistics on ScreenOS]]></title>
+    <link href="http://tunnelsup.github.io/view-interface-statistics-on-screenos/"/>
+    <updated>2013-09-06T11:11:00-07:00</updated>
+    <id>http://tunnelsup.github.io/view-interface-statistics-on-screenos</id>
+    <content type="html"><![CDATA[<h2>Get command to see interface statistics on a SSG/ScreenOS</h2>
+
+<p><code>get counter statistics interface &lt;interface&gt;</code></p>
+
+<p>This will display the following result:<br></p>
+
+<p>```
+FLFW1-> get count stati int eth0/2
+Hardware counters for interface ethernet0/2:
+in bytes      2391954371 | out bytes     2188210410 | early frame            0
+in packets    2536213416 | out packets    926090442 | late frame             0
+in no buffer           0 | out no buffer          0 | re-xmt limit           0
+in overrun             0 | out underrun           0 | drop vlan              0
+in coll err            0 | out coll err           0 | out cs lost            0
+in misc err            0 | out misc err           0 |                       <br/>
+in dma err             0 | out bs pak             0 |                       <br/>
+in crc err             0 | out discard            0 |                       <br/>
+in align err           0 | out defer              0 |                       <br/>
+in short frame         0 | out heartbeat          0 |</p>
+
+<p>Hardware 64-bit counters for interface ethernet0/2:
+in bytes                7278066553795 |  out bytes               1376577745130
+in ucast                   6831180712 |  out ucast                  5221057738
+in mcast                            0 |  out mcast                           0
+in bcast                            0 |  out bcast                           0</p>
+
+<p>Total flow counters for interface ethernet0/2:
+in bytes      1363202958 | out bytes     2188210410 | tcp proxy              0
+in packets    2521677948 | out packets    926090442 | tear drop            387
+in vlan                0 | out vlan               0 | in permit     3912073647
+out permit    1539534845 | src route              0 | no g-parent            0
+ping of death          0 | no gate sess           0 | address spoof          0
+in icmp         12232565 | no nat vector         11 | land attack            0
+in self                0 | no map                 0 | icmp flood         77599
+in un-auth             0 | no conn                0 | no arp entry           0
+udp flood              0 | in unk prot            0 | no dip                 0
+winnuke                0 | in vpn         222640182 | no gate                0
+port scan            194 | in other               0 | no xmit vpnf           0
+ip sweep               0 | no mac                 0 | no route               0
+tcp out of seq     88121 | mac relearn            0 | no frag sess           0
+wrong intf             0 | slow mac               0 | no frag netpak         0
+wrong slot             0 | trmng queue            0 | no sa                734
+icmp broadcast         0 | trmng drop             0 | no sa policy           0
+illegal pak      4739684 | tiny frag              0 | sa inactive        52449
+url block              2 | syn frag               0 | sa policy deny         0
+encrypt fail           0 | connections            0 | policy deny            0
+mp fail                0 | misc prot              0 | auth deny              0
+auth fail              2 | loopback drop         16 | big bkstr              0
+proc sess              0 | mal url                0 | sessn thresh           0
+invalid zone           0 | null zone              0 | no nsp-tunnel          0
+IP cls failure         0 | first pak frag        18 | unknown pak     14532135
+multiauth drop         0 | multi-DIP drop         0 | tcp sweep              0
+udp sweep              0 | tcp check drop         0 |
+```</p>
+
+<h2>Deciphering Output</h2>
+
+<p><code>address spoof</code>   Number of suspected address spoofing attack packets received<br>
+<code>auth deny</code>   Number of times user authentication was denied<br>
+<code>auth fail</code>   Number of times user authentication failed<br>
+<code>big bkstr</code>   Number of packets that are too big to buffer in the ARP back store while waiting for MAC-to-IP address resolution<br>
+<code>connections</code>   Number of sessions established since the last boot<br>
+<code>encrypt fail</code>  Number of failed Point-to-Point Tunneling Protocol (PPTP) packets<br>
+<code>*icmp broadcast</code>   Number of ICMP broadcasts received<br>
+<code>icmp flood</code>  Number of ICMP packets that are counted toward the ICMP flood threshold<br>
+<code>illegal pak</code>   Number of packets dropped because they do not conform to the protocol standards<br>
+<code>in arp req</code>  Number of incoming arp request packets<br>
+<code>in arp resp</code>   Number of outgoing arp request packets<br>
+<code>in bytes</code>  Number of bytes received<br>
+<code>in icmp</code>   Number of Internet Control Message Protocol (ICMP) packets received<br>
+<code>in other</code>  Number of incoming packets that are of a different Ethernet type<br>
+<code>in packets</code>  Number of packets received<br>
+<code>in self</code>   Number of packets addressed to the Management IP address<br>
+<code>*in un auth</code>   Number of unauthorized incoming TCP, UDP, and ICMP packets<br>
+<code>*in unk prot</code>  Number of incoming packets using an unknown Ethernet protocol<br>
+<code>in vlan</code>   Number of incoming vlan packets<br>
+<code>in vpn</code>  Number of IPsec packets received<br>
+<code>invalid zone</code>  Number of packets destined for an invalid security zone<br>
+<code>ip sweep</code>  Number of packets received and discarded beyond the specified ip sweep threshold<br>
+<code>land attack</code>   Number of suspected land attack packets received<br>
+<code>loopback drop</code>   Number of packets dropped because they cannot be looped back through the security device. An example of a loopback session is when a host in the Trust zone sends traffic to a MIP or VIP address that is mapped to a server that is also in the Trust zone. The security device creates a loopback session that directs such traffic from the host to the MIP or VIP server. mac relearn Number of times that the MAC address learning table had to relearn the interface associated with a MAC address because the location of the MAC address changed<br>
+<code>mac tbl full</code>  Number of times that the MAC address learning table completely filled up<br>
+<code>mal url</code>   Number of blocked packets destined for a URL determined to be malicious<br>
+<code>*misc prot</code>  Number of packets using a protocol other than TCP, UDP, or ICMP<br>
+<code>mp fail</code>   Number of times a problem occurred when sending a PCI message between the master processor module and the processor module<br>
+<code>no conn</code>   Number of packets dropped because of unavailable Network Address Translation (NAT) connections<br>
+<code>no dip</code>  Number of packets dropped because of unavailable Dynamic IP (DIP) addresses<br>
+<code>no frag netpak</code>  Number of times that the available space in the netpak buffer fell below 70%<br>
+<code>*no frag sess</code>   The number of times that fragmented sessions were greater than half of the maximum number of NAT sessions<br>
+<code>no g-parent</code>   Number of packets dropped because the parent connection could not be found<br>
+<code>no gate</code>   Number of packets dropped because no gate was available<br>
+<code>no gate sess</code>  Number of terminated sessions because there were no gates in the firewall for them<br>
+<code>no map</code>  Number of packets dropped because there was no map to the trusted side<br>
+<code>no nat vector</code>   Number of packets dropped because the Network Address Translation (NAT) connection was unavailable for the gate<br>
+<code>*no nsp tunnel</code>  Number of dropped packets sent to a tunnel interface to which no VPN tunnel is bound<br>
+<code>no route</code>  Number of unroutable packets received<br>
+<code>no sa</code>   The number of packets dropped because no Security Associations (SA) was defined<br>
+<code>no sa policy</code>  Number of packets dropped because no policy was associated with an SA<br>
+<code>*no xmit vpnf</code>   Number of dropped VPN packets due to fragmentation<br>
+<code>null zone</code>   Number of dropped packets erroneously sent to an interface bound to the Null zone<br>
+<code>nvec err</code>  Number of packets dropped because of NAT vector error<br>
+<code>out bytes</code>   Number of bytes sents<br>
+<code>out defer</code>   Number of deferred outgoing packets<br>
+<code>out packets</code>   Number of packets sent<br>
+<code>out defer</code>   Number of deferred outgoing packets<br>
+<code>out vlan</code>  Number of outgoing vlan packets<br>
+<code>ping of death</code>   Number of suspected Ping of Death attack packets received<br>
+<code>policy deny</code>   Number of packets denied by a defined policy<br>
+<code>port scan</code>   Number of packets that are counted as a port scan attempt<br>
+<code>proc sess</code>   Number of times that the total number of sessions on a processor module exceeded the maximum threshold<br>
+<code>sa inactive</code>   Number of packets dropped because of an inactive SA<br>
+<code>sa policy deny</code>  Number of packets denied by an SA policy<br>
+<code>sessn thresh</code>  the threshold for the maximum number of sessions<br>
+<code>*slow mac</code>   Number of frames whose MAC addresses were slow to resolve<br>
+<code>src route</code>   Number of packets dropped because of the filter source route option<br>
+<code>syn frag</code>  Number of dropped SYN packets because of a fragmentation<br>
+<code>tcp out of seq</code>  Number of TCP segments received whose sequence number is outside the acceptable range<br>
+<code>tcp proxy</code>   Number of packets dropped from using a TCP proxy such as the SYN flood protection option or user authentication<br>
+<code>teardrop</code>  Number of packets blocked as part of a suspected Teardrop attack<br>
+<code>tiny frag</code>   Number of tiny fragmented packets received<br>
+<code>trmn drop</code>   Number of packets dropped by traffic management<br>
+<code>trmng queue</code>   Number of packets waiting in the queue<br>
+<code>udp hdlen err</code>   Number of packets where the IP header is less than the IP header + UDP header.  If IP Total Length is less than 28 bytes (8 bytes UDP header + 20 bytes IP header), it will increase this counter.  This type of traffic is not valid.<br>
+<code>udp flood</code>   Number of UDP packets that are counted toward the UDP flood threshold<br>
+<code>unknown pak</code>   Any packets with an Ethernet type that the firewall does not recognize. Examples would be Spanning Tree or proprietary Cisco protocols that the firewall does not pass or is capable of reading. When the firewall sees a packet with a Ethernet type it does not recognize, it will drop the packet and increment the &lsquo;unknown pak&rsquo; counter.<br>
+<code>url block</code>   Number of HTTP requests that were blocked<br>
+<code>winnuke</code>   Number of WinNuke attack packets received<br>
+<code>wrong intf</code>  Number of session creation messages sent from a processor module to the master processor module<br>
+<code>wrong slot</code>  Number of packets erroneously sent to the wrong processor module<br></p>
+
+<h2>Sources</h2>
+
+<p><a href="http://kb.juniper.net/InfoCenter/index?page=content&amp;id=KB4257">http://kb.juniper.net/InfoCenter/index?page=content&amp;id=KB4257</a><br>
+<a href="http://kb.juniper.net/InfoCenter/index?page=content&amp;id=KB4261">http://kb.juniper.net/InfoCenter/index?page=content&amp;id=KB4261</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Understanding Cisco ASA interface counters and statistics]]></title>
+    <link href="http://tunnelsup.github.io/understanding-cisco-asa-interface-counters-and-statistics/"/>
+    <updated>2013-07-29T13:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/understanding-cisco-asa-interface-counters-and-statistics</id>
+    <content type="html"><![CDATA[<p>Upon doing a show interface command a lot of valuable information is displayed regarding the packets and errors on that interface.</p>
+
+<p>```
+USS-ASA/pri/act# sh int GigabitEthernet0/1
+Interface GigabitEthernet0/1 &ldquo;inside&rdquo;, is up, line protocol is up
+  Hardware is i82546GB rev03, BW 1000 Mbps, DLY 10 usec</p>
+
+<pre><code>    Full-Duplex(Full-duplex), 100 Mbps(100 Mbps)
+    Input flow control is unsupported, output flow control is off
+    MAC address 442b.442b.442b, MTU 1500
+    IP address 172.16.250.26, subnet mask 255.255.255.240
+    16433456 packets input, 2581392514 bytes, 0 no buffer
+    Received 111 broadcasts, 0 runts, 0 giants
+    0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+    0 pause input, 0 resume input
+    0 L2 decode drops
+    24943232 packets output, 28662026144 bytes, 430 underruns
+    0 pause output, 0 resume output
+    0 output errors, 0 collisions, 0 interface resets
+    0 late collisions, 0 deferred
+    0 input reset drops, 0 output reset drops, 0 tx hangs
+    input queue (blocks free curr/low): hardware (255/230)
+    output queue (blocks free curr/low): hardware (254/0)
+</code></pre>
+
+<p>  Traffic Statistics for &ldquo;inside&rdquo;:</p>
+
+<pre><code>    16433456 packets input, 2214576498 bytes
+    24943662 packets output, 28202920165 bytes
+    28768 packets dropped
+  1 minute input rate 178 pkts/sec,  18825 bytes/sec
+  1 minute output rate 267 pkts/sec,  306674 bytes/sec
+  1 minute drop rate, 0 pkts/sec
+  5 minute input rate 255 pkts/sec,  16417 bytes/sec
+  5 minute output rate 422 pkts/sec,  548955 bytes/sec
+  5 minute drop rate, 0 pkts/sec
+</code></pre>
+
+<p>```</p>
+
+<p>Let&rsquo;s break this down line by line.</p>
+
+<h2>General Interface Details</h2>
+
+<p><code>Interface GigabitEthernet0/1 "inside", is up, line protocol is up</code><br>
+Interface number, name, status. The &ldquo;is up&rdquo; status can be up or administratively down. The like protocol status is either up (indicating there is a working cable plugged into the interface) or down (indicating the cable is either unplugged or incorrect).</p>
+
+<p><code>Hardware is i82546GB rev03, BW 1000 Mbps, DLY 10 usec</code><br>
+Hardware is the chip type used in the interface. The valid options here are:<br></p>
+
+<ul>
+<li>i82542 &ndash; Intel PCI Fiber Gigabit card used on PIX platforms</li>
+<li>i82543 &ndash; Intel PCI-X Fiber Gigabit card used on PIX platforms</li>
+<li>i82546GB &ndash; Intel PCI-X Copper Gigabit used on ASA platforms</li>
+<li>i82547GI &ndash; Intel CSA Copper Gigabit used as backplane on ASA platforms</li>
+<li>i82557 &ndash; Intel PCI Copper Fast Ethernet used on ASA platforms</li>
+<li>i82559 &ndash; Intel PCI Copper Fast Ethernet used on PIX platforms</li>
+<li>VCS7380 &ndash; Vitesse Four Port Gigabit Switch used in SSM-4GE</li>
+</ul>
+
+
+<p>Displayed on this line is also the maximum bandwidth and delay that can be on this interface.</p>
+
+<p><code>Full-Duplex(Full-duplex), 100 Mbps(100 Mbps)</code><br>
+Duplex and speed settings. If the line is down, the configured values are displayed. If the line is up the negotiated or actual values will be in parenthesis.</p>
+
+<p><code>Input flow control is unsupported, output flow control is off</code><br>
+Optional message. Some examples are:<br>
+If you do not configure a name, you see the following message: Available but not configured via nameif<br>
+If an interface is a member of a redundant interface, you see the following message: Active member of Redundant5<br>
+On a multi context firewall, in the system context you might see the following message: Available for allocation to a context<br></p>
+
+<p><code>MAC address 442b.442b.442b, MTU 1500</code><br>
+This is the interfaces MAC address and configured MTU. If the interface name is not set the MTU will display &ldquo;MTU not set&rdquo;.</p>
+
+<p><code>IP address 172.16.16.16, subnet mask 255.255.255.240</code><br>
+This is the interfaces IP address and subnet mask.</p>
+
+<h2>Input Statistics</h2>
+
+<p><code>16433456 packets input, 2581392514 bytes, 0 no buffer</code><br>
+The number of packets and bytes received on this interface. The &ldquo;no buffer&rdquo; indicates the number of failures from block allocations.</p>
+
+<p><code>Received 111 broadcasts, 0 runts, 0 giants</code><br>
+The number of broadcast packets received.<br>
+<strong>Runts</strong> are the number of packets that are discarded because they are smaller than the minimum packet size, which is 64 bytes. Runts are usually caused by collisions. They might also be caused by poor wiring and electrical interference. <br>
+<strong>Giants</strong> are the number of packets that are discarded because they exceed the maximum packet size. For example, any Ethernet packet that is greater than 1518 bytes is considered a giant.</p>
+
+<p><code>0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort</code><br>
+<strong>Input errors</strong> are the number of total input errors, including the types listed below. Other input-related errors can also cause the input error count to increase, and some datagrams might have more than one error; therefore, this sum might exceed the number of errors listed for the types below. <br>
+<strong>CRC errors</strong> are the number of Cyclical Redundancy Check errors. When a station sends a frame, it appends a CRC to the end of the frame. This CRC is generated from an algorithm based on the data in the frame. If the frame is altered between the source and destination, the ASA notes that the CRC does not match. A high number of CRCs is usually the result of collisions or a station transmitting bad data.<br>
+<strong>Frame errors</strong> are bad frames that have packets with an incorrect length or bad frame checksums. This error is usually the result of collisions or a malfunctioning Ethernet device.<br>
+<strong>Overrun errors</strong> are the number of times that the ASA was incapable of handing received data to a hardware buffer because the input rate exceeded the ASA capability to handle the data. <br>
+<strong>Ignored errors</strong> are not used. The value is always 0.<br>
+<strong>Abort errors</strong> are not used. The value is always 0.<br></p>
+
+<p><code>0 pause input, 0 resume input</code><br>
+<strong>Pause input</strong> packets are unknown.<br>
+<strong>Resume input</strong> packets are unknown.</p>
+
+<p><code>0 L2 decode drops</code><br>
+<strong>L2 decode drop</strong> packets are the number of packets dropped because the name is not configured (nameif command) or a frame with an invalid VLAN id is received.</p>
+
+<h2>Output Statistics</h2>
+
+<p><code>24943232 packets output, 28662026144 bytes, 430 underruns</code><br>
+Number of packets and bytes output from this interface.<br>
+<strong>Undderrun errors</strong> are the number of times that the transmitter ran faster than the ASA could handle. <br></p>
+
+<p><code>0 pause output, 0 resume output</code><br>
+<strong>Pause output</strong> packets are unknown.<br>
+<strong>Resume output</strong> packets are unknown.</p>
+
+<p><code>0 output errors, 0 collisions, 0 interface resets</code><br>
+<strong>Output errors</strong> are the number of frames not transmitted because the configured maximum number of collisions was exceeded. This counter should only increment during heavy network traffic. <br>
+<strong>Collisions</strong> are the number of messages retransmitted due to an Ethernet collision (single and multiple collisions). This usually occurs on an overextended LAN (Ethernet or transceiver cable too long, more than two repeaters between stations, or too many cascaded multiport transceivers). A packet that collides is counted only once by the output packets. <br>
+<strong>Interface resets</strong> are the number of times an interface has been reset. If an interface is unable to transmit for three seconds, the ASA resets the interface to restart transmission. During this interval, connection state is maintained. An interface reset can also happen when an interface is looped back or shut down<br></p>
+
+<p><code>0 late collisions, 0 deferred</code><br>
+<strong>Late collisions</strong> is when the number of frames that were not transmitted because a collision occurred outside the normal collision window. A late collision is a collision that is detected late in the transmission of the packet. Normally, these should never happen. When two Ethernet hosts try to talk at once, they should collide early in the packet and both back off, or the second host should see that the first one is talking and wait. If you get a late collision, a device is jumping in and trying to send the packet on the Ethernet while the ASA is partly finished sending the packet. The ASA does not resend the packet, because it may have freed the buffers that held the first part of the packet. This is not a real problem because networking protocols are designed to cope with collisions by resending packets. However, late collisions indicate a problem exists in your network. Common problems are large repeated networks and Ethernet networks running beyond the specification. <br>
+<strong>Deferred</strong> packets are the number of frames that were deferred before transmission due to activity on the link.<br></p>
+
+<p><code>0 input reset drops, 0 output reset drops, 0 tx hangs</code><br>
+<strong>Input reset drops</strong> are the number of packets dropped in the RX ring when a reset occurs. <br>
+<strong>Output reset drops</strong> are the number of packets dropped in the TX ring when a reset occurs. <br>
+<strong>TX hangs</strong> is unknown.<br></p>
+
+<p><code>input queue (blocks free curr/low): hardware (255/230)</code><br>
+The number of packets in the input queue. Values in the parenthesis are: blocks free currently / the lowest number of blocks free.</p>
+
+<p><code>output queue (blocks free curr/low): hardware (254/0)</code><br>
+The number of packets in the output queue. Values in the parenthesis are: blocks free currently / the lowest number of blocks free.</p>
+
+<h2>Additional Interface Statistics</h2>
+
+<p><code>Traffic Statistics for "inside":</code><br>
+<code>16433456 packets input, 2214576498 bytes</code><br>
+The number of packets and bytes received.</p>
+
+<p><code>24943662 packets output, 28202920165 bytes</code><br>
+The number of packets and bytes sent.</p>
+
+<p><code>28768 packets dropped</code><br>
+The number of packets dropped. Typically this counter increments for packets dropped on the accelerated security path (ASP), for example, if a packet is dropped due to an access list deny.
+See the &lsquo;show asp drop&rsquo; command for reasons for potential drops on an interface.</p>
+
+<p><code>1 minute input rate 178 pkts/sec,  18825 bytes/sec</code><br>
+<code>1 minute output rate 267 pkts/sec,  306674 bytes/sec</code><br>
+<code>1 minute drop rate, 0 pkts/sec</code><br>
+<code>5 minute input rate 255 pkts/sec,  16417 bytes/sec</code><br>
+<code>5 minute output rate 422 pkts/sec,  548955 bytes/sec</code><br>
+<code>5 minute drop rate, 0 pkts/sec</code><br>
+Various interface bandwidth statistics.</p>
+
+<hr>
+
+
+<br><br><br>
+
+
+<p>Source: <a href="http://www.cisco.com/en/US/docs/security/asa/asa84/command/reference/s3.html#wp1497263">Cisco Documentation</a></p>
+]]></content>
+  </entry>
+  
+</feed>

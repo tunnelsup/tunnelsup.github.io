@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: awareness | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/awareness/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Free Security Awareness Training Posters]]></title>
+    <link href="http://tunnelsup.github.io/free-security-awareness-training-posters/"/>
+    <updated>2016-05-10T07:53:00-07:00</updated>
+    <id>http://tunnelsup.github.io/free-security-awareness-training-posters</id>
+    <content type="html"><![CDATA[<p>Something that is helpful for ongoing security awareness training programs is to print out security awareness posters and put them in areas where people hang out around the office. The goal is to keep security awareness training fresh, fun, and relevant.</p>
+
+<p>Here are some free posters you can find online to download and print for your own organization.</p>
+
+<h2>OPSEC Professionals</h2>
+
+<p><a href="http://www.opsecprofessionals.org/posters.html">http://www.opsecprofessionals.org/posters.html</a></p>
+
+<p>&ldquo;The following OPSEC awareness posters are free for personal or professional (non-commercial) use, and may be edited or published in any OPSEC awareness campaign. Although not required, credit to OSPA is appreciated.&rdquo;</p>
+
+<h2>The Center for the Development of Security Excellence</h2>
+
+<p><a href="http://www.cdse.edu/resources/posters.html">http://www.cdse.edu/resources/posters.html</a></p>
+
+<h2>SANS Posters</h2>
+
+<p>Their &lsquo;Securing the Humans&rsquo; posters are free to use under the Creative Commons License.
+<a href="http://securingthehuman.sans.org/resources/posters">http://securingthehuman.sans.org/resources/posters</a></p>
+
+<h2>Native Intelligence</h2>
+
+<p><a href="http://www.nativeintelligence.com/ni-free/ni-free-posters.asp">http://www.nativeintelligence.com/ni-free/ni-free-posters.asp</a></p>
+
+<p>They have posters you can download but they say, &ldquo;Copyrights must stay with the free posters, the posters must not be changed, and the images must not be extracted.&rdquo;</p>
+
+<p>These posters are kind of low quality but <a href="https://twitter.com/TessSchrodinger">@TessSchrodinger</a> thinks it&rsquo;s a great place for inspiration to make your own posters. She says:</p>
+
+<blockquote><p>If you look at the first poster with the &ldquo;big gulp&rdquo;&hellip; I&rsquo;d just take that idea, make my own poster with a graphic of a big gulp cup I found online and be done with it. So I use these for ideas to make my own stuff.</p></blockquote>
+
+<p>Tess Shrodinger has a fantastic talk about how to use these kinds of posters in her security awareness training program called <a href="https://www.youtube.com/watch?v=5CIzGg_pHNU">Do You Want Educated Users? Because This is How You Get Educated Users</a>.</p>
+
+<h2>NSA</h2>
+
+<p>The NSA has some really nice posters but you have to work in industry and send a fax to get a catalog that comes in the mail six months later and then you submit your hand written order via fax AGAIN and then six months later you get a tube with them in it. They are nice but you have to go through a lot of hoops to get them.</p>
+]]></content>
+  </entry>
+  
+</feed>

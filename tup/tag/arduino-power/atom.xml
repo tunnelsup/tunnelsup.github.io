@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: arduino power | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/arduino-power/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Arduino Power Usage Project]]></title>
+    <link href="http://tunnelsup.github.io/arduino-power-usage-project/"/>
+    <updated>2011-09-19T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/arduino-power-usage-project</id>
+    <content type="html"><![CDATA[<p>I wanted to see how much power I am consuming in my home at any given moment, so I created this project using arduino.  It features a simple display of LEDs: red representing high energy usage, yellow moderate usage, and green low usage.</p>
+
+<iframe src="http://www.youtube.com/embed/ZAjG0oVoZ-4" frameborder="0" width="420" height="315"></iframe>
+
+
+<h3>Parts List:</h3>
+
+<p><img src="/images/ArduinoMega-150x150.jpg" alt="Arduino Mega - IMG" /></p>
+
+<p><img src="/images/arduino_ethernet_connect1-150x150.jpg" alt="Ethernet Shield - IMG" /></p>
+
+<p><img src="/images/mtu-ct-150x150.jpg" alt="TED - IMG" /></p>
+
+<p><img src="/images/TEDGateway-150x150.jpg" alt="TED Gateway - IMG" /></p>
+
+<ul>
+    <li>Arduino Mega</li>
+    <li>Arduino EthernetShield V1.1</li>
+    <li>TED 5000</li>
+    <li>Linux Webserver</li>
+    <li>9 LEDs (with jumpers and resistors)</li>
+</ul>
+
+
+<h3>Diagram of how they all fit together:</h3>
+
+<p><img src="/images/powerprojectgraphic.png" alt="Project Diagram - IMG" /></p>
+
+<h5>STEP 1 &ndash; TED</h5>
+
+<p><img class="alignnone size-medium wp-image-194" style="float: right;" title="ted-footprints" src="http://tunnelsup.github.io/images/ted-footprints-200x300.jpg" alt="" width="200" height="300" />Get <a href="http://www.theenergydetective.com/">TED (The Energy Detective) </a>working at your house. This is a nifty little unit that has a device called an MTU that sits in your electrical panel to monitor your mains and how much electricity they use. Then it sends that data through the electrical wiring in your house to the gateway. The gateway then has an ethernet cable connected to to it and plugs into your home network.</p>
+
+<p>The TED gateway makes a call every 5 seconds to get a reading from the MTU which is the device sitting in the main electrical panel. In my case, the TED gateway has an IP address of 172.16.200.216. Upon going to that website it has nice graphical display of real time power usage. The picture on the right is what the live kw usage shows on the TED software.</p>
+
+<p>Upon doing some investigations with firebug I found that the website was drawing its information from an xml file called &ldquo;/api/LiveData.xml&rdquo;. This is the xml file that is updated every 5 seconds from the sensor outside.  I examined the xml file and found the current power reading is within the <PowerNow> xml value.</p>
+
+<h5>STEP 2 &ndash; PERL</h5>
+
+<p>Now I thought it would be smart for me to write a perl script on a server that basically goes to TED&rsquo;s XML file that has the data I need and extract just that bit. I&rsquo;m not very good with perl and just wanted something to get the job done so I apologize if this is ugly or isn&rsquo;t effecient. I put this perl script in my cgi-bin directory of my webserver so it can be called remotely. Really the purpose of this is to scrub the data from the xml file and make this a much smaller input for the arduino. The xml file from TED was rather large for arduino to handle every 5 seconds. Here is the perl program I wrote.</p>
+
+<p>```</p>
+
+<h1>!/usr/bin/perl</h1>
+
+<p>use LWP::UserAgent;
+use <a href="HTTP::Request;">HTTP::Request;</a>
+my $agent = LWP::UserAgent->new(env_proxy => 1,keep_alive => 1, timeout => 30);
+my $url = &ldquo;<a href="http://172.16.200.217/api/LiveData.xml">http://172.16.200.217/api/LiveData.xml</a>&rdquo;;
+my $header = <a href="HTTP::Request-">HTTP::Request-</a>>new(GET => $url);
+my $request = <a href="HTTP::Request-">HTTP::Request-</a>>new(&lsquo;GET&rsquo;, $url, $header);
+my $response = $agent->request($request);</p>
+
+<p>if ($response->is_success){
+   print &ldquo;Content-type: text/html\r\n\r\n&rdquo;;
+   if ($response->content=~/<PowerNow>(\d*)&lt;\/PowerNow>/) {</p>
+
+<pre><code>  print $1;
+</code></pre>
+
+<p>   }
+} else {
+ print &ldquo;No response&rdquo;;
+}
+```</p>
+
+<h5>STEP 3 &ndash; ARDUINO</h5>
+
+<p>So now I just need the arduino to make a webcall to my webserver located at 172.16.200.200/cgi-bin/powerget.cgi and then display the LEDs depending on what value comes back. I wired the arduino to a breadboard with 9 LEDS. It looks like this.</p>
+
+<p><img src="/images/IMG_7145-300x225.jpg" alt="Arduino - IMG" /></p>
+
+<p>There are 3 green, 3 yellow and 3 red lights. More lights will light up depending on how much energy is being used. Key to reading lights:</p>
+
+<ol>
+    <li>Below 100W</li>
+    <li>Between 100-500W</li>
+    <li>Between 500-1000W</li>
+    <li>Between 1000-1500W</li>
+    <li>Between 1500-5000W</li>
+    <li>Between 5000-7500W</li>
+    <li>Between 7500-10,000W</li>
+    <li>Between 10,000-12,500W</li>
+    <li>Above 15,000W</li>
+</ol>
+
+
+<p>&nbsp;</p>
+
+<p>Arduino code:</p>
+
+<p>```</p>
+
+<h1>include &lt;EtherShield.h></h1>
+
+<h1>define HTTPPATH &ldquo;/cgi-bin/powerget.cgi&rdquo;</h1>
+
+<h1>define PORT 80</h1>
+
+<h1>define HOSTNAME &ldquo;&rdquo;  //unknown what this value is for yet</h1>
+
+<h1>define BUFFER_SIZE 550</h1>
+
+<p>byte buf[BUFFER_SIZE+1];
+byte websrvip[4] = { 172,16,200,200 }; // set destination IP
+byte mymac[6] = {0x54,0x55,0x58,0x10,0x00,0x25};
+byte myip[4] = {172,16,200,77}; // Arduino&rsquo;s IP
+byte gwip[4] = {172,16,200,2}; // Default gateway.
+byte conn = 0; // used to track connections
+int packetlength = 0; //used in loop
+int powernow = 0; //global current value of power consumption
+const byte numofLEDs = 9;
+byte ledStates[numofLEDs];
+const byte ledPins[numofLEDs] =  {23,24,25,26,27,28,29,30,31}; // the number of the LED pins
+unsigned long timetosend;</p>
+
+<p>EtherShield es=EtherShield();</p>
+
+<p>void browserresult_callback(byte statuscode,word pos){</p>
+
+<pre><code>// Get specific data from the web call (assuming power is never over 99,999W)
+char currentpower[5] = {buf[240], buf[241], buf[242], buf[243], buf[244]};
+// convert the string to an integer to do math on it
+powernow = atoi(currentpower);
+conn = 1; // If conn == 1 then the program knows the network connection worked
+</code></pre>
+
+<p>}</p>
+
+<p>void setup(){</p>
+
+<p>  es.ES_enc28j60Init(mymac); //initialize enc28j60</p>
+
+<p>  //init the ethernet/ip layer:
+  es.ES_init_ip_arp_udp_tcp(mymac, myip, PORT);</p>
+
+<p>  // init the web client:
+  es.ES_client_set_gwip(gwip);
+  es.ES_client_set_wwwip(websrvip);</p>
+
+<p>  // init the pins for LEDs
+  for (byte i = 0; i &lt; numofLEDs; i++) {
+   pinMode(ledPins[i], OUTPUT);
+  }</p>
+
+<p>}</p>
+
+<p>void loop()
+{
+  // handle ping and wait for a tcp packet
+  // calling this routine powers the sending and receiving of data
+  //defined as: uint16_t ES_enc28j60PacketReceive(uint16_t len, uint8_t* packet);
+  packetlength = es.ES_enc28j60PacketReceive(BUFFER_SIZE, buf);
+  es.ES_packetloop_icmp_tcp(buf,packetlength);</p>
+
+<p>  if( millis() &ndash; timetosend > 5000) // every 5 seconds
+  {</p>
+
+<pre><code>  timetosend = millis(); //this number should overload every 50 days or so...
+  //request data from web server place data in buf[] 
+  es.ES_client_browse_url(PSTR(HTTPPATH), NULL , PSTR(HOSTNAME), &amp;browserresult_callback);
+
+  // reset all LEDs back to off
+  for (byte i = 0; i &lt; numofLEDs; i++) {
+    ledStates[i] = LOW;
+    digitalWrite(ledPins[i], ledStates[i]);
+  }
+  // Set which LEDs should be on 
+  if (conn == 1) {
+    if ((powernow &gt; 100) &amp;&amp; numofLEDs&gt;0) ledStates[0] = HIGH;
+    if ((powernow &gt; 500) &amp;&amp; numofLEDs &gt; 1) ledStates[1] = HIGH;
+    if ((powernow &gt; 1000) &amp;&amp; numofLEDs &gt; 2) ledStates[2] = HIGH;
+    if ((powernow &gt; 1500) &amp;&amp; numofLEDs &gt; 3) ledStates[3] = HIGH;
+    if ((powernow &gt; 5000) &amp;&amp; numofLEDs &gt; 4) ledStates[4] = HIGH;
+    if ((powernow &gt; 7500) &amp;&amp; numofLEDs &gt; 5) ledStates[5] = HIGH;
+    if ((powernow &gt; 10000) &amp;&amp; numofLEDs &gt; 6) ledStates[6] = HIGH;
+    if ((powernow &gt; 12500) &amp;&amp; numofLEDs &gt; 7) ledStates[7] = HIGH;
+    if ((powernow &gt; 15000) &amp;&amp; numofLEDs &gt; 8) ledStates[8] = HIGH;
+  } else {
+    // If network outage - turn on the top LED only to indicate a problem
+    if (ledStates[numofLEDs-1] = HIGH);
+  }
+  conn = 0; 
+
+  // Turn on all the LEDs that need to be on
+  for (byte i = 0; i &lt; numofLEDs; i++) {
+   digitalWrite(ledPins[i], ledStates[i]);
+  }
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>A few notes about using that ethernet shield with the arduino mega. First of all I used the Ethershield library located here:
+<a href="http://blog.thiseldo.co.uk/?p=504"> <a href="http://blog.thiseldo.co.uk/?p=504">http://blog.thiseldo.co.uk/?p=504</a></a></p>
+
+<p>Second, I had to hack ethernet board to get the two boards to talk to each other (this was really aggravating and I wish I had a different ethershield to work with). The hack I used was to bend certain pins that we don&rsquo;t need to use and run jumpers to pins we do need to use. I followed the directions here to accomplish this:
+<a href="http://mcukits.com/2009/04/06/arduino-ethernet-shield-mega-hack/"> <a href="http://mcukits.com/2009/04/06/arduino-ethernet-shield-mega-hack/">http://mcukits.com/2009/04/06/arduino-ethernet-shield-mega-hack/</a></a></p>
+
+<p>Now unfortunately I still wasn&rsquo;t done. The ethershield library thinks you have a duemilanove so I had to make one last adjustment. <span style="color: #292929; font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;"><span class="Apple-style-span" style="font-size: 14px; line-height: 17px;">  </span></span></p>
+
+<p>In the file:  enc28j60.h (usually found in arduino\libraries\EtherShield)</p>
+
+<p>I changed the definitions for the SPI interface.  Changed the ports to be as follows:</p>
+
+<p>```</p>
+
+<h1>define DEFAULT_ENC28J60_CONTROL_CS    53</h1>
+
+<h1>define SPI_MOSI                       51</h1>
+
+<h1>define SPI_MISO                       50</h1>
+
+<h1>define SPI_SCK                        52</h1>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,429 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>Cisco ASA VPN - Authorize user based on LDAP group - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="It is possible to authenticate to LDAP but then only allow a user in if they are in the right LDAP group. This post will explain how to authorize a &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tunnelsup.github.io/cisco-asa-vpn-authorize-user-based-on-ldap-group">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Cisco ASA VPN - Authorize User Based on LDAP Group</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-13T21:00:00-07:00" pubdate data-updated="true">Aug 13<span>th</span>, 2014</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>It is possible to authenticate to LDAP but then only allow a user in if they are in the right LDAP group. This post will explain how to authorize a
+user based on their LDAP group they are a member of.</p>
+
+<p>The theory for this task is to set a default group policy which has no access to the network, then create an LDAP map that maps a LDAP group to a group-policy.</p>
+
+<h3>Configure LDAP authentication</h3>
+
+<p>First what you&rsquo;ll need to do is make sure you have LDAP authentication working. Create a aaa-server that uses the LDAP protocol. The configuration may look like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>aaa-server LDAP protocol ldap
+</span><span class='line'>aaa-server LDAP (INSIDE) host 10.10.10.1
+</span><span class='line'> ldap-base-dn DC=example,DC=com
+</span><span class='line'> ldap-scope subtree
+</span><span class='line'> ldap-naming-attribute sAMAccountName
+</span><span class='line'> ldap-login-password *****
+</span><span class='line'> ldap-login-dn CN=svc_asavpn,OU=users,OU=chi,DC=example,DC=com</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>ldap-base-dn</code> will be where where the ASA starts looking for an authenticated user. I recommend setting this as the first level of your AD tree.</p>
+
+<p>The <code>ldap-scope subtree</code> tells LDAP to look for this user in any subtree. The other option is just a single subtree up.</p>
+
+<p>The next 3 commands are setting up the LDAP user that will be used to bind to LDAP. The <code>ldap-naming-attribute</code> command says we&rsquo;ll be using the sAMAccountName as the identifier of our login name. The <code>ldap-login-password</code> is the LDAP password for the user we are using to bind to LDAP. In this case the user is svc_asavpn. The <code>ldap-login-dn</code> tells LDAP where that user lives. It&rsquo;s important to know the full path of that user as indicated in the commands above.</p>
+
+<p>Once you have those commands in the easiest way to test the connectivity is to use the <code>test</code> command. It looks something like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>CHIASA# test aaa-server authentication LDAP username svc_asavpn password p@ssw0rd
+</span><span class='line'>Server IP Address or name: 10.10.10.1
+</span><span class='line'>INFO: Authentication Successful</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&rsquo;s important that this test is successful. Failure to get LDAP working successfully here will result in harder to troubleshoot problems later.</p>
+
+<p>You may be able to get additional help by turning on <code>debug ldap 255</code> then trying the test again.</p>
+
+<h3>Create Group-Policies for the VPN</h3>
+
+<p>Create two group policies. One that has no access and denies the user from logging in, and one that has the correct permissions to allow a user to login.</p>
+
+<p>First create the group for no access</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>group-policy NoAccess internal
+</span><span class='line'>group-policy NoAccess attributes
+</span><span class='line'> vpn-simultaneous-logins 0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We just want a group policy that doesn&rsquo;t allow anyone to login so if we restrict the login count to 0 nobody will ever be able to login.</p>
+
+<p>Next create the group policy that will allow the user access.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>group-policy GRPPOL-RA-VPN internal
+</span><span class='line'>group-policy GRPPOL-RA-VPN attributes
+</span><span class='line'> dns-server value 10.10.10.1
+</span><span class='line'> vpn-simultaneous-logins 3
+</span><span class='line'> vpn-tunnel-protocol ssl-client</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that sometimes we need to explicitly say the max simultaneous logins is more than 0 since we made it 0 earlier it may get inherited.</p>
+
+<h3>Create the Tunnel Group</h3>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>tunnel-group GRP-RA-VPN type remote-access
+</span><span class='line'>tunnel-group GRP-RA-VPN general-attributes
+</span><span class='line'> address-pool POOL-RA-VPN
+</span><span class='line'> authentication-server-group LDAP
+</span><span class='line'> default-group-policy NoAccess</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We&rsquo;ve set the authentication group to be the aaa LDAP server we configured in step one. Also take note we&rsquo;ve set the default group policy to be the NoAccess one.</p>
+
+<h3>Create an LDAP map</h3>
+
+<p>An LDAP map will look at the LDAP settings that user has and if there&rsquo;s a match will assign them to a specific group-policy (amongst other options). Essentially we are saying deny all users from VPN access, unless they are a memberOf the specified group and if so assign them to a different group-policy.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ldap attribute-map MAP-ANYCONNECT-LOGIN
+</span><span class='line'>  map-name  memberOf Group-Policy
+</span><span class='line'>  map-value memberOf CN=vpn_users,OU=groups,OU=chi,DC=example,DC=com GRPPOL-RA-VPN</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Since these are seldom used commands lets break them down all the way.</p>
+
+<p><code>memberOf</code> is the specific LDAP flag we are going to be looking for. We want to check if this user is a memberOf a group.</p>
+
+<p><code>Group-Policy</code> says that if there&rsquo;s a match, lets assign them a new group-policy. In older version of ASA (&lt;8.2.5) use this instead: IETF-Radius-Class.</p>
+
+<p><code>CN=vpn_users,OU=groups,OU=chi,DC=example,DC=com</code> is the location of the group in AD to check if the user is a memberOf.</p>
+
+<p><code>GRPPOL-RA-VPN</code> is the name of the group-policy we will assign them to if there is a match.</p>
+
+<p><code>map-name</code> is more like indicating the type of map attribute to check against and what will be assigned if there&rsquo;s a match.</p>
+
+<p><code>map-value</code> defines the values to be checking against and assigning to. You can have multiple map-value commands in one LDAP map.</p>
+
+<p>Now apply the LDAP map.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>aaa-server LDAP (INSIDE) host 10.10.10.1
+</span><span class='line'> ldap-attribute-map MAP-ANYCONNECT-LOGIN</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Test to verify it&rsquo;s working</h3>
+
+<p>You can try to login to the VPN using an LDAP account or you can try the <code>test</code> command that was talked about earlier. If you have <code>debug ldap 255</code> on you&rsquo;ll see the following in a successfully authenticated message:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>[-2147483628]   memberOf: value = CN=vpn_users,OU=groups,OU=chi,DC=example,DC=com
+</span><span class='line'>[-2147483628]           mapped to Group-Policy: value = GRPPOL-RA-VPN
+</span><span class='line'>[-2147483628]           mapped to LDAP-Class: value = GRPPOL-RA-VPN</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you&rsquo;re seeing that message it means the user was given the proper group-policy to login with. You can also verify the test by successfully logging in via a VPN session and check if the user has the right group-policy when looking at the user doing <code>show vpn-sessiondb anyconnect</code>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-13T21:00:00-07:00" pubdate data-updated="true">Aug 13<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/asa/'>asa</a>, <a class='category' href='/tup/tag/authorization/'>authorization</a>, <a class='category' href='/tup/tag/cisco/'>cisco</a>, <a class='category' href='/tup/tag/ldap/'>ldap</a>, <a class='category' href='/tup/tag/scripts/'>scripts</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tunnelsup.github.io/cisco-asa-vpn-authorize-user-based-on-ldap-group/" data-via="tunnelsup" data-counturl="http://tunnelsup.github.io/cisco-asa-vpn-authorize-user-based-on-ldap-group/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tunnelsup.github.io/cisco-asa-vpn-authorize-user-based-on-ldap-group/';
+        var disqus_url = 'http://tunnelsup.github.io/cisco-asa-vpn-authorize-user-based-on-ldap-group/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>

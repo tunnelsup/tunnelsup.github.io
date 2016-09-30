@@ -1,0 +1,433 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>Cisco ASA Licensing Quick Reference Guide - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="One of the most confusing things about Cisco ASA&rsquo;s is the licensing structure. While it is very nice to have a single train of OS files to deal &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tunnelsup.github.io/cisco-asa-licensing-quick-reference-guide">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Cisco ASA Licensing Quick Reference Guide</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-01T11:26:00-07:00" pubdate data-updated="true">Jul 1<span>st</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>One of the most confusing things about Cisco ASA&rsquo;s is the licensing structure. While it is very nice to have a single train of OS files to deal with, it is incredibly hard to keep track of all of the licensing details regarding the ASA. Here is a handy guide that may help you wade through the piles of documentation around it.</p>
+
+<h2>Quick Reference Guide</h2>
+
+<p><img src="/images/asalicensing.png" alt="ASA Licensing Guide IMG" /></p>
+
+<p>Download: <a href="/images/asalicensing.png">PNG Image</a>, <a href="/images/ASALicensingCheatSheet.pdf">PDF Document</a></p>
+
+<p>To see what licenses are installed on the ASA review the outputs of the <code>show version</code> command. The output will look something like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>Inside Hosts                      : Unlimited      perpetual
+</span><span class='line'>Failover                          : Active/Active  perpetual
+</span><span class='line'>Encryption-DES                    : Enabled        perpetual
+</span><span class='line'>Encryption-3DES-AES               : Enabled        perpetual
+</span><span class='line'>Security Contexts                 : 2              perpetual
+</span><span class='line'>GTP/GPRS                          : Disabled       perpetual
+</span><span class='line'>AnyConnect Premium Peers          : 2              perpetual
+</span><span class='line'>AnyConnect Essentials             : Disabled       perpetual
+</span><span class='line'>Other VPN Peers                   : 250            perpetual
+</span><span class='line'>Total VPN Peers                   : 250            perpetual
+</span><span class='line'>Shared License                    : Disabled       perpetual
+</span><span class='line'>AnyConnect for Mobile             : Disabled       perpetual
+</span><span class='line'>AnyConnect for Cisco VPN Phone    : Disabled       perpetual
+</span><span class='line'>Advanced Endpoint Assessment      : Disabled       perpetual
+</span><span class='line'>UC Phone Proxy Sessions           : 2              perpetual
+</span><span class='line'>Total UC Proxy Sessions           : 2              perpetual
+</span><span class='line'>Botnet Traffic Filter             : Disabled       perpetual
+</span><span class='line'>Intercompany Media Engine         : Disabled       perpetual
+</span><span class='line'>IPS Module                        : Disabled       perpetual
+</span><span class='line'>Cluster                           : Disabled       perpetual</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we will cover each of these items in detail.</p>
+
+<h2>VLANs</h2>
+
+<p>On the Cisco ASA 5505 you may see a line stating:<br>
+<code>VLANs                             : 3              DMZ Restricted</code>
+On the 5505 each interface is assigned a VLAN. This is stating only 3 VLANs can be created which are then eligible to be applied to an interface. The &ldquo;DMZ Restricted&rdquo; term indicates a further restriction. Two VLANs can talk to each other without issues. Suppose these are &ldquo;inside&rdquo; and &ldquo;outside&rdquo;. The 3rd VLAN we&rsquo;ll call &ldquo;DMZ&rdquo;. The DMZ interface is restricted to only be able to pass traffic to either the inside interface or outside but cannot pass traffic to both. That means it&rsquo;s &ldquo;DMZ Restricted&rdquo;. A sec plus license can be applied to remove this restriction.</p>
+
+<h2>Inside Hosts</h2>
+
+<p>This is &ldquo;Unlimited&rdquo; in all models except for the 5505. The 5505 comes with 10 hosts standard and can be upgraded to 50 or Unlimited number of hosts. This specifically means the ASA will only build connections for 10 hosts within the network at a time.</p>
+
+<h2>Failover</h2>
+
+<p>This is not to be confused with &ldquo;Clustering&rdquo;. Failover is when two firewalls (which are matching models and hardware) are paired together for redundancy. In an Active/Standby scenario, one firewall acts as the active one and accepts connections going through it. The active firewall will keep the active IP. So if the primary firewall goes down, the standby unit will kick over to active and even take over the active IP. This failover usually occurs without dropping a packet because the connection table is actually replicated between the two units.</p>
+
+<p>An Active/Active scenario is generally used for multi context firewalls. This may be used when Primary firewall is the Active firewall for Context A, and the secondary fireall is the Active firewall for Context B. If one firewall goes down, the remaining one becomes Active for both Contexts.</p>
+
+<h2>Encryption</h2>
+
+<p>Encryption-DES comes standard on all firewalls.</p>
+
+<p>Encryption-3DES-AES is a $0 cost license that enables 3DES and AES encryption methods.</p>
+
+<h2>Security Contexts</h2>
+
+<p>By default the ASA has 2 contexts that can be ran simultaneously. This is not supported in the 5505 and requires the Security Plus license for 5510 and 5512-X.</p>
+
+<p>A multi context firewall is one which runs multiple separate firewalls inside a single chassis. The admin context is used to determine which interfaces are assigned to which contexts.</p>
+
+<h2>Other VPN Peers / Total VPN Peers</h2>
+
+<p>Included with base license. It is used for site to site IPSec tunnels using IKEv1 or IKEv2. It is also used when using remote access VPN (Legacy Cisco VPN Client) using IKEv1. IPSec remote access IKEv2 requires AnyConnect Essentials or AnyConnect Premium.</p>
+
+<h2>AnyConnect</h2>
+
+<p>For more information regarding AnyConnect Premium and Essentials see my blog post <a href="http://www.tunnelsup.com/tup/2012/08/08/understanding-cisco-asa-anyconnect-licensing/">Understanding AnyConnect Licensing</a>.</p>
+
+<p>Advanced Endpoint Assessment is used to enhance the host scan. When normally a host scan can detect when a VPN user is out of compliancy and not allowed conection into the network, the Advanced Endpoint Assessment can actually suggest to the user what they&rsquo;ll need to do to fix it. Either by downloading an update or guiding them on fixing a program.</p>
+
+<p>AnyConnect for Cisco VPN Phone is used for allowing VOIP phones that have built in VPN support to VPN into the ASA and then contact the Call Manager. Only supported on CallManager 8.0+ and IP Phone firmware 9.x.</p>
+
+<h2>Botnet</h2>
+
+<p>For more information on the botnet license and capability see my blog post <a href="http://www.tunnelsup.com/tup/2013/05/08/cisco-asa-botnet-license/">Understanding Botnet Licensing</a>.</p>
+
+<h2>GTP/GPRS</h2>
+
+<p>This is used by ISPs who have 3G traffic going through their network.</p>
+
+<h2>Shared License</h2>
+
+<p>The Shared SSL VPN license is a way to have a central ASA act as an AnyConnect premium peer license server and other participant ASA&rsquo;s can ask for licenses (in blocks of 50 at a time) from the shared license server. This requires both a Server license and particpant license.</p>
+
+<h2>UC Phone Proxy</h2>
+
+<p>This is a legacy license because CallManager 8.0+ does not support this feature any longer.</p>
+
+<h2>Intercompany Media Engine</h2>
+
+<p>Allows support to offload communications from PSTN to IP-based SIP trunks through the ASA. Primarily used for business to business federation between CUCM&rsquo;s. Requires version 8.3(1)+.</p>
+
+<h2>IPS Module</h2>
+
+<p>In ASA 5500-X series firewalls the IPS module is entirely software based and requires an additional license to enable it. Once the license is enabled for the software firewall, and additional support contract (smartnet) is required to update the IPS sensor with signatures.</p>
+
+<h2>Cluster</h2>
+
+<p>This feature is new to 9.0(1). It allows multiple ASA&rsquo;s to be grouped into a single logical device. Clustering will probably never be supported on the ASA 5500 series models. It currently is only available on 5580 and 5585-X models. Future plans to support all 5500-X models.</p>
+
+<p>For further information read: <a href="http://communities.cisco.com/docs/DOC-26234">http://communities.cisco.com/docs/DOC-26234</a></p>
+
+<h2>Security Plus License</h2>
+
+<p>Refer to the image below to understand what the Security Plus license does. Note: it is only available for the 5505, 5510, 5512-X and 5585-X.</p>
+
+<p><img src="/images/asasecplus.png" alt="ASA Sec Plus IMG" /></p>
+
+<h2>Further Reading</h2>
+
+<p>For more information review Cisco documentation: <a href="http://www.cisco.com/en/US/docs/security/asa/asa91/license/license_management/license.html">http://www.cisco.com/en/US/docs/security/asa/asa91/license/license_management/license.html</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-01T11:26:00-07:00" pubdate data-updated="true">Jul 1<span>st</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/asa/'>asa</a>, <a class='category' href='/tup/tag/cheatsheet/'>cheatsheet</a>, <a class='category' href='/tup/tag/cisco/'>cisco</a>, <a class='category' href='/tup/tag/licensing/'>licensing</a>, <a class='category' href='/tup/tag/scripts/'>scripts</a>, <a class='category' href='/tup/tag/tips/'>tips</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tunnelsup.github.io/cisco-asa-licensing-quick-reference-guide/" data-via="tunnelsup" data-counturl="http://tunnelsup.github.io/cisco-asa-licensing-quick-reference-guide/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tunnelsup.github.io/cisco-asa-licensing-quick-reference-guide/';
+        var disqus_url = 'http://tunnelsup.github.io/cisco-asa-licensing-quick-reference-guide/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>

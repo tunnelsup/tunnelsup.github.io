@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>Configuring NAT in Juniper SRX Platforms using JunOS - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="There are 3 kinds of NAT for the JunOS SRX devices. Source NAT, destination NAT, and static NAT. We will also cover Proxy ARP. This post will only &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tunnelsup.github.io/configuring-nat-in-juniper-srx-platforms-using-junos">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Configuring NAT in Juniper SRX Platforms Using JunOS</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-01T11:13:00-07:00" pubdate data-updated="true">Jul 1<span>st</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>There are 3 kinds of NAT for the JunOS SRX devices. Source NAT, destination NAT, and static NAT. We will also cover Proxy ARP. This post will only cover the basic and most common concepts and usage of NAT in SRX. But with this knowledge you should be able to do NAT for almost any occasion.</p>
+
+<p>This post assumes you know the basic concept of NAT and what it is and why we use it and why we need it.</p>
+
+<h2>JunOS NAT packet processing</h2>
+
+<p>Consider the image below of how a packet is flowing through an SRX in regards to NAT.
+<img src="/images/junos-nat-packet-flow.png" alt="NAT flow IMG" /></p>
+
+<p>In order for the SRX to process the policies, it first needs to know what zone the packet is trying to get to. That is why the destination of a static NAT and destination NAT takes place first. After the policy is evaluated then the source of the static NAT or source NAT gets translated.</p>
+
+<p>As you might have guessed from looking at the diagram, static NAT takes precedence over any other kind of NAT.</p>
+
+<p>If there are overlapping NAT rules, the most specific (longest prefix length) is used.</p>
+
+<h2>Source NAT</h2>
+
+<p>This generally refers to outgoing NAT only. Traffic from within your company that has private IPs that needs to get out to the internet is source NAT&rsquo;d to a public IP.</p>
+
+<p><strong>Note:</strong> This NAT is UNIDIRECTIONAL. Meaning, traffic will be NAT&rsquo;d one way, and be able to reply back, but it will not NAT going the other direction.</p>
+
+<p><img src="/images/junos-nat-source.png" alt="NAT Source IMG" /></p>
+
+<p>The config to conduct source NAT would look something like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST from zone DMZ
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST to zone UNTRUST
+</span><span class='line'>
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE match source-address 192.168.0.0/16
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE match destination-address 0.0.0.0/0
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE then source-nat interface</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To create a NAT you must create a <code>rule-set</code> and a <code>rule</code> within that rule-set. Only one rule-set can be applied on a zone pair. Multiple rules can then be applied in that rule-set.</p>
+
+<p>In the example above, the traffic coming from 192.168.0.0/16 that is destined for anywhere that is traveling from the DMZ zone to the UNTRUST zone will be source NAT&rsquo;d to the interface of the UNTRUST interface IP address. In this particular case we are PAT&#8217;ing the traffic, also known as NAT overload. This is where many IPs can use the same single source IP as they are NAT&rsquo;d through the firewall.</p>
+
+<h3>Then Source-NAT Options</h3>
+
+<p>In the NAT config above you see the <code>then source-nat</code> portion last. There are three options that can be added here. In the case above we use the option <code>interface</code>. There is also <code>pool</code> and <code>off</code>.</p>
+
+<h4>Pool Option</h4>
+
+<p>Suppose you don&rsquo;t want to NAT to the interface but instead you want to use another IP. To first do that you must define that IP in a <code>pool</code>. The configuration would look like so:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>set security nat source pool POOL-PAT address 199.199.199.199/32
+</span><span class='line'>
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST from zone DMZ 
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST to zone UNTRUST
+</span><span class='line'>
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE match source-address 192.168.0.0/16
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE match destination-address 0.0.0.0/0
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE then source-nat pool POOL-PAT </span></code></pre></td></tr></table></div></figure>
+
+
+<p>Even if you only have 1 IP you still make a pool. Take note that the pool will either be defined a source pool or destination pool.</p>
+
+<p>If you have over 64,000 connections going through the firewall into a single IP, you can have multiple IP addresses in the pool and the SRX will alternate between the IP addresses defined in the pool.</p>
+
+<h4>Off Option</h4>
+
+<p>It is possible to identify traffic that you specifically <strong>don&rsquo;t</strong> want to NAT. This would be useful if you are NAT&#8217;ing everything coming from DMZ going to UNTRUST, but you didn&rsquo;t want to NAT a specific flow that is supposed to go over a VPN tunnel. To conduct something like that you would use the <code>off</code> option. Here is an example:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST from zone DMZ
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST to zone UNTRUST
+</span><span class='line'>
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule NAT-OFF match source-address 192.168.0.0/16
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule NAT-OFF match destination-address 172.16.57.0/24
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule NAT-OFF then source-nat off
+</span><span class='line'>
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE match source-address 192.168.0.0/16
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE match destination-address 0.0.0.0/0
+</span><span class='line'>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE then source-nat interface</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notice there are two rules. The first is called <code>NO-NAT</code> which specifically says <code>source-nat off</code> if the traffic matches the criteria. That is because this traffic is going over a VPN and we don&rsquo;t want it to be NAT&rsquo;d but everything else must be source NAT&rsquo;d to the interface IP.</p>
+
+<p>This is the Cisco equivalent to doing a NAT Zero, NAT 0, No NAT, or Identity NAT.</p>
+
+<h2>Destination NAT</h2>
+
+<p>Destination NAT is usually referring to incoming NAT. Specifically someone on the internet needs to access a device inside the network can be destination NAT&rsquo;d to be reachable from the outside.</p>
+
+<p><strong>Note:</strong> This NAT is UNIDIRECTIONAL. Meaning, traffic will be NAT&rsquo;d one way, and be able to reply back, but it will not NAT going the other direction.</p>
+
+<p><img src="/images/junos-nat-dest.png" alt="NAT Source IMG" /></p>
+
+<p>This type of NAT is likely to be used for the outside public network to get to a webserver which has a private IP. As the traffic comes into the SRX the destination IP will have to be changed from the public IP to the real IP or private IP.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>set security nat destination pool POOL-WEBSERVER address 10.10.10.10/32
+</span><span class='line'>
+</span><span class='line'>set security nat destination rule-set NAT-UNTRUST-TO-DMZ from zone UNTRUST 
+</span><span class='line'>set security nat destination rule-set NAT-UNTRUST-TO-DMZ to zone DMZ
+</span><span class='line'>
+</span><span class='line'>set security nat destination rule-set NAT-UNTRUST-TO-DMZ rule DEST-NAT match destination-address 199.199.199.199/32
+</span><span class='line'>set security nat destination rule-set NAT-UNTRUST-TO-DMZ rule DEST-NAT then destination-nat pool POOL-WEBSERVER</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the example above any traffic coming into the SRX on the UNTRUST zone that is destined for 199.199.199.199 will be destination translated to go to 10.10.10.10. Keep in mind, 10.10.10.10 can respond to this traffic due to the SRX being a stateful firewall, however if it initiates traffic it will not be source NAT&rsquo;d to 199.199.199.199.</p>
+
+<p>If there are multiple IPs in the pool, the SRX will load balance between the IP&rsquo;s in the pool. Sending some traffic to each of the IPs in the destination pool. Considered the poor mans way to load balance.</p>
+
+<h3>Port Forwarding</h3>
+
+<p>Sometimes you want to do port forwarding. This would be classified as destination NAT. Here is an example of that.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>set security nat destination pool POOL-PORT-FORWARD address 10.10.10.10/32 port 80
+</span><span class='line'>
+</span><span class='line'>set security nat destination rule-set NAT-UNTRUST-TO-DMZ from zone UNTRUST 
+</span><span class='line'>set security nat destination rule-set NAT-UNTRUST-TO-DMZ to zone DMZ
+</span><span class='line'>
+</span><span class='line'>set security nat destination rule-set NAT-UNTRUST-TO-DMZ rule DEST-NAT match destination-address 199.199.199.199/32
+</span><span class='line'>set security nat destination rule-set NAT-UNTRUST-TO-DMZ rule DEST-NAT match destination-port 8080
+</span><span class='line'>set security nat destination rule-set NAT-UNTRUST-TO-DMZ rule DEST-NAT then destination-nat pool POOL-PORT-FORWARD</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the above example, anyone coming into this SRX from the UNTRUST interface trying to get to 199.199.199.199 on port 8080, will be translated to go to 10.10.10.10 on port 80.</p>
+
+<h2>Static NAT</h2>
+
+<p>This type of NAT is bidirection. It is one to one. Specifically one public IP can be NAT&rsquo;d to one private IP. This would essentially create a source and destination NAT all in one rule.</p>
+
+<p><strong>Note:</strong> This NAT is BIDIRECTIONAL. Meaning, traffic will be NAT&rsquo;d both if it&rsquo;s going out or coming in.</p>
+
+<p><img src="/images/junos-nat-static.png" alt="NAT Source IMG" /></p>
+
+<p>Because this is bidirectional, you would use this type of NAT if you&rsquo;d like to map a public IP to a private IP to allow traffic to that IP to be destination NAT&rsquo;d and traffic from that IP to be source NAT&rsquo;d.</p>
+
+<p>Configuration example:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>set security nat static rule-set STATIC-SERVER1 from zone UNTRUST
+</span><span class='line'>set security nat static rule-set STATIC-SERVER1 rule RULE-NAME match destination-address 99.99.99.99/32
+</span><span class='line'>set security nat static rule-set STATIC-SERVER1 rule RULE-NAME then static-nat 10.10.10.99/32</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Proxy ARP</h2>
+
+<p>If you are doing NAT and the destination is not the IP address of the interface of the SRX, then you need to tell the SRX to do proxy ARP.</p>
+
+<p>Imagine the firewall has a UNTRUST IP of 99.99.99.99 and is doing a static NAT for 99.99.99.88 to be NAT&rsquo;d to 10.10.10.88. In this case next hop internet router will do an ARP to look for whoever owns 99.99.99.88. By default the SRX will not respond to this ARP request. Proxy ARP must be enabled for the SRX to say &ldquo;oh, that packet is for me, here&rsquo;s my MAC address&rdquo;.</p>
+
+<p>Here is an example of proxy ARP configuration:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>set security nat proxy-arp interface ge-0/0/0.0 address 99.99.99.88/32 to 99.99.99.99/89/32</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now the SRX will &lsquo;listen&rsquo; for any ARP requests for 99.99.99.88 and 99.99.99.89.</p>
+
+<h2>Show Commands</h2>
+
+<p>Here are a few show commands to watch how NAT is taking place as it passes through the firewall.</p>
+
+<p><code>show security flow session</code><br>
+<code>show security nat source summary</code><br>
+<code>show security destination source summary</code><br></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-01T11:13:00-07:00" pubdate data-updated="true">Jul 1<span>st</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/juniper/'>juniper</a>, <a class='category' href='/tup/tag/nat/'>nat</a>, <a class='category' href='/tup/tag/scripts/'>scripts</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tunnelsup.github.io/configuring-nat-in-juniper-srx-platforms-using-junos/" data-via="tunnelsup" data-counturl="http://tunnelsup.github.io/configuring-nat-in-juniper-srx-platforms-using-junos/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tunnelsup.github.io/configuring-nat-in-juniper-srx-platforms-using-junos/';
+        var disqus_url = 'http://tunnelsup.github.io/configuring-nat-in-juniper-srx-platforms-using-junos/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>

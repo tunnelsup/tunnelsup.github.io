@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: hacking | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/hacking/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Hacker Challenges]]></title>
+    <link href="http://tunnelsup.github.io/hacker-challenges/"/>
+    <updated>2016-04-01T13:33:00-07:00</updated>
+    <id>http://tunnelsup.github.io/hacker-challenges</id>
+    <content type="html"><![CDATA[<p>Want to get started hacking things but don&rsquo;t want to do anything illegal? Here are some challenges others have made to help you practice some hacking skills. By participating in the challenges you could learn the following skills:</p>
+
+<ul>
+<li>HTML/JS/CSS manipulation and decoding</li>
+<li>SQL &ndash; injections, bugs, limitations</li>
+<li>Linux hacking such as: escalating your privileges, gaining access to things you shouldn&rsquo;t, stealing data</li>
+<li>Linux CLI such as: tr, nc, tcpdump, strings, base64, xxd, etc.</li>
+<li>Programming in languages such as: python, c, ruby, bash, perl, etc.</li>
+<li>Windows hacking such as: accessing a system you shouldn&rsquo;t be able to access, dumping memory, stealing user data</li>
+<li>Memory forensics. Looking at crash dumps or memory data and deciphering it</li>
+<li>Disassembling. Running programs through a hexeditor or disassembler to reverse engineer them.</li>
+<li>Steganography &ndash; the practice of hiding or extracting messages in files that serve a different purpose</li>
+<li>Encrypting/Decrypting &ndash; decrypting and deciphering messages</li>
+<li>Password cracking &ndash; using <a href="/getting-started-cracking-password-hashes/">John the ripper</a></li>
+<li>Wireshark analysis</li>
+<li>Pen testing &ndash; trying to exploit vulnerabilities in systems with known problems</li>
+<li>Hacking tools &ndash; learn to use metasploit, beef, ida, burpsuite etc.</li>
+</ul>
+
+
+<p>Are you looking for only &lsquo;programming hacker&rsquo; type challenges? Try the <a href="/games-to-test-your-coding-skills/">Games to Test Your Programming Skills</a> post.</p>
+
+<h2>PicoCTF</h2>
+
+<p><a href="https://picoctf.com">https://picoctf.com</a></p>
+
+<p>PicoCTF is a great place for anyone to start. It&rsquo;s a game that has many increasingly difficult challenges with a story behind it. Try to get all the way through it!</p>
+
+<h2>OverTheWire Wargames</h2>
+
+<p><a href="http://overthewire.org/wargames/">http://overthewire.org/wargames/</a></p>
+
+<p>This is a great set of challenges that has a wide range of problems to solve. The beginning challenge &ldquo;Bandit&rdquo; will challenge your linux CLI skills and shows you ways you can do things you probably shouldn&rsquo;t be able to in linux as that user. The &ldquo;Krypton&rdquo; challenge will show you some basic crypto and have you decode it. The &ldquo;Natas&rdquo; challenge is a series of websites that challenges you to hack them and manipulate them to gain access in ways you shouldn&rsquo;t be able to. Try all 4 of these to see where you niche is in solving challenges.</p>
+
+<h2>SmashTheStack</h2>
+
+<p><a href="http://smashthestack.org/">http://smashthestack.org/</a></p>
+
+<p>Similar to some of the OverTheWire challenges, SmashTheStack lets you ssh to their system and solve the puzzles. The problem I had with this is the lack of cleanup done by admins and many files were left by previous participants which can get hairy real fast.</p>
+
+<h2>HackThisSite</h2>
+
+<p><a href="http://www.hackthissite.org/">http://www.hackthissite.org/</a></p>
+
+<p>Another hacking challenge site.</p>
+
+<h2>FRA Challenges</h2>
+
+<p><a href="http://challenge.fra.se/">http://challenge.fra.se/</a></p>
+
+<p>This is a Swedish company&rsquo;s recruitment page. In it, are over a dozen challenges they&rsquo;ve had throughout the years. Their goal is to find people who can solve these challenges so they can hire them. These challenges are super fun to try.</p>
+
+<p>To help you along or give you an idea of how in depth their challenges are, here&rsquo;s a walkthrough for Informationssäkerhetsspecialist.
+<a href="https://www.youtube.com/watch?v=tvdETwpTaC8">https://www.youtube.com/watch?v=tvdETwpTaC8</a></p>
+
+<h2>p0wnlabs</h2>
+
+<p><a href="http://www.p0wnlabs.com/free/vms">http://www.p0wnlabs.com/free/vms</a></p>
+
+<p>A great resource listing numerous vulnerable VMs. Such as:</p>
+
+<ul>
+<li><a href="https://community.rapid7.com/docs/DOC-2196">Metasploitable</a> &ndash; a vulnerable VM from Rapid 7 (os hacking)</li>
+<li><a href="https://www.owasp.org/index.php/Category:OWASP_WebGoat_Project">Webgoat</a> &ndash; a lab from OWASP (website hacking)</li>
+</ul>
+
+
+<h2>Vuln Hub</h2>
+
+<p><a href="https://www.vulnhub.com/">https://www.vulnhub.com/</a></p>
+
+<p>Another big list of vulnerable VMs and past CTFs that can be attempted anytime.</p>
+
+<h2>Damn Vulnerable Web Application</h2>
+
+<p><a href="http://www.dvwa.co.uk/">http://www.dvwa.co.uk/</a></p>
+
+<p>A web application that you download and get running then try to hack.</p>
+
+<h2>Crack Me if You Can</h2>
+
+<p><a href="http://contest.korelogic.com/">http://contest.korelogic.com/</a></p>
+
+<p>A contest that was previously held at DefCon which has various password hash dumps for you you to try cracking. A great way to learn how to use tools like John the Ripper and other brute forcers.</p>
+
+<h2>Malware Hunter Lab</h2>
+
+<p><a href="https://www.alienvault.com/blogs/security-essentials/building-a-home-lab-to-become-a-malware-hunter-a-beginners-guide?utm_medium=Social">https://www.alienvault.com/blogs/security-essentials/building-a-home-lab-to-become-a-malware-hunter-a-beginners-guide?utm_medium=Social</a></p>
+
+<p>Alien Vault has a nice writeup on how to build a home lab to practice hunting for malware.</p>
+
+<h2>Ring Zero</h2>
+
+<p><a href="https://ringzer0team.com/">https://ringzer0team.com/</a>
+An online, Jeopardy style, CTF where you compete with others working on the same puzzles. This CTF doesn&rsquo;t appear to be timed and is always running.</p>
+
+<h2>Embedded Security CTF</h2>
+
+<p><a href="https://microcorruption.com">https://microcorruption.com</a></p>
+
+<p>Another CTF to try that is not time based.</p>
+
+<h2>CTF Field Guide</h2>
+
+<p><a href="https:///trailofbits.github.io/ctf">https:///trailofbits.github.io/ctf</a></p>
+
+<p>A helpful website that gives tips on solving CTFs and gets you started with all of this.</p>
+
+<h2>Another huge list</h2>
+
+<p><a href="http://www.amanhardikar.com/mindmaps/Practice.html">http://www.amanhardikar.com/mindmaps/Practice.html</a></p>
+
+<p>Tons of links here to even more challenges, vms, ctfs, etc.</p>
+
+<h2>Next steps: CTF</h2>
+
+<p>Now that you&rsquo;re all skilled up on the various hacking skills, it&rsquo;s time to compete in an CTF. These are live challenges, often a team event, where you are given a specific challenge and time limit. Each team competes to solve the puzzles to score points.</p>
+
+<p>CTFs usually break down into two categories: jeopardy and attack-defense. Jeopardy ones are more geared towards solving pre-defined challenges, while attack-defense puts your team up against another team where you try to get into their system while they try to get into yours.</p>
+
+<p>This website tracks all the upcoming CTFs. Find one and compete. I&rsquo;m sure you&rsquo;ll learn a ton of new stuff!</p>
+
+<p><a href="https://ctftime.org/">https://ctftime.org/</a></p>
+
+<h4>Hacker Experience</h4>
+
+<p><a href="https://legacy.hackerexperience.com/">https://legacy.hackerexperience.com/</a></p>
+
+<p>Not quite a challenge that will teach you how to hack, but a funny little game anyways regarding hacking.</p>
+]]></content>
+  </entry>
+  
+</feed>

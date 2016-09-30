@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: cheatsheet | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/cheatsheet/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Metasploit Cheat Sheet]]></title>
+    <link href="http://tunnelsup.github.io/metasploit-cheat-sheet/"/>
+    <updated>2016-09-28T10:41:00-07:00</updated>
+    <id>http://tunnelsup.github.io/metasploit-cheat-sheet</id>
+    <content type="html"><![CDATA[<p>Need a quick handy reference guide for Metasploit? I&rsquo;ve put together a bunch of the most common commands in a cheat sheet style for quick reference.</p>
+
+<p><img class="center" src="/images/Metasploit.png">
+Download: <a href="/images/Metasploit.png">[PNG Image]</a> - <a href="/images/Metasploit-CheatSheet.pdf">[PDF File]</a></p>
+
+<p>If you find any problems with this please leave a comment below and I will update the guide periodically.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA Licensing Quick Reference Guide]]></title>
+    <link href="http://tunnelsup.github.io/cisco-asa-licensing-quick-reference-guide/"/>
+    <updated>2013-07-01T11:26:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-asa-licensing-quick-reference-guide</id>
+    <content type="html"><![CDATA[<p>One of the most confusing things about Cisco ASA&rsquo;s is the licensing structure. While it is very nice to have a single train of OS files to deal with, it is incredibly hard to keep track of all of the licensing details regarding the ASA. Here is a handy guide that may help you wade through the piles of documentation around it.</p>
+
+<h2>Quick Reference Guide</h2>
+
+<p><img src="/images/asalicensing.png" alt="ASA Licensing Guide IMG" /></p>
+
+<p>Download: <a href="/images/asalicensing.png">PNG Image</a>, <a href="/images/ASALicensingCheatSheet.pdf">PDF Document</a></p>
+
+<p>To see what licenses are installed on the ASA review the outputs of the <code>show version</code> command. The output will look something like this:</p>
+
+<p><code>
+Inside Hosts                      : Unlimited      perpetual
+Failover                          : Active/Active  perpetual
+Encryption-DES                    : Enabled        perpetual
+Encryption-3DES-AES               : Enabled        perpetual
+Security Contexts                 : 2              perpetual
+GTP/GPRS                          : Disabled       perpetual
+AnyConnect Premium Peers          : 2              perpetual
+AnyConnect Essentials             : Disabled       perpetual
+Other VPN Peers                   : 250            perpetual
+Total VPN Peers                   : 250            perpetual
+Shared License                    : Disabled       perpetual
+AnyConnect for Mobile             : Disabled       perpetual
+AnyConnect for Cisco VPN Phone    : Disabled       perpetual
+Advanced Endpoint Assessment      : Disabled       perpetual
+UC Phone Proxy Sessions           : 2              perpetual
+Total UC Proxy Sessions           : 2              perpetual
+Botnet Traffic Filter             : Disabled       perpetual
+Intercompany Media Engine         : Disabled       perpetual
+IPS Module                        : Disabled       perpetual
+Cluster                           : Disabled       perpetual
+</code>
+Now we will cover each of these items in detail.</p>
+
+<h2>VLANs</h2>
+
+<p>On the Cisco ASA 5505 you may see a line stating:<br>
+<code>VLANs                             : 3              DMZ Restricted</code>
+On the 5505 each interface is assigned a VLAN. This is stating only 3 VLANs can be created which are then eligible to be applied to an interface. The &ldquo;DMZ Restricted&rdquo; term indicates a further restriction. Two VLANs can talk to each other without issues. Suppose these are &ldquo;inside&rdquo; and &ldquo;outside&rdquo;. The 3rd VLAN we&rsquo;ll call &ldquo;DMZ&rdquo;. The DMZ interface is restricted to only be able to pass traffic to either the inside interface or outside but cannot pass traffic to both. That means it&rsquo;s &ldquo;DMZ Restricted&rdquo;. A sec plus license can be applied to remove this restriction.</p>
+
+<h2>Inside Hosts</h2>
+
+<p>This is &ldquo;Unlimited&rdquo; in all models except for the 5505. The 5505 comes with 10 hosts standard and can be upgraded to 50 or Unlimited number of hosts. This specifically means the ASA will only build connections for 10 hosts within the network at a time.</p>
+
+<h2>Failover</h2>
+
+<p>This is not to be confused with &ldquo;Clustering&rdquo;. Failover is when two firewalls (which are matching models and hardware) are paired together for redundancy. In an Active/Standby scenario, one firewall acts as the active one and accepts connections going through it. The active firewall will keep the active IP. So if the primary firewall goes down, the standby unit will kick over to active and even take over the active IP. This failover usually occurs without dropping a packet because the connection table is actually replicated between the two units.</p>
+
+<p>An Active/Active scenario is generally used for multi context firewalls. This may be used when Primary firewall is the Active firewall for Context A, and the secondary fireall is the Active firewall for Context B. If one firewall goes down, the remaining one becomes Active for both Contexts.</p>
+
+<h2>Encryption</h2>
+
+<p>Encryption-DES comes standard on all firewalls.</p>
+
+<p>Encryption-3DES-AES is a $0 cost license that enables 3DES and AES encryption methods.</p>
+
+<h2>Security Contexts</h2>
+
+<p>By default the ASA has 2 contexts that can be ran simultaneously. This is not supported in the 5505 and requires the Security Plus license for 5510 and 5512-X.</p>
+
+<p>A multi context firewall is one which runs multiple separate firewalls inside a single chassis. The admin context is used to determine which interfaces are assigned to which contexts.</p>
+
+<h2>Other VPN Peers / Total VPN Peers</h2>
+
+<p>Included with base license. It is used for site to site IPSec tunnels using IKEv1 or IKEv2. It is also used when using remote access VPN (Legacy Cisco VPN Client) using IKEv1. IPSec remote access IKEv2 requires AnyConnect Essentials or AnyConnect Premium.</p>
+
+<h2>AnyConnect</h2>
+
+<p>For more information regarding AnyConnect Premium and Essentials see my blog post <a href="http://www.tunnelsup.com/tup/2012/08/08/understanding-cisco-asa-anyconnect-licensing/">Understanding AnyConnect Licensing</a>.</p>
+
+<p>Advanced Endpoint Assessment is used to enhance the host scan. When normally a host scan can detect when a VPN user is out of compliancy and not allowed conection into the network, the Advanced Endpoint Assessment can actually suggest to the user what they&rsquo;ll need to do to fix it. Either by downloading an update or guiding them on fixing a program.</p>
+
+<p>AnyConnect for Cisco VPN Phone is used for allowing VOIP phones that have built in VPN support to VPN into the ASA and then contact the Call Manager. Only supported on CallManager 8.0+ and IP Phone firmware 9.x.</p>
+
+<h2>Botnet</h2>
+
+<p>For more information on the botnet license and capability see my blog post <a href="http://www.tunnelsup.com/tup/2013/05/08/cisco-asa-botnet-license/">Understanding Botnet Licensing</a>.</p>
+
+<h2>GTP/GPRS</h2>
+
+<p>This is used by ISPs who have 3G traffic going through their network.</p>
+
+<h2>Shared License</h2>
+
+<p>The Shared SSL VPN license is a way to have a central ASA act as an AnyConnect premium peer license server and other participant ASA&rsquo;s can ask for licenses (in blocks of 50 at a time) from the shared license server. This requires both a Server license and particpant license.</p>
+
+<h2>UC Phone Proxy</h2>
+
+<p>This is a legacy license because CallManager 8.0+ does not support this feature any longer.</p>
+
+<h2>Intercompany Media Engine</h2>
+
+<p>Allows support to offload communications from PSTN to IP-based SIP trunks through the ASA. Primarily used for business to business federation between CUCM&rsquo;s. Requires version 8.3(1)+.</p>
+
+<h2>IPS Module</h2>
+
+<p>In ASA 5500-X series firewalls the IPS module is entirely software based and requires an additional license to enable it. Once the license is enabled for the software firewall, and additional support contract (smartnet) is required to update the IPS sensor with signatures.</p>
+
+<h2>Cluster</h2>
+
+<p>This feature is new to 9.0(1). It allows multiple ASA&rsquo;s to be grouped into a single logical device. Clustering will probably never be supported on the ASA 5500 series models. It currently is only available on 5580 and 5585-X models. Future plans to support all 5500-X models.</p>
+
+<p>For further information read: <a href="http://communities.cisco.com/docs/DOC-26234">http://communities.cisco.com/docs/DOC-26234</a></p>
+
+<h2>Security Plus License</h2>
+
+<p>Refer to the image below to understand what the Security Plus license does. Note: it is only available for the 5505, 5510, 5512-X and 5585-X.</p>
+
+<p><img src="/images/asasecplus.png" alt="ASA Sec Plus IMG" /></p>
+
+<h2>Further Reading</h2>
+
+<p>For more information review Cisco documentation: <a href="http://www.cisco.com/en/US/docs/security/asa/asa91/license/license_management/license.html">http://www.cisco.com/en/US/docs/security/asa/asa91/license/license_management/license.html</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[XBee S2 Quick Reference Guide/Cheat Sheet and Video Tutorials to Getting Started]]></title>
+    <link href="http://tunnelsup.github.io/xbee-guide/"/>
+    <updated>2012-11-30T00:00:00-08:00</updated>
+    <id>http://tunnelsup.github.io/xbee-guide</id>
+    <content type="html"><![CDATA[<p>When I first got started with XBee I had a hard time getting the right information to help me on the projects I was working on. I put my project on hold and spent a few months simply trying to understand XBee specifically using it with arduino. Below is a cheat sheet or quick reference guide that I use now to reference whenever I&rsquo;m working on a project. It has pretty much all of the information I need to effectively use the XBee in whatever project I&rsquo;m working on.</p>
+
+<p><img class="center" src="/images/xbee.png">
+Download: <a href="/images/xbee.png">[PNG Image]</a> - <a href="/images/XBee-Quick-Reference-Guide.pdf">[PDF File]</a></p>
+
+<p>If you find any problems with this please leave a comment below and I will update the guide periodically.</p>
+
+<h2>Video Tutorial Course: XBee Basics</h2>
+
+<p>I have created 5 videos that walk you through everything on the quick reference guide above. This way you can use the guide effectively as well as learn all about XBees. Links to each lesson is below.</p>
+
+<ul>
+<li><a href="http://www.youtube.com/watch?v=odekkumB3WQ">Video 1: Overview of XBee and how to configure it</a></li>
+<li><a href="http://www.youtube.com/watch?feature=player_embedded&amp;v=mPx3TjzvE9U"> Video 2: XBee with both sides in AT mode (transparent communication)</a></li>
+<li><a href="http://www.youtube.com/watch?v=jh-GIaghIjw"> Video 3: API mode &ndash; Digital Input from remote sensor</a></li>
+<li><a href="http://www.youtube.com/watch?v=rnBx2yqKn_E"> Video 4: API mode &ndash; Analog reading from remote sensor</a></li>
+<li><a href="http://www.youtube.com/watch?v=CzH146rR-7I"> Video 5: API mode &ndash; Digital output to remote sensor</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

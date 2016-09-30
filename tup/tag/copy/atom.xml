@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: copy | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/copy/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Providing a username and password in one line when copying a FTP file to a Cisco ASA firewall]]></title>
+    <link href="http://tunnelsup.github.io/providing-a-username-and-password-in-one-line-when-copying-a-ftp-file-to-a-cisco-asa-firewall/"/>
+    <updated>2013-05-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/providing-a-username-and-password-in-one-line-when-copying-a-ftp-file-to-a-cisco-asa-firewall</id>
+    <content type="html"><![CDATA[<p>To copy a file from an FTP server to the flash of a ASA you could do the following:</p>
+
+<p><code>
+copy ftp flash
+</code></p>
+
+<p>Which will then prompt you for all the details (username/password/location/file). But there is a better way which will allow you to put all of that information on one line.</p>
+
+<p>To indicate all of the details on one line you can do:</p>
+
+<p><code>
+copy ftp://ftpuser:Passw0rD@192.168.5.50/asa/asa825-41-k8.bin flash
+</code></p>
+
+<p>This indicates the username is <code>ftpuser</code>, with the password of <code>Passw0rD</code> with the location of the ftp server at <code>192.168.5.50</code> with the filename <code>asa825-41-k8.bin</code>.</p>
+]]></content>
+  </entry>
+  
+</feed>

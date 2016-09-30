@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: dovecot | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/dovecot/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Using salted SHA hashes with Dovecot authentication]]></title>
+    <link href="http://tunnelsup.github.io/using-salted-sha-hashes-with-dovecot-authentication/"/>
+    <updated>2015-02-08T13:25:00-08:00</updated>
+    <id>http://tunnelsup.github.io/using-salted-sha-hashes-with-dovecot-authentication</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve finally figured out how to do this. The <a href="http://wiki2.dovecot.org/Authentication/PasswordSchemes">Dovecot documentation</a> is absolutely horrible which is sad because it should be encouraged to always salt your password hashes yet they make it very difficult to figure out.</p>
+
+<p>Dovecot is a IMAP and POP3 plugin for Postfix. Postfix doesn&rsquo;t do authentication on its own so it&rsquo;s often found that SASL authentication gets passed to Dovecot for both IMAP mail checking and creating dynamic relay lists.</p>
+
+<h3>Goal</h3>
+
+<p>We want to get Dovecot authentication to use salted SHA password hashes. The password hashes are stored in a mysql database and were created using ruby, python, or php.</p>
+
+<p>You should never be saving user passwords. It&rsquo;s better to only store the hash of a user&rsquo;s passwords. But don&rsquo;t stop there, add some complexity to the hash. By salting the password hash it significantly complicates the cracking process. It&rsquo;s also best practices to have a unique salt for every password hash.</p>
+
+<h3>Format of the hash</h3>
+
+<p>The Dovecot documentation says the password hash must be in the following format when presented to Dovecot for comparing. (It can be in base64 or hex.)</p>
+
+<p><code>{SSHA256.hex}4a847fefc4f9ab450f16783c5025d64313942a1ceb2599707cdb65940ba901e513fa442f</code></p>
+
+<p>This is a string with the following in it:</p>
+
+<ul>
+<li><code>{SSHA256}</code> This is the beginning of the string which tells Dovecot what kind of hash this is. In this case &lsquo;SSH256&rsquo; means Salted SHA 256 bit.</li>
+<li><code>4a847fefc4f9ab450f16783c5025d64313942a1ceb2599707cdb65940ba901e5</code> is the salted hash. Dovecot knows only that portion is the salted hash because a SHA256 hash will be 32 bytes long.</li>
+<li><code>13fa442f</code> is the salt. Dovecot knows this is the salt because it assumes everything after the hash will be the salt because we indicated &ldquo;SSHA&rdquo; which is a salted SHA hash.</li>
+</ul>
+
+
+<p>You can actually verify this against Dovecot with the following command line:</p>
+
+<p><code>
+$ doveadm pw -t {SSHA256.hex}4a847fefc4f9ab450f16783c5025d64313942a1ceb2599707cdb65940ba901e513fa442f -p pass
+{SSHA256.hex}4a847fefc4f9ab450f16783c5025d64313942a1ceb2599707cdb65940ba901e513fa442f (verified)
+</code></p>
+
+<p>The command above asks the Dovecot authentication compare program to check the hash given against the password &ldquo;pass&rdquo;. The result is <strong>verified</strong> which means this password matches the hash.</p>
+
+<h3>Create the hash</h3>
+
+<p>The are many ways to create the hash. You can use php, python, ruby, bash, or even mysql itself to hash the password. In the cases below we are creating a base64 hash.</p>
+
+<h5>Ruby</h5>
+
+<p>Using ruby or ruby on rails we can create the hash this way:</p>
+
+<p><code>ruby
+salt = SecureRandom.hex(32) # Creates a 64 byte random hex string
+hash = Base64.strict_encode64(Digest::SHA512.digest("password"+salt) + salt)
+</code></p>
+
+<p>You can test this code using the rails console.</p>
+
+<h5>Python</h5>
+
+<p>Using python or any of the python web frameworks like django we can create the hash this way:</p>
+
+<p>```python
+import base64
+import hashlib
+import os</p>
+
+<p>salt = os.urandom(64) # Creates a random 64 byte string
+shahash = hashlib.sha512()
+shahash.update(&ldquo;password&rdquo;)
+shahash.update(salt)</p>
+
+<p>shahashsalt = &lsquo;{}{}&rsquo;.format(shahash.digest(), salt)</p>
+
+<p>hash = base64.b64encode(hashsalt)
+```</p>
+
+<p>You can test this code from the python console. Thanks to <a href="https://gist.github.com/garrettreid/8329796">this gist</a> for helping me out with this.</p>
+
+<h5>PHP</h5>
+
+<p><a href="http://stackoverflow.com/questions/6713521/how-to-securely-generate-ssha256-or-ssha512-hashes-in-php">This stackoverflow question</a> goes over how to create the hash in PHP. I have not tested this one though.</p>
+
+<h3>Test the hash using Dovecot</h3>
+
+<p>Suppose the following:<br>
+Our salt is: <code>2fec1ee0940e7c436ef2037e89e4c06ca20b281a90dbb2d6cbd3534aa4ce7e19</code><br>
+Our password is: <code>test</code></p>
+
+<p>This would result in the following <strong>salted</strong> hash:<br>
+<code>text
+4a1e8a61780f449ef6cbc883b5cf57279d32fd004cb7298ddb6f8c46bf246187c03f1bf9447044708767a826e65f977e5c95a490abf8f2c3ca90c7a0ea2b89e8
+</code></p>
+
+<p>And when concatenating the salt to the end and converting to base64 we&rsquo;d get this:<br>
+<code>text
+Sh6KYXgPRJ72y8iDtc9XJ50y/QBMtymN22+MRr8kYYfAPxv5RHBEcIdnqCbmX5d+XJWkkKv48sPKkMeg6iuJ6DJmZWMxZWUwOTQwZTdjNDM2ZWYyMDM3ZTg5ZTRjMDZjYTIwYjI4MWE5MGRiYjJkNmNiZDM1MzRhYTRjZTdlMTk=
+</code></p>
+
+<p>We can test this string using the <code>doveadm pw</code> command from the linux command line (provided Dovecot is installed):</p>
+
+<p><code>
+$ doveadm pw -t {SSHA512}Sh6KYXgPRJ72y8iDtc9XJ50y/QBMtymN22+MRr8kYYfAPxv5RHBEcIdnqCbmX5d+XJWkkKv48sPKkMeg6iuJ6DJmZWMxZWUwOTQwZTdjNDM2ZWYyMDM3ZTg5ZTRjMDZjYTIwYjI4MWE5MGRiYjJkNmNiZDM1MzRhYTRjZTdlMTk= -p test
+{SSHA512}Sh6KYXgPRJ72y8iDtc9XJ50y/QBMtymN22+MRr8kYYfAPxv5RHBEcIdnqCbmX5d+XJWkkKv48sPKkMeg6iuJ6DJmZWMxZWUwOTQwZTdjNDM2ZWYyMDM3ZTg5ZTRjMDZjYTIwYjI4MWE5MGRiYjJkNmNiZDM1MzRhYTRjZTdlMTk= (verified)
+</code></p>
+
+<p>The <code>-t</code> indicates we are going to give the hash and the <code>-p</code> indicates which password to use for hashing. The hash we give indicates this is a <strong>S</strong>alted SHA512 and is long enough to indicate the salted hash with the salt appended to the end of the string. So doveadm will take the first 64 bytes of the hash off and the rest of the bytes are the salt. It will then hash the word &ldquo;test&rdquo; with SHA512 using the salt provided and then test that against the hash provided. The result is <strong>verified</strong> which means the hashes match.</p>
+
+<h3>Configure Dovecot</h3>
+
+<p>Suppose the username and hashed password is stored in the mysql table &ldquo;users&rdquo;. Let&rsquo;s now configure Dovecot to get that information for it&rsquo;s authentication.</p>
+
+<p>First make sure Dovecot is handling the authentication by configuring Postfix. Add the lines to <code>/etc/postfix/main.conf</code>:</p>
+
+<p><code>
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+</code></p>
+
+<p>Edit the <code>/etc/dovecot/conf.d/10-auth.conf</code> file and make sure the following are in it:</p>
+
+<p><code>
+auth_mechanisms = plain login
+!include auth-sql.conf.ext
+</code></p>
+
+<p>Edit the <code>/etc/dovecot/conf.d/auth-sql.conf.ext</code> file and put the following in it:</p>
+
+<p><code>
+passdb {
+  driver = sql
+  args = /etc/dovecot/dovecot-sql.conf.ext
+}
+</code></p>
+
+<p>Edit the <code>/etc/dovecot/dovecot-sql.conf.ext</code> file and put the following in it:</p>
+
+<p>```
+driver = mysql</p>
+
+<p>connect = host=127.0.0.1 dbname=mydatabase user=sqluser password=sqluserpassword</p>
+
+<p>default_pass_scheme = SSHA512</p>
+
+<p>password_query = SELECT username as user, CONCAT(&ldquo;{SSHA512}&rdquo;, password_hash) as password FROM users WHERE username=&lsquo;%n&rsquo;;
+```</p>
+
+<p>You&rsquo;ll have to adjust the <code>connect</code> and <code>password_query</code> parameters to be what your database requires for the properly mysql authentication and lookups. Take note here that Dovecot expects this command to return a <code>user</code> and <code>password</code> column in the result. So if your mysql columns don&rsquo;t say that, use the <code>as</code> mysql command to fix that. Also note that we are adding <code>{SSHA512}</code> to the front of the <code>password</code> because this is what Dovecot wants.</p>
+
+<p>Once that is done restart Dovecot by doing <code>sudo services dovecot restart</code>.</p>
+
+<h3>Verify/Troubleshoot</h3>
+
+<p>At this point you should be able to authenticate to Dovecot with your password which is stored using a salted hash algorithm.</p>
+
+<p>If this isn&rsquo;t working for you then check <code>/var/log/mail.log</code> to see if there are any errors. Turn on additional debugging by editing the file <code>/etc/dovecot/conf.d/10-logging.conf</code> and add/uncomment this line:</p>
+
+<p><code>auth_debug_passwords = yes</code></p>
+
+<p>Now when you check mail.log you may see the following:</p>
+
+<p><code>text
+auth-worker(27083): sql(testuser,1.1.1.1): Password mismatch
+auth-worker(27083): Debug: sql(testuser,1.1.1.1): SSHA512.HEX(test) != '3b98564e1ae8ec5d70cb7b9ea457e1ad833628da9f37211e73d1dc80b8c4c271d65de63a5e4fdde4e0c62cc13995619a3ba22441a892c06f4395d5f46e3fe3df5db034e27bda3045ef9e6057eb4799ea9c05d35c6a3b361697b20689ce44b16d5db034e27bda3045ef9e6057eb4799ea9c05d35c6a3b361697b20689ce44b16d'
+</code></p>
+
+<p>This will show you the hash that&rsquo;s being checked and the hashing type Dovecot is trying. You can test this manually by using the <code>doveadm pw</code> command covered above in the Test section of this page.</p>
+
+<p>My biggest problem was creating a salted hash the correct way. Verify that the hash you&rsquo;re creating works against <code>doveadm pw</code> before adding the Dovecot configuration.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: activerecord | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/activerecord/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Rails ActiveRecord Console Commands]]></title>
+    <link href="http://tunnelsup.github.io/rails-activerecord-console-commands/"/>
+    <updated>2015-02-03T20:34:00-08:00</updated>
+    <id>http://tunnelsup.github.io/rails-activerecord-console-commands</id>
+    <content type="html"><![CDATA[<p>It is possible to interact with the database of a Ruby on Rails project from the console. To enter the console execute this command from the command line within your project:</p>
+
+<p><code>rails console</code></p>
+
+<p>In our examples below we will be using the following databases. The relationship is that a <code>user</code> has many <code>pets</code>.</p>
+
+<table class="table">
+ <caption>users</caption>
+ <th>id</th>
+ <th>username</th>
+ <th>password</th>
+ <tr>
+  <td>1</td>
+  <td>Alex</td>
+  <td>al23lk@#$AFfFj23rhf0a98eraljkwqer</td>
+ </tr>
+ <tr>
+  <td>2</td>
+  <td>Benny</td>
+  <td>2llLKJ#3j3#KJ#L7ouOuoI#</td>
+ </tr>
+ <tr>
+  <td>7</td>
+  <td>Carlton</td>
+  <td>#LKJ#LkjJ9f9wf0j</td>
+ </tr>
+</table>
+
+
+
+
+<table class="table">
+ <caption>pets</caption>
+ <th>id</th>
+ <th>user_id</th>
+ <th>pet_name</th>
+ <tr>
+  <td>1</td>
+  <td>2</td>
+  <td>Scruffy</td>
+ </tr>
+ <tr>
+  <td>2</td>
+  <td>2</td>
+  <td>Buddy</td>
+ </tr>
+ <tr>
+  <td>3</td>
+  <td>3</td>
+  <td>Buttons</td>
+ </tr>
+</table>
+
+
+<h3>Viewing a record</h3>
+
+<p>To view the first <strong>user</strong>:<br>
+<code>
+2.1.1 :003 &gt; User.first
+ =&gt; #&lt;User id: 1, username: "Alex", password: "al23lk@#$AFfFj23rhf0a98eraljkwqer"&gt;
+</code></p>
+
+<p>To view the 3rd <strong>user</strong>:<br>
+<code>
+2.1.1 :003 &gt; User.find(3)
+ =&gt; #&lt;User id: 3, username: "Benny", password: "2llLKJ#3j3#KJ#L7ouOuoI#"&gt;
+</code></p>
+
+<p>To find the <strong>pet</strong> with the name &ldquo;Buttons&rdquo;:<br>
+<code>
+2.1.1 :009 &gt; Pet.find_by_pet_name('Buttons')
+ =&gt; #&lt;Pet id: 3, user_id: 3, pet_name: "Buttons"&gt;
+</code></p>
+
+<p>Using the <strong>where</strong> command:</p>
+
+<p><code>
+2.1.1 :028 &gt; User.where(username: "Carlton")
+ =&gt; #&lt;ActiveRecord::Relation [#&lt;User id: 3, username: "Carlton", password: "#LKJ#LkjJ9f9wf0j"&gt;]&gt;
+</code></p>
+
+<h3>Using variables</h3>
+
+<p>In order to manipulate the data in the database it&rsquo;s best to use variables. They are easy to use and very helpful.</p>
+
+<p>To assign the first user to variable <strong>a</strong> and then display the contents of a:</p>
+
+<p><code>
+2.1.1 :012 &gt; a = User.first
+ =&gt; #&lt;User id: 1, username: "Alex", password: "al23lk@#$AFfFj23rhf0a98eraljkwqer"&gt;
+2.1.1 :013 &gt; a
+ =&gt; #&lt;User id: 1, username: "Alex", password: "al23lk@#$AFfFj23rhf0a98eraljkwqer"&gt;
+</code></p>
+
+<p>To change the username for <strong>a</strong>:</p>
+
+<p><code>
+2.1.1 :016 &gt; a.username = "Alexander"
+ =&gt; "Alexander"
+2.1.1 :017 &gt; a
+ =&gt; #&lt;User id: 1, username: "Alexander", password: "al23lk@#$AFfFj23rhf0a98eraljkwqer"&gt;
+</code></p>
+
+<p>To save the new changes to the database:</p>
+
+<p><code>
+2.1.1 :018 &gt; a.save
+ =&gt; true
+</code></p>
+
+<p>If the result says &lsquo;true&rsquo; it means the data was saved to the database. If it comes back &lsquo;false&rsquo; it means there&rsquo;s a problem and the data wasn&rsquo;t saved. The validations rules still apply that are in the model. Also if you have before save filters in the model that may cause the save to fail.</p>
+
+<h3>Create a new record</h3>
+
+<p>There are two ways to create a new record. Using the &lsquo;save&rsquo; option or &lsquo;create&rsquo; option.</p>
+
+<p>Using the <strong>save</strong> method:</p>
+
+<p><code>
+2.1.1 :019 &gt; a = User.new
+ =&gt; #&lt;User id: nil, username: nil, password: nil, created_at: nil, updated_at: nil&gt;
+2.1.1 :020 &gt; a.username = "Darcy"
+ =&gt; "Darcy"
+2.1.1 :021 &gt; a.save
+ =&gt; true
+</code>
+Using the <strong>create</strong> method:</p>
+
+<p><code>
+2.1.1 :011 &gt; User.create(:username =&gt; "Darcy")
+</code></p>
+
+<h3>Further reading</h3>
+
+<p><a href="http://guides.rubyonrails.org/active_record_querying.html">http://guides.rubyonrails.org/active_record_querying.html</a></p>
+]]></content>
+  </entry>
+  
+</feed>

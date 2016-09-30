@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: cpu | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/cpu/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Troubleshooting high CPU on Juniper SRX Junos devices]]></title>
+    <link href="http://tunnelsup.github.io/troubleshooting-high-cpu-on-juniper-srx-junos-devices/"/>
+    <updated>2015-09-30T19:20:00-07:00</updated>
+    <id>http://tunnelsup.github.io/troubleshooting-high-cpu-on-juniper-srx-junos-devices</id>
+    <content type="html"><![CDATA[<p>Occasionally a Juniper SRX device running Junos will have a high CPU. Here are some tips for troubleshooting these incidents.</p>
+
+<h2>Validate</h2>
+
+<p>Check the routing engine (control plane). Check the CPU status by doing <code>show chassis routing-engine</code>.</p>
+
+<p>```
+user@USPHIFW1> show chassis routing-engine
+Routing Engine status:</p>
+
+<pre><code>Temperature                 40 degrees C / 104 degrees F
+CPU temperature             38 degrees C / 100 degrees F
+Total memory              1024 MB Max   758 MB used ( 74 percent)
+  Control plane memory     560 MB Max   442 MB used ( 79 percent)
+  Data plane memory        464 MB Max   316 MB used ( 68 percent)
+CPU utilization:
+  User                      90 percent
+  Background                 0 percent
+  Kernel                     6 percent
+  Interrupt                  0 percent
+  Idle                       4 percent
+Model                          RE-SRX240H
+Serial ID                      AAEM9236
+Start time                     2014-02-23 10:25:39 CST
+Uptime                         584 days, 7 hours, 58 minutes, 37 seconds
+Last reboot reason             0x1:power cycle/failure
+Load averages:                 1 minute   5 minute  15 minute
+                                   0.46       0.48       0.49
+</code></pre>
+
+<p>```</p>
+
+<p>Above you can see that the CPUs are 4% idle which means it&rsquo;s 96% utilized. I would say anything over 90% is considered bad. Once the CPU gets gets to 100% utilization it will start dropping packets and possibly overheating.</p>
+
+<p>Next you want to look further and see what processes are running high. Do this with the command <code>show system processes extensive</code>.</p>
+
+<p>```
+user@USPHIFW1> show system processes extensive
+last pid: 15924;  load averages:  0.50,  0.50,  0.50  up 584+08:03:00    19:28:16
+149 processes: 19 running, 115 sleeping, 3 zombie, 12 waiting</p>
+
+<p>Mem: 172M Active, 140M Inact, 539M Wired, 73M Cache, 112M Buf, 46M Free Swap:</p>
+
+<p>  PID USERNAME       THR PRI NICE   SIZE    RES STATE  C   TIME   WCPU COMMAND
+ 1306 nobody           2 139    0  8996K  3440K RUN    0  20.5H 7518.75% httpd
+ 1377 root             7  76    0   499M 52316K select 0    ??? 281.15% flowd_octeon_hm
+ 1106 root             1  87    0 13692K  3200K RUN    0 1712.2 22.51% eventd
+15922 root             1   4    0  7732K  2968K sbwait 0   0:00  2.25% sshd
+```</p>
+
+<p>Usually even under good conditions, there will be processes that are running at well over 100% utilization. The Junos does a terrible job at adding in this case, something to do with multi core processors confusing the output. You can do <code>start shell</code> then <code>top -H</code> to see the actual utilization per core.</p>
+
+<h2>Analyze the processes</h2>
+
+<p>Now that you know what processes are running high, we can look into why it&rsquo;s causing it.</p>
+
+<h3>Process: httpd</h3>
+
+<p>If you see the process <code>httpd</code> as one of the <strong>first three</strong> processes with the highest CPU, chances are the web UI is having issues and needs to be restarted. Restarting this process only impacts any user that are currently in the web UI of this SRX.</p>
+
+<p>To restart the httpd process run the following command:</p>
+
+<p><code>
+restart web-management
+</code></p>
+
+<p>This will immediately restart the process without confirmation. After doing so, look at <code>show chassis routing-engine</code> over and over to see if the percent idle has gone up over 30%. If so, that has fixed your problem.</p>
+
+<p>I very frequently see this process get stuck at a high percent. I&rsquo;m not sure what causes it, but the fix is quick and easy so that&rsquo;s nice.</p>
+
+<h3>Process: eventd</h3>
+
+<p>If the process <code>eventd</code> is running high (over 20%) then this is probably something worth looking into. This process handles the events on the Juniper device itself which includes:</p>
+
+<ul>
+<li>Storing internal syslog messages</li>
+<li>Sending syslog messages to another system</li>
+<li>Sending/responding to SNMP traps/polls</li>
+<li>Sampling handling</li>
+<li>Traceoptions handling</li>
+</ul>
+
+
+<p>If this is running high check if any of the above are turned on a little too high. Perhaps too many traceoptions are on, or too much sampling is turned on. Try turning these off and see if the CPU goes back to normal.</p>
+
+<p>There are two modes for syslogs, event and stream. Perhaps changing it to stream will reduce the CPU utilization.</p>
+
+<h3>Process: flowd_octeon</h3>
+
+<p>The process <code>flowd_octeon</code> seems to always run over 200%. This is normal. Usually this isn&rsquo;t the problem and try looking at the next highest CPU hog as the culprit.</p>
+
+<p>This processes is responsible for packet handling, data processing, or flow processing. The flow processing is all done on the data plane.</p>
+
+<h5>Check the packet forwarding engine (data plane)</h5>
+
+<p>The following two commands shows us what&rsquo;s happening on the data plane.</p>
+
+<p><code>
+user@USPHIFW1&gt; show chassis forwarding
+FWDD status:
+  State                                 Online
+  Microkernel CPU utilization         5 percent
+  Real-time threads CPU utilization   0 percent
+  Heap utilization                   68 percent
+  Buffer utilization                  1 percent
+  Uptime:                               584 days, 8 hours, 43 minutes, 30 seconds
+</code></p>
+
+<p>```
+user@USPHIFW1> show security monitoring fpc 0
+FPC 0
+  PIC 0</p>
+
+<pre><code>CPU utilization      :    2 %
+Memory utilization   :   68 %
+Current flow session :  929
+Max flow session     : 131072
+</code></pre>
+
+<p>Session Creation Per Second (for last 96 seconds on average):    0
+```</p>
+
+<p>If the CPU utilization here is low, then you don&rsquo;t have a problem with the data plane.</p>
+
+<p><a href="http://www.juniper.net/documentation/en_US/junos12.1/topics/concept/chassis-cluster-data-plane-understanding.html">The data plane (aka forwarding plane)</a> is where the SRX decides what to do with the packet. This is where the SRX looks at the forwarding table and routing table to determine where to send the packet. If your CPU here is high, then it&rsquo;s possible you are reaching the capacity of this device. Start looking at things like how many packets and bytes each interface is receiving and comparing it with the model specifications.</p>
+
+<p>To examine the throughput of each interface use the following command:</p>
+
+<p><code>show interfaces detail | match "link is Up| bps| pps" | except "0 bps|0 pps"</code></p>
+
+<p>To examine the number of sessions use the following command:</p>
+
+<p><code>show security flow statistics</code></p>
+
+<p>Check the model for limitations here:</p>
+
+<p><a href="http://www.juniper.net/us/en/products-services/security/srx-series/compare/#a=SRX100,SRX110,SRX210,SRX220,SRX240,SRX300,SRX550,SRX650,SRX1400,SRX1500,SRX3400,SRX3600,SRX5400,SRX5600,SRX5800">http://www.juniper.net/us/en/products-services/security/srx-series/compare/#a=SRX100,SRX110,SRX210,SRX220,SRX240,SRX300,SRX550,SRX650,SRX1400,SRX1500,SRX3400,SRX3600,SRX5400,SRX5600,SRX5800</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Troubleshooting High CPU on a Cisco ASA]]></title>
+    <link href="http://tunnelsup.github.io/troubleshooting-high-cpu-on-a-cisco-asa/"/>
+    <updated>2014-04-28T19:03:00-07:00</updated>
+    <id>http://tunnelsup.github.io/troubleshooting-high-cpu-on-a-cisco-asa</id>
+    <content type="html"><![CDATA[<p>Is your ASA having a High CPU issue? Here&rsquo;s some methods for troubleshooting the issue.</p>
+
+<h2>Find out what process is causing the CPU to be high</h2>
+
+<p>To see what the current CPU usage is:</p>
+
+<p><code>
+asa# show cpu usage
+CPU utilization for 5 seconds = 94%; 1 minute: 92%; 5 minutes: 92%
+</code></p>
+
+<ul>
+<li>Under normal conditions the CPU should stay below 50% (baseline as per network); if the CPU reaches 100% the firewall will start dropping packets</li>
+<li>FWSM CPU is used for limited traffic processing; during ACL compilation CPU is expected to be near 100% until ACL is compiled</li>
+<li>The show cpu usage command displays the CPU over time as a running average</li>
+</ul>
+
+
+<p>Now take a look at what the top process is that&rsquo;s causing it.</p>
+
+<p><code>
+asa# show processes cpu-usage sorted non-zero
+PC           Thread        5Sec     1Min     5Min    Process
+0x08298b79   0x6e5d4e14    82.1%    82.3%    83.6%   Dispatch Unit
+0x090f20ad   0x6e5ca0b0     0.1%     0.0%     0.0%   ssh
+0x09192b79   0x6e5bd330     0.1%     0.0%     0.0%   snmp
+0x08ca2340   0x6e5cdca0     0.1%     0.1%     0.1%   Unicorn Admin Handler
+0x0913e27c   0x6e5cb1d0     0.1%     0.1%     0.1%   Logger
+0x09155cba   0x6e5a71fc     0.0%     0.0%     0.4%   ssh
+</code></p>
+
+<p>Notice what process is taking up the most of the CPU. In this case it&rsquo;s Dispatch Unit.</p>
+
+<p>This command was first Introduced in Cisco ASA Version 7.2(4.11), 8.0(4.5), 8.1(1.100), 8.2(1)50</p>
+
+<h2>Troubleshooting High CPU related to Dispatch Unit</h2>
+
+<p>In short, dispatch unit is the process that processes traffic. In general when this is high it means that traffic is overwhelming the firewall and the firewall can&rsquo;t keep up. This could be due to too much traffic hitting a specific ACL, policy, class or other ASP drop reason.</p>
+
+<p>If you have a high CPU due to dispatch unit you first must identify what traffic is causing this. If you normally don&rsquo;t have a high CPU then it shouldn&rsquo;t be too hard to identify what traffic is causing this problem.</p>
+
+<p>Let&rsquo;s start by examining the following show commands:</p>
+
+<p><code>show interface</code>
+Do you see any input or output errors? If so, take a look at the <a href="http://www.tunnelsup.com/understanding-cisco-asa-interface-counters-and-statistics/">meaning of interface counters</a> post to determine what the drops are.</p>
+
+<p><code>show traffic</code>
+Does any interface have an unusually high amount of packets/bytes going through it?</p>
+
+<p><code>show perfmon</code>
+Does any stat seem crazy high?</p>
+
+<p><code>show service-policy</code>
+Are any of the inspects rising very quickly?</p>
+
+<p>Another thing to use is Splunk or a syslog collector to determine what is happening on the device. If you are using Splunk to collect logs from this ASA you could do a search like so:</p>
+
+<p><code>&lt;ASA-IP&gt;  | stats count by error_code event_desc | sort 10 -count</code></p>
+
+<p>This will show you something like this:</p>
+
+<p><code>
+error_code  event_desc                                                                                                      count
+419002        Received duplicate TCP SYN with different initial sequence number.                                                87874
+106023        Deny protocol src by access_group acl_ID                                                                        7390
+305013        Asymmetric NAT rules matched for forward and reverse flows; Connection denied due to NAT reverse path failure.    618
+420003        IPS requested to reset TCP connection from ifc_in:SIP/SPORT to ifc_out:DIP/DPORT                                439
+420002        IPS requested to drop ICMP packets ifc_in:SIP to ifc_out:DIP (typeICMP_TYPE, code ICMP_CODE)                    73
+</code></p>
+
+<p>In the case above you can see that syslog message 419002 is triggering a crazy amount of syslogs. Investigate that syslog message to find what the biggest traffic flow is that is responsible for that. You could do a Splunk search like so:</p>
+
+<p><code>&lt;ASA-IP&gt; error_code="419002" | stats count by src_ip dest_ip dest_port | sort -count</code></p>
+
+<p>With a search like that you may get a result like this:</p>
+
+<p><code>
+src_ip             dest_ip         dest_port     count
+10.21.21.21        10.100.100.1    8530        80598
+192.168.49.168    192.168.200.112    80            237
+192.168.49.168    192.168.200.112    443            235
+</code></p>
+
+<p>Now you know that the flow between <code>10.21.21.21</code> and <code>10.100.100.1</code> is doing a large amount of SYN flooding. Try shunning that source IP for a while to see if traffic dies down. Or find the offending user and tell them to stop.</p>
+]]></content>
+  </entry>
+  
+</feed>

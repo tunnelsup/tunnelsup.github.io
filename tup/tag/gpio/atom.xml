@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: gpio | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/gpio/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Raspberry Pi Zero: Blink an LED using GPIO pins]]></title>
+    <link href="http://tunnelsup.github.io/raspberry-pi-zero-blink-an-led-using-gpio-pins/"/>
+    <updated>2016-09-14T12:19:00-07:00</updated>
+    <id>http://tunnelsup.github.io/raspberry-pi-zero-blink-an-led-using-gpio-pins</id>
+    <content type="html"><![CDATA[<p>Want to use the GPIO pins to blink an LED using a Raspberry Pi Zero? Here&rsquo;s a quick guide to get you started.</p>
+
+<h2>Build the circuit</h2>
+
+<p>Do this is the Raspberry Pi off. You don&rsquo;t want to accidentally touch the wrong pin on the Pi and fry the Pi.</p>
+
+<p>Use <a href="http://pinout.xyz">http://pinout.xyz</a> to check the pinouts of the Raspberry Pi.</p>
+
+<p>Create a circuit that goes from GND to LED to resistor to GPIO pin (BCM).</p>
+
+<p><img src="https://www.raspberrypi.org/wp-content/uploads/2015/11/led-gpio17.png" width="500"></p>
+
+<h2>Install the Python Library</h2>
+
+<p>We&rsquo;ll be using python to build our program so first download the python library. There is an api to interface with the GPIO pins which makes this a lot easier.</p>
+
+<p><code>
+sudo apt-get install python3-gpiozero python-gpiozero
+</code></p>
+
+<p><a href="https://gpiozero.readthedocs.io/">https://gpiozero.readthedocs.io/</a> for more information on this library.</p>
+
+<h2>Create the Program</h2>
+
+<p>Now create a file called <code>blink.py</code> and put the following in it:</p>
+
+<p>```python
+from gpiozero import LED
+from time import sleep</p>
+
+<p>led = LED(17) # Choose the correct pin number</p>
+
+<p>while True:</p>
+
+<pre><code>led.on()
+sleep(1)
+led.off()
+sleep(1)
+</code></pre>
+
+<p>```</p>
+
+<h2>Run the Program</h2>
+
+<p>Run the program with the following command:</p>
+
+<p><code>
+python blink.py
+</code></p>
+
+<p>If all went well you should now see your LED blinking!</p>
+
+<h2>References</h2>
+
+<p><a href="https://gpiozero.readthedocs.io/">https://gpiozero.readthedocs.io/</a></p>
+
+<p><a href="https://www.raspberrypi.org/blog/gpio-zero-a-friendly-python-api-for-physical-computing/">https://www.raspberrypi.org/blog/gpio-zero-a-friendly-python-api-for-physical-computing/</a></p>
+
+<p><a href="http://pinout.xyz">http://pinout.xyz</a></p>
+
+<p><a href="https://hackr.io/tutorials/python">https://hackr.io/tutorials/python</a></p>
+]]></content>
+  </entry>
+  
+</feed>

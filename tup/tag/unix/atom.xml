@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: unix | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/unix/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to do a Continuous Ping]]></title>
+    <link href="http://tunnelsup.github.io/continuous-ping/"/>
+    <updated>2013-06-06T23:29:00-07:00</updated>
+    <id>http://tunnelsup.github.io/continuous-ping</id>
+    <content type="html"><![CDATA[<p>Below are methods to create a continuous ping in different environments.</p>
+
+<p>To learn more about pings see the blog post <a href="http://www.tunnelsup.com/what-is-ping/">What is ping?</a></p>
+
+<h3>Windows (CMD Prompt)</h3>
+
+<p>This works in Win95, Win98, WinXP, Win7, Win8 etc. Go to start, then run, type in cmd to open a command prompt.</p>
+
+<p><code>ping 192.168.1.1 -t</code></p>
+
+<br><br>
+
+
+<h3>Unix/Linux Shell</h3>
+
+<p>In *nix it is continuous by default.</p>
+
+<p><code>ping 192.168.1.1</code></p>
+
+<p>You can also indicate a high count which will ping for a very long time. This example will ping something 9,999,999 times.</p>
+
+<p><code>ping 192.168.1.1 -c 9999999</code></p>
+
+<p>If you are in linux and it is not doing a continuous ping by default there is probably an alias for the ping command which is changing the way you envoke ping. Find where the ping command is using <code>which ping</code> then call the program from there and it should be continuous.</p>
+
+<p><code>/bin/ping 192.168.1.1</code></p>
+
+<br><br>
+
+
+<h3>Mac and OSX</h3>
+
+<p>In OSX it is continuous by default.</p>
+
+<p><code>ping 192.168.1.1</code></p>
+
+<p>If that doesn&rsquo;t work you can get it to be continuous by doing this command instead:</p>
+
+<p><code>/sbin/ping 192.168.1.1</code></p>
+
+<br>
+
+
+<h3>Cisco Router/Firewall/Switch</h3>
+
+<p>You cannot do a continuous ping from a Cisco router, firewall or switch. This includes ASA and IOS operating systems. You can however do a ping for a VERY long time by indicating a lot of pings.</p>
+
+<p><code>ping 192.168.1.1 repeat 9999999</code></p>
+
+<p>Or if the repeat command is unavailable use the extended ping by simply issuing the <code>ping</code> command by itself and follow the prompts after.</p>
+
+<p>If that still isn&rsquo;t good enough, you can set up an <a href="/cisco-asa-and-sla-monitoring/">SLA monitor</a> to actually ping forever.</p>
+
+<br>
+
+
+<h3>Juniper JunOS</h3>
+
+<p>In JunOS it is continuous by default.</p>
+
+<p><code>ping 192.168.1.1</code></p>
+
+<br><br>
+
+
+<h2>Stopping a ping</h2>
+
+<p>On any of the systems above you can halt the ping.</p>
+
+<p>To stop the continuous ping press <code>CONTROL</code>+<code>c</code>.</p>
+
+<br>
+
+
+<hr>
+
+
+<p>Keywords: constant ping, continual ping, infinate ping, pertpetual ping, persistent ping</p>
+]]></content>
+  </entry>
+  
+</feed>

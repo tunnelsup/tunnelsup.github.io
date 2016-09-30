@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: firefox | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/firefox/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Firefox - Secure Connection Failed - ssl_error_weak_server_ephemeral_dh_key]]></title>
+    <link href="http://tunnelsup.github.io/firefox-secure-connection-failed-ssl-error-weak-server-ephemeral-dh-key/"/>
+    <updated>2015-07-26T11:27:00-07:00</updated>
+    <id>http://tunnelsup.github.io/firefox-secure-connection-failed-ssl-error-weak-server-ephemeral-dh-key</id>
+    <content type="html"><![CDATA[<p>Have you seen the following error?</p>
+
+<blockquote><p><strong>Secure Connection Failed</strong></p>
+
+<p>An error occurred during a connection to example.com. SSL received a weak ephemeral Diffie-Hellman key in Server Key Exchange handshake message. (Error code: ssl_error_weak_server_ephemeral_dh_key)</p>
+
+<ul>
+<li><p>The page you are trying to view cannot be shown because then authenticity of the received data could not be verified.</p></li>
+<li><p>Please contact the website owners to inform them of this problem.</p></li>
+</ul>
+</blockquote>
+
+<p><img src="/images/dhkey1.png"></p>
+
+<p>You get this error when the server you are trying to connect to is vulnerable to the <a href="https://weakdh.org/">logjam</a> vulnerability. You should report this problem to the server owner so they can fix it immediately. This server is considered unsafe and is vulnerable to man-in-the-middle attacks.</p>
+
+<p>Newer versions of Firefox and Chrome will block connections to unsafe servers by default.</p>
+
+<h3>Bypassing the weak security</h3>
+
+<p>If you really wish to access the site anyway you can go to <code>about:config</code> in the address bar of Firefox. Then search for <code>security.ssl3.dhe</code>. Then change this value to false.</p>
+
+<p><img src="/images/dhkey2.png"></p>
+
+<p>After that, your page should load. Please change the setting in your browser back to true when you are done so your browser is not vulnerable to logjam and man-in-the-middle attacks.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to use Firefox to check if a website uses SSLv3]]></title>
+    <link href="http://tunnelsup.github.io/how-to-use-firefox-to-check-if-a-website-uses-sslv3/"/>
+    <updated>2015-07-26T10:57:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-use-firefox-to-check-if-a-website-uses-sslv3</id>
+    <content type="html"><![CDATA[<p>We should all know by now that <a href="https://isc.sans.edu/forums/diary/SSLv3+POODLE+Vulnerability+Official+Release/18827/">SSLv3 is a broken security protocol due to the POODLE vulnerability</a>. Firefox tries to connect to a website using the strongest security that the web server provides. It is possible to change the settings in Firefox to force a less secure connection which can tell us whether SSLv3 is on or not.</p>
+
+<h3>Change the settings</h3>
+
+<p>In firefox go to the url <code>about:config</code>. Then search for <code>tls.version</code>.</p>
+
+<p><img src="/images/ssl3-1.png"></p>
+
+<p>The different TLS versions are:</p>
+
+<ul>
+<li><code>0</code> &ndash; SSL 3.0</li>
+<li><code>1</code> &ndash; TLS 1.0</li>
+<li><code>2</code> &ndash; TLS 1.1</li>
+<li><code>3</code> &ndash; TLS 1.2</li>
+</ul>
+
+
+<p>By changing the max version to be <code>0</code> you are telling Firefox you don&rsquo;t want to use anything higher than SSLv3. Please only do this for testing purposes and do not leave your browser on this setting.</p>
+
+<h3>Testing the connection</h3>
+
+<p>Now browse to the site you wish to test. Click on the little padlock icon in the address bar, then click more information.</p>
+
+<p><img src="/images/ssl3-2.png"></p>
+
+<p>At the bottom of this panel will display the technical details about the site. In this image below you can see that the browser negotiated to the site using SSLv3 which is broken encryption.</p>
+
+<p><img src="/images/ssl3-3.png"></p>
+]]></content>
+  </entry>
+  
+</feed>

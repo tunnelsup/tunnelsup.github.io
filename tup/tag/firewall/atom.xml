@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: firewall | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/firewall/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[What is a Firewall?]]></title>
+    <link href="http://tunnelsup.github.io/what-is-a-firewall/"/>
+    <updated>2014-11-09T10:29:00-08:00</updated>
+    <id>http://tunnelsup.github.io/what-is-a-firewall</id>
+    <content type="html"><![CDATA[<p>A firewall is a physical device or software that provides a layer of security into a network or computer. Its primary task is to only permit traffic that is required to pass through and block all other traffic.</p>
+
+<p><img src="/images/firewall1.png"></p>
+
+<p>In the average home network, traffic will likely not originate from the internet and be destined for the home network. However, traffic is often seen originating from within the home network going out to the internet. A firewall could be deployed to block all incoming traffic and permit all outgoing traffic. This would block many attempts from hackers trying to enter the home network.</p>
+
+<p>A firewall can be installed as a software program on a single computer. This type of firewall is often limited to only blocking traffic in or out of the computer. For instance in the Windows operating system a firewall is installed by default. This will block traffic coming into the computer but allow traffic to leave the computer.</p>
+
+<p>Many companies like to put a firewall on the edge of their network. This is a physical device that sits between the public internet and the private internal network. These types of physical firewalls are created by such companies as Cisco or Juniper.</p>
+
+<p>There are three reasons to deploy a firewall in the network: access control, NAT and VPN. Access control is where policies are created to block or permit traffic based on IP address, port and protocol. NAT, or network address translation, is the act of converting one IP address to another. A firewall often is equipped to do many kinds of NAT which would be translating the private internal IP addresses to publicly accessible IP addresses. Firewalls also often have VPN capabilities. A Virtual Private Network is a technology used to securely connect two networks together across an insecure network such as the internet.</p>
+
+<h4>What is a Stateful Firewall?</h4>
+
+<p>Firewalls are often stateful. This means the firewall will remember the connection going through it so it can permit return traffic for the same flow. If the firewall is set up to block all incoming traffic but allow all outgoing traffic, then how will any return traffic come back through that is requested by a machine on the inside of the network? The stateful firewall will keep track of what requests originated from the inside so that when the traffic comes back from the outside it will be permitted.</p>
+
+<h4>What is a Next Gen Firewall?</h4>
+
+<p>A next generation or NG firewall is loosely defined but often refers to firewalls that can inspect traffic that isn&rsquo;t just on layer 3 of the OSI model. Layer 3 is IP addresses, ports and protocols. NG firewalls not only are able to inspect this traffic but they can also look inside the packet and determine if the packet is for a particular website or even a particular application on a website. An NG firewall may be able to allow users to go to Facebook but block their ability to chat on Facebook. This would mean that the firewall is able to operate at layer 7 of the OSI model.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How an ASA determines what interface to send a packet out of]]></title>
+    <link href="http://tunnelsup.github.io/how-an-asa-determines-what-interface-to-send-a-packet-out-of/"/>
+    <updated>2013-06-18T18:16:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-an-asa-determines-what-interface-to-send-a-packet-out-of</id>
+    <content type="html"><![CDATA[<p>Sometimes I see the question &ldquo;Why is NAT choosing what interface to send the packet out of on a Cisco ASA?&rdquo; or &ldquo;Since when do NAT rules make routing decisions?&rdquo; or &ldquo;What is the <code>route-lookup</code> keyword in the NAT configuration for?&rdquo; or &ldquo;Why is the firewall saying no route to host but there&rsquo;s a route in the routing table?&rdquo;</p>
+
+<p>This is a tricky question but I believe it&rsquo;s best understood in a two step process. It all comes down to the order of operation of a firewall and how the firewall processes packets. Most importantly the NAT rules and route lookups.</p>
+
+<p>If you refer to my post on <a href="/tup/2013/06/18/cisco-asa-order-of-operation/">ASA Order of Operations</a> you might already have a clue as to what is going on.</p>
+
+<h2>How a firewall processes NAT</h2>
+
+<p>When the packet is being processed by the NAT rules, the firewall has to know what the egress interface of the packet is in order to understand what NAT rule to apply. Usually the packet can match a NAT rule which has a ingress and egress interface defined in the rule. The firewall trusts the NAT rule to properly identify the egress interface for the packet. If you rather the firewall look at the routing table instead of the NAT rule, specify the <code>route-lookup</code> keyword at the end of the NAT rule (applies to 8.3+). After it does the XLATE stuff to the packet, it then <em>virtually</em> forwards the packet to the egress interface.</p>
+
+<h2>What happens to the packet when it&rsquo;s on the egress interface?</h2>
+
+<p>Once the packet is on the egress interface the firewall does a route lookup on that packet to determine what interface it needs to go out of. The only option the firewall will accept is the egress interface it&rsquo;s already on. If it happens to be any other interface the packet is likely to be dropped with the syslog message <code>ASA-6-110001: No route to 111.111.11.11 from 10.0.5.5</code> or one saying reverse path check failure.</p>
+
+<p>Source: <a href="http://www.cisco.com/en/US/docs/security/asa/asa84/configuration/guide/nat_overview.html#wpxref17243">Cisco documentation</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to do a password recovery on a Cisco ASA firewall]]></title>
+    <link href="http://tunnelsup.github.io/how-to-do-a-password-recovery-on-a-cisco-asa-firewall/"/>
+    <updated>2013-06-17T22:52:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-do-a-password-recovery-on-a-cisco-asa-firewall</id>
+    <content type="html"><![CDATA[<p>Perhaps you&rsquo;ve forgotten the password to your firewall? This post will answer the question: How do I restore the password on a Cisco ASA?</p>
+
+<h2>Password Recovery</h2>
+
+<p>To recover passwords, perform the following steps:</p>
+
+<ul>
+<li><p>Console into the ASA.</p></li>
+<li><p>Reboot the ASA</p></li>
+<li><p>Press the escape key during reboot to enter ROMMON.</p></li>
+<li><p>Tell the firewall to ignore the startup config on next reload:<br>
+rommon #1> <code>confreg</code></p></li>
+</ul>
+
+
+<p>The following will be displayed:<br></p>
+
+<blockquote><p>Current Configuration Register: 0x00000011<br>
+Configuration Summary:<br>
+boot TFTP image, boot default image from Flash on netboot failure<br>
+Do you wish to change this configuration? y/n [n]:<br></p></blockquote>
+
+<ul>
+<li><p>Jot down the config register value for later.</p></li>
+<li><p>Enter <code>y</code> to say yes.</p></li>
+<li><p>Hit enter at each prompt to accept the default. When you get to &ldquo;disable system configuration&rdquo; hit <code>y</code>.</p></li>
+<li><p>Reboot the ASA<br>
+rommon #2> <code>boot</code></p></li>
+</ul>
+
+
+<h4>At this point the ASA should reload and completely bypass the configuration.</h4>
+
+<ul>
+<li><p>When the firewall reboots it will not prompt a console user for a username and the enable password is blank. Go into enable mode.<br>
+<code>enable</code></p></li>
+<li><p>Restore the old config<br>
+<code>copy startup-config running-config</code></p></li>
+<li><p>Enter config mode and reset the password<br>
+<code>configure terminal</code><br>
+<code>password NEW_PASSWORD</code><br>
+<code>enable password NEW_PASSWORD</code><br>
+<code>username USER password NEW_PASSWORD</code><br></p></li>
+<li><p>Restore the config registry to where it was to begin with. This is the number you wrote down earlier.<br>
+<code>config-register 0x0000###</code></p></li>
+<li><p>Save your config
+<code>copy running-config startup-config</code></p></li>
+</ul>
+
+
+<p>At this point you have regained access to the firewall and restored the config file and registry to where it before the password reset.</p>
+
+<h2>Further reading</h2>
+
+<p>Link to all Cisco product password recovery pages.
+<a href="http://www.cisco.com/en/US/products/sw/iosswrel/ps1831/products_tech_note09186a00801746e6.shtml">http://www.cisco.com/en/US/products/sw/iosswrel/ps1831/products_tech_note09186a00801746e6.shtml</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA Identity Firewall]]></title>
+    <link href="http://tunnelsup.github.io/cisco-asa-identity-firewall/"/>
+    <updated>2013-06-15T16:01:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-asa-identity-firewall</id>
+    <content type="html"><![CDATA[<p>The Cisco ASA software 8.4.2 introduced something called Identity Firewall. The IDFW gives a new level of control to ACLs.</p>
+
+<h2>Permit/Deny flows using a user name or user group</h2>
+
+<p>You can now permit/deny traffic flows using a user name or user group.</p>
+
+<p>For instance, look at the last two options when making an ACL:</p>
+
+<p>```
+ASA-5505(config)# access-list MYACL ext permit ip ?
+configure mode commands/options:
+  A.B.C.D            Source IP address
+  any                Abbreviation for source address and mask of 0.0.0.0</p>
+
+<pre><code>                 0.0.0.0
+</code></pre>
+
+<p>  host               Use this keyword to configure source host
+  interface          Use interface address as source address
+  object             Keyword to enter source object name
+  object-group       Network object-group for source address
+  object-group-user  User object-group for source address
+  user               User for source address [&lt;domain_nickname>]&lt;user_name>
+  user-group         User-group for source address</p>
+
+<pre><code>                 [&lt;domain_nickname&gt;\\]&lt;user_group_name&gt;
+</code></pre>
+
+<p>```
+In order for the firewall to map an IP to a username it has to integrate with a domain controller and an AD agent. The AD agent is a program that Cisco has made that is installed on the AD server. It essentially sends the ASA a map of what user has connected with what IP. The ASA then can make decisions on who to block because it knows what each user&rsquo;s IP is.</p>
+
+<p>The ASA uses the global <code>user-identity</code> commands to configure this.</p>
+
+<p>To learn more about installing the AD agent review this link: <a href="http://www.cisco.com/en/US/docs/security/ibf/setup_guide/ad_agent_setup_guide.html">http://www.cisco.com/en/US/docs/security/ibf/setup_guide/ad_agent_setup_guide.html</a></p>
+
+<h2>Permit/Deny Domain Names</h2>
+
+<p>Also in 8.4.2 there is the ability to block a domain name. This is something we&rsquo;ve all been looking forward to for a long time.</p>
+
+<h4>Configure the ASA to resolve DNS</h4>
+
+<p>In order for the firewall to block a domain name it has to be able to resolve domain names. Use your own DNS server if you have it. Otherwise using a public DNS server will look something like this:</p>
+
+<p>```
+dns domain-lookup OUTSIDE
+DNS server-group DefaultDNS</p>
+
+<pre><code>name-server 4.2.2.2
+</code></pre>
+
+<p>```
+Make sure you can ping a url like google.com from the firewall to verify your ASA is resolving DNS correctly.</p>
+
+<h4>Create the object</h4>
+
+<p>Suppose we want to block access to Google.com. Create an object with google.com in it.</p>
+
+<p><code>
+object network OBJ-GOOGLE.COM
+ fqdn google.com
+</code></p>
+
+<h4>Add the object to an ACL</h4>
+
+<p>Now it&rsquo;s just a matter of adding it to the right ACL. Here is what the command looks like:</p>
+
+<p><code>
+access-list ACL-INSIDE line 1 extended deny ip any object OBJ-GOOGLE.COM
+</code></p>
+
+<p>This is what it should look like after you do a <code>show access-list</code><br>
+<code>
+access-list ACL-INSIDE line 1 extended deny ip any object OBJ-GOOGLE.COM 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any fqdn google.com (resolved) 0x827c8780
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.163 (google.com) (hitcnt=73) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.165 (google.com) (hitcnt=3) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.162 (google.com) (hitcnt=7) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.169 (google.com) (hitcnt=23) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.174 (google.com) (hitcnt=130) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.164 (google.com) (hitcnt=21) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.168 (google.com) (hitcnt=14) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.161 (google.com) (hitcnt=12) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.167 (google.com) (hitcnt=3) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.160 (google.com) (hitcnt=20) 0x8e6d59a8
+access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.166 (google.com) (hitcnt=4) 0x8e6d59a8
+</code></p>
+
+<p>Notice the ASA resolved the domain name and added all of the IPs in the ACL. This will be updated based on the TTL of the DNS request it made to resolve the IP.</p>
+
+<p>And this is what the syslog looks like:</p>
+
+<p><code>Mar 23 2012 11:58:07: %ASA-4-106023: Deny tcp src INSIDE:172.16.2.21/2414 dst OUTSIDE:74.125.224.160/443(google.com) by access-group "ACL-INSIDE" [0x1e144444,0x1e144444]</code></p>
+
+<p>A cool thing about this solution is that it doesn&rsquo;t slow down the firewall at all. It does the DNS look up probably once every few hours for when the TTL expires and then stores the IPs in memory. In other words it does not do a DNS lookup for every packet that comes through the firewall, it does it before hand.</p>
+
+<p>What I also like about this solution is that this works for both HTTPS and HTTP. The firewall doesn&rsquo;t inspect domain names or URLs and it doesn&rsquo;t care if the packet is encrypted or not. The packet has to have a destination IP and that&rsquo;s what the firewall will check.</p>
+
+<p><strong> Special Note:</strong> This does not resolve all subdomain of google like www.google.com, mail.google.com, maps.google.com etc. You&rsquo;ll have to create a seperate object for each of these domains to cover all the bases.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Site to Site VPN Tunnel Between Cisco ASA and Juniper SRX JunOS]]></title>
+    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos/"/>
+    <updated>2013-01-16T00:00:00-08:00</updated>
+    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos</id>
+    <content type="html"><![CDATA[<p><img src="/images/asasitetosite.jpg" alt="ASA Site to site diagram - IMG" /></p>
+
+<p>Blue firewall: Juniper SRX 210 (JunOS 10.0R1.8)</p>
+
+<p>Red firewall: Cisco ASA 5510 (OS 8.4)</p>
+
+<p>This is a script to create a site to site VPN tunnel between a Cisco ASA and a Juniper SRX. The Juniper SRX will be using a policy based VPN.</p>
+
+<h3>Blue Juniper SRX</h3>
+
+<p>```</p>
+
+<h1>Create the IKE proposal</h1>
+
+<p>set security ike proposal IKE-SHA-AES128-DH1 authentication-method pre-shared-keys
+set security ike proposal IKE-SHA-AES128-DH1 dh-group group2
+set security ike proposal IKE-SHA-AES128-DH1 encryption-algorithm aes-128-cbc
+set security ike proposal IKE-SHA-AES128-DH1 authentication algorithm sha1
+set security ike proposal IKE-SHA-AES128-DH1 lifetime-seconds 86400</p>
+
+<h1>Create the IKE policy</h1>
+
+<p>set security ike policy IKE-POLICY-HQ mode main
+set security ike policy IKE-POLICY-HQ proposals IKE-SHA-AES128-DH1
+set security ike policy IKE-POLICY-HQ pre-shared-key ascii-text s3kreTKey</p>
+
+<h1>Create an IKE gateway</h1>
+
+<p>set security ike gateway IKE-GATEWAY-HQ ike-policy IKE-POLICY-HQ
+set security ike gateway IKE-GATEWAY-HQ address 22.22.22.22
+set security ike gateway IKE-GATEWAY-HQ external-interface ge-0/0/0.0</p>
+
+<h1>Create an IPSec proposal/transform set</h1>
+
+<p>set security ipsec proposal IPSEC-SHA-AES128-ESP encryption-algorithm aes-128-cbc
+set security ipsec proposal IPSEC-SHA-AES128-ESP authentication-algorithm hmac-sha1-96
+set security ipsec proposal IPSEC-SHA-AES128-ESP protocol esp
+set security ipsec proposal IPSEC-SHA-AES128-ESP lifetime-seconds 3600</p>
+
+<h1>Create a IPSec policy</h1>
+
+<p>set security ipsec policy VPN-POLICY-HQ proposals IPSEC-SHA-AES128-ESP</p>
+
+<h1>Create the IPSec VPN</h1>
+
+<p>set security ipsec vpn VPN-HQ ike gateway IKE-GATEWAY-HQ
+set security ipsec vpn VPN-HQ ike ipsec-policy VPN-POLICY-HQ</p>
+
+<h1>Add some networks into the address book</h1>
+
+<p>set security zones security-zone OUTSIDE address-book address NET-REMOTE-VPN 172.16.22.0/24
+set security zones security-zone INSIDE address-book address NET-LOCAL 192.168.11.0/24</p>
+
+<h1>Create the policies to define the interesting traffic</h1>
+
+<p>set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match source-address NET-LOCAL
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match destination-address NET-REMOTE-VPN
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match application any
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT then permit tunnel ipsec-vpn VPN-HQ
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT then permit tunnel pair-policy VPN-POLICY-HQ-IN</p>
+
+<p>set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match source-address NET-REMOTE-VPN
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match destination-address NET-LOCAL
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match application any
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN then permit tunnel ipsec-vpn VPN-HQ
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN then permit tunnel pair-policy VPN-POLICY-HQ-OUT</p>
+
+<h1>You want to exclude the VPN traffic from being NAT&rsquo;d</h1>
+
+<p>set security nat source rule-set NAT-INTERFACE rule NO-NAT match source-address 192.168.11.0/24
+set security nat source rule-set NAT-INTERFACE rule NO-NAT match destination-address 172.16.22.0/24
+set security nat source rule-set NAT-INTERFACE rule NO-NAT then source-nat off</p>
+
+<h1>My config already had a rule in the rule-set. So I had to move the new rule above the old rule so it processes the no nat first.</h1>
+
+<p>insert source rule-set NAT-INTERFACE rule NO-NAT before rule RULE-NAME
+```</p>
+
+<h3>Red Cisco ASA Firewall</h3>
+
+<p>```
+! Define the interesting traffic
+access-list ACL-VPN-SRX extended permit ip 172.16.22.0 255.255.255.0 192.168.11.0 255.255.255.0</p>
+
+<p>! Set the IKE parameters
+crypto ikev1 enable OUTSIDE
+crypto ikev1 policy 5
+authentication pre-share
+encryption aes
+hash sha
+group 2
+lifetime 86400</p>
+
+<p>! Create the IPSec settings
+crypto ipsec ikev1 transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+crypto map MAP-VPN 10 match address ACL-VPN-SRX
+crypto map MAP-VPN 10 set peer 11.11.11.11
+crypto map MAP-VPN 10 set ikev1 transform-set ESP-AES128-SHA
+crypto map MAP-VPN interface OUTSIDE</p>
+
+<p>! Create the tunnel group
+tunnel-group 11.11.11.11 type ipsec-l2l
+tunnel-group 11.11.11.11 ipsec-attributes
+ikev1 pre-shared-key s3kreTKey</p>
+
+<p>! In my case I needed to tell this VPN traffic to not be NAT&rsquo;d as it goes through the firewall
+object network OBJ-172.16.22.0
+subnet 172.16.22.0 255.255.255.0
+object network OBJ-192.168.11.0
+subnet 192.168.11.0 255.255.255.0
+nat (INSIDE,OUTSIDE) source static OBJ-172.16.22.0 OBJ-172.16.22.0 destination static OBJ-192.168.11.0 OBJ-192.168.11.0 no-proxy-arp description No NAT for VPN to SRX
+```</p>
+
+<p>There is a great tool to generate the Juniper SRX code on Juniper&rsquo;s site:</p>
+
+<p><a href="https://www.juniper.net/customers/support/configtools/vpnconfig.html"><a href="https://www.juniper.net/customers/support/configtools/vpnconfig.html">https://www.juniper.net/customers/support/configtools/vpnconfig.html</a></a></p>
+
+<p>To build the Juniper config I used this page as a reference guide:</p>
+
+<p><a href="http://www.juniper.net/techpubs/en_US/junos/topics/example/policy-based-vpn-using-j-series-srx-series-device-configuring.html"><a href="http://www.juniper.net/techpubs/en_US/junos/topics/example/policy-based-vpn-using-j-series-srx-series-device-configuring.html">http://www.juniper.net/techpubs/en_US/junos/topics/example/policy-based-vpn-using-j-series-srx-series-device-configuring.html</a></a></p>
+]]></content>
+  </entry>
+  
+</feed>

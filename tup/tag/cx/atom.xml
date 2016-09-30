@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: cx | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/cx/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Cisco CX ASA]]></title>
+    <link href="http://tunnelsup.github.io/installing-cisco-cx-asa/"/>
+    <updated>2013-07-13T10:39:00-07:00</updated>
+    <id>http://tunnelsup.github.io/installing-cisco-cx-asa</id>
+    <content type="html"><![CDATA[<p>The Cisco ASA 5500-X series firewalls can utilize the new CX features that will enable it to be a &ldquo;next gen firewall&rdquo; or &ldquo;context aware&rdquo;.</p>
+
+<p>Installing CX requires a few unique commands.</p>
+
+<h2>Before You Begin</h2>
+
+<ul>
+<li>Requires ASA 5500-X firewall.</li>
+<li>Requires additional hard drive. Part number: ASA5500X-SSD120. A single hard drive will work or a pair can be installed if the ASA can take multiple hard drives and you want RAID support.</li>
+<li>Requires additional CX license which is activated within PRSM</li>
+<li>Requires additional PRSM license. This is used to manage the CX ASA.</li>
+<li>Requires ASA version 9.1.1+</li>
+<li>Requires 3Gig of space on the ASA flash card. (Uncertain if this is required only for install or always)</li>
+<li><p>Cannot be ran concurrently with software IPS. (May be supported in future versions)</p></li>
+<li><p>If installing on the 5585 a line card is required instead of a SSD drive and the card must be in the top slot.</p></li>
+</ul>
+
+
+<h3>Download Software</h3>
+
+<p>Acquire the ASA CX boot image from cisco.com. It will look something like this: <code>asacx-5500x-boot-9.1.1.img</code>.</p>
+
+<p>Also acquire the system image. This will look something like this: <code>asacx-sys-9.1.1.pkg</code>.</p>
+
+<p>Please note, the 5500-X platforms all use the same boot image but the 5585 uses a different one.</p>
+
+<h2>Installing ASA CX</h2>
+
+<ol>
+<li><p>Copy CX Boot image to ASA flash.</p>
+
+<p> <code>copy http://&lt;server&gt;/asacx-5500x-boot-9.1.1.img flash</code></p></li>
+<li><p>Configure the Boot Image to be used on ASA.</p>
+
+<p> <code>sw-module module cxsc recover configure image disk0:/asacx-5500x-boot-9.1.1.img</code></p></li>
+<li><p>Boot the image from ASA.</p>
+
+<p> <code>sw-module module cxsc recover boot</code></p></li>
+<li><p>Session into the CX module.</p>
+
+<p> <code>session cxsc console</code></p></li>
+<li><p>Configure the CX disk partitions.</p>
+
+<p> console:  <code>partition</code></p></li>
+<li><p>Setup the CX management IP.</p>
+
+<p> console: <code>setup</code></p></li>
+<li><p>Install complete CX system package from CX console and reboot.</p>
+
+<p> console: <code>system install http://&lt;server&gt;/&lt;path&gt;/asacx-sys-9.1.1.pkg</code></p></li>
+</ol>
+
+
+<h2>Installing PRSM</h2>
+
+<p>PRSM is the Prime Security Manager. It is required to manage and control the CX ASA. Only system maintenance can be done from the console. All policies are managed through PRSM. PRSM can only manage 20 CX devices at a time.</p>
+
+<p>PRSM can run on the ASA itself or on a dedicated server.</p>
+
+<p>Refer to cisco documentation for further details on installing PRSM.
+<a href="http://www.cisco.com/en/US/docs/security/asacx/9.0/installation/guide/b_Installation_Guide_for_PRSM_9_0.pdf">http://www.cisco.com/en/US/docs/security/asacx/9.0/installation/guide/b_Installation_Guide_for_PRSM_9_0.pdf</a></p>
+]]></content>
+  </entry>
+  
+</feed>

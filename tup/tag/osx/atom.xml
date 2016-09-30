@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: osx | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/osx/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mac OSX How to Lock the Screen]]></title>
+    <link href="http://tunnelsup.github.io/mac-osx-how-to-lock-the-screen/"/>
+    <updated>2016-09-23T18:18:00-07:00</updated>
+    <id>http://tunnelsup.github.io/mac-osx-how-to-lock-the-screen</id>
+    <content type="html"><![CDATA[<p>To lock the screen of a Macbook or Mac running OSX use the following key combination:</p>
+
+<p><code>&lt;CONTROL&gt;</code> + <code>&lt;SHIFT&gt;</code> + <code>&lt;POWER&gt;</code></p>
+
+<p>In order for the screen to be password protected follow these steps:</p>
+
+<h3>1. Go to System Preferences</h3>
+
+<p><img src="/images/mac-set-ip1.png" alt="Lock Screen Mac OSX" /><br></p>
+
+<h3>2. Go to Security and Privacy</h3>
+
+<p><img src="/images/lock1.png" alt="Lock Screen Mac OSX" /><br></p>
+
+<h3>3. Check Require Password Immediately After Sleep</h3>
+
+<p><img src="/images/lock2.png" alt="Lock Screen Mac OSX" /><br></p>
+
+<p>Now when you lock the screen it will ask for a password to unlock it.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to set a static IP on Mac OSX]]></title>
+    <link href="http://tunnelsup.github.io/how-to-set-a-static-ip-on-mac-osx/"/>
+    <updated>2016-09-22T21:28:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-set-a-static-ip-on-mac-osx</id>
+    <content type="html"><![CDATA[<p>Are you using a Macbook Pro or Macbook Air and want to know how to show the change the interface to use a static IP? Follow the steps below to complete this.</p>
+
+<h2>1. Go to Preferences</h2>
+
+<p>Click the Apple icon in the top left corner and click System Preferences.</p>
+
+<p><img src="/images/mac-set-ip1.png" alt="Static IP" /><br></p>
+
+<h2>2. Go to Network Settings</h2>
+
+<p>Now find the <code>Network</code> icon and click it.</p>
+
+<p><img src="/images/mac-set-ip2.png" alt="Static IP" /><br></p>
+
+<h2>3. Change the Settings</h2>
+
+<p>Find the interface you want to change the settings on and click it. Then select the interface settings you want to us. To set a static IP select the options <code>Manually</code> and fill in the fields. You can also set it to be DHCP where you&rsquo;ll be assigned an address automatically by a router.
+<img src="/images/mac-set-ip3.png" alt="Static IP" /><br></p>
+
+<p>If you need to change the DNS settings, click <code>advanced</code>.</p>
+
+<p>Once done click apply and your settings should be applied right away.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to see the routing table on Mac OSX]]></title>
+    <link href="http://tunnelsup.github.io/how-to-see-the-routing-table-on-mac-osx/"/>
+    <updated>2016-09-20T20:39:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-see-the-routing-table-on-mac-osx</id>
+    <content type="html"><![CDATA[<p>Do you have a Macbook Pro or Macbook Air and want to know how to show the routes it has in the routing table? Are you looking for the Windows command <strong>route print</strong> equivalent in OSX? This post is for you.</p>
+
+<h2>Show Routes</h2>
+
+<p>This is the command to show routes on a Mac OSX:</p>
+
+<p><code>
+netstat -rn
+</code></p>
+
+<p>The <code>-r</code> flag means to show routes.</p>
+
+<p>The <code>-n</code> flag means to not resolve IPs to hostnames.</p>
+
+<p>Here is an example output of the command:</p>
+
+<p>```
+$ netstat -rn
+Routing tables</p>
+
+<p>Internet:
+Destination        Gateway            Flags        Refs      Use   Netif Expire
+default            192.168.20.1       UGSc           39        0     en0
+127.0.0.1          127.0.0.1          UH              3    11132     lo0
+192.168.20/24      link#4             UCS             8        0     en0
+192.168.20.1       0:1f:ca:88:96:8c   UHLWIir        40       22     en0   1025
+192.168.20.255     ff:ff:ff:ff:ff:ff  UHLWbI          0        8     en0
+```</p>
+
+<p>In the case above, the default gateway of this Mac is 192.168.20.1. Meaning all routes are pointing to that system.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The best free screen recording software for Mac OSX]]></title>
+    <link href="http://tunnelsup.github.io/the-best-free-screen-recording-software-for-mac-osx/"/>
+    <updated>2014-09-18T23:49:00-07:00</updated>
+    <id>http://tunnelsup.github.io/the-best-free-screen-recording-software-for-mac-osx</id>
+    <content type="html"><![CDATA[<p>The QuickTime video player that comes installed in OSX by default can also do screen recording. It does a decent job at screen recording and since it&rsquo;s free and already on the system it is the best free software for doing screen recording on Mac OSX.</p>
+
+<h3>Features of the QuickTime screen recording software</h3>
+
+<ul>
+<li>Option to choose entire screen or part of screen to record</li>
+<li>Option to use built in mic (if available), external (USB) mic or no audio at all</li>
+<li>Saves to .mov file formats which is recognized by most video editing software and youtube.</li>
+<li>Ability to hide or show mouse in recording. Ability to show mouse clicks when recording.</li>
+</ul>
+
+
+<h3>Using QuickTime as a screen recorder</h3>
+
+<h4>Launch QuickTime</h4>
+
+<p>Start by launching QuickTime. Do this by either using something like Spotlight or Alfred and typing in QuickTime or going to applications then QuickTime Player</p>
+
+<h4>Setup the Recording</h4>
+
+<p>Start the recording process by first going to <code>File -&gt; New Screen Recording</code>.  This will open a new window. On the right side is a small arrow pointing down. By clicking this you can choose which audio input to use as well as if you want the mouse to be seen in the recording.</p>
+
+<p>Click the red record button. You will now be presented with an option to record the entire screen or just a portion of the screen. To record the entire screen click on the screen one time. To record a portion, click and drag on the portion you wish to record.</p>
+
+<p>Now that the stage is set, begin the recording by clicking the &ldquo;Start Recording&rdquo; button. If you&rsquo;ve chosen to record the whole screen it will already be recording.</p>
+
+<h4>Stop recording</h4>
+
+<p>When the recording is going on there will be an icon that is a circle with a square in the center and it is located in the menu bar just to the left of where the time is shown. By clicking that button the recording will stop.</p>
+
+<p>Once the recording has stopped the video is not yet saved. It&rsquo;s now time to preview the video to make sure it turned out the way you wanted. Check that the audio came out right and the recording is correct.</p>
+
+<h4>Saving the video</h4>
+
+<p>After you have previewed the video and would like to save it there are two ways to save it. Either go to file save or close the video. By closing it you will get a dialogue box that asks if you wish to save it.</p>
+
+<p>The only encoding option for saving is .mov file.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to take a screenshot on Mac OSX]]></title>
+    <link href="http://tunnelsup.github.io/how-to-take-a-screenshot-on-mac-osx/"/>
+    <updated>2014-09-18T23:35:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-take-a-screenshot-on-mac-osx</id>
+    <content type="html"><![CDATA[<p>Mac OSX has multiple ways to take a screenshot depending on what you need to capture.</p>
+
+<table class="table">
+    <thead>
+        <th></th>
+        <th>Entire Screen</th>
+        <th>Region (crosshairs)</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Save to Desktop</strong></td>
+            <td><code>CMD</code>+<code>SHIFT</code>+<code>3</code></td>
+            <td><code>CMD</code>+<code>SHIFT</code>+<code>4</code></td>
+        </tr>
+        <tr>
+            <td><strong>Save to Clipboard</strong></td>
+            <td><code>CMD</code>+<code>CONTROL</code>+<code>SHIFT</code>+<code>3</code></td>
+            <td><code>CMD</code>+<code>CONTROL</code>+<code>SHIFT</code>+<code>4</code></td>
+        </tr>
+
+    </tbody>
+
+</table>
+
+
+<br><br>
+
+
+<h3>Detailed Explanation</h3>
+
+<p><code>CMD+SHIFT+3</code> will take a screenshot of the entire screen and save the image to the desktop as a png file.</p>
+
+<p><code>CMD+CONTROL+SHIFT+3</code> will copy the entire screen to the clipboard so it can be pasted somewhere else.</p>
+
+<p><code>CMD+SHIFT+4</code> will turn the cursor into crosshairs and allow you to take a screenshot of the selected portion of the screen. After clicking the screenshot is saved to the desktop as a png file.</p>
+
+<p><code>CMD+CONTROL+SHIFT+4</code> will allow you to take a screenshot of a portion of the screen and the image will be saved to the clipboard.</p>
+
+<p><code>CMD+SHIFT+4</code> then <code>SPACEBAR</code> will let you take a screenshot of a specific window and save it to desktop.</p>
+
+<p><code>CMD+CONTROL+SHIFT+4</code> then <code>SPACEBAR</code> will let you take a screenshot of a specific window and save it to the clipboard.</p>
+
+<h3>Using Grab</h3>
+
+<p>Mac OSX comes with a utility called <code>grab</code>. This is found under applications > utilities > grab. It is a screen capturing program which can be used to achieve the same things above and more.</p>
+]]></content>
+  </entry>
+  
+</feed>

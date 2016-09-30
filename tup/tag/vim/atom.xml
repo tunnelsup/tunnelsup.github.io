@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: vim | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/vim/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Remove ^M Newline Character using vim]]></title>
+    <link href="http://tunnelsup.github.io/remove-m-newline-character-using-vim/"/>
+    <updated>2014-11-08T18:48:00-08:00</updated>
+    <id>http://tunnelsup.github.io/remove-m-newline-character-using-vim</id>
+    <content type="html"><![CDATA[<p>Sometimes when opening a file in vim there are a lot of <code>^M</code> characters at the end of everyline. This is probably because the file was saved in Windows which uses a slightly different newline, linebreak, carriage return, and line feed characters. It may look something like this:</p>
+
+<pre><code>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<span style="color: #FF6666;">^M</span>
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,<span style="color: #FF6666;">^M</span>
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo<span style="color: #FF6666;">^M</span>
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse<span style="color: #FF6666;">^M</span>
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non<span style="color: #FF6666;">^M</span>
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<span style="color: #FF6666;">^M</span></code></pre>
+
+
+<h2>Using Vim to remove the ^M characters</h2>
+
+<p>The fasttest way to remove these characters in VIM is to do the following:</p>
+
+<p><code>:%s/&lt;Cntrl+V&gt;&lt;Cntrl+M&gt;/&lt;Cntrl+V&gt;&lt;Cntrl+M&gt;/g</code></p>
+
+<p>This command cannot be pasted directly into Vim. You must press <code>Control</code>+<code>V</code> then <code>Control</code>+<code>M</code> to get the special character.</p>
+
+<p>The <code>:%s</code> is the substitution command. If you had <code>:%s/this/that/</code> it would read substitute the word <code>this</code> with the word <code>that</code>.</p>
+
+<p>The <code>Control</code>+<code>V</code> <code>Control</code>+<code>M</code> is using a special code to tell Vim to create the character we are looking for.</p>
+
+<p>The <code>/&lt;Cntrl+V&gt;&lt;Cntrl+M&gt;/</code> means we are substituting it with a carriage return and line break that our system recognizes.</p>
+
+<p>The <code>g</code> indicates to execute this substitution globally on every occurance.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: bash | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/bash/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to change the output color when using ls in bash]]></title>
+    <link href="http://tunnelsup.github.io/how-to-change-the-output-color-when-using-ls-in-bash/"/>
+    <updated>2015-02-14T16:34:00-08:00</updated>
+    <id>http://tunnelsup.github.io/how-to-change-the-output-color-when-using-ls-in-bash</id>
+    <content type="html"><![CDATA[<p>Sometimes when using Linux in bash or zsh you may have a hard time seeing directories. If you have ANSI colors turned on and your terminal background color is black seeing the directories is hard. That is because the directory color is dark blue by default. The fix to this is to change the dircolors which uses an environmental variable <code>$LS_COLORS</code>.</p>
+
+<h3>Change the dir color</h3>
+
+<p>The fix is as simple as doing this:</p>
+
+<p><code>
+LS_COLORS="$LS_COLORS:di=01;33"
+</code></p>
+
+<p>This sets the color to bold yellow.</p>
+
+<h5>Make it a default setting.</h5>
+
+<p>If you want this to be there the next time you login just add it to your shell rc file like <code>.bashrc</code> or <code>.zshrc</code>. You can do that one of two ways.</p>
+
+<p>Either append the line at the end of your file like: <br>
+<code>echo 'LS_COLORS="$LS_COLORS:di=01;33"' &gt;&gt; .bashrc</code></p>
+
+<p>Or add the line in manually by using a text editor like <code>nano</code> or <code>vi</code> and add the line <code>LS_COLORS="$LS_COLORS:di=01;33"</code> to the bottom of the file.</p>
+
+<p>Once the line is added to the file then restart the shell by logging out and logging in again and your new colors should be there.</p>
+
+<h3>Change other file type colors</h3>
+
+<p>Try using the command <code>dircolors</code> to see your current settings.</p>
+
+<p>You can also use the command <code>dircolors -p</code> to see the default settings.</p>
+
+<h3>Other color options</h3>
+
+<p>This webpage goes over <a href="http://misc.flogisoft.com/bash/tip_colors_and_formatting">bash colors</a> in depth. You can replace the <code>00;93</code> in the example above with another color of your choice.</p>
+]]></content>
+  </entry>
+  
+</feed>

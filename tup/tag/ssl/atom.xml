@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ssl | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/ssl/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to use Firefox to check if a website uses SSLv3]]></title>
+    <link href="http://tunnelsup.github.io/how-to-use-firefox-to-check-if-a-website-uses-sslv3/"/>
+    <updated>2015-07-26T10:57:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-use-firefox-to-check-if-a-website-uses-sslv3</id>
+    <content type="html"><![CDATA[<p>We should all know by now that <a href="https://isc.sans.edu/forums/diary/SSLv3+POODLE+Vulnerability+Official+Release/18827/">SSLv3 is a broken security protocol due to the POODLE vulnerability</a>. Firefox tries to connect to a website using the strongest security that the web server provides. It is possible to change the settings in Firefox to force a less secure connection which can tell us whether SSLv3 is on or not.</p>
+
+<h3>Change the settings</h3>
+
+<p>In firefox go to the url <code>about:config</code>. Then search for <code>tls.version</code>.</p>
+
+<p><img src="/images/ssl3-1.png"></p>
+
+<p>The different TLS versions are:</p>
+
+<ul>
+<li><code>0</code> &ndash; SSL 3.0</li>
+<li><code>1</code> &ndash; TLS 1.0</li>
+<li><code>2</code> &ndash; TLS 1.1</li>
+<li><code>3</code> &ndash; TLS 1.2</li>
+</ul>
+
+
+<p>By changing the max version to be <code>0</code> you are telling Firefox you don&rsquo;t want to use anything higher than SSLv3. Please only do this for testing purposes and do not leave your browser on this setting.</p>
+
+<h3>Testing the connection</h3>
+
+<p>Now browse to the site you wish to test. Click on the little padlock icon in the address bar, then click more information.</p>
+
+<p><img src="/images/ssl3-2.png"></p>
+
+<p>At the bottom of this panel will display the technical details about the site. In this image below you can see that the browser negotiated to the site using SSLv3 which is broken encryption.</p>
+
+<p><img src="/images/ssl3-3.png"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Adding a wildcard SSL certificate to a Cisco ASA]]></title>
+    <link href="http://tunnelsup.github.io/adding-a-wildcard-ssl-certificate-to-a-cisco-asa/"/>
+    <updated>2015-03-05T22:51:00-08:00</updated>
+    <id>http://tunnelsup.github.io/adding-a-wildcard-ssl-certificate-to-a-cisco-asa</id>
+    <content type="html"><![CDATA[<p>A wildcard SSL certificate is where the SSL certificate is good for both the root domain and all subdomains. If we had a wildcard certificate for example.com it means the certificate will be valid for vpn.example.como, mail.example.com, blog.example.com, and example.com. This differs from a normal SSL certificate that specifically indicates one or more domain names in the subject field. There is another post that covers how to <a href="http://www.tunnelsup.com/adding-an-ssl-certificate-on-an-asa">install a basic SSL certificate on a Cisco ASA</a>.</p>
+
+<p>In this post we will be covering how to install a wildcard certificate on a Cisco ASA.</p>
+
+<h3>Before we begin</h3>
+
+<p>Verify you have the following:</p>
+
+<ul>
+<li>The certificate private key file (in pem format)</li>
+<li>The wildcard certificate (in pem format)</li>
+<li>The intermediary certificate (in pem format)</li>
+</ul>
+
+
+<p>For testing we&rsquo;ll use a Cisco ASA that allows a user to go to it using a browser.</p>
+
+<h3>A quick understanding of the types of certificate files</h3>
+
+<p>Examine the certs you have. Open them up and look at the contents. Does it start with &ldquo;BEGIN CERTIFICATE&rdquo; and end in &ldquo;END CERTIFICATE&rdquo;? If so then that certificate is likely in &ldquo;pem&rdquo; format. Files that end in the suffix &lsquo;.pem&rsquo; or &lsquo;.key&rsquo; usually are in this format. We&rsquo;ll need all the certs to be in this format for best results.</p>
+
+<p>There a ways to convert your certs to pem format but we won&rsquo;t cover that here.</p>
+
+<h3>Create the pkcs12 certificate.</h3>
+
+<p>In the ASA we will eventually choose to import a certificate from a PKCS12 format file which has the certificate and private key in it together.</p>
+
+<p>We will be using a linux system to convert the key + certificate into one file. We can use this command to do the conversion:</p>
+
+<p><code>
+$ openssl pkcs12 -export -inkey privkey.pem  -in cert.pem -name "My Wildcard Cert" -out cert.p12
+Enter Export Password:
+Verifying - Enter Export Password:
+$  ls
+cert.pem  cert.p12  privkey.pem
+</code></p>
+
+<p>Here it will also ask you for a new password to encrypt the file. Remember this because we&rsquo;ll use it later when importing the certificate.</p>
+
+<p>You can view the pem certificate contents by doing the following command:</p>
+
+<p><code>openssl x509 -in cert.pem -inform pem -noout -text</code></p>
+
+<p>Here you&rsquo;re looking for:</p>
+
+<blockquote><p>X509v3 Subject Alternative Name:
+ DNS:*.example.com, DNS:example.com</p></blockquote>
+
+<p>This indicates what the URL is allowed to be for the cert to think it&rsquo;s a match. Because this is a wildcard cert we see the *.example.com which will match any of the example.com domains.</p>
+
+<h3>First install the intermediate cert</h3>
+
+<p>I am a huge fan of the CLI but for some reason I never feel comfortable doing certificate stuff at the CLI.</p>
+
+<p>Go to the ASDM. Navigate to Configuration > Device Management > Certificate Management > CA Certificates.</p>
+
+<p>Click Add.</p>
+
+<p>Then copy and paste your intermediate CA certificate in the box. You can copy the whole thing including the &ldquo;BEGIN&rdquo; and &ldquo;END&rdquo; lines in your certificate.</p>
+
+<p>Click install certificate and this should then install and you should see your CA certificate in the list of certificates. Make sure the expiry date is far into the future (at least greater than your certificate).</p>
+
+<p>If this comes back and says &ldquo;Certificate install failed&rdquo; then make sure you&rsquo;re certificate is in pem format when pasting in and make sure it&rsquo;s an intermediary CA cert and not your primary cert.</p>
+
+<h3>Add the certificate to the ASA</h3>
+
+<p>In the ASDM. Navigate to Configuration > Device Management > Certificate Management > Identity Certificates.</p>
+
+<p>Click Add.</p>
+
+<p>The ASA refers to certificates as &ldquo;TrustPoints&rdquo;. You can give it any name you want but remember it because we&rsquo;ll refer to it later.</p>
+
+<p>Choose to &ldquo;import the identity certificate from a file&rdquo;.</p>
+
+<p>Enter the password you used when you created the pkcs12 file (explained earlier in this post).</p>
+
+<p>Browse to the pkcs12 file you create earlier.</p>
+
+<p>Click Add Certificate.</p>
+
+<p>If all went well then you should see your new certificate added to the list. Verify the date is in the future and also verify the clock on the ASA is correct (show clock).</p>
+
+<h3>Assign the certificate to an interface</h3>
+
+<p>In the ASDM. Navigate to Configuration > Device Management > Advanced > SSL Settings.</p>
+
+<p>Here you can see which certificate is going to be placed on which interface.</p>
+
+<p>Select the interface you wish to add the certificate to and either double click or hit edit.</p>
+
+<p>Select the new certificate trustpoint you created earlier.</p>
+
+<p>Click Apply for the popup and then Apply at the bottom of the ASDM screen.</p>
+
+<h3>Verify the certificate</h3>
+
+<p>Open a web browser like Firefox and navigate to the URL of your ASA using https. Click the little lock icon in the URL field. Click &ldquo;more information&rdquo; then &ldquo;view certificates&rdquo;. Here you should be able to confirm that the certificate you added to the ASA is the same as what you see in the browser.</p>
+
+<p>If it still looks like the old certificate you used to have in there try opening a different browser. Browsers often cache the certificate. Once the cache times out or the user clears the cache the new certificate will be present.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SSL VPN access is not allowed]]></title>
+    <link href="http://tunnelsup.github.io/ssl-vpn-access-is-not-allowed/"/>
+    <updated>2013-06-06T22:17:00-07:00</updated>
+    <id>http://tunnelsup.github.io/ssl-vpn-access-is-not-allowed</id>
+    <content type="html"><![CDATA[<p>Recently I tried installing WebVPN usability onto a Cisco ASA firewall. When trying to login I received the following error:<br>
+<img src="http://tunnelsup.com/images/sslvpnerror.png" alt="SSL VPN Error IMG" /></p>
+
+<blockquote><p>Clientless (browser) SSL VPN access is not allowed</p></blockquote>
+
+<p>That&rsquo;s odd. I&rsquo;m the administrator. I WANT to allow this. It&rsquo;s my goal to allow this! Also, I wish Cisco would have consistency for this type of VPN. Is it &ldquo;Clientless (browser) SSL VPN&rdquo; or &ldquo;WebVPN&rdquo; or &ldquo;SSL VPN&rdquo; or &ldquo;Clientless VPN&rdquo;? Make up your mind!</p>
+
+<p>Perhaps the logs give us more of a clue. It said:</p>
+
+<blockquote><p>May 22 2013 17:20:42: %ASA-4-722050: Group &lt;GP-WEBVPN> User &lt;test-user> IP &lt;198.198.198.198> Session terminated: SVC not enabled for the user</p></blockquote>
+
+<p>This immediately became a battle with licensing. A quick show version gives me the following details:</p>
+
+<p><code>
+Licensed features for this platform:
+Maximum Physical Interfaces       : Unlimited      perpetual
+Maximum VLANs                     : 100            perpetual
+Inside Hosts                      : Unlimited      perpetual
+Failover                          : Active/Active  perpetual
+Encryption-DES                    : Enabled        perpetual
+Encryption-3DES-AES               : Enabled        perpetual
+Security Contexts                 : 2              perpetual
+GTP/GPRS                          : Disabled       perpetual
+AnyConnect Premium Peers          : 50             perpetual
+AnyConnect Essentials             : 250            perpetual
+Other VPN Peers                   : 250            perpetual
+Total VPN Peers                   : 250            perpetual
+Shared License                    : Disabled       perpetual
+AnyConnect for Mobile             : Enabled        perpetual
+AnyConnect for Cisco VPN Phone    : Enabled        perpetual
+Advanced Endpoint Assessment      : Disabled       perpetual
+UC Phone Proxy Sessions           : 24             perpetual
+Total UC Proxy Sessions           : 24             perpetual
+Botnet Traffic Filter             : Disabled       perpetual
+Intercompany Media Engine         : Disabled       perpetual
+Cluster                           : Disabled       perpetual
+</code></p>
+
+<p>It appears we have AnyConnect Premium Peer license applied to this firewall. But is it in use?</p>
+
+<p><code>
+denver-5520/pri/act(config)# sh run webvpn
+webvpn
+ enable OUTSIDE
+ anyconnect-essentials
+ anyconnect image disk1:/anyconnect-win-3.0.0629-k9.pkg 1
+ anyconnect enable
+ tunnel-group-list enable
+</code>
+Doh! It appears <code>anyconnect-essentials</code> is enabled! Here&rsquo;s the reason why this is a problem.</p>
+
+<p>Anyconnect-essentials does NOT support WebVPN. You must have Anyconnect Premium enabled to use WebVPN. It&rsquo;s confusing because the way the licensing works is that You can either have essentials on or not. If you don&rsquo;t then you have premium on. Either way you cannot have both at the same time. In order to make this WebVPN script work I had to say <code>no anyconnect-essentials</code> which enables the premium peers. This brought us from 250 possible simultaneous VPN sessions down to 50.</p>
+
+<p>To learn more about AnyConnect license (and why anyconnect-essentials doesn&rsquo;t allow you to use WebVPN) see <a href="http://tunnelsup.com/tup/2012/08/08/understanding-cisco-asa-anyconnect-licensing">my post</a> about it.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WebVPN or SSL VPN on an ASA]]></title>
+    <link href="http://tunnelsup.github.io/webvpn-or-ssl-vpn-on-an-asa/"/>
+    <updated>2010-05-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/webvpn-or-ssl-vpn-on-an-asa</id>
+    <content type="html"><![CDATA[<p><img src="/images/webvpn.jpg" alt="WebVPN diagram - IMG" /></p>
+
+<p>WebVPN (or often called SSL VPN) (or sometimes called clientless VPN) is used when someone needs to access a web based application that is on the private network. A web browser is used for all the encryption and authentication.</p>
+
+<p>After applying the config below the web user should be able to point their browser to <a href="https://11.11.11.11">https://11.11.11.11</a> to access the device at 192.168.11.2.</p>
+
+<h3>BLUE ASA</h3>
+
+<p>First make sure to have a SSL certificate on the ASA. This is needed because the ASA is acting as a web proxy and requires an SSL cert to be there to create the connection to the client.</p>
+
+<p><code>
+! Generate a self signed certificate
+crypto ca trustpoint SELF-SIGNED-CERTIFICATE
+proxy-ldc-issuer
+id-usage ssl-ipsec
+no fqdn
+subject-name CN=firewall-name
+enrollment self
+crypto ca enroll SELF-SIGNED-CERTIFICATE noconfirm
+</code></p>
+
+<p>Configure the WebVPN</p>
+
+<p><code>
+webvpn
+  enable Outside
+  ssl trust-point SELF-SIGNED-CERTIFICATE Outside
+group-policy POL-SP-WEBVPN internal
+group-policy POL-SP-WEBVPN attributes
+  vpn-tunnel-protocol webvpn
+  webvpn
+   url-list none
+tunnel-group WEBVPN-SHAREPOINT type remote-access
+tunnel-group WEBVPN-SHAREPOINT general-attributes
+  default-group-policy POL-SP-WEBVPN
+</code>
+Once the Group Policy and Tunnel Group are created go into ASDM to control the look and control what websites the user can access.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,453 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>View Interface Statistics on ScreenOS - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="Get command to see interface statistics on a SSG/ScreenOS get counter statistics interface &lt;interface&gt; This will display the following result: &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tunnelsup.github.io/view-interface-statistics-on-screenos">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">View Interface Statistics on ScreenOS</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-06T11:11:00-07:00" pubdate data-updated="true">Sep 6<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Get command to see interface statistics on a SSG/ScreenOS</h2>
+
+<p><code>get counter statistics interface &lt;interface&gt;</code></p>
+
+<p>This will display the following result:<br></p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>FLFW1-&gt; get count stati int eth0/2
+</span><span class='line'>Hardware counters for interface ethernet0/2:
+</span><span class='line'>in bytes      2391954371 | out bytes     2188210410 | early frame            0
+</span><span class='line'>in packets    2536213416 | out packets    926090442 | late frame             0
+</span><span class='line'>in no buffer           0 | out no buffer          0 | re-xmt limit           0
+</span><span class='line'>in overrun             0 | out underrun           0 | drop vlan              0
+</span><span class='line'>in coll err            0 | out coll err           0 | out cs lost            0
+</span><span class='line'>in misc err            0 | out misc err           0 |                         
+</span><span class='line'>in dma err             0 | out bs pak             0 |                         
+</span><span class='line'>in crc err             0 | out discard            0 |                         
+</span><span class='line'>in align err           0 | out defer              0 |                         
+</span><span class='line'>in short frame         0 | out heartbeat          0 |                         
+</span><span class='line'>
+</span><span class='line'>Hardware 64-bit counters for interface ethernet0/2:
+</span><span class='line'>in bytes                7278066553795 |  out bytes               1376577745130
+</span><span class='line'>in ucast                   6831180712 |  out ucast                  5221057738
+</span><span class='line'>in mcast                            0 |  out mcast                           0
+</span><span class='line'>in bcast                            0 |  out bcast                           0
+</span><span class='line'>
+</span><span class='line'>Total flow counters for interface ethernet0/2:
+</span><span class='line'>in bytes      1363202958 | out bytes     2188210410 | tcp proxy              0
+</span><span class='line'>in packets    2521677948 | out packets    926090442 | tear drop            387
+</span><span class='line'>in vlan                0 | out vlan               0 | in permit     3912073647
+</span><span class='line'>out permit    1539534845 | src route              0 | no g-parent            0
+</span><span class='line'>ping of death          0 | no gate sess           0 | address spoof          0
+</span><span class='line'>in icmp         12232565 | no nat vector         11 | land attack            0
+</span><span class='line'>in self                0 | no map                 0 | icmp flood         77599
+</span><span class='line'>in un-auth             0 | no conn                0 | no arp entry           0
+</span><span class='line'>udp flood              0 | in unk prot            0 | no dip                 0
+</span><span class='line'>winnuke                0 | in vpn         222640182 | no gate                0
+</span><span class='line'>port scan            194 | in other               0 | no xmit vpnf           0
+</span><span class='line'>ip sweep               0 | no mac                 0 | no route               0
+</span><span class='line'>tcp out of seq     88121 | mac relearn            0 | no frag sess           0
+</span><span class='line'>wrong intf             0 | slow mac               0 | no frag netpak         0
+</span><span class='line'>wrong slot             0 | trmng queue            0 | no sa                734
+</span><span class='line'>icmp broadcast         0 | trmng drop             0 | no sa policy           0
+</span><span class='line'>illegal pak      4739684 | tiny frag              0 | sa inactive        52449
+</span><span class='line'>url block              2 | syn frag               0 | sa policy deny         0
+</span><span class='line'>encrypt fail           0 | connections            0 | policy deny            0
+</span><span class='line'>mp fail                0 | misc prot              0 | auth deny              0
+</span><span class='line'>auth fail              2 | loopback drop         16 | big bkstr              0
+</span><span class='line'>proc sess              0 | mal url                0 | sessn thresh           0
+</span><span class='line'>invalid zone           0 | null zone              0 | no nsp-tunnel          0
+</span><span class='line'>IP cls failure         0 | first pak frag        18 | unknown pak     14532135
+</span><span class='line'>multiauth drop         0 | multi-DIP drop         0 | tcp sweep              0
+</span><span class='line'>udp sweep              0 | tcp check drop         0 | </span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Deciphering Output</h2>
+
+<p><code>address spoof</code>   Number of suspected address spoofing attack packets received<br>
+<code>auth deny</code>   Number of times user authentication was denied<br>
+<code>auth fail</code>   Number of times user authentication failed<br>
+<code>big bkstr</code>   Number of packets that are too big to buffer in the ARP back store while waiting for MAC-to-IP address resolution<br>
+<code>connections</code>   Number of sessions established since the last boot<br>
+<code>encrypt fail</code>  Number of failed Point-to-Point Tunneling Protocol (PPTP) packets<br>
+<code>*icmp broadcast</code>   Number of ICMP broadcasts received<br>
+<code>icmp flood</code>  Number of ICMP packets that are counted toward the ICMP flood threshold<br>
+<code>illegal pak</code>   Number of packets dropped because they do not conform to the protocol standards<br>
+<code>in arp req</code>  Number of incoming arp request packets<br>
+<code>in arp resp</code>   Number of outgoing arp request packets<br>
+<code>in bytes</code>  Number of bytes received<br>
+<code>in icmp</code>   Number of Internet Control Message Protocol (ICMP) packets received<br>
+<code>in other</code>  Number of incoming packets that are of a different Ethernet type<br>
+<code>in packets</code>  Number of packets received<br>
+<code>in self</code>   Number of packets addressed to the Management IP address<br>
+<code>*in un auth</code>   Number of unauthorized incoming TCP, UDP, and ICMP packets<br>
+<code>*in unk prot</code>  Number of incoming packets using an unknown Ethernet protocol<br>
+<code>in vlan</code>   Number of incoming vlan packets<br>
+<code>in vpn</code>  Number of IPsec packets received<br>
+<code>invalid zone</code>  Number of packets destined for an invalid security zone<br>
+<code>ip sweep</code>  Number of packets received and discarded beyond the specified ip sweep threshold<br>
+<code>land attack</code>   Number of suspected land attack packets received<br>
+<code>loopback drop</code>   Number of packets dropped because they cannot be looped back through the security device. An example of a loopback session is when a host in the Trust zone sends traffic to a MIP or VIP address that is mapped to a server that is also in the Trust zone. The security device creates a loopback session that directs such traffic from the host to the MIP or VIP server. mac relearn Number of times that the MAC address learning table had to relearn the interface associated with a MAC address because the location of the MAC address changed<br>
+<code>mac tbl full</code>  Number of times that the MAC address learning table completely filled up<br>
+<code>mal url</code>   Number of blocked packets destined for a URL determined to be malicious<br>
+<code>*misc prot</code>  Number of packets using a protocol other than TCP, UDP, or ICMP<br>
+<code>mp fail</code>   Number of times a problem occurred when sending a PCI message between the master processor module and the processor module<br>
+<code>no conn</code>   Number of packets dropped because of unavailable Network Address Translation (NAT) connections<br>
+<code>no dip</code>  Number of packets dropped because of unavailable Dynamic IP (DIP) addresses<br>
+<code>no frag netpak</code>  Number of times that the available space in the netpak buffer fell below 70%<br>
+<code>*no frag sess</code>   The number of times that fragmented sessions were greater than half of the maximum number of NAT sessions<br>
+<code>no g-parent</code>   Number of packets dropped because the parent connection could not be found<br>
+<code>no gate</code>   Number of packets dropped because no gate was available<br>
+<code>no gate sess</code>  Number of terminated sessions because there were no gates in the firewall for them<br>
+<code>no map</code>  Number of packets dropped because there was no map to the trusted side<br>
+<code>no nat vector</code>   Number of packets dropped because the Network Address Translation (NAT) connection was unavailable for the gate<br>
+<code>*no nsp tunnel</code>  Number of dropped packets sent to a tunnel interface to which no VPN tunnel is bound<br>
+<code>no route</code>  Number of unroutable packets received<br>
+<code>no sa</code>   The number of packets dropped because no Security Associations (SA) was defined<br>
+<code>no sa policy</code>  Number of packets dropped because no policy was associated with an SA<br>
+<code>*no xmit vpnf</code>   Number of dropped VPN packets due to fragmentation<br>
+<code>null zone</code>   Number of dropped packets erroneously sent to an interface bound to the Null zone<br>
+<code>nvec err</code>  Number of packets dropped because of NAT vector error<br>
+<code>out bytes</code>   Number of bytes sents<br>
+<code>out defer</code>   Number of deferred outgoing packets<br>
+<code>out packets</code>   Number of packets sent<br>
+<code>out defer</code>   Number of deferred outgoing packets<br>
+<code>out vlan</code>  Number of outgoing vlan packets<br>
+<code>ping of death</code>   Number of suspected Ping of Death attack packets received<br>
+<code>policy deny</code>   Number of packets denied by a defined policy<br>
+<code>port scan</code>   Number of packets that are counted as a port scan attempt<br>
+<code>proc sess</code>   Number of times that the total number of sessions on a processor module exceeded the maximum threshold<br>
+<code>sa inactive</code>   Number of packets dropped because of an inactive SA<br>
+<code>sa policy deny</code>  Number of packets denied by an SA policy<br>
+<code>sessn thresh</code>  the threshold for the maximum number of sessions<br>
+<code>*slow mac</code>   Number of frames whose MAC addresses were slow to resolve<br>
+<code>src route</code>   Number of packets dropped because of the filter source route option<br>
+<code>syn frag</code>  Number of dropped SYN packets because of a fragmentation<br>
+<code>tcp out of seq</code>  Number of TCP segments received whose sequence number is outside the acceptable range<br>
+<code>tcp proxy</code>   Number of packets dropped from using a TCP proxy such as the SYN flood protection option or user authentication<br>
+<code>teardrop</code>  Number of packets blocked as part of a suspected Teardrop attack<br>
+<code>tiny frag</code>   Number of tiny fragmented packets received<br>
+<code>trmn drop</code>   Number of packets dropped by traffic management<br>
+<code>trmng queue</code>   Number of packets waiting in the queue<br>
+<code>udp hdlen err</code>   Number of packets where the IP header is less than the IP header + UDP header.  If IP Total Length is less than 28 bytes (8 bytes UDP header + 20 bytes IP header), it will increase this counter.  This type of traffic is not valid.<br>
+<code>udp flood</code>   Number of UDP packets that are counted toward the UDP flood threshold<br>
+<code>unknown pak</code>   Any packets with an Ethernet type that the firewall does not recognize. Examples would be Spanning Tree or proprietary Cisco protocols that the firewall does not pass or is capable of reading. When the firewall sees a packet with a Ethernet type it does not recognize, it will drop the packet and increment the &lsquo;unknown pak&rsquo; counter.<br>
+<code>url block</code>   Number of HTTP requests that were blocked<br>
+<code>winnuke</code>   Number of WinNuke attack packets received<br>
+<code>wrong intf</code>  Number of session creation messages sent from a processor module to the master processor module<br>
+<code>wrong slot</code>  Number of packets erroneously sent to the wrong processor module<br></p>
+
+<h2>Sources</h2>
+
+<p><a href="http://kb.juniper.net/InfoCenter/index?page=content&amp;id=KB4257">http://kb.juniper.net/InfoCenter/index?page=content&amp;id=KB4257</a><br>
+<a href="http://kb.juniper.net/InfoCenter/index?page=content&amp;id=KB4261">http://kb.juniper.net/InfoCenter/index?page=content&amp;id=KB4261</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-06T11:11:00-07:00" pubdate data-updated="true">Sep 6<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/counters/'>counters</a>, <a class='category' href='/tup/tag/interface/'>interface</a>, <a class='category' href='/tup/tag/juniper/'>juniper</a>, <a class='category' href='/tup/tag/screenos/'>screenos</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tunnelsup.github.io/view-interface-statistics-on-screenos/" data-via="tunnelsup" data-counturl="http://tunnelsup.github.io/view-interface-statistics-on-screenos/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tunnelsup.github.io/view-interface-statistics-on-screenos/';
+        var disqus_url = 'http://tunnelsup.github.io/view-interface-statistics-on-screenos/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>

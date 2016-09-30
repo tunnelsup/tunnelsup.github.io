@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: certificate | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/certificate/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Adding a wildcard SSL certificate to a Cisco ASA]]></title>
+    <link href="http://tunnelsup.github.io/adding-a-wildcard-ssl-certificate-to-a-cisco-asa/"/>
+    <updated>2015-03-05T22:51:00-08:00</updated>
+    <id>http://tunnelsup.github.io/adding-a-wildcard-ssl-certificate-to-a-cisco-asa</id>
+    <content type="html"><![CDATA[<p>A wildcard SSL certificate is where the SSL certificate is good for both the root domain and all subdomains. If we had a wildcard certificate for example.com it means the certificate will be valid for vpn.example.como, mail.example.com, blog.example.com, and example.com. This differs from a normal SSL certificate that specifically indicates one or more domain names in the subject field. There is another post that covers how to <a href="http://www.tunnelsup.com/adding-an-ssl-certificate-on-an-asa">install a basic SSL certificate on a Cisco ASA</a>.</p>
+
+<p>In this post we will be covering how to install a wildcard certificate on a Cisco ASA.</p>
+
+<h3>Before we begin</h3>
+
+<p>Verify you have the following:</p>
+
+<ul>
+<li>The certificate private key file (in pem format)</li>
+<li>The wildcard certificate (in pem format)</li>
+<li>The intermediary certificate (in pem format)</li>
+</ul>
+
+
+<p>For testing we&rsquo;ll use a Cisco ASA that allows a user to go to it using a browser.</p>
+
+<h3>A quick understanding of the types of certificate files</h3>
+
+<p>Examine the certs you have. Open them up and look at the contents. Does it start with &ldquo;BEGIN CERTIFICATE&rdquo; and end in &ldquo;END CERTIFICATE&rdquo;? If so then that certificate is likely in &ldquo;pem&rdquo; format. Files that end in the suffix &lsquo;.pem&rsquo; or &lsquo;.key&rsquo; usually are in this format. We&rsquo;ll need all the certs to be in this format for best results.</p>
+
+<p>There a ways to convert your certs to pem format but we won&rsquo;t cover that here.</p>
+
+<h3>Create the pkcs12 certificate.</h3>
+
+<p>In the ASA we will eventually choose to import a certificate from a PKCS12 format file which has the certificate and private key in it together.</p>
+
+<p>We will be using a linux system to convert the key + certificate into one file. We can use this command to do the conversion:</p>
+
+<p><code>
+$ openssl pkcs12 -export -inkey privkey.pem  -in cert.pem -name "My Wildcard Cert" -out cert.p12
+Enter Export Password:
+Verifying - Enter Export Password:
+$  ls
+cert.pem  cert.p12  privkey.pem
+</code></p>
+
+<p>Here it will also ask you for a new password to encrypt the file. Remember this because we&rsquo;ll use it later when importing the certificate.</p>
+
+<p>You can view the pem certificate contents by doing the following command:</p>
+
+<p><code>openssl x509 -in cert.pem -inform pem -noout -text</code></p>
+
+<p>Here you&rsquo;re looking for:</p>
+
+<blockquote><p>X509v3 Subject Alternative Name:
+ DNS:*.example.com, DNS:example.com</p></blockquote>
+
+<p>This indicates what the URL is allowed to be for the cert to think it&rsquo;s a match. Because this is a wildcard cert we see the *.example.com which will match any of the example.com domains.</p>
+
+<h3>First install the intermediate cert</h3>
+
+<p>I am a huge fan of the CLI but for some reason I never feel comfortable doing certificate stuff at the CLI.</p>
+
+<p>Go to the ASDM. Navigate to Configuration > Device Management > Certificate Management > CA Certificates.</p>
+
+<p>Click Add.</p>
+
+<p>Then copy and paste your intermediate CA certificate in the box. You can copy the whole thing including the &ldquo;BEGIN&rdquo; and &ldquo;END&rdquo; lines in your certificate.</p>
+
+<p>Click install certificate and this should then install and you should see your CA certificate in the list of certificates. Make sure the expiry date is far into the future (at least greater than your certificate).</p>
+
+<p>If this comes back and says &ldquo;Certificate install failed&rdquo; then make sure you&rsquo;re certificate is in pem format when pasting in and make sure it&rsquo;s an intermediary CA cert and not your primary cert.</p>
+
+<h3>Add the certificate to the ASA</h3>
+
+<p>In the ASDM. Navigate to Configuration > Device Management > Certificate Management > Identity Certificates.</p>
+
+<p>Click Add.</p>
+
+<p>The ASA refers to certificates as &ldquo;TrustPoints&rdquo;. You can give it any name you want but remember it because we&rsquo;ll refer to it later.</p>
+
+<p>Choose to &ldquo;import the identity certificate from a file&rdquo;.</p>
+
+<p>Enter the password you used when you created the pkcs12 file (explained earlier in this post).</p>
+
+<p>Browse to the pkcs12 file you create earlier.</p>
+
+<p>Click Add Certificate.</p>
+
+<p>If all went well then you should see your new certificate added to the list. Verify the date is in the future and also verify the clock on the ASA is correct (show clock).</p>
+
+<h3>Assign the certificate to an interface</h3>
+
+<p>In the ASDM. Navigate to Configuration > Device Management > Advanced > SSL Settings.</p>
+
+<p>Here you can see which certificate is going to be placed on which interface.</p>
+
+<p>Select the interface you wish to add the certificate to and either double click or hit edit.</p>
+
+<p>Select the new certificate trustpoint you created earlier.</p>
+
+<p>Click Apply for the popup and then Apply at the bottom of the ASDM screen.</p>
+
+<h3>Verify the certificate</h3>
+
+<p>Open a web browser like Firefox and navigate to the URL of your ASA using https. Click the little lock icon in the URL field. Click &ldquo;more information&rdquo; then &ldquo;view certificates&rdquo;. Here you should be able to confirm that the certificate you added to the ASA is the same as what you see in the browser.</p>
+
+<p>If it still looks like the old certificate you used to have in there try opening a different browser. Browsers often cache the certificate. Once the cache times out or the user clears the cache the new certificate will be present.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Adding an SSL certificate on an ASA]]></title>
+    <link href="http://tunnelsup.github.io/adding-an-ssl-certificate-on-an-asa/"/>
+    <updated>2012-08-16T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/adding-an-ssl-certificate-on-an-asa</id>
+    <content type="html"><![CDATA[<p>This tutorial is to show you how to install a HTTPS/SSL certificate on an ASA. This is often used when WebVPN or AnyConnect is configured which uses SSL. Without a certificate installed the users is given warnings and errors about a missing or invalid certificate.</p>
+
+<p>This has nothing to do with authentication. It&rsquo;s simply the https certificate which is needed for a secure communication to be set up.</p>
+
+<p>Suppose you are working for a place called <a href="http://company.com">http://company.com</a> and they want to set up their ASA to allows users to VPN into the network. To access the VPN you can either use IPSec or SSL. Suppose their choice was SSL and they want the URL of the ASA to be <a href="https://vpn.company.com.">https://vpn.company.com.</a> This tutorial will help set the HTTPS certificate for that URL.</p>
+
+<p>It is easier for me to use ASDM when dealing with certificates so this tutorial uses ASDM exclusively.</p>
+
+<h3>Step 1 - Create an Identity Certificate</h3>
+
+
+<p>Under Configuration &ndash;&gt; Device Management &ndash;&gt; Certificate Management &ndash;&gt; Identity Certificates</p>
+
+<p>Click Add.</p>
+
+<p>Give the Trustpoint a Name.</p>
+
+<p>Choose &ldquo;Add&rdquo; a new identity certificate</p>
+
+<p>Choose the key pair to use for encryption.</p>
+
+<p>Click &ldquo;Select&rdquo; for the certificate subject DN. In this section it is important to make the CN = the URL of the ASA that this certificate will be serving. It doesn&rsquo;t need to have any trailing slashes. So if the URL is &ldquo;<a href="https://example.com/owa">https://example.com/owa</a>&rdquo; you can simply make the CN &ldquo;example.com&rdquo;.</p>
+
+<p>Click &ldquo;advanced&rdquo;.</p>
+
+<p>Fill in the FQDN field. This should be exactly the same as CN.</p>
+
+<p>Click Add certificate.</p>
+
+<h3>Step 2 - Send the certificate to the CA</h3>
+
+
+<p>After completing step 1 you will be presented with the option of saving your certificate.</p>
+
+<p>Send this certificate to the CA such as Symantec or Verisign. They will then process it and send you back your public certificate</p>
+
+<h3>Step 3 - Installing your certificate</h3>
+
+
+<p>Go back to the ASDM: Configuration &ndash;&gt; Device Management &ndash;&gt; Certificate Management &ndash;&gt; Identity Certificates</p>
+
+<p>Click the certificate you made earlier. Then click Install.</p>
+
+<p>Paste in the certificate the CA sent you. Paste in everything including the BEGIN CERTIFICATE and END CERTIFICATE portions but make sure there are no trailing spaces or carriage returns. You do not need any of the intermediate keys, simply the public cert.</p>
+
+<h3>Step 4 - Enabling your certificate on an interface</h3>
+
+
+<p>Go to Configuration &ndash;&gt; Remote Access VPN &ndash;&gt; Network (client) access &ndash;&gt; AnyConnect Connection Profiles</p>
+
+<p>Click Device Certificate</p>
+
+<p>Choose the certificate you installed as the one to use for when users HTTPS to this device.</p>
+
+<p>That&rsquo;s it! Test the functionality by going to the URL of your ASA by using HTTPS.</p>
+]]></content>
+  </entry>
+  
+</feed>

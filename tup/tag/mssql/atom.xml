@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mssql | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/mssql/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MSSQL auto populate creation time]]></title>
+    <link href="http://tunnelsup.github.io/mssql-auto-populate-creation-time/"/>
+    <updated>2015-10-18T16:06:00-07:00</updated>
+    <id>http://tunnelsup.github.io/mssql-auto-populate-creation-time</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s good practice to add a creation time to every record in your database which marks the time and date when the record was created. This is ridiculously easy since it&rsquo;s a feature of MSSQL.</p>
+
+<p>Simply use <code>DATETIME2()</code> type and <code>GETDATE()</code> function.</p>
+
+<p>```sql
+CREATE TABLE tblExample</p>
+
+<pre><code>   (id           INT IDENTITY PRIMARY KEY
+   ,createTime   DATETIME2(0) DEFAULT GETDATE()
+   )
+</code></pre>
+
+<p>```</p>
+
+<p>Now, automatically, every time a record is created the creation time is automatically populated in the database.</p>
+
+<p>There isn&rsquo;t such a function for modified time. That would have to be done programmatically in whatever program is used to populate the database.</p>
+]]></content>
+  </entry>
+  
+</feed>

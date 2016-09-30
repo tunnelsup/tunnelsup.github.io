@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: javascript | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/javascript/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to do a Javascript Redirect]]></title>
+    <link href="http://tunnelsup.github.io/how-to-do-a-javascript-redirect/"/>
+    <updated>2015-07-23T22:33:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-do-a-javascript-redirect</id>
+    <content type="html"><![CDATA[<p>The best way to do a Javascript redirect is with the following code:</p>
+
+<p>```javascript</p>
+
+<script type="text/javascript">
+    window.location.href = "http://example.com";
+</script>
+
+
+<p>```</p>
+
+<p>The Javascript variable <code>window.location.href</code> contains the full URL of the current page. By setting this to something else, the browser immediately is redirected to that page. We can also view the URL of the current page by printing the contents of <code>window.location.href</code>. For example, the contents of that variable on this page is:</p>
+
+<script language="javascript">
+    document.write (document.location.href);
+</script>
+
+
+
+
+<br>
+
+
+<br>
+
+
+<p>It&rsquo;s possible to just use <code>window.location</code> or even shorter <code>location</code> instead of <code>window.location.href</code> to set the location. However, these are two different variables when reading them. The variable <code>window.location</code> is an object and has multiple values, while the variable <code>window.location.href</code> is a string and contains the URL. So it&rsquo;s better practice to use the <code>window.location.href</code> here because it works for both setting and reading the URL location which makes reading code easier too.</p>
+
+<h3>Example HTML</h3>
+
+<p>Here is an example webpage that will immediately redirect the browser to another location.</p>
+
+<p>```html
+<html>
+<head></p>
+
+<script type="text/javascript">
+    window.location.href = "http://example.com";
+</script>
+
+
+<p></head>
+<body>
+Javascript Redirect Example
+</body>
+</html>
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jQuery Checkbox Checked - Reading and Setting]]></title>
+    <link href="http://tunnelsup.github.io/jquery-checkbox-checked-reading-and-setting/"/>
+    <updated>2015-01-16T09:45:00-08:00</updated>
+    <id>http://tunnelsup.github.io/jquery-checkbox-checked-reading-and-setting</id>
+    <content type="html"><![CDATA[<p>If you have a checkbox in a form you can use jQuery to read and set the data in the checkbox. Here is the HTML we&rsquo;ll use an example for our checkbox:</p>
+
+<p><code>html
+&lt;input type="checkbox" id="checkboxid" /&gt;
+</code></p>
+
+<h2>Reading a Checkbox</h2>
+
+<p>When using jQuery and you wish to read whether a checkbox is checked or not.</p>
+
+<p><code>javascript
+$('#checkboxid').is(':checked');
+</code></p>
+
+<p>This will return <code>true</code> if the checkbox is checked and <code>false</code> if left unchecked.</p>
+
+<h2>Checking or Unchecking the Checkbox</h2>
+
+<p>Use the <a href="http://api.jquery.com/prop/">.prop()</a> function to manipulate the checkbox.</p>
+
+<p><code>javascript
+$("#checkboxid").prop('checked', true);  // Checks the box
+$("#checkboxid").prop('checked', false); // Unchecks the box
+</code></p>
+
+<p>The attr() function of jQuery has been deprecated since 1.6. However if you&rsquo;re jQuery version is below 1.6 you must use this method.</p>
+
+<p><code>javascript
+$("#checkboxid").attr('checked', true);
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,557 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>NAT for Cisco ASA's version 8.3+ - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="There are two major kinds of NAT in 8.3+ Auto NAT and Manual NAT. Auto is done inside the object and cannot take into consideration the destination &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tunnelsup.github.io/nat-for-cisco-asas-version-8-3">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">NAT for Cisco ASA's Version 8.3+</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-24T00:00:00-07:00" pubdate data-updated="true">Jun 24<span>th</span>, 2011</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>There are two major kinds of NAT in 8.3+ Auto NAT and Manual NAT. Auto is done inside the object and cannot take into consideration the destination of the traffic. Manual is done in global configuration and can NAT either the source IPs and destination IPs.</p>
+
+<h3>Auto NAT</h3>
+
+<p>The new term autoNAT is used in 8.3. Auto NAT is when the  NAT command appears INSIDE the object statement on the firewall.  There are two major variants of auto NAT: dynamic and static. Auto NAT is also sometimes referenced as Network Object NAT because the configuration is done within the network object.</p>
+
+<h5>Regular Dynamic PAT</h5>
+
+<p>To create a many-to-one NAT where the entire inside network is getting PATd to a single outside IP do the following.</p>
+
+<p>Old 8.2 command:</p>
+
+<pre><code><span style="color: #993300;">nat (inside) 1 10.0.0.0 255.255.255.0</span>
+<span style="color: #993300;">global (outside) 1 interface</span>
+</code></pre>
+
+
+<p>New 8.3 equivalent command:</p>
+
+<pre><code><span style="color: #00F000;">object network inside-net</span>
+  <span style="color: #00F000;">subnet 10.0.0.0 255.255.255.0</span>
+<span style="color: #00F000;">nat (inside,outside) <strong>dynamic</strong> interface</span>
+</pre>
+
+
+<p></code></p>
+
+<p>Note: the interface command is the 2nd interface in the nat statement, in this case the outside.</p>
+
+<h5>Static Auto-NAT</h5>
+
+<p>To create a one to one NAT within the object like when you have a webserver in your DMZ you can do the following NAT configuration.</p>
+
+<pre><code><span style="color: #00F000;">object network dmz-webserver</span>
+  <span style="color: #00F000;">host 192.168.1.23</span>
+<span style="color: #00F000;">nat (dmz,outside) <strong>static</strong> 209.165.201.28</span>
+</pre>
+
+
+<p></code></p>
+
+<p>Please note, the <code>nat (inside,outside)</code> part of these commands are a lot easier to read in 8.3. The first interface is the interface the traffic is coming into the ASA on and the second interface is the interface that this traffic is going out of the ASA on. So the command nat (dmz,outside) static 209.165.201.28 should be read as NAT the IP address 192.168.1.23 to 209.165.201.28 if the traffic is coming in on the dmz interface and going out the outside interface, or vice versa. This will not NAT traffic coming from the inside going to the DMZ, nor should it NAT the traffic coming from the DMZ going to the inside.</p>
+
+<h5>Using the <code>any</code> interface in the NAT statement</h5>
+
+<p>ASA 8.3 introduces the <code>any</code> interface when configuring NAT. For instance if you have a system on the DMZ that you wish to NAT not only to the outside interface, but to any interface you can use this command:</p>
+
+<pre><code><span style="color: #00F000;">object network dmz-webserver</span>
+  <span style="color: #00F000;">host 192.168.1.23</span>
+<span style="color: #00F000;">nat (dmz,any) static 200.200.200.200</span>
+</pre>
+
+
+<p></code></p>
+
+<p>This makes it so users on the inside can web to 200.200.200.200 and if traffic is routed to the firewall it will NAT it to the real IP in the DMZ.</p>
+
+<h5>Port forwarding using Auto NAT</h5>
+
+<p>Suppose you have 2 web servers in your DMZ but you only have 1 IP address. You can configure port forwarding using the auto NAT feature in the following way:</p>
+
+<pre><code><span style="color: #00F000;">object network dmz-webserver1</span>
+  <span style="color: #00F000;">host 192.168.1.25</span>
+<span style="color: #00F000;">nat (dmz,outside) static interface service tcp 8000 www</span>
+<span style="color: #00F000;">object network dmz-webserver2</span>
+  <span style="color: #00F000;">host 192.168.1.23</span>
+<span style="color: #00F000;">nat (dmz,outside) static interface service tcp 8080 www</span>
+</pre>
+
+
+<p></code></p>
+
+<p>This will make it so if you go to the IP address of the outside interface over port 8000 it will take you to 192.168.1.25 port 80 but if you go there using port 8080 it will take you to 192.168.1.23 port 80.</p>
+
+<p>Confused yet? I hope not because its about to get weird</p>
+
+<h3>Manual NAT or Twice NAT or Policy NAT or Reverse NAT</h3>
+
+<p>The limitation that Auto NAT has is that it cannot take the destination into consideration when conducting its NAT. This also of course results in it not being able to alter the destination address either. To accomplish either of these tasks you must use manual NAT.</p>
+
+<p>All of these terms are <strong>identical</strong>: Manual NAT, Twice NAT, Policy NAT, Reverse NAT. Dont be confused by fancy mumbo jumbo.</p>
+
+<h5>Policy NAT Exemption aka NAT Zero aka No NAT</h5>
+
+<p>In ASA 8.3 code this is known as Policy NAT exemption. This is commonly used to not NAT traffic over a VPN tunnel.</p>
+
+<pre><code><span style="color: #00F000;">object network inside-net</span>
+  <span style="color: #00F000;">subnet 10.0.0.0 255.255.255.0</span>
+<span style="color: #00F000;">object network vpn-subnets</span>
+  <span style="color: #00F000;">range 10.1.0.0 10.5.255.255</span>
+<span style="color: #00F000;">nat (inside,outside) source static inside-net inside-net destination static vpn-subnets vpn-subnets</span>
+</pre>
+
+
+<p></code></p>
+
+<h5>Policy NAT exemption for incoming remote access VPNs</h5>
+
+<p>In order for a packet to come in through a firewall from a lesser security interface to a higher security interface it must have a translation and an ACL to permit it through. If you are setting up remote access VPN then the ACL is usually bypassed since its tunneled traffic. There still needs to be a translation. This is completed by doing the following (Note the order of the interfaces in the NAT statement):</p>
+
+<pre><code><span style="color: #00F000;">object-group network OBJ-INSIDE-NETWORKS</span>
+  <span style="color: #00F000;">network-object 172.16.200.0 255.255.255.0</span>
+<span style="color: #00F000;">object network obj-172.16.101.0</span>
+  <span style="color: #00F000;">subnet 172.16.101.0 255.255.255.0</span>
+<span style="color: #00F000;">nat (OUTSIDE,INSIDE) source static obj-172.16.101.0 obj-172.16.101.0 destination static OBJ-INSIDE-NETWORKS OBJ-INSIDE-NETWORKS</span>
+</pre>
+
+
+<p></code></p>
+
+<h5>Dynamic Policy NAT</h5>
+
+<p>This is when you want to specify an ACL for your NAT traffic to match on and if it matches that ACL then NAT it to something</p>
+
+<p>Suppose you are trying to build a VPN tunnel to another site. The problem is that your private IP addresses are overlapping with their private IP addresses so they tell you that you MUST come from 172.27.27.27. If this was a static one to one translation it wouldnt be so hard but in this case we have many users all needing to use that IP address.</p>
+
+<p>In the pre 8.3 configuration your code would look something like this:</p>
+
+<pre><code><span style="color: #993300;">access-list ACL-VENDOR-VPN-NAT extended permit ip 192.168.1.0 255.255.255.0 host 172.16.75.5</span>
+<span style="color: #993300;">nat (inside) 3 access-list ACL-VENDOR-VPN-NAT</span>
+<span style="color: #993300;">global (outside) 3 172.27.27.27</span>
+</pre>
+
+
+<p></code></p>
+
+<p>In the new ASA 8.3 config the code looks like this:</p>
+
+<pre><code><span style="color: #00F000;">object network inside-net</span>
+  <span style="color: #00F000;">subnet 192.168.1.0 255.255.255.0</span>
+<span style="color: #00F000;">object network vendor-vpn-nat</span>
+  <span style="color: #00F000;">host 172.16.75.5</span>
+<span style="color: #00F000;">object network translated-ip</span>
+  <span style="color: #00F000;">host 172.27.27.27</span>
+<span style="color: #00F000;">nat (inside,outside) source dynamic inside-net translated-ip destination static vendor-vpn-nat vendor-vpn-nat</span>
+</pre>
+
+
+<p></code></p>
+
+<h3>Miscellaneous Notes</h3>
+
+<h5>Use real IPs in access-lists</h5>
+
+<p>In ASA version 8.3 you must specify the real IP and not the translate IP. For instance to permit your traffic  to the webserver through the outside ACL you must put:</p>
+
+<p>access-list ACL-OUTSIDE-IN extended permit tcp any host 192.168.1.25 eq 80</p>
+
+<p>This is a major change from pre 8.3 which would specify the public or NATd IP address.</p>
+
+<h3>Show commands</h3>
+
+<p>To view this configuration you must check two places to see what is being NATd.</p>
+
+<p><code>show run object</code></p>
+
+<p><code>show run nat</code></p>
+
+<p>The command show run object in-line is sometimes useful to when using the pipe commands.</p>
+
+<p>You can also see the order of NAT and number of NAT translation hit counts with:</p>
+
+<p><code>show nat</code></p>
+
+<h3>Optional Destination keyword in manual NAT</h3>
+
+<p>The destination keyword and addresses in the manual NAT command is optional.  This means that both of these configurations do the same work:</p>
+
+<pre><code><span style="color: #00F000;">object network inside-net</span>
+<span style="color: #00F000;">subnet 10.0.0.0 255.255.255.0</span>
+<span style="color: #00F000;">nat (inside,outside) dynamic interface</span>
+<span style="color: #00F000;">!</span>
+<span style="color: #00F000;">object network inside-net</span>
+<span style="color: #00F000;">subnet 10.0.0.0 255.255.255.0</span>
+<span style="color: #00F000;">nat (inside,outside) source dynamic inside-net interface</span>
+</pre>
+
+
+<p></code></p>
+
+<h3>NAT order and after-auto NATing</h3>
+
+<p>The order of operation in NAT commands is documented here:</p>
+
+<p><a href="http://www.cisco.com/en/US/partner/docs/security/asa/asa83/configuration/guide/nat_overview.html#wp1118157"><a href="http://www.cisco.com/en/US/partner/docs/security/asa/asa83/configuration/guide/nat_overview.html#wp1118157">http://www.cisco.com/en/US/partner/docs/security/asa/asa83/configuration/guide/nat_overview.html#wp1118157</a></a></p>
+
+<p>The NAT operation will only take place once. Once there is a match on a NAT it will stop looking down the line to see whether it needs to NAT this traffic or not. The order of operation for this is like so:</p>
+
+<ol>
+    <li>Twice NAT statements</li>
+    <li>Auto NAT statements</li>
+    <li>After-Auto NAT statements</li>
+</ol>
+
+
+<p>Let&rsquo;s say you have a Manual or Twice NAT that you want to be considered AFTER all of the auto NATs. You can specify this by adding the after-auto keyword which would look something like this:</p>
+
+<p><span style="color: #00F000;"><code>nat (inside,outside) after-auto source dynamic any</code></span></p>
+
+<h3>Using Descriptions</h3>
+
+<p>The description keyword can be added to the end of a manual NAT statement to keep things more organized like so:</p>
+
+<pre><code><span style="color: #00F000;">nat (OUTSIDE,INSIDE) source static obj-172.16.101.0 obj-172.16.101.0 destination static OBJ-INSIDE-NETWORKS OBJ-INSIDE-NETWORKS description ANYCON-NONAT</span>
+</pre>
+
+
+<p></code></p>
+
+<h3>Inactive NAT statements</h3>
+
+<p>You may deactivate a manual NAT statement by adding the inactive keyword at the end of the statement like so:</p>
+
+<pre><code><span style="color: #00F000;">nat (OUTSIDE,INSIDE) source static obj-172.16.101.0 obj-172.16.101.0 destination static OBJ-INSIDE-NETWORKS OBJ-INSIDE-NETWORKS inactive</span>
+</pre>
+
+
+<p></code></p>
+
+<h3>Cisco Documentation on NAT for 8.3</h3>
+
+<p>CLI NAT configuration guide for ASA 8.3
+<a href="http://www.cisco.com/en/US/partner/docs/security/asa/asa83/configuration/guide/nat_overview.html"><a href="http://www.cisco.com/en/US/partner/docs/security/asa/asa83/configuration/guide/nat_overview.html">http://www.cisco.com/en/US/partner/docs/security/asa/asa83/configuration/guide/nat_overview.html</a></a></p>
+
+<p>Upgrading to ASA 8.3  What you need to know
+<a href="https://supportforums.cisco.com/docs/DOC-12690"><a href="https://supportforums.cisco.com/docs/DOC-12690">https://supportforums.cisco.com/docs/DOC-12690</a></a></p>
+
+<p>Video examples and tutorial
+<a href="https://supportforums.cisco.com/docs/DOC-12324"><a href="https://supportforums.cisco.com/docs/DOC-12324">https://supportforums.cisco.com/docs/DOC-12324</a></a></p>
+
+<p><span id="307d6c73_b603_4925_99da_e8f83599f5eb"><object id="embedded_playerb198756c208b6" width="520" height="328" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="codebase" value="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,30,0" /><param name="pluginspage" value="http://www.macromedia.com/go/getflashplayer" /><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="wmode" value="transparent" /><param name="quality" value="high" /><param name="base" value="http://videosvc.jivesoftware.com" /><param name="flashvars" value="v=0&amp;l=[{video_id:'b198756c208b6',logo_file:'https://supportforums.cisco.com/servlet/JiveServlet/downloadImage/6472/cisco_logo.png'}]" /><param name="src" value="http://videosvc.jivesoftware.com/plugins/player.swf?p=document&amp;auth_token=f9452220e1f763ff8e22c12e7b2c58919415c30b8951481284b76921d6012549" /><embed id="embedded_playerb198756c208b6" width="520" height="328" type="application/x-shockwave-flash" src="http://videosvc.jivesoftware.com/plugins/player.swf?p=document&amp;auth_token=f9452220e1f763ff8e22c12e7b2c58919415c30b8951481284b76921d6012549" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,30,0" pluginspage="http://www.macromedia.com/go/getflashplayer" allowfullscreen="true" allowscriptaccess="always" wmode="transparent" quality="high" base="http://videosvc.jivesoftware.com" flashvars="v=0&amp;l=[{video_id:'b198756c208b6',logo_file:'https://supportforums.cisco.com/servlet/JiveServlet/downloadImage/6472/cisco_logo.png'}]" /></object></span></p>
+
+<p>ASA Pre-8.3 to 8.3 NAT configuration examples
+<a href="https://supportforums.cisco.com/docs/DOC-9129"><a href="https://supportforums.cisco.com/docs/DOC-9129">https://supportforums.cisco.com/docs/DOC-9129</a></a></p>
+
+<p>ASA NAT migration problems when upgrading to 8.3 ; Syslog &ldquo;%ASA-5-305013: Asymmetric NAT rules matched for forward and reverse flows&rdquo;
+<a href="https://supportforums.cisco.com/docs/DOC-12569"><a href="https://supportforums.cisco.com/docs/DOC-12569">https://supportforums.cisco.com/docs/DOC-12569</a></a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-24T00:00:00-07:00" pubdate data-updated="true">Jun 24<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/8-dot-3/'>8.3</a>, <a class='category' href='/tup/tag/asa/'>asa</a>, <a class='category' href='/tup/tag/cisco/'>cisco</a>, <a class='category' href='/tup/tag/featured/'>featured</a>, <a class='category' href='/tup/tag/nat/'>nat</a>, <a class='category' href='/tup/tag/scripts/'>scripts</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tunnelsup.github.io/nat-for-cisco-asas-version-8-3/" data-via="tunnelsup" data-counturl="http://tunnelsup.github.io/nat-for-cisco-asas-version-8-3/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tunnelsup.github.io/nat-for-cisco-asas-version-8-3/';
+        var disqus_url = 'http://tunnelsup.github.io/nat-for-cisco-asas-version-8-3/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>

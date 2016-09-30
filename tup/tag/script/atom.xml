@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: script | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/script/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Site to Site VPN configuration script between PIX and ASA]]></title>
+    <link href="http://tunnelsup.github.io/site-to-site-vpn-configuration-script-between-pix-and-asa/"/>
+    <updated>2010-05-23T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/site-to-site-vpn-configuration-script-between-pix-and-asa</id>
+    <content type="html"><![CDATA[<p>This script can be used to get you started on a site to site vpn using the older Cisco PIX code.</p>
+
+<h3>PIX running 6.3</h3>
+
+<p>```
+! ^^^^ Set ISAKMP (phase 1) parameters ^^^^^ !
+isakmp enable outside
+isakmp key sekretk3y address 22.22.22.22 netmask 255.255.255.255
+isakmp policy 5 authentication pre-share
+isakmp policy 5 encryption aes
+isakmp policy 5 hash sha
+isakmp policy 5 group 2
+isakmp policy 5 lifetime 86400</p>
+
+<p>!^^^^ take care of interesting traffic ^^^^!
+access-list ACL-VPN line 1 permit ip 192.168.100.0 255.255.255.0 192.168.200.0 255.255.255.0
+nat (inside) 0 access-list ACL-VPN</p>
+
+<p>!^^^^ Set IPSEC (Phase 2) parameters ^^^^!
+crypto ipsec transform-set AES128-SHA esp-aes esp-sha-hmac crypto map MAP-VPN 10 ipsec-isakmp</p>
+
+<p>crypto map MAP-VPN 10 match address ACL-VPN
+crypto map MAP-VPN 10 set peer 22.22.22.22
+crypto map MAP-VPN 10 set transform-set AES128-SHA
+crypto map MAP-VPN interface outside
+```</p>
+
+<h3>ASA Configuration running (7.2 &ndash; 8.2.5 code)</h3>
+
+<p>```
+!^^^^^^^ ISAKMP (Phase 1) ^^^^^^^!
+crypto isakmp policy 15
+  authentication pre-share
+  encryption aes
+  hash sha
+  group 2
+  lifetime 86400
+crypto isakmp enable OUTSIDE tunnel-group 11.11.11.11 type ipsec-l2l
+tunnel-group 11.11.11.11 ipsec-attributes
+  pre-shared-key sekretk3y</p>
+
+<p>!^^^^^^^ IPSEC (Phase 2) ^^^^^^^!
+access-list ACL-BLUE-VPN permit ip 192.168.200.0 255.255.255.0 192.168.100.0 255.255.255.0
+crypto ipsec transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+crypto map MAP-VPN 10 match address ACL-BLUE-VPN
+crypto map MAP-VPN 10 set peer 11.11.11.11
+crypto map MAP-VPN 10 set transform-set ESP-AES128-SHA
+crypto map MAP-VPN 10 set security-association lifetime kilobytes 10000
+crypto map MAP-VPN interface OUTSIDE</p>
+
+<p>!^^^^^^^ Routes and No-NATS ^^^^^^^!
+route OUTSIDE 192.168.100.0 255.255.255.0 22.22.22.1
+access-list ACL-INSIDE-NONAT extended permit ip 192.168.200.0 255.255.255.0 192.168.100.0 255.255.255.0
+nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dynamic/DHCP VPN tunnel between two Cisco ASA's]]></title>
+    <link href="http://tunnelsup.github.io/dynamicdhcp-vpn-tunnel-between-two-asas/"/>
+    <updated>2010-05-10T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/dynamicdhcp-vpn-tunnel-between-two-asas</id>
+    <content type="html"><![CDATA[<p>This script will create a vpn tunnel between one Cisco ASA that has a statically assigned IP and one Cisco ASA that has DHCP assigned IP which will change.</p>
+
+<p>The caveat here is that the LAN with the DHCP side ASA needs to be the one that initiates the tunnel by sending interesting traffic. The Static side will not know which IP to peer with and therefor cannot bring this tunnel up, however, once the tunnel is up the static side can go across the tunnel because the peer is established.</p>
+
+<h3>ASA WITH STATIC IP</h3>
+
+<p>```
+! Create isakmp policy to negotiate on
+crypto isakmp policy 5
+  authentication pre-share
+  encryption aes
+  hash sha
+  group 2
+  lifetime 86400
+crypto isakmp enable OUTSIDE</p>
+
+<p>! The dynamic map tunnel group is DefaultL2LGroup. The pre-shared key needs to be defined within this tunnel group
+tunnel-group DefaultL2LGroup ipsec-attributes
+  pre-shared-key sekretk3y</p>
+
+<p>crypto ipsec transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+! Create  a dynamic-map
+crypto dynamic-map MAP-DYN 20 set transform-set ESP-AES128-SHA
+! Assign dynamic-map to crypto map
+crypto map MAP-VPN 55 ipsec-isakmp dynamic MAP-DYN
+crypto map MAP-VPN interface OUTSIDE</p>
+
+<p>! create no-nat statements
+access-list ACL-INSIDE-NONAT extended permit ip 192.168.100.0 255.255.255.0 192.168.200.0 255.255.255.0
+nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
+```</p>
+
+<h3>ASA WITH DYNAMIC/DHCP IP ADDRESS</h3>
+
+<p>Note: This config is exactly the same as a normal site to site VPN</p>
+
+<p>```
+!^^^^^^^ ISAKMP (Phase 1) ^^^^^^^!
+crypto isakmp policy 15
+ authentication pre-share
+ encryption aes
+ hash sha
+ group 2
+ lifetime 86400
+crypto isakmp enable OUTSIDE
+tunnel-group 11.11.11.11 type ipsec-l2l
+tunnel-group 11.11.11.11 ipsec-attributes
+ pre-shared-key sekretk3y</p>
+
+<p>!^^^^^^^ IPSEC (Phase 2) ^^^^^^^!
+access-list ACL-BLUE-VPN permit ip 192.168.200.0 255.255.255.0 192.168.100.0 255.255.255.0
+crypto ipsec transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+crypto map MAP-VPN 10 match address ACL-BLUE-VPN
+crypto map MAP-VPN 10 set peer 11.11.11.11
+crypto map MAP-VPN 10 set transform-set ESP-AES128-SHA
+crypto map MAP-VPN 10 set security-association lifetime kilobytes 10000
+crypto map MAP-VPN interface OUTSIDE</p>
+
+<p>!^^^^^^^ Routes and No-NATS ^^^^^^^!
+route OUTSIDE 192.168.100.0 255.255.255.0 22.22.22.1
+access-list ACL-INSIDE-NONAT extended permit ip 192.168.200.0 255.255.255.0 192.168.100.0 255.255.255.0
+nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WebVPN or SSL VPN on an ASA]]></title>
+    <link href="http://tunnelsup.github.io/webvpn-or-ssl-vpn-on-an-asa/"/>
+    <updated>2010-05-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/webvpn-or-ssl-vpn-on-an-asa</id>
+    <content type="html"><![CDATA[<p><img src="/images/webvpn.jpg" alt="WebVPN diagram - IMG" /></p>
+
+<p>WebVPN (or often called SSL VPN) (or sometimes called clientless VPN) is used when someone needs to access a web based application that is on the private network. A web browser is used for all the encryption and authentication.</p>
+
+<p>After applying the config below the web user should be able to point their browser to <a href="https://11.11.11.11">https://11.11.11.11</a> to access the device at 192.168.11.2.</p>
+
+<h3>BLUE ASA</h3>
+
+<p>First make sure to have a SSL certificate on the ASA. This is needed because the ASA is acting as a web proxy and requires an SSL cert to be there to create the connection to the client.</p>
+
+<p><code>
+! Generate a self signed certificate
+crypto ca trustpoint SELF-SIGNED-CERTIFICATE
+proxy-ldc-issuer
+id-usage ssl-ipsec
+no fqdn
+subject-name CN=firewall-name
+enrollment self
+crypto ca enroll SELF-SIGNED-CERTIFICATE noconfirm
+</code></p>
+
+<p>Configure the WebVPN</p>
+
+<p><code>
+webvpn
+  enable Outside
+  ssl trust-point SELF-SIGNED-CERTIFICATE Outside
+group-policy POL-SP-WEBVPN internal
+group-policy POL-SP-WEBVPN attributes
+  vpn-tunnel-protocol webvpn
+  webvpn
+   url-list none
+tunnel-group WEBVPN-SHAREPOINT type remote-access
+tunnel-group WEBVPN-SHAREPOINT general-attributes
+  default-group-policy POL-SP-WEBVPN
+</code>
+Once the Group Policy and Tunnel Group are created go into ASDM to control the look and control what websites the user can access.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Site to site VPN between two ASAs]]></title>
+    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-using-two-asas/"/>
+    <updated>2010-05-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-using-two-asas</id>
+    <content type="html"><![CDATA[<p><img src="/images/asasitetosite.jpg" alt="ASA site to site diagram - IMG" /></p>
+
+<p>The classic site to site VPN tunnel between two ASAs. This configuration script is for ASA versions 8.2.5 and below. The new version has next gen encryption and has different keywords.</p>
+
+<p>After applying the config below the device at 192.168.11.2 should be able to access 172.16.22.2 and vice versa.</p>
+
+<h3>BLUE ASA</h3>
+
+<p>```
+!^^^^^^^ ISAKMP (Phase 1) ^^^^^^^!
+! must match with the other side in order for Phase 1 to complete.
+! Lower policy numbers will likely be used before higher ones.
+crypto isakmp policy 5
+  authentication pre-share
+  encryption aes
+  hash sha
+  group 2
+  lifetime 86400</p>
+
+<p>! Enable ISAKMP on the outside interface crypto isakmp enable OUTSIDE
+! Define the pre-shared-key
+tunnel-group 22.22.22.22 type ipsec-l2l
+tunnel-group 22.22.22.22 ipsec-attributes
+  pre-shared-key sekretk3y</p>
+
+<p>!^^^^^^^ IPSEC (Phase 2) ^^^^^^^!
+! Define the interesting traffic in the ACL
+access-list ACL-RED-VPN permit ip 192.168.11.0 255.255.255.0 172.16.22.0 255.255.255.0
+crypto ipsec transform-set ESP-AES128-SHA esp-aes esp-sha-hmac</p>
+
+<p>! Create a crypto map entry that defines the tunnel
+crypto map MAP-OUTSIDE 20 set peer 22.22.22.22</p>
+
+<p>! ACL must be exactly the opposite of the other sides ACL
+crypto map MAP-OUTSIDE 20 match address ACL-RED-VPN</p>
+
+<p>! Transform set must match other side identically
+crypto map MAP-OUTSIDE 20 set transform-set ESP-AES128-SHA
+crypto map MAP-OUTSIDE 20 set security-association lifetime kilobytes 10000</p>
+
+<p>! Apply crypto map to an interface
+crypto map MAP-OUTSIDE interface OUTSIDE</p>
+
+<p>!^^^^^^^ Routes and No-NATS ^^^^^^^!
+! Point the destination network out the outside interface with a next hop as the default gateway.
+route OUTSIDE 172.16.22.0 255.255.255.0 11.11.11.1</p>
+
+<p>! Make sure that the VPN traffic is NOT NAT&rsquo;d
+access-list ACL-INSIDE-NONAT extended permit ip 192.168.11.0 255.255.255.0 172.16.22.0 255.255.255.0
+nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
+```</p>
+
+<h3>RED ASA</h3>
+
+<p><code>
+!^^^^^^^ ISAKMP (Phase 1) ^^^^^^^!
+crypto isakmp policy 15
+  authentication pre-share
+  encryption aes
+  hash sha
+  group 2
+  lifetime 86400
+crypto isakmp enable OUTSIDE
+tunnel-group 11.11.11.11 type ipsec-l2l
+tunnel-group 11.11.11.11 ipsec-attributes
+  pre-shared-key sekretk3y
+!^^^^^^^ IPSEC (Phase 2) ^^^^^^^!
+access-list ACL-BLUE-VPN permit ip 172.16.22.0 255.255.255.0 192.168.11.0 255.255.255.0
+crypto ipsec transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+crypto map MAP-VPN 10 match address ACL-BLUE-VPN
+crypto map MAP-VPN 10 set peer 11.11.11.11
+crypto map MAP-VPN 10 set transform-set ESP-AES128-SHA
+crypto map MAP-VPN 10 set security-association lifetime kilobytes 10000
+crypto map MAP-VPN interface OUTSIDE
+!^^^^^^^ Routes and No-NATS ^^^^^^^!
+route OUTSIDE 192.168.11.0 255.255.255.0 22.22.22.1
+access-list ACL-INSIDE-NONAT extended permit ip 1172.16.22.0 255.255.255.0 192.168.11.0 255.255.255.0
+nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Site to site VPN tunnel between ASA and Router]]></title>
+    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-asa-and-cisco-router/"/>
+    <updated>2010-05-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-asa-and-cisco-router</id>
+    <content type="html"><![CDATA[<p><img src="/images/asa-isr.jpg" alt="ASR ISR network diagram- IMG" /></p>
+
+<p>Using the above network diagram, the scripts below can be applied to both ASA&rsquo;s to build a site to site VPN tunnel. The firewall on the left is a Cisco ASA and device on the right is a Cisco Router. The router needs to have an IOS that supports VPN&rsquo;s. You can test this by typing &lsquo;crypto ?&rsquo; and see if it has the commands available to make the tunnel. Usually a router with a K9 image on it is good enough. If not then it&rsquo;ll require the security image to have IPSec capabilities.</p>
+
+<p>After applying the config below the device at 192.168.11.2 should be able to access 172.16.22.2 and vice versa.</p>
+
+<h3>BLUE ASA</h3>
+
+<p><code>
+!^^^^^^^ ISAKMP (Phase 1) ^^^^^^^!
+! The policy number is arbitrary. The parameters inside the policy
+! must match with the other side in order for Phase 1 to complete.
+! Lower policy numbers will likely be used before higher ones.
+crypto isakmp policy 5
+  authentication pre-share
+  encryption aes
+  hash sha
+  group 2
+  lifetime 86400
+! Enable ISAKMP on the outside interface
+crypto isakmp enable OUTSIDE
+! Define the pre-shared-key
+tunnel-group 22.22.22.22 type ipsec-l2l
+tunnel-group 22.22.22.22 ipsec-attributes
+  pre-shared-key sekretk3y
+!^^^^^^^ IPSEC (Phase 2) ^^^^^^^!
+! Define the interesting traffic in the ACL
+access-list ACL-RED-VPN permit ip 192.168.11.0 255.255.255.0 172.16.22.0 255.255.255.0
+crypto ipsec transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+! Create a crypto map entry that defines the tunnel
+crypto map MAP-OUTSIDE 20 set peer 22.22.22.22
+! ACL must be exactly the opposite of the other sides ACL
+crypto map MAP-OUTSIDE 20 match address ACL-RED-VPN
+! Transform set must match other side identically
+crypto map MAP-OUTSIDE 20 set transform-set ESP-AES128-SHA
+crypto map MAP-OUTSIDE 20 set security-association lifetime kilobytes 10000
+! Apply crypto map to an interface
+crypto map MAP-OUTSIDE interface OUTSIDE
+!^^^^^^^ Routes and No-NATS ^^^^^^^!
+! Point the destination network out the outside interface with a next hop as the default gateway.
+route OUTSIDE 172.16.22.0 255.255.255.0 11.11.11.1
+! Make sure that the VPN traffic is NOT NAT'd
+access-list ACL-INSIDE-NONAT extended permit ip 192.168.11.0 255.255.255.0 172.16.22.0 255.255.255.0
+nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
+</code></p>
+
+<h3>RED ROUTER WITH CRYPTO SUPPORT</h3>
+
+<p>```
+!^^^^^^^ ISAKMP (Phase 1) ^^^^^^^!
+! Note: The default isakmp settings on a router are Encr:DES Hash:SHA DH:Group 1
+! If these settings are used, they will not show under &lsquo;show run&rsquo;
+crypto isakmp policy 5
+  encr aes
+  hash sha
+  authentication pre-share
+  group 2
+crypto isakmp key sekretk3y address 11.11.11.11</p>
+
+<p>!^^^^^^^ IPSEC (Phase 2) ^^^^^^^!
+! Define the interesting traffic in the ACL
+ip access-list extended ACL-VPN
+  permit ip 172.16.22.0 0.0.0.255 192.168.11.0 0.0.0.255
+crypto ipsec transform-set AES-SHA esp-aes esp-sha-hmac
+crypto map VPN-TUNNEL 1 ipsec-isakmp
+  set peer 11.11.11.11
+  set transform-set AES-SHA
+  match address ACL-VPN</p>
+
+<p>interface Fa0/0
+  crypto map VPN-TUNNEL
+  ip nat outside</p>
+
+<p>interface Vlan2
+  ip nat inside</p>
+
+<p>!^^^^^^^ Routes and No-NATS ^^^^^^^!
+! Point the destination network out the outside interface with a next hop as the default gateway.
+ip route 192.168.11.0 255.255.255.0 22.22.22.1</p>
+
+<p>! Make sure that the VPN traffic is NOT NAT&rsquo;d
+ip access-list extended ACL-NAT
+  deny   ip 172.16.22.0 0.0.0.255 192.168.11.0 0.0.0.255
+  permit ip any any
+ip nat inside source list ACL-NAT interface Fa0/0 overload</p>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+</feed>

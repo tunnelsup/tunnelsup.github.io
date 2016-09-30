@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: tips | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/tips/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Understanding Cisco ASA interface counters and statistics]]></title>
+    <link href="http://tunnelsup.github.io/understanding-cisco-asa-interface-counters-and-statistics/"/>
+    <updated>2013-07-29T13:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/understanding-cisco-asa-interface-counters-and-statistics</id>
+    <content type="html"><![CDATA[<p>Upon doing a show interface command a lot of valuable information is displayed regarding the packets and errors on that interface.</p>
+
+<p>```
+USS-ASA/pri/act# sh int GigabitEthernet0/1
+Interface GigabitEthernet0/1 &ldquo;inside&rdquo;, is up, line protocol is up
+  Hardware is i82546GB rev03, BW 1000 Mbps, DLY 10 usec</p>
+
+<pre><code>    Full-Duplex(Full-duplex), 100 Mbps(100 Mbps)
+    Input flow control is unsupported, output flow control is off
+    MAC address 442b.442b.442b, MTU 1500
+    IP address 172.16.250.26, subnet mask 255.255.255.240
+    16433456 packets input, 2581392514 bytes, 0 no buffer
+    Received 111 broadcasts, 0 runts, 0 giants
+    0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+    0 pause input, 0 resume input
+    0 L2 decode drops
+    24943232 packets output, 28662026144 bytes, 430 underruns
+    0 pause output, 0 resume output
+    0 output errors, 0 collisions, 0 interface resets
+    0 late collisions, 0 deferred
+    0 input reset drops, 0 output reset drops, 0 tx hangs
+    input queue (blocks free curr/low): hardware (255/230)
+    output queue (blocks free curr/low): hardware (254/0)
+</code></pre>
+
+<p>  Traffic Statistics for &ldquo;inside&rdquo;:</p>
+
+<pre><code>    16433456 packets input, 2214576498 bytes
+    24943662 packets output, 28202920165 bytes
+    28768 packets dropped
+  1 minute input rate 178 pkts/sec,  18825 bytes/sec
+  1 minute output rate 267 pkts/sec,  306674 bytes/sec
+  1 minute drop rate, 0 pkts/sec
+  5 minute input rate 255 pkts/sec,  16417 bytes/sec
+  5 minute output rate 422 pkts/sec,  548955 bytes/sec
+  5 minute drop rate, 0 pkts/sec
+</code></pre>
+
+<p>```</p>
+
+<p>Let&rsquo;s break this down line by line.</p>
+
+<h2>General Interface Details</h2>
+
+<p><code>Interface GigabitEthernet0/1 "inside", is up, line protocol is up</code><br>
+Interface number, name, status. The &ldquo;is up&rdquo; status can be up or administratively down. The like protocol status is either up (indicating there is a working cable plugged into the interface) or down (indicating the cable is either unplugged or incorrect).</p>
+
+<p><code>Hardware is i82546GB rev03, BW 1000 Mbps, DLY 10 usec</code><br>
+Hardware is the chip type used in the interface. The valid options here are:<br></p>
+
+<ul>
+<li>i82542 &ndash; Intel PCI Fiber Gigabit card used on PIX platforms</li>
+<li>i82543 &ndash; Intel PCI-X Fiber Gigabit card used on PIX platforms</li>
+<li>i82546GB &ndash; Intel PCI-X Copper Gigabit used on ASA platforms</li>
+<li>i82547GI &ndash; Intel CSA Copper Gigabit used as backplane on ASA platforms</li>
+<li>i82557 &ndash; Intel PCI Copper Fast Ethernet used on ASA platforms</li>
+<li>i82559 &ndash; Intel PCI Copper Fast Ethernet used on PIX platforms</li>
+<li>VCS7380 &ndash; Vitesse Four Port Gigabit Switch used in SSM-4GE</li>
+</ul>
+
+
+<p>Displayed on this line is also the maximum bandwidth and delay that can be on this interface.</p>
+
+<p><code>Full-Duplex(Full-duplex), 100 Mbps(100 Mbps)</code><br>
+Duplex and speed settings. If the line is down, the configured values are displayed. If the line is up the negotiated or actual values will be in parenthesis.</p>
+
+<p><code>Input flow control is unsupported, output flow control is off</code><br>
+Optional message. Some examples are:<br>
+If you do not configure a name, you see the following message: Available but not configured via nameif<br>
+If an interface is a member of a redundant interface, you see the following message: Active member of Redundant5<br>
+On a multi context firewall, in the system context you might see the following message: Available for allocation to a context<br></p>
+
+<p><code>MAC address 442b.442b.442b, MTU 1500</code><br>
+This is the interfaces MAC address and configured MTU. If the interface name is not set the MTU will display &ldquo;MTU not set&rdquo;.</p>
+
+<p><code>IP address 172.16.16.16, subnet mask 255.255.255.240</code><br>
+This is the interfaces IP address and subnet mask.</p>
+
+<h2>Input Statistics</h2>
+
+<p><code>16433456 packets input, 2581392514 bytes, 0 no buffer</code><br>
+The number of packets and bytes received on this interface. The &ldquo;no buffer&rdquo; indicates the number of failures from block allocations.</p>
+
+<p><code>Received 111 broadcasts, 0 runts, 0 giants</code><br>
+The number of broadcast packets received.<br>
+<strong>Runts</strong> are the number of packets that are discarded because they are smaller than the minimum packet size, which is 64 bytes. Runts are usually caused by collisions. They might also be caused by poor wiring and electrical interference. <br>
+<strong>Giants</strong> are the number of packets that are discarded because they exceed the maximum packet size. For example, any Ethernet packet that is greater than 1518 bytes is considered a giant.</p>
+
+<p><code>0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort</code><br>
+<strong>Input errors</strong> are the number of total input errors, including the types listed below. Other input-related errors can also cause the input error count to increase, and some datagrams might have more than one error; therefore, this sum might exceed the number of errors listed for the types below. <br>
+<strong>CRC errors</strong> are the number of Cyclical Redundancy Check errors. When a station sends a frame, it appends a CRC to the end of the frame. This CRC is generated from an algorithm based on the data in the frame. If the frame is altered between the source and destination, the ASA notes that the CRC does not match. A high number of CRCs is usually the result of collisions or a station transmitting bad data.<br>
+<strong>Frame errors</strong> are bad frames that have packets with an incorrect length or bad frame checksums. This error is usually the result of collisions or a malfunctioning Ethernet device.<br>
+<strong>Overrun errors</strong> are the number of times that the ASA was incapable of handing received data to a hardware buffer because the input rate exceeded the ASA capability to handle the data. <br>
+<strong>Ignored errors</strong> are not used. The value is always 0.<br>
+<strong>Abort errors</strong> are not used. The value is always 0.<br></p>
+
+<p><code>0 pause input, 0 resume input</code><br>
+<strong>Pause input</strong> packets are unknown.<br>
+<strong>Resume input</strong> packets are unknown.</p>
+
+<p><code>0 L2 decode drops</code><br>
+<strong>L2 decode drop</strong> packets are the number of packets dropped because the name is not configured (nameif command) or a frame with an invalid VLAN id is received.</p>
+
+<h2>Output Statistics</h2>
+
+<p><code>24943232 packets output, 28662026144 bytes, 430 underruns</code><br>
+Number of packets and bytes output from this interface.<br>
+<strong>Undderrun errors</strong> are the number of times that the transmitter ran faster than the ASA could handle. <br></p>
+
+<p><code>0 pause output, 0 resume output</code><br>
+<strong>Pause output</strong> packets are unknown.<br>
+<strong>Resume output</strong> packets are unknown.</p>
+
+<p><code>0 output errors, 0 collisions, 0 interface resets</code><br>
+<strong>Output errors</strong> are the number of frames not transmitted because the configured maximum number of collisions was exceeded. This counter should only increment during heavy network traffic. <br>
+<strong>Collisions</strong> are the number of messages retransmitted due to an Ethernet collision (single and multiple collisions). This usually occurs on an overextended LAN (Ethernet or transceiver cable too long, more than two repeaters between stations, or too many cascaded multiport transceivers). A packet that collides is counted only once by the output packets. <br>
+<strong>Interface resets</strong> are the number of times an interface has been reset. If an interface is unable to transmit for three seconds, the ASA resets the interface to restart transmission. During this interval, connection state is maintained. An interface reset can also happen when an interface is looped back or shut down<br></p>
+
+<p><code>0 late collisions, 0 deferred</code><br>
+<strong>Late collisions</strong> is when the number of frames that were not transmitted because a collision occurred outside the normal collision window. A late collision is a collision that is detected late in the transmission of the packet. Normally, these should never happen. When two Ethernet hosts try to talk at once, they should collide early in the packet and both back off, or the second host should see that the first one is talking and wait. If you get a late collision, a device is jumping in and trying to send the packet on the Ethernet while the ASA is partly finished sending the packet. The ASA does not resend the packet, because it may have freed the buffers that held the first part of the packet. This is not a real problem because networking protocols are designed to cope with collisions by resending packets. However, late collisions indicate a problem exists in your network. Common problems are large repeated networks and Ethernet networks running beyond the specification. <br>
+<strong>Deferred</strong> packets are the number of frames that were deferred before transmission due to activity on the link.<br></p>
+
+<p><code>0 input reset drops, 0 output reset drops, 0 tx hangs</code><br>
+<strong>Input reset drops</strong> are the number of packets dropped in the RX ring when a reset occurs. <br>
+<strong>Output reset drops</strong> are the number of packets dropped in the TX ring when a reset occurs. <br>
+<strong>TX hangs</strong> is unknown.<br></p>
+
+<p><code>input queue (blocks free curr/low): hardware (255/230)</code><br>
+The number of packets in the input queue. Values in the parenthesis are: blocks free currently / the lowest number of blocks free.</p>
+
+<p><code>output queue (blocks free curr/low): hardware (254/0)</code><br>
+The number of packets in the output queue. Values in the parenthesis are: blocks free currently / the lowest number of blocks free.</p>
+
+<h2>Additional Interface Statistics</h2>
+
+<p><code>Traffic Statistics for "inside":</code><br>
+<code>16433456 packets input, 2214576498 bytes</code><br>
+The number of packets and bytes received.</p>
+
+<p><code>24943662 packets output, 28202920165 bytes</code><br>
+The number of packets and bytes sent.</p>
+
+<p><code>28768 packets dropped</code><br>
+The number of packets dropped. Typically this counter increments for packets dropped on the accelerated security path (ASP), for example, if a packet is dropped due to an access list deny.
+See the &lsquo;show asp drop&rsquo; command for reasons for potential drops on an interface.</p>
+
+<p><code>1 minute input rate 178 pkts/sec,  18825 bytes/sec</code><br>
+<code>1 minute output rate 267 pkts/sec,  306674 bytes/sec</code><br>
+<code>1 minute drop rate, 0 pkts/sec</code><br>
+<code>5 minute input rate 255 pkts/sec,  16417 bytes/sec</code><br>
+<code>5 minute output rate 422 pkts/sec,  548955 bytes/sec</code><br>
+<code>5 minute drop rate, 0 pkts/sec</code><br>
+Various interface bandwidth statistics.</p>
+
+<hr>
+
+
+<br><br><br>
+
+
+<p>Source: <a href="http://www.cisco.com/en/US/docs/security/asa/asa84/command/reference/s3.html#wp1497263">Cisco Documentation</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Locating the Cisco AnyConnect profiles]]></title>
+    <link href="http://tunnelsup.github.io/locating-the-cisco-anyconnect-profiles/"/>
+    <updated>2013-07-19T19:25:00-07:00</updated>
+    <id>http://tunnelsup.github.io/locating-the-cisco-anyconnect-profiles</id>
+    <content type="html"><![CDATA[<h2>Local AnyConnect Profiles</h2>
+
+<p>XML and profile files are stored locally to the users machine. The location varies based on OS.</p>
+
+<h4>Windows XP</h4>
+
+<p>%ALLUSERSPROFILE%\Application Data\Cisco\
+Cisco AnyConnect Secure Mobility Client\Profile</p>
+
+<h4>Windows Vista</h4>
+
+<p>%ProgramData%\Cisco\Cisco AnyConnect Secure Mobility Client\Profile</p>
+
+<h4>Windows 7</h4>
+
+<p>%ProgramData%\Cisco\Cisco AnyConnect Secure Mobility Client\Profile</p>
+
+<h4>Mac OS X</h4>
+
+<p>/opt/cisco/anyconnect/profile</p>
+
+<h4>Linux</h4>
+
+<p>/opt/cisco/anyconnect/profile</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA Licensing Quick Reference Guide]]></title>
+    <link href="http://tunnelsup.github.io/cisco-asa-licensing-quick-reference-guide/"/>
+    <updated>2013-07-01T11:26:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-asa-licensing-quick-reference-guide</id>
+    <content type="html"><![CDATA[<p>One of the most confusing things about Cisco ASA&rsquo;s is the licensing structure. While it is very nice to have a single train of OS files to deal with, it is incredibly hard to keep track of all of the licensing details regarding the ASA. Here is a handy guide that may help you wade through the piles of documentation around it.</p>
+
+<h2>Quick Reference Guide</h2>
+
+<p><img src="/images/asalicensing.png" alt="ASA Licensing Guide IMG" /></p>
+
+<p>Download: <a href="/images/asalicensing.png">PNG Image</a>, <a href="/images/ASALicensingCheatSheet.pdf">PDF Document</a></p>
+
+<p>To see what licenses are installed on the ASA review the outputs of the <code>show version</code> command. The output will look something like this:</p>
+
+<p><code>
+Inside Hosts                      : Unlimited      perpetual
+Failover                          : Active/Active  perpetual
+Encryption-DES                    : Enabled        perpetual
+Encryption-3DES-AES               : Enabled        perpetual
+Security Contexts                 : 2              perpetual
+GTP/GPRS                          : Disabled       perpetual
+AnyConnect Premium Peers          : 2              perpetual
+AnyConnect Essentials             : Disabled       perpetual
+Other VPN Peers                   : 250            perpetual
+Total VPN Peers                   : 250            perpetual
+Shared License                    : Disabled       perpetual
+AnyConnect for Mobile             : Disabled       perpetual
+AnyConnect for Cisco VPN Phone    : Disabled       perpetual
+Advanced Endpoint Assessment      : Disabled       perpetual
+UC Phone Proxy Sessions           : 2              perpetual
+Total UC Proxy Sessions           : 2              perpetual
+Botnet Traffic Filter             : Disabled       perpetual
+Intercompany Media Engine         : Disabled       perpetual
+IPS Module                        : Disabled       perpetual
+Cluster                           : Disabled       perpetual
+</code>
+Now we will cover each of these items in detail.</p>
+
+<h2>VLANs</h2>
+
+<p>On the Cisco ASA 5505 you may see a line stating:<br>
+<code>VLANs                             : 3              DMZ Restricted</code>
+On the 5505 each interface is assigned a VLAN. This is stating only 3 VLANs can be created which are then eligible to be applied to an interface. The &ldquo;DMZ Restricted&rdquo; term indicates a further restriction. Two VLANs can talk to each other without issues. Suppose these are &ldquo;inside&rdquo; and &ldquo;outside&rdquo;. The 3rd VLAN we&rsquo;ll call &ldquo;DMZ&rdquo;. The DMZ interface is restricted to only be able to pass traffic to either the inside interface or outside but cannot pass traffic to both. That means it&rsquo;s &ldquo;DMZ Restricted&rdquo;. A sec plus license can be applied to remove this restriction.</p>
+
+<h2>Inside Hosts</h2>
+
+<p>This is &ldquo;Unlimited&rdquo; in all models except for the 5505. The 5505 comes with 10 hosts standard and can be upgraded to 50 or Unlimited number of hosts. This specifically means the ASA will only build connections for 10 hosts within the network at a time.</p>
+
+<h2>Failover</h2>
+
+<p>This is not to be confused with &ldquo;Clustering&rdquo;. Failover is when two firewalls (which are matching models and hardware) are paired together for redundancy. In an Active/Standby scenario, one firewall acts as the active one and accepts connections going through it. The active firewall will keep the active IP. So if the primary firewall goes down, the standby unit will kick over to active and even take over the active IP. This failover usually occurs without dropping a packet because the connection table is actually replicated between the two units.</p>
+
+<p>An Active/Active scenario is generally used for multi context firewalls. This may be used when Primary firewall is the Active firewall for Context A, and the secondary fireall is the Active firewall for Context B. If one firewall goes down, the remaining one becomes Active for both Contexts.</p>
+
+<h2>Encryption</h2>
+
+<p>Encryption-DES comes standard on all firewalls.</p>
+
+<p>Encryption-3DES-AES is a $0 cost license that enables 3DES and AES encryption methods.</p>
+
+<h2>Security Contexts</h2>
+
+<p>By default the ASA has 2 contexts that can be ran simultaneously. This is not supported in the 5505 and requires the Security Plus license for 5510 and 5512-X.</p>
+
+<p>A multi context firewall is one which runs multiple separate firewalls inside a single chassis. The admin context is used to determine which interfaces are assigned to which contexts.</p>
+
+<h2>Other VPN Peers / Total VPN Peers</h2>
+
+<p>Included with base license. It is used for site to site IPSec tunnels using IKEv1 or IKEv2. It is also used when using remote access VPN (Legacy Cisco VPN Client) using IKEv1. IPSec remote access IKEv2 requires AnyConnect Essentials or AnyConnect Premium.</p>
+
+<h2>AnyConnect</h2>
+
+<p>For more information regarding AnyConnect Premium and Essentials see my blog post <a href="http://www.tunnelsup.com/tup/2012/08/08/understanding-cisco-asa-anyconnect-licensing/">Understanding AnyConnect Licensing</a>.</p>
+
+<p>Advanced Endpoint Assessment is used to enhance the host scan. When normally a host scan can detect when a VPN user is out of compliancy and not allowed conection into the network, the Advanced Endpoint Assessment can actually suggest to the user what they&rsquo;ll need to do to fix it. Either by downloading an update or guiding them on fixing a program.</p>
+
+<p>AnyConnect for Cisco VPN Phone is used for allowing VOIP phones that have built in VPN support to VPN into the ASA and then contact the Call Manager. Only supported on CallManager 8.0+ and IP Phone firmware 9.x.</p>
+
+<h2>Botnet</h2>
+
+<p>For more information on the botnet license and capability see my blog post <a href="http://www.tunnelsup.com/tup/2013/05/08/cisco-asa-botnet-license/">Understanding Botnet Licensing</a>.</p>
+
+<h2>GTP/GPRS</h2>
+
+<p>This is used by ISPs who have 3G traffic going through their network.</p>
+
+<h2>Shared License</h2>
+
+<p>The Shared SSL VPN license is a way to have a central ASA act as an AnyConnect premium peer license server and other participant ASA&rsquo;s can ask for licenses (in blocks of 50 at a time) from the shared license server. This requires both a Server license and particpant license.</p>
+
+<h2>UC Phone Proxy</h2>
+
+<p>This is a legacy license because CallManager 8.0+ does not support this feature any longer.</p>
+
+<h2>Intercompany Media Engine</h2>
+
+<p>Allows support to offload communications from PSTN to IP-based SIP trunks through the ASA. Primarily used for business to business federation between CUCM&rsquo;s. Requires version 8.3(1)+.</p>
+
+<h2>IPS Module</h2>
+
+<p>In ASA 5500-X series firewalls the IPS module is entirely software based and requires an additional license to enable it. Once the license is enabled for the software firewall, and additional support contract (smartnet) is required to update the IPS sensor with signatures.</p>
+
+<h2>Cluster</h2>
+
+<p>This feature is new to 9.0(1). It allows multiple ASA&rsquo;s to be grouped into a single logical device. Clustering will probably never be supported on the ASA 5500 series models. It currently is only available on 5580 and 5585-X models. Future plans to support all 5500-X models.</p>
+
+<p>For further information read: <a href="http://communities.cisco.com/docs/DOC-26234">http://communities.cisco.com/docs/DOC-26234</a></p>
+
+<h2>Security Plus License</h2>
+
+<p>Refer to the image below to understand what the Security Plus license does. Note: it is only available for the 5505, 5510, 5512-X and 5585-X.</p>
+
+<p><img src="/images/asasecplus.png" alt="ASA Sec Plus IMG" /></p>
+
+<h2>Further Reading</h2>
+
+<p>For more information review Cisco documentation: <a href="http://www.cisco.com/en/US/docs/security/asa/asa91/license/license_management/license.html">http://www.cisco.com/en/US/docs/security/asa/asa91/license/license_management/license.html</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using the Windows Command line like a pro]]></title>
+    <link href="http://tunnelsup.github.io/using-the-windows-command-line-like-a-pro/"/>
+    <updated>2013-06-18T19:17:00-07:00</updated>
+    <id>http://tunnelsup.github.io/using-the-windows-command-line-like-a-pro</id>
+    <content type="html"><![CDATA[<p>In this post I will be answering such question as: What is the &lsquo;cat&rsquo; equivalent in Windows? What is the &lsquo;grep&rsquo; equivalent in Windows? Yes that&rsquo;s right, we are visiting the Windows CLI today. The old DOS shell.</p>
+
+<p>These commands all work in Windows 7 and Server 2008; most of them also work in Windows XP.</p>
+
+<h2>Using the Type+Find+Sort combo</h2>
+
+<p>The windows command <code>type</code> is similar to the <code>cat</code> command in linux. Then you can pipe it to <code>find</code> which is like <code>grep</code>. Then you can <code>sort</code> it to your liking. This command combination can be a very powerful tool for productivity.</p>
+
+<h4>To display all of the lines in hosts.txt file that contain the text &ldquo;dmz&rdquo; in any combination of upper or lower case (<code>/i</code> is to &ldquo;ignore case&rdquo;):</h4>
+
+<p>S:\network> <code>type hosts.txt | find /i "dmz"</code></p>
+
+<h4>Look at all of the lines in hosts.txt file that have &ldquo;mex&rdquo; in them, sorted on the 20th character</h4>
+
+<p>S:\network> <code>type hosts.txt | find /i "mex" | sort /+20</code></p>
+
+<h4>Get all of the lines that have the term &ldquo;mex&rdquo; in it and ignore the case.</h4>
+
+<p>S:\network> <code>type hosts.txt | find /i "mex"</code><br>
+25.25.25.251        MEXSR01            # Exchange server<br>
+192.168.1.21        MEXPS01            # Power Supply<br>
+192.168.1.22        MEXSW02            # Network Switch<br>
+25.25.25.250        MEXRT02            # Router on second floor<br></p>
+
+<h4>Gets all of the lines with &ldquo;mex&rdquo; in it, but eliminate the lines mentioning &ldquo;PS&rdquo;:</h4>
+
+<p>S:\network> <code>type hosts.txt | find /i "mex" | find /i /v "ps"</code><br>
+25.25.25.251        MEXSR01            # Exchange server<br>
+192.168.1.22        MEXSW02            # Network Switch<br>
+25.25.25.250        MEXRT02            # Router on second floor<br></p>
+
+<h4>Gets all lines with &ldquo;192.168&rdquo; and &ldquo;mex&rdquo;.</h4>
+
+<p>S:\network> <code>type hosts.txt | find /i "192.168" | find /i "mex"</code><br>
+192.168.1.21        MEXPS01            # Power Supply<br>
+192.168.1.22        MEXSW02            # Network Switch<br></p>
+
+<h4>Run through all of the text files in the current directory, and gets lines containing notconnect.</h4>
+
+<p>T:\configs> <code>type *.txt | find /i "notconnect"</code><br>
+tokyo.txt<br>
+Gi1/9        unused-july18      notconnect   1            auto   auto 10/100/1000BaseT</p>
+
+<p>moskow.txt<br>
+Gi1/9        unused-july18      notconnect   1            auto   auto 10/100/1000BaseT</p>
+
+<h2>Starting Programs</h2>
+
+<h3>Using the start command</h3>
+
+<h4>Open Windows Explorer in the current directory</h4>
+
+<p>T:\configs> <code>start .</code></p>
+
+<h4>Open Firefox to Google search page with Google Instant disabled:</h4>
+
+<p>d:\> <code>start firefox http://google.com/webhp?complete=0</code></p>
+
+<h4>To open a specific .doc file, you can just use &ldquo;start&rdquo; this way, from a command line (Window will use the default program associated with .doc files):</h4>
+
+<p>C:\> <code>start t:\configs\daily-update.doc</code></p>
+
+<h3>Useful shortcuts for frequently used programs</h3>
+
+<h4>Open the Remote Desktop console connection to server 192.168.1.1</h4>
+
+<p>d:\> <code>mstsc /console /v:192.168.1.1</code></p>
+
+<h4>Create a Windows Firewall rule that allows a server to reply to ping requests</h4>
+
+<p>D:\> <code>netsh advfirewall firewall add rule name="allow-ping-replies" protocol=icmpv4:8,any dir=in action=allow
+Ok.</code></p>
+
+<h4>Open directly to Device Manager</h4>
+
+<p>d:\> <code>devmgmt.msc</code></p>
+
+<h4>Open directly to the Windows Firewall with Advanced Security console</h4>
+
+<p>d:\> <code>wf.msc</code></p>
+
+<h4>Open directly to Disk Management</h4>
+
+<p>d:\> <code>diskmgmt.msc</code></p>
+
+<h4>Open directly to the System Properties applet</h4>
+
+<p>d:\> <code>sysdm.cpl</code></p>
+
+<h4>Open the services</h4>
+
+<p>c:\> <code>services.msc</code></p>
+
+<h4>Open the boot and system config</h4>
+
+<p>c:\> <code>msconfig</code></p>
+
+<h2>Networking commands</h2>
+
+<h4>Display the IP addresses of each NIC</h4>
+
+<p>d:\> <code>ipconfig</code></p>
+
+<h4>Show the MAC addresses of each NIC</h4>
+
+<p>d:\> <code>getmac</code></p>
+
+<h4>Show the routing table</h4>
+
+<p>d:\> <code>route print</code></p>
+
+<h4>List TCP/IP stats and information</h4>
+
+<p>d:\> <code>netstat</code></p>
+
+<h4>Open the Network Connections configurator (network control panel applet)</h4>
+
+<p>d:\> <code>ncpa.cpl</code></p>
+
+<h4></h4>
+
+<h2>Other useful commands</h2>
+
+<h4>Initiates an immediate, forced reboot (-r is &ldquo;restart&rdquo;, -f is force, -t 0 is in 0 seconds) with a comment (-c) to be recorded in the Event Viewer</h4>
+
+<p>d:\> <code>shutdown -r -f -t 0 c Services are hung; rebooting system</code></p>
+
+<h4>To map the letter T: to a Windows share on a file server:</h4>
+
+<p>d:\> <code>net use t: \\example.com\common\is\euc</code></p>
+
+<h4>Run the systeminfo command, and displays only the line referring to system boot time:</h4>
+
+<p>d:\> <code>systeminfo | find /i "boot time"</code><br>
+System Boot Time:          6/4/2013, 12:53:27 PM</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Chromaterm]]></title>
+    <link href="http://tunnelsup.github.io/chromaterm/"/>
+    <updated>2013-06-16T22:31:00-07:00</updated>
+    <id>http://tunnelsup.github.io/chromaterm</id>
+    <content type="html"><![CDATA[<h2>About</h2>
+
+<p>Chromaterm is a terminal colorization tool that runs on linux and is produced by TunnelsUp.com. It essentially acts as a wrapper for the linux shell. Once it starts it then starts a new shell. Any activity within that new shell will be ran through Chromaterm. Chromaterm listens for keywords, that are user defined, and will highlight them with user defined colors.</p>
+
+<p>This can be extremely helpful especially when accessing Cisco routers and firewalls from a central Linux server. Colorizing the ssh screen of a Cisco CLI output is very convenient.</p>
+
+<h2>Screenshots</h2>
+
+<p>Below are screenshots of using chromaterm while SSH&rsquo;d into a Cisco firewall.<br>
+<img src="/images/chroma1.PNG" alt="Chromaterm IMG" /><br>
+<img src="/images/chroma2.PNG" alt="Chromaterm IMG" /><br>
+<img src="/images/chroma3.PNG" alt="Chromaterm IMG" /></p>
+
+<h2>Install</h2>
+
+<p>Installation is easy.</p>
+
+<ul>
+<li><p><a href="https://github.com/tunnelsup/chromaterm">Download the files from github</a>. Either by using the download link or by doing <code>git clone https://github.com/tunnelsup/chromaterm.git</code></p></li>
+<li><p><code>cd chromaterm/src/</code> Go into the src directory.</p></li>
+<li><p><code>./configure</code> Configure the program.</p></li>
+<li><p><code>make</code> Create the binary called ct.</p></li>
+<li><p><code>make install</code> Optional. It will move ct to the ~ directory.</p></li>
+</ul>
+
+
+<p>Once installation is complete a new file called <code>ct</code> will be in the src/ directory. Move this to your home directory. You can start the program by doing the following:</p>
+
+<p><code>./ct &lt;config_file&gt;</code></p>
+
+<h2>Creating the Config file</h2>
+
+<p>Use your text editor of choice to create a file called ct.cfg and put the following in it.</p>
+
+<p>```</p>
+
+<h1>run session bash</h1>
+
+<h1>config regex on</h1>
+
+<h1>event {SESSION DISCONNECTED} {#end}</h1>
+
+<h1>highlight {&#037;d.&#037;d.&#037;d.&#037;d} {bold yellow}</h1>
+
+<h1>highlight { any } {bold white}</h1>
+
+<h1>highlight {&#123;permit(ted)*}} {bold green}</h1>
+
+<h1>highlight {&#123;(d|D)eny}} {bold red}</h1>
+
+<h1>highlight {&#123; (E|e)rr..}} {bold white}</h1>
+
+<h1>highlight {INSIDE} {bold blue}</h1>
+
+<h1>highlight {OUTSIDE} {bold green}</h1>
+
+<h1>highlight {DMZ} {bold magenta}</h1>
+
+<h1>substitute {^Cisco %1 Version %2, %3} {Cisco %1 <134>Version %2<088>, %3}</h1>
+
+<h1>substitute {&#037;1pkts encaps: %d, %3} {&#037;1pkts encaps: <150>%2<088>, %3}</h1>
+
+<h1>substitute {&#037;1pkts decaps: %d, %3} {&#037;1pkts decaps: <120>%2<088>, %3}</h1>
+
+<h1>substitute {&#037;1 uptime is %2} {&#037;1 uptime is <150>%2<088>}</h1>
+
+<p><code>``
+The</code>highlight` keyword will simply look for the text in the first argument and colorize it using the color chosen in the second argument.</p>
+
+<p>The <code>substitute</code> keyword will search and replace text display. %1, %2 etc are variables that are stored. They can then be called later to colorize a variable.</p>
+
+<h2>Usage</h2>
+
+<p>You will need a terminal program that can handle VT100 and ANSI color codes. Such programs that can do this are putty, SecureCRT, or any native Linux terminal.</p>
+
+<p>Start chromaterm using the following command: <code>./ct ct.cfg</code></p>
+
+<p>Once Chromaterm is running use the <code>#help</code> command to display help. Some useful help commands:</p>
+
+<p><code>#help highlight</code><br>
+<code>#help substitute</code><br>
+<code>#help colors</code><br>
+<code>#help colordemo</code></p>
+
+<p>To exit chromaterm type:<br>
+<code>#end</code></p>
+
+<p>You can then edit the ct.cfg file to your satisfaction to add more keyword highlighting or change colors. A sample ct.cfg file is included in the files which is what I use as my config.</p>
+
+<p>Now that it&rsquo;s running you can test it by telnetting or ssh'ing into a device and watch how highlighted keywords defined in the config file will become colorized.</p>
+]]></content>
+  </entry>
+  
+</feed>

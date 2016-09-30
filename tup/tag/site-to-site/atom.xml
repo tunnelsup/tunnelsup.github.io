@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: site to site | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/site-to-site/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Site to Site VPN Tunnel Between Cisco ASA and Juniper SRX JunOS]]></title>
+    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos/"/>
+    <updated>2013-01-16T00:00:00-08:00</updated>
+    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos</id>
+    <content type="html"><![CDATA[<p><img src="/images/asasitetosite.jpg" alt="ASA Site to site diagram - IMG" /></p>
+
+<p>Blue firewall: Juniper SRX 210 (JunOS 10.0R1.8)</p>
+
+<p>Red firewall: Cisco ASA 5510 (OS 8.4)</p>
+
+<p>This is a script to create a site to site VPN tunnel between a Cisco ASA and a Juniper SRX. The Juniper SRX will be using a policy based VPN.</p>
+
+<h3>Blue Juniper SRX</h3>
+
+<p>```</p>
+
+<h1>Create the IKE proposal</h1>
+
+<p>set security ike proposal IKE-SHA-AES128-DH1 authentication-method pre-shared-keys
+set security ike proposal IKE-SHA-AES128-DH1 dh-group group2
+set security ike proposal IKE-SHA-AES128-DH1 encryption-algorithm aes-128-cbc
+set security ike proposal IKE-SHA-AES128-DH1 authentication algorithm sha1
+set security ike proposal IKE-SHA-AES128-DH1 lifetime-seconds 86400</p>
+
+<h1>Create the IKE policy</h1>
+
+<p>set security ike policy IKE-POLICY-HQ mode main
+set security ike policy IKE-POLICY-HQ proposals IKE-SHA-AES128-DH1
+set security ike policy IKE-POLICY-HQ pre-shared-key ascii-text s3kreTKey</p>
+
+<h1>Create an IKE gateway</h1>
+
+<p>set security ike gateway IKE-GATEWAY-HQ ike-policy IKE-POLICY-HQ
+set security ike gateway IKE-GATEWAY-HQ address 22.22.22.22
+set security ike gateway IKE-GATEWAY-HQ external-interface ge-0/0/0.0</p>
+
+<h1>Create an IPSec proposal/transform set</h1>
+
+<p>set security ipsec proposal IPSEC-SHA-AES128-ESP encryption-algorithm aes-128-cbc
+set security ipsec proposal IPSEC-SHA-AES128-ESP authentication-algorithm hmac-sha1-96
+set security ipsec proposal IPSEC-SHA-AES128-ESP protocol esp
+set security ipsec proposal IPSEC-SHA-AES128-ESP lifetime-seconds 3600</p>
+
+<h1>Create a IPSec policy</h1>
+
+<p>set security ipsec policy VPN-POLICY-HQ proposals IPSEC-SHA-AES128-ESP</p>
+
+<h1>Create the IPSec VPN</h1>
+
+<p>set security ipsec vpn VPN-HQ ike gateway IKE-GATEWAY-HQ
+set security ipsec vpn VPN-HQ ike ipsec-policy VPN-POLICY-HQ</p>
+
+<h1>Add some networks into the address book</h1>
+
+<p>set security zones security-zone OUTSIDE address-book address NET-REMOTE-VPN 172.16.22.0/24
+set security zones security-zone INSIDE address-book address NET-LOCAL 192.168.11.0/24</p>
+
+<h1>Create the policies to define the interesting traffic</h1>
+
+<p>set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match source-address NET-LOCAL
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match destination-address NET-REMOTE-VPN
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match application any
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT then permit tunnel ipsec-vpn VPN-HQ
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT then permit tunnel pair-policy VPN-POLICY-HQ-IN</p>
+
+<p>set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match source-address NET-REMOTE-VPN
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match destination-address NET-LOCAL
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match application any
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN then permit tunnel ipsec-vpn VPN-HQ
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN then permit tunnel pair-policy VPN-POLICY-HQ-OUT</p>
+
+<h1>You want to exclude the VPN traffic from being NAT&rsquo;d</h1>
+
+<p>set security nat source rule-set NAT-INTERFACE rule NO-NAT match source-address 192.168.11.0/24
+set security nat source rule-set NAT-INTERFACE rule NO-NAT match destination-address 172.16.22.0/24
+set security nat source rule-set NAT-INTERFACE rule NO-NAT then source-nat off</p>
+
+<h1>My config already had a rule in the rule-set. So I had to move the new rule above the old rule so it processes the no nat first.</h1>
+
+<p>insert source rule-set NAT-INTERFACE rule NO-NAT before rule RULE-NAME
+```</p>
+
+<h3>Red Cisco ASA Firewall</h3>
+
+<p>```
+! Define the interesting traffic
+access-list ACL-VPN-SRX extended permit ip 172.16.22.0 255.255.255.0 192.168.11.0 255.255.255.0</p>
+
+<p>! Set the IKE parameters
+crypto ikev1 enable OUTSIDE
+crypto ikev1 policy 5
+authentication pre-share
+encryption aes
+hash sha
+group 2
+lifetime 86400</p>
+
+<p>! Create the IPSec settings
+crypto ipsec ikev1 transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+crypto map MAP-VPN 10 match address ACL-VPN-SRX
+crypto map MAP-VPN 10 set peer 11.11.11.11
+crypto map MAP-VPN 10 set ikev1 transform-set ESP-AES128-SHA
+crypto map MAP-VPN interface OUTSIDE</p>
+
+<p>! Create the tunnel group
+tunnel-group 11.11.11.11 type ipsec-l2l
+tunnel-group 11.11.11.11 ipsec-attributes
+ikev1 pre-shared-key s3kreTKey</p>
+
+<p>! In my case I needed to tell this VPN traffic to not be NAT&rsquo;d as it goes through the firewall
+object network OBJ-172.16.22.0
+subnet 172.16.22.0 255.255.255.0
+object network OBJ-192.168.11.0
+subnet 192.168.11.0 255.255.255.0
+nat (INSIDE,OUTSIDE) source static OBJ-172.16.22.0 OBJ-172.16.22.0 destination static OBJ-192.168.11.0 OBJ-192.168.11.0 no-proxy-arp description No NAT for VPN to SRX
+```</p>
+
+<p>There is a great tool to generate the Juniper SRX code on Juniper&rsquo;s site:</p>
+
+<p><a href="https://www.juniper.net/customers/support/configtools/vpnconfig.html"><a href="https://www.juniper.net/customers/support/configtools/vpnconfig.html">https://www.juniper.net/customers/support/configtools/vpnconfig.html</a></a></p>
+
+<p>To build the Juniper config I used this page as a reference guide:</p>
+
+<p><a href="http://www.juniper.net/techpubs/en_US/junos/topics/example/policy-based-vpn-using-j-series-srx-series-device-configuring.html"><a href="http://www.juniper.net/techpubs/en_US/junos/topics/example/policy-based-vpn-using-j-series-srx-series-device-configuring.html">http://www.juniper.net/techpubs/en_US/junos/topics/example/policy-based-vpn-using-j-series-srx-series-device-configuring.html</a></a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Site to Site VPN tunnel config between a Cisco ASA and a Juniper SSG ScreenOS]]></title>
+    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos/"/>
+    <updated>2012-07-06T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos</id>
+    <content type="html"><![CDATA[<p>Below is a config to create a VPN tunnel between a Cisco ASA (Blue side) to a Juniper SSG ScreenOS (Red Side).</p>
+
+<p>Juniper Settings:</p>
+
+<p>ethernet0/0: 22.22.22.22, Untrust
+bgroup0: 172.16.22.1, Trust</p>
+
+<p><img src="/images/asasitetosite.jpg" alt="ASA network diagram - IMG" /></p>
+
+<h3>Cisco ASA config (Blue):</h3>
+
+<p>```
+!^^^^^^^ ISAKMP (Phase 1) ^^^^^^^!
+! must match with the other side in order for Phase 1 to complete.
+! Lower policy numbers will likely be used before higher ones.
+crypto isakmp policy 5
+  authentication pre-share
+  encryption aes
+  hash sha
+  group 2
+  lifetime 86400</p>
+
+<p>! Enable ISAKMP on the outside interface
+crypto isakmp enable OUTSIDE
+! Define the pre-shared-key
+tunnel-group 22.22.22.22 type ipsec-l2l
+tunnel-group 22.22.22.22 ipsec-attributes
+ pre-shared-key sekretk3y</p>
+
+<p>!^^^^^^^ IPSEC (Phase 2) ^^^^^^^!
+! Define the interesting traffic in the ACL
+access-list ACL-RED-VPN permit ip 192.168.11.0 255.255.255.0 172.16.22.0 255.255.255.0
+crypto ipsec transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+! Create a crypto map entry that defines the tunnel
+crypto map MAP-OUTSIDE 20 set peer 22.22.22.22
+! ACL must be exactly the opposite of the other sides ACL
+crypto map MAP-OUTSIDE 20 match address ACL-RED-VPN
+! Transform set must match other side identically
+crypto map MAP-OUTSIDE 20 set transform-set ESP-AES128-SHA
+crypto map MAP-OUTSIDE 20 set security-association lifetime kilobytes 10000
+! Apply crypto map to an interface
+crypto map MAP-OUTSIDE interface OUTSIDE</p>
+
+<p>!^^^^^^^ Routes and No-NATS ^^^^^^^!
+! Point the destination network out the outside interface with a next hop as the default gateway.
+route OUTSIDE 172.16.22.0 255.255.255.0 11.11.11.1
+! Make sure that the VPN traffic is NOT NATd
+access-list ACL-INSIDE-NONAT extended permit ip 192.168.11.0 255.255.255.0 172.16.22.0 255.255.255.0
+nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
+```</p>
+
+<h3>Juniper SSG-5 ScreenOS config (Red):</h3>
+
+<p>```
+! Create a tunnel interface
+set interface tunnel.1 zone Untrust
+set interface tunnel.1 ip unnumbered interface ethernet0/0</p>
+
+<h1>Create the gateway (IKE settings)</h1>
+
+<h1>note that &ldquo;sec-level standard&rdquo; means the IKE policies will try to use:  pre-g2-3des-sha and pre-g2-aes128-sha</h1>
+
+<p>set ike gateway &ldquo;VPN-GATEWAY&rdquo; ip 11.11.11.11 outgoing-interface ethernet0/0 preshare &ldquo;sekretk3y&rdquo; sec-level standard</p>
+
+<h1>Configure VPN IPSEC settings</h1>
+
+<p>set vpn &ldquo;VPN&rdquo; gateway &ldquo;VPN-GATEWAY&rdquo; replay tunnel idletime 0 proposal &ldquo;nopfs-esp-aes128-sha&rdquo;
+set vpn &ldquo;VPN&rdquo; id 1 bind interface tunnel.1
+set vpn &ldquo;VPN&rdquo; proxy-id local-ip 172.16.22.0/24 remote-ip 192.168.11.0/24 &ldquo;ANY&rdquo;</p>
+
+<h1>Configure a route for the remote end traffic</h1>
+
+<p>set vrouter trust-vr route 192.168.11.0/24 interface tunnel.1</p>
+
+<h1>Create 2 address book entries and create two policies to permit this traffic</h1>
+
+<p>set address Untrust &ldquo;192.168.11.0/24&rdquo; 192.168.11.0/24
+set address Trust &ldquo;172.16.22.0/24&rdquo; 172.16.22.0/24
+set policy top from &ldquo;Trust&rdquo; to &ldquo;Untrust&rdquo; &ldquo;172.16.22.0/24&rdquo; &ldquo;192.168.11.0/24&rdquo; &ldquo;ANY&rdquo; Permit log count
+set policy top from &ldquo;Untrust&rdquo; to &ldquo;Trust&rdquo; &ldquo;192.168.11.0/24&rdquo; &ldquo;172.16.22.0/24&rdquo; &ldquo;ANY&rdquo; Permit log count
+```</p>
+
+<h3>Notes:</h3>
+
+<p>Coming at this from my Cisco background I had to learn some new ways of looking at this.</p>
+
+<p>The traffic that can go over the tunnel is called the proxy-id. It is defined in the vpn settings. You also have to then permit this traffic in a policy between the two zones of your tunnel interface and whatever internal interface you have. In my case my Trust interface was bgroup0.</p>
+
+<h3>Troubleshooting:</h3>
+
+<p>Some show commands to see what&rsquo;s going on:</p>
+
+<p><code>get sa</code></p>
+
+<p><code>get ike gateway</code></p>
+
+<p><code>get event</code></p>
+
+<p>Try creating a packet capture to see what is happening to the packet. With a packet capture you can see what is going on between the two VPN peers, or why your interesting traffic is not making it through the SSG.</p>
+
+<p>```
+clear db
+set console dbuf
+set ffilter src-ip 1.1.1.1 dst-ip 2.2.2.2
+debug flow basic</p>
+
+<h1>generate some traffic</h1>
+
+<h1>to see the capture:</h1>
+
+<p>get dbuf stream</p>
+
+<h1>to stop capturing:</h1>
+
+<p>undebug all
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Site to site VPN between two ASAs]]></title>
+    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-using-two-asas/"/>
+    <updated>2010-05-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-using-two-asas</id>
+    <content type="html"><![CDATA[<p><img src="/images/asasitetosite.jpg" alt="ASA site to site diagram - IMG" /></p>
+
+<p>The classic site to site VPN tunnel between two ASAs. This configuration script is for ASA versions 8.2.5 and below. The new version has next gen encryption and has different keywords.</p>
+
+<p>After applying the config below the device at 192.168.11.2 should be able to access 172.16.22.2 and vice versa.</p>
+
+<h3>BLUE ASA</h3>
+
+<p>```
+!^^^^^^^ ISAKMP (Phase 1) ^^^^^^^!
+! must match with the other side in order for Phase 1 to complete.
+! Lower policy numbers will likely be used before higher ones.
+crypto isakmp policy 5
+  authentication pre-share
+  encryption aes
+  hash sha
+  group 2
+  lifetime 86400</p>
+
+<p>! Enable ISAKMP on the outside interface crypto isakmp enable OUTSIDE
+! Define the pre-shared-key
+tunnel-group 22.22.22.22 type ipsec-l2l
+tunnel-group 22.22.22.22 ipsec-attributes
+  pre-shared-key sekretk3y</p>
+
+<p>!^^^^^^^ IPSEC (Phase 2) ^^^^^^^!
+! Define the interesting traffic in the ACL
+access-list ACL-RED-VPN permit ip 192.168.11.0 255.255.255.0 172.16.22.0 255.255.255.0
+crypto ipsec transform-set ESP-AES128-SHA esp-aes esp-sha-hmac</p>
+
+<p>! Create a crypto map entry that defines the tunnel
+crypto map MAP-OUTSIDE 20 set peer 22.22.22.22</p>
+
+<p>! ACL must be exactly the opposite of the other sides ACL
+crypto map MAP-OUTSIDE 20 match address ACL-RED-VPN</p>
+
+<p>! Transform set must match other side identically
+crypto map MAP-OUTSIDE 20 set transform-set ESP-AES128-SHA
+crypto map MAP-OUTSIDE 20 set security-association lifetime kilobytes 10000</p>
+
+<p>! Apply crypto map to an interface
+crypto map MAP-OUTSIDE interface OUTSIDE</p>
+
+<p>!^^^^^^^ Routes and No-NATS ^^^^^^^!
+! Point the destination network out the outside interface with a next hop as the default gateway.
+route OUTSIDE 172.16.22.0 255.255.255.0 11.11.11.1</p>
+
+<p>! Make sure that the VPN traffic is NOT NAT&rsquo;d
+access-list ACL-INSIDE-NONAT extended permit ip 192.168.11.0 255.255.255.0 172.16.22.0 255.255.255.0
+nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
+```</p>
+
+<h3>RED ASA</h3>
+
+<p><code>
+!^^^^^^^ ISAKMP (Phase 1) ^^^^^^^!
+crypto isakmp policy 15
+  authentication pre-share
+  encryption aes
+  hash sha
+  group 2
+  lifetime 86400
+crypto isakmp enable OUTSIDE
+tunnel-group 11.11.11.11 type ipsec-l2l
+tunnel-group 11.11.11.11 ipsec-attributes
+  pre-shared-key sekretk3y
+!^^^^^^^ IPSEC (Phase 2) ^^^^^^^!
+access-list ACL-BLUE-VPN permit ip 172.16.22.0 255.255.255.0 192.168.11.0 255.255.255.0
+crypto ipsec transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+crypto map MAP-VPN 10 match address ACL-BLUE-VPN
+crypto map MAP-VPN 10 set peer 11.11.11.11
+crypto map MAP-VPN 10 set transform-set ESP-AES128-SHA
+crypto map MAP-VPN 10 set security-association lifetime kilobytes 10000
+crypto map MAP-VPN interface OUTSIDE
+!^^^^^^^ Routes and No-NATS ^^^^^^^!
+route OUTSIDE 192.168.11.0 255.255.255.0 22.22.22.1
+access-list ACL-INSIDE-NONAT extended permit ip 1172.16.22.0 255.255.255.0 192.168.11.0 255.255.255.0
+nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Site to site VPN tunnel between ASA and Router]]></title>
+    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-asa-and-cisco-router/"/>
+    <updated>2010-05-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-asa-and-cisco-router</id>
+    <content type="html"><![CDATA[<p><img src="/images/asa-isr.jpg" alt="ASR ISR network diagram- IMG" /></p>
+
+<p>Using the above network diagram, the scripts below can be applied to both ASA&rsquo;s to build a site to site VPN tunnel. The firewall on the left is a Cisco ASA and device on the right is a Cisco Router. The router needs to have an IOS that supports VPN&rsquo;s. You can test this by typing &lsquo;crypto ?&rsquo; and see if it has the commands available to make the tunnel. Usually a router with a K9 image on it is good enough. If not then it&rsquo;ll require the security image to have IPSec capabilities.</p>
+
+<p>After applying the config below the device at 192.168.11.2 should be able to access 172.16.22.2 and vice versa.</p>
+
+<h3>BLUE ASA</h3>
+
+<p><code>
+!^^^^^^^ ISAKMP (Phase 1) ^^^^^^^!
+! The policy number is arbitrary. The parameters inside the policy
+! must match with the other side in order for Phase 1 to complete.
+! Lower policy numbers will likely be used before higher ones.
+crypto isakmp policy 5
+  authentication pre-share
+  encryption aes
+  hash sha
+  group 2
+  lifetime 86400
+! Enable ISAKMP on the outside interface
+crypto isakmp enable OUTSIDE
+! Define the pre-shared-key
+tunnel-group 22.22.22.22 type ipsec-l2l
+tunnel-group 22.22.22.22 ipsec-attributes
+  pre-shared-key sekretk3y
+!^^^^^^^ IPSEC (Phase 2) ^^^^^^^!
+! Define the interesting traffic in the ACL
+access-list ACL-RED-VPN permit ip 192.168.11.0 255.255.255.0 172.16.22.0 255.255.255.0
+crypto ipsec transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+! Create a crypto map entry that defines the tunnel
+crypto map MAP-OUTSIDE 20 set peer 22.22.22.22
+! ACL must be exactly the opposite of the other sides ACL
+crypto map MAP-OUTSIDE 20 match address ACL-RED-VPN
+! Transform set must match other side identically
+crypto map MAP-OUTSIDE 20 set transform-set ESP-AES128-SHA
+crypto map MAP-OUTSIDE 20 set security-association lifetime kilobytes 10000
+! Apply crypto map to an interface
+crypto map MAP-OUTSIDE interface OUTSIDE
+!^^^^^^^ Routes and No-NATS ^^^^^^^!
+! Point the destination network out the outside interface with a next hop as the default gateway.
+route OUTSIDE 172.16.22.0 255.255.255.0 11.11.11.1
+! Make sure that the VPN traffic is NOT NAT'd
+access-list ACL-INSIDE-NONAT extended permit ip 192.168.11.0 255.255.255.0 172.16.22.0 255.255.255.0
+nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
+</code></p>
+
+<h3>RED ROUTER WITH CRYPTO SUPPORT</h3>
+
+<p>```
+!^^^^^^^ ISAKMP (Phase 1) ^^^^^^^!
+! Note: The default isakmp settings on a router are Encr:DES Hash:SHA DH:Group 1
+! If these settings are used, they will not show under &lsquo;show run&rsquo;
+crypto isakmp policy 5
+  encr aes
+  hash sha
+  authentication pre-share
+  group 2
+crypto isakmp key sekretk3y address 11.11.11.11</p>
+
+<p>!^^^^^^^ IPSEC (Phase 2) ^^^^^^^!
+! Define the interesting traffic in the ACL
+ip access-list extended ACL-VPN
+  permit ip 172.16.22.0 0.0.0.255 192.168.11.0 0.0.0.255
+crypto ipsec transform-set AES-SHA esp-aes esp-sha-hmac
+crypto map VPN-TUNNEL 1 ipsec-isakmp
+  set peer 11.11.11.11
+  set transform-set AES-SHA
+  match address ACL-VPN</p>
+
+<p>interface Fa0/0
+  crypto map VPN-TUNNEL
+  ip nat outside</p>
+
+<p>interface Vlan2
+  ip nat inside</p>
+
+<p>!^^^^^^^ Routes and No-NATS ^^^^^^^!
+! Point the destination network out the outside interface with a next hop as the default gateway.
+ip route 192.168.11.0 255.255.255.0 22.22.22.1</p>
+
+<p>! Make sure that the VPN traffic is NOT NAT&rsquo;d
+ip access-list extended ACL-NAT
+  deny   ip 172.16.22.0 0.0.0.255 192.168.11.0 0.0.0.255
+  permit ip any any
+ip nat inside source list ACL-NAT interface Fa0/0 overload</p>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Remote access VPN connection using Cisco Router]]></title>
+    <link href="http://tunnelsup.github.io/remote-access-vpn-connection-using-a-cisco-router/"/>
+    <updated>2010-05-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/remote-access-vpn-connection-using-a-cisco-router</id>
+    <content type="html"><![CDATA[<p><img src="/images/ra-isr.jpg" alt="Network Diagram - IMG" /></p>
+
+<p>The blue router on the left is a Cisco router with VPN capabilities and the red computer on the right is any computer that is running the Cisco VPN Client.</p>
+
+<p>After applying the config below the remote access user will be able to access the device at 192.168.11.2 as if it was on the same network as it. We will also be implementing a DNS entry so the Remote Access user can use hostnames.</p>
+
+<h3>Blue Cisco Router Configuration</h3>
+
+<p><code>
+aaa authentication login VPNUSERSAUTH local
+aaa authorization network VPNUSERS local
+username ra-user password 0 passw0rd
+crypto isakmp policy 7
+encr 3des
+hash md5
+authentication pre-share
+group 2
+crypto isakmp client configuration group VPNUSERS
+key sekretK3Y
+pool VPN-POOL
+acl ACL-SPLIT-VPN
+crypto ipsec transform-set 3DES-SHA esp-3des esp-sha-hmac
+crypto dynamic-map VPNDYNMAP 1
+set transform-set ESP-AES128-SHA
+reverse-route
+crypto map MAP-OUTSIDE client authentication list VPNUSERSAUTH
+crypto map MAP-OUTSIDE isakmp authorization list VPNUSERS
+crypto map MAP-OUTSIDE client configuration address respond
+crypto map MAP-OUTSIDE 6500 ipsec-isakmp dynamic VPNDYNMAP
+ip local pool VPN-POOL 10.1.74.5 10.1.74.250
+ip access-list extended ACL-SPLIT-VPN
+permit ip 192.168.11.0 0.0.0.255 10.1.74.0 0.0.0.255
+</code></p>
+
+<h3>Cisco VPN Client Configuration</h3>
+
+<p>Create a new VPN profile in the Cisco VPN Client</p>
+
+<p><img src="/images/ra-vpnclient.jpg" alt="VPN Client Config - IMG" /></p>
+
+<p>Now select the new profile and click connect. Use the username ra-user/passw0rd</p>
+
+<p><img src="/images/ravpncl.jpg" alt="VPN Client Config - IMG" /></p>
+]]></content>
+  </entry>
+  
+</feed>

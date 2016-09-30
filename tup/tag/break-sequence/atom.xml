@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: break sequence | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/break-sequence/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Recovering the password when No Service Password-Recovery is enabled on a router]]></title>
+    <link href="http://tunnelsup.github.io/recovering-the-password-when-no-service-password-recovery-is-enabled-on-a-router/"/>
+    <updated>2013-01-04T00:00:00-08:00</updated>
+    <id>http://tunnelsup.github.io/recovering-the-password-when-no-service-password-recovery-is-enabled-on-a-router</id>
+    <content type="html"><![CDATA[<p>Goal: Get into an 1811 that has the No Service Password-Recovery feature enabled.</p>
+
+<p>Limitation: Because this feature is enabled it simply means when you do password recovery the entire config will be wiped.</p>
+
+<p>Problem: <a href="http://www.cisco.com/en/US/docs/ios/12_3/12_3y/12_3ya8/gtnsvpwd.html#wp1062060">Cisco&rsquo;s documentation on this is WRONG. </a></p>
+
+<p>Solution: Using SecureCRT and consoled into the router the break sequence is CTRL+BREAK (if you are on a lenovo laptop then hold CTRL then push Fn+BREAK). You have to send it at the right time. Look at the output below to see when to hit the break sequence.</p>
+
+<pre><code>
+System Bootstrap, Version 12.3(8r)YH13, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 2008 by cisco Systems, Inc.
+C1800 platform with 131072 Kbytes of main memory with parity disabled
+
+Readonly ROMMON initialized
+PASSWORD RECOVERY FUNCTIONALITY IS DISABLED
+program load complete, entry point: 0x80012000, size: 0xc0c0
+
+Initializing ATA monitor library.......
+program load complete, entry point: 0x80012000, size: 0xc0c0
+
+Initializing ATA monitor library.......
+
+program load complete, entry point: 0x80012000, size: 0x1974ba0
+Self decompressing the image : ######################################################################
+######################################################################
+######################################################################
+################################ [OK]
+
+Restricted Rights Legend
+
+Use, duplication, or disclosure by the Government is
+subject to restrictions as set forth in subparagraph
+(c) of the Commercial Computer Software - Restricted
+Rights clause at FAR sec. 52.227-19 and subparagraph
+(c) (1) (ii) of the Rights in Technical Data and Computer
+Software clause at DFARS sec. 252.227-7013.
+
+cisco Systems, Inc.
+170 West Tasman Drive
+San Jose, California 95134-1706
+
+Cisco IOS Software, C181X Software (C181X-ADVIPSERVICESK9-M), Version 15.0(1)M3, RELEASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2010 by Cisco Systems, Inc.
+Compiled Sun 18-Jul-10 00:57 by prod_rel_team
+Image text-base: 0x80012118, data-base: 0x82E13000
+<strong><span style="color: #ff0000;">[ 5 Second window begins here to send BREAK ]</span></strong>
+
+PASSWORD RECOVERY IS DISABLED.
+Do you want to reset the router to factory default
+configuration and proceed [y/n] ? <strong>y</strong>
+Reset router configuration to factory default.
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+Installed image archive
+Cisco 1811 (MPC8500) processor (revision 0x400) with 118784K/12288K bytes of memory.
+Processor board ID FTX141780Z7, with hardware revision 0000
+
+10 FastEthernet interfaces
+1 Serial interface
+1 terminal line
+1 Virtual Private Network (VPN) Module
+62720K bytes of ATA CompactFlash (Read/Write)
+[OK][OK]
+SETUP: new interface FastEthernet0 placed in "shutdown" state
+SETUP: new interface FastEthernet1 placed in "shutdown" state
+
+Press RET5 01:35:07.427: %LINK-5-CHANGED: Interface FastEthernet0, changed state to administratively down
+*Jan  5 01:35:07.431: %SYS-5-RESTART: System restarted --
+Cisco IOS Software, C181X Software (C181X-ADVIPSERVICESK9-M), Version 15.0(1)M3, RELEASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2010 by Cisco Systems, Inc.
+Compiled Sun 18-Jul-10 00:57 by prod_rel_team
+*Jan  5 01:35:07.431: %SNMP-5-COLDSTART: SNMP agent on host Router is undergoing a cold start
+*Jan  5 01:35:07.459: %CRYPTO-6-ISAKMP_ON_OFF: ISAKMP is OFF
+*Jan  5 01:35:07.459: %CRYPTO-6-GDOI_ON_OFF: GDOI is OFF
+*Jan  5 01:35:07.943: %LINK-5-CHANGED: Interface FastEthernet1, changed state to administratively down
+*Jan  5 01:35:08.823: %LINK-3-UPDOWN: Interface FastEthernet2, changed state to up
+*Jan  5 01:35:08.823: %LINK-3-UPDOWN: Interface FastEthernet3, changed state to up
+*Jan  5 01:35:08.823: %LINK-3-UPDOWN: Interface FastEthernet4, changed state to up
+*Jan  5 01:35:08.827: %LINK-3-UPDOWN: Interface FastEthernet5, changed state to up
+*Jan  5 01:35:08.827: %LINK-3-UPDOWN: Interface FastEthernet6, changed state to up
+*Jan  5 01:35:08.827: %LINK-3-UPDOWN: Interface FastEthernet7, changed state to up
+*Jan  5 01:35:08.831: %LINK-3-UPDOWN: Interface FastEthernet8, changed state to up
+*Jan  5 01:35:08.831: %LINK-3-UPDOWN: Interface FastEthernet9, changed state to up
+*Jan  5 01:35:09.823: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet2, changed state to down
+*Jan  5 01:35:09.823: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet3, changed state to down
+*Jan  5 01:35:09.823: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet4, changed state to down
+*Jan  5 01:35:09.827: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet5, changed state to down
+*Jan  5 01:35:09.827: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet6, changed state to down
+*Jan  5 01:35:09.827: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet7, changed state to down
+*Jan  5 01:35:09.831: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet8, changed state to down
+*Jan  5 01:35:09.831: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet9, changed state to down
+Router&gt;
+</code></pre>
+
+]]></content>
+  </entry>
+  
+</feed>

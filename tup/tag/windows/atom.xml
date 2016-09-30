@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: windows | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/windows/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Route Add Windows - A Guide to Windows Routing]]></title>
+    <link href="http://tunnelsup.github.io/route-add-windows-a-guide-to-windows-routing/"/>
+    <updated>2016-04-25T08:41:00-07:00</updated>
+    <id>http://tunnelsup.github.io/route-add-windows-a-guide-to-windows-routing</id>
+    <content type="html"><![CDATA[<p>Sometimes you need to manually add, change, or remove a route on a Windows machine. Here is quick guide to help you accomplish these tasks.</p>
+
+<p>First start by opening a CMD prompt by going to start then typing <code>cmd</code>.</p>
+
+<p>These commands should work for Win XP, Win Vista, Win 98, Win NT, Win 2000, Win 2008, Win 2012, Win 7, Win 8, Win 10.</p>
+
+<h2>Show the Current Routing Table</h2>
+
+<p>```</p>
+
+<h1>C:>route print</h1>
+
+<p>Interface List
+ 11&hellip;54 ee 75 5b e3 c9 &hellip;&hellip;Intel&reg; Ethernet Connection (3) I218-LM</p>
+
+<h1> 13&hellip;5c e0 c5 7f e4 c8 &hellip;&hellip;Intel&reg; Dual Band Wireless-AC 7265</h1>
+
+<h1>IPv4 Route Table</h1>
+
+<p>Active Routes:
+Network Destination        Netmask          Gateway       Interface  Metric</p>
+
+<pre><code>      0.0.0.0          0.0.0.0   192.168.177.1    192.168.177.30     10
+    127.0.0.0        255.0.0.0         On-link         127.0.0.1    306
+ 192.168.60.0    255.255.255.0         On-link      192.168.60.1    276
+ 192.168.60.1  255.255.255.255         On-link      192.168.60.1    276
+</code></pre>
+
+<p>   192.168.60.255  255.255.255.255         On-link      192.168.60.1    276</p>
+
+<pre><code>192.168.177.0    255.255.255.0         On-link     192.168.177.1    276
+192.168.177.1  255.255.255.255         On-link     192.168.177.1    276
+</code></pre>
+
+<h1>  192.168.177.255  255.255.255.255         On-link     192.168.177.1    276</h1>
+
+<p>Persistent Routes:
+  None</p>
+
+<p>```</p>
+
+<p>The default route is represented by A destination/netmask of <code>0.0.0.0</code>. If there isn&rsquo;t a route with a more specific destination and netmask, the default route is used.</p>
+
+<p>Use this <a href="/subnet-calculator/">subnet calculator</a> if you need help subnetting.</p>
+
+<h2>Add a Static Route</h2>
+
+<p>To add a route to the routing table use the <code>route add</code> command. An example looks like this:</p>
+
+<p><code>
+route add 10.0.0.0 mask 255.0.0.0 192.168.177.1
+</code></p>
+
+<p>You can optionally add a <code>metric 2</code> to the end if you want to add a specific weight to the route. The routes with the lowest metric will take precedence over higher metrics. By default, static routes have a metric of 6.</p>
+
+<p>You can also optionally add a <code>IF 2</code> to the end. This will force the route to use interface 2. You can see what interface numbers you have with the <code>route print</code> command.</p>
+
+<p>```
+Active Routes:
+Network Destination        Netmask          Gateway       Interface  Metric</p>
+
+<pre><code>     10.0.0.0        255.0.0.0         On-link     172.16.177.30      6
+</code></pre>
+
+<p>```</p>
+
+<h2>Remove a Static Route</h2>
+
+<p>To remove a route you must use the <code>route delete</code> command and the destination.</p>
+
+<p><code>
+route delete 10.0.0.0
+</code></p>
+
+<h2>Change a Static Route</h2>
+
+<p>If you simply want to update a static route you can use the <code>route change</code> command.</p>
+
+<p><code>
+route CHANGE 157.0.0.0 MASK 255.0.0.0 157.55.80.5 METRIC 2 IF 2
+</code></p>
+
+<h2>Troubleshooting</h2>
+
+<p>If you get the following error:
+<code>The requested operation requires elevation.</code></p>
+
+<p>To resolve this you will need administrator access to the system. Go to the start menu and when you type <code>cmd</code> right click on the cmd.exe program and click <code>Run As Administrator</code>. This opens a CMD prompt with more privileges.</p>
+
+<p>For any further help you can use the built in help the route command provides. Simply type <code>route</code> and hit enter.</p>
+
+<p>```
+C:>route</p>
+
+<p>Manipulates network routing tables.</p>
+
+<p>ROUTE [-f] [-p] [-4|-6] command [destination]</p>
+
+<pre><code>              [MASK netmask]  [gateway] [METRIC metric]  [IF interface]
+</code></pre>
+
+<p>  -f           Clears the routing tables of all gateway entries.  If this is</p>
+
+<pre><code>           used in conjunction with one of the commands, the tables are
+           cleared prior to running the command.
+</code></pre>
+
+<p>  -p           When used with the ADD command, makes a route persistent across</p>
+
+<pre><code>           boots of the system. By default, routes are not preserved
+           when the system is restarted. Ignored for all other commands,
+           which always affect the appropriate persistent routes. This
+           option is not supported in Windows 95.
+</code></pre>
+
+<p>  -4           Force using IPv4.</p>
+
+<p>  -6           Force using IPv6.</p>
+
+<p>  command      One of these:</p>
+
+<pre><code>             PRINT     Prints  a route
+             ADD       Adds    a route
+             DELETE    Deletes a route
+             CHANGE    Modifies an existing route
+</code></pre>
+
+<p>  destination  Specifies the host.
+  MASK         Specifies that the next parameter is the &lsquo;netmask&rsquo; value.
+  netmask      Specifies a subnet mask value for this route entry.</p>
+
+<pre><code>           If not specified, it defaults to 255.255.255.255.
+</code></pre>
+
+<p>  gateway      Specifies gateway.
+  interface    the interface number for the specified route.
+  METRIC       specifies the metric, ie. cost for the destination.</p>
+
+<p>All symbolic names used for destination are looked up in the network database
+file NETWORKS. The symbolic names for gateway are looked up in the host name
+database file HOSTS.</p>
+
+<p>If the command is PRINT or DELETE. Destination or gateway can be a wildcard,
+(wildcard is specified as a star &lsquo;*&rsquo;), or the gateway argument may be omitted.</p>
+
+<p>If Dest contains a * or ?, it is treated as a shell pattern, and only
+matching destination routes are printed. The &lsquo;<em>&rsquo; matches any string,
+and &lsquo;?&rsquo; matches any one char. Examples: 157.</em>.1, 157.<em>, 127.</em>, <em>224</em>.</p>
+
+<p>Pattern match is only allowed in PRINT command.
+Diagnostic Notes:</p>
+
+<pre><code>Invalid MASK generates an error, that is when (DEST &amp; MASK) != DEST.
+Example&gt; route ADD 157.0.0.0 MASK 155.0.0.0 157.55.80.1 IF 1
+         The route addition failed: The specified mask parameter is invalid.
+</code></pre>
+
+<p> (Destination &amp; Mask) != Destination.</p>
+
+<p>Examples:</p>
+
+<pre><code>&gt; route PRINT
+&gt; route PRINT -4
+&gt; route PRINT -6
+&gt; route PRINT 157*          .... Only prints those matching 157*
+
+&gt; route ADD 157.0.0.0 MASK 255.0.0.0  157.55.80.1 METRIC 3 IF 2
+         destination^      ^mask      ^gateway     metric^    ^
+                                                     Interface^
+  If IF is not given, it tries to find the best interface for a given
+  gateway.
+&gt; route ADD 3ffe::/32 3ffe::1
+
+&gt; route CHANGE 157.0.0.0 MASK 255.0.0.0 157.55.80.5 METRIC 2 IF 2
+
+  CHANGE is used to modify gateway and/or metric only.
+
+&gt; route DELETE 157.0.0.0
+&gt; route DELETE 3ffe::/32
+</code></pre>
+
+<p>```</p>
+
+<p>Check out this article for more <a href="/using-the-windows-command-line-like-a-pro/">cool Windows CLI commands</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Delete IPv6 Translation methods for IPv6 in Windows OS]]></title>
+    <link href="http://tunnelsup.github.io/delete-ipv6-translation-methods-for-ipv6/"/>
+    <updated>2015-09-06T18:12:00-07:00</updated>
+    <id>http://tunnelsup.github.io/delete-ipv6-translation-methods-for-ipv6</id>
+    <content type="html"><![CDATA[<p>The Windows operating system likes to turn on the IPV6 transition methods by default. There are some transition methods that don&rsquo;t work like 6to4, ISATPA, and Teredo. If you run ipconfig /all, you&rsquo;ll notice a large list of IPv6-related interfaces that are completely unnecessary and can be disabled. This won&rsquo;t disable IPv6, only the transition methods that aren&rsquo;t needed.</p>
+
+<p>Open a command prompt in Windows and enter the following:</p>
+
+<p><code>
+netsh interface 6to4 set state state=disabled undoonstop=disabled
+netsh interface isatap set state state=disabled
+netsh interface teredo set state type=disabled
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[hosts file]]></title>
+    <link href="http://tunnelsup.github.io/hosts-file/"/>
+    <updated>2015-01-22T20:47:00-08:00</updated>
+    <id>http://tunnelsup.github.io/hosts-file</id>
+    <content type="html"><![CDATA[<p>The &lsquo;hosts&rsquo; file is a hostname to IP address map used for local DNS resolution. When a computer needs to talk to another computer it needs to first know the IP address of the second computer. This is where DNS converts a hostname to an IP address.</p>
+
+<h2>DNS Order of Operations</h2>
+
+<p>When a computer needs to resolve a hostname it follows these steps.</p>
+
+<ol>
+<li>Check if the host is the computer itself</li>
+<li>Check the hosts file to see if there is an entry there</li>
+<li>Do a DNS server query</li>
+<li>If still not resolved, a Windows computer will do a local NetBIOS query to see if anyone on the local network has that hostname</li>
+</ol>
+
+
+<p>By adding a host to the hosts file this will force the host to be resolved to the given IP instead of querying the DNS server. Some reasons to do this are:</p>
+
+<ul>
+<li>Creating a hosts entry for a hostname to match a SSL certificate value.</li>
+<li>Create a hosts entry to block access to a specific website. By mapping a hostname to 127.0.0.1, any request to that hostname won&rsquo;t leave the computer making the request.</li>
+<li>Create a hosts entry to make static DNS resolutions.</li>
+</ul>
+
+
+<h2>Syntax</h2>
+
+<p>No matter what OS you&rsquo;re using the syntax is the same for all of them. Edit the hosts file using any kind of text editor like notepad or vi. Make an entry like the following. Save it and immediately on saving the file the entries will be live.</p>
+
+<p><code>
+93.184.216.34     example.com
+172.16.2.2        mysite.com
+</code></p>
+
+<p>This means that if the user tries to go to <a href="http://mysite.com">http://mysite.com</a> they will be directed to 172.16.2.2.</p>
+
+<h2>Location</h2>
+
+<p>The hosts file is in a different location depending on the OS.</p>
+
+<h4>Windows Hosts File</h4>
+
+<ul>
+<li>Windows 8 <code>C:\Windows\System32\drivers\etc\</code></li>
+<li>Windows 7 <code>C:\Windows\system32\drivers\etc\</code></li>
+<li>Windows XP  <code>C:\Windows\system32\drivers\etc\</code></li>
+<li>Windows NT  <code>C:\Windows\system32\drivers\etc\</code></li>
+<li>Windows 95  <code>C:\Windows\</code></li>
+</ul>
+
+
+<h4>Mac Hosts File</h4>
+
+<p>For OSX 10.2 and up the hosts file is found in <code>/etc/hosts</code>.</p>
+
+<h4>Linux Hosts File</h4>
+
+<p>In Unix and Linux operating systems the file is located in <code>/etc/hosts</code>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using the Windows Command line like a pro]]></title>
+    <link href="http://tunnelsup.github.io/using-the-windows-command-line-like-a-pro/"/>
+    <updated>2013-06-18T19:17:00-07:00</updated>
+    <id>http://tunnelsup.github.io/using-the-windows-command-line-like-a-pro</id>
+    <content type="html"><![CDATA[<p>In this post I will be answering such question as: What is the &lsquo;cat&rsquo; equivalent in Windows? What is the &lsquo;grep&rsquo; equivalent in Windows? Yes that&rsquo;s right, we are visiting the Windows CLI today. The old DOS shell.</p>
+
+<p>These commands all work in Windows 7 and Server 2008; most of them also work in Windows XP.</p>
+
+<h2>Using the Type+Find+Sort combo</h2>
+
+<p>The windows command <code>type</code> is similar to the <code>cat</code> command in linux. Then you can pipe it to <code>find</code> which is like <code>grep</code>. Then you can <code>sort</code> it to your liking. This command combination can be a very powerful tool for productivity.</p>
+
+<h4>To display all of the lines in hosts.txt file that contain the text &ldquo;dmz&rdquo; in any combination of upper or lower case (<code>/i</code> is to &ldquo;ignore case&rdquo;):</h4>
+
+<p>S:\network> <code>type hosts.txt | find /i "dmz"</code></p>
+
+<h4>Look at all of the lines in hosts.txt file that have &ldquo;mex&rdquo; in them, sorted on the 20th character</h4>
+
+<p>S:\network> <code>type hosts.txt | find /i "mex" | sort /+20</code></p>
+
+<h4>Get all of the lines that have the term &ldquo;mex&rdquo; in it and ignore the case.</h4>
+
+<p>S:\network> <code>type hosts.txt | find /i "mex"</code><br>
+25.25.25.251        MEXSR01            # Exchange server<br>
+192.168.1.21        MEXPS01            # Power Supply<br>
+192.168.1.22        MEXSW02            # Network Switch<br>
+25.25.25.250        MEXRT02            # Router on second floor<br></p>
+
+<h4>Gets all of the lines with &ldquo;mex&rdquo; in it, but eliminate the lines mentioning &ldquo;PS&rdquo;:</h4>
+
+<p>S:\network> <code>type hosts.txt | find /i "mex" | find /i /v "ps"</code><br>
+25.25.25.251        MEXSR01            # Exchange server<br>
+192.168.1.22        MEXSW02            # Network Switch<br>
+25.25.25.250        MEXRT02            # Router on second floor<br></p>
+
+<h4>Gets all lines with &ldquo;192.168&rdquo; and &ldquo;mex&rdquo;.</h4>
+
+<p>S:\network> <code>type hosts.txt | find /i "192.168" | find /i "mex"</code><br>
+192.168.1.21        MEXPS01            # Power Supply<br>
+192.168.1.22        MEXSW02            # Network Switch<br></p>
+
+<h4>Run through all of the text files in the current directory, and gets lines containing notconnect.</h4>
+
+<p>T:\configs> <code>type *.txt | find /i "notconnect"</code><br>
+tokyo.txt<br>
+Gi1/9        unused-july18      notconnect   1            auto   auto 10/100/1000BaseT</p>
+
+<p>moskow.txt<br>
+Gi1/9        unused-july18      notconnect   1            auto   auto 10/100/1000BaseT</p>
+
+<h2>Starting Programs</h2>
+
+<h3>Using the start command</h3>
+
+<h4>Open Windows Explorer in the current directory</h4>
+
+<p>T:\configs> <code>start .</code></p>
+
+<h4>Open Firefox to Google search page with Google Instant disabled:</h4>
+
+<p>d:\> <code>start firefox http://google.com/webhp?complete=0</code></p>
+
+<h4>To open a specific .doc file, you can just use &ldquo;start&rdquo; this way, from a command line (Window will use the default program associated with .doc files):</h4>
+
+<p>C:\> <code>start t:\configs\daily-update.doc</code></p>
+
+<h3>Useful shortcuts for frequently used programs</h3>
+
+<h4>Open the Remote Desktop console connection to server 192.168.1.1</h4>
+
+<p>d:\> <code>mstsc /console /v:192.168.1.1</code></p>
+
+<h4>Create a Windows Firewall rule that allows a server to reply to ping requests</h4>
+
+<p>D:\> <code>netsh advfirewall firewall add rule name="allow-ping-replies" protocol=icmpv4:8,any dir=in action=allow
+Ok.</code></p>
+
+<h4>Open directly to Device Manager</h4>
+
+<p>d:\> <code>devmgmt.msc</code></p>
+
+<h4>Open directly to the Windows Firewall with Advanced Security console</h4>
+
+<p>d:\> <code>wf.msc</code></p>
+
+<h4>Open directly to Disk Management</h4>
+
+<p>d:\> <code>diskmgmt.msc</code></p>
+
+<h4>Open directly to the System Properties applet</h4>
+
+<p>d:\> <code>sysdm.cpl</code></p>
+
+<h4>Open the services</h4>
+
+<p>c:\> <code>services.msc</code></p>
+
+<h4>Open the boot and system config</h4>
+
+<p>c:\> <code>msconfig</code></p>
+
+<h2>Networking commands</h2>
+
+<h4>Display the IP addresses of each NIC</h4>
+
+<p>d:\> <code>ipconfig</code></p>
+
+<h4>Show the MAC addresses of each NIC</h4>
+
+<p>d:\> <code>getmac</code></p>
+
+<h4>Show the routing table</h4>
+
+<p>d:\> <code>route print</code></p>
+
+<h4>List TCP/IP stats and information</h4>
+
+<p>d:\> <code>netstat</code></p>
+
+<h4>Open the Network Connections configurator (network control panel applet)</h4>
+
+<p>d:\> <code>ncpa.cpl</code></p>
+
+<h4></h4>
+
+<h2>Other useful commands</h2>
+
+<h4>Initiates an immediate, forced reboot (-r is &ldquo;restart&rdquo;, -f is force, -t 0 is in 0 seconds) with a comment (-c) to be recorded in the Event Viewer</h4>
+
+<p>d:\> <code>shutdown -r -f -t 0 c Services are hung; rebooting system</code></p>
+
+<h4>To map the letter T: to a Windows share on a file server:</h4>
+
+<p>d:\> <code>net use t: \\example.com\common\is\euc</code></p>
+
+<h4>Run the systeminfo command, and displays only the line referring to system boot time:</h4>
+
+<p>d:\> <code>systeminfo | find /i "boot time"</code><br>
+System Boot Time:          6/4/2013, 12:53:27 PM</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to do a Continuous Ping]]></title>
+    <link href="http://tunnelsup.github.io/continuous-ping/"/>
+    <updated>2013-06-06T23:29:00-07:00</updated>
+    <id>http://tunnelsup.github.io/continuous-ping</id>
+    <content type="html"><![CDATA[<p>Below are methods to create a continuous ping in different environments.</p>
+
+<p>To learn more about pings see the blog post <a href="http://www.tunnelsup.com/what-is-ping/">What is ping?</a></p>
+
+<h3>Windows (CMD Prompt)</h3>
+
+<p>This works in Win95, Win98, WinXP, Win7, Win8 etc. Go to start, then run, type in cmd to open a command prompt.</p>
+
+<p><code>ping 192.168.1.1 -t</code></p>
+
+<br><br>
+
+
+<h3>Unix/Linux Shell</h3>
+
+<p>In *nix it is continuous by default.</p>
+
+<p><code>ping 192.168.1.1</code></p>
+
+<p>You can also indicate a high count which will ping for a very long time. This example will ping something 9,999,999 times.</p>
+
+<p><code>ping 192.168.1.1 -c 9999999</code></p>
+
+<p>If you are in linux and it is not doing a continuous ping by default there is probably an alias for the ping command which is changing the way you envoke ping. Find where the ping command is using <code>which ping</code> then call the program from there and it should be continuous.</p>
+
+<p><code>/bin/ping 192.168.1.1</code></p>
+
+<br><br>
+
+
+<h3>Mac and OSX</h3>
+
+<p>In OSX it is continuous by default.</p>
+
+<p><code>ping 192.168.1.1</code></p>
+
+<p>If that doesn&rsquo;t work you can get it to be continuous by doing this command instead:</p>
+
+<p><code>/sbin/ping 192.168.1.1</code></p>
+
+<br>
+
+
+<h3>Cisco Router/Firewall/Switch</h3>
+
+<p>You cannot do a continuous ping from a Cisco router, firewall or switch. This includes ASA and IOS operating systems. You can however do a ping for a VERY long time by indicating a lot of pings.</p>
+
+<p><code>ping 192.168.1.1 repeat 9999999</code></p>
+
+<p>Or if the repeat command is unavailable use the extended ping by simply issuing the <code>ping</code> command by itself and follow the prompts after.</p>
+
+<p>If that still isn&rsquo;t good enough, you can set up an <a href="/cisco-asa-and-sla-monitoring/">SLA monitor</a> to actually ping forever.</p>
+
+<br>
+
+
+<h3>Juniper JunOS</h3>
+
+<p>In JunOS it is continuous by default.</p>
+
+<p><code>ping 192.168.1.1</code></p>
+
+<br><br>
+
+
+<h2>Stopping a ping</h2>
+
+<p>On any of the systems above you can halt the ping.</p>
+
+<p>To stop the continuous ping press <code>CONTROL</code>+<code>c</code>.</p>
+
+<br>
+
+
+<hr>
+
+
+<p>Keywords: constant ping, continual ping, infinate ping, pertpetual ping, persistent ping</p>
+]]></content>
+  </entry>
+  
+</feed>

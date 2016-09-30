@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: netflow | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/netflow/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Configuring Netflow on ASA's]]></title>
+    <link href="http://tunnelsup.github.io/configuring-netflow-with-cisco-asas/"/>
+    <updated>2010-05-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/configuring-netflow-with-cisco-asas</id>
+    <content type="html"><![CDATA[<p>Netflow is data that the ASA will send to a netflow collector which will then give details regarding bandwith used, top talkers, number of connections, etc. Unfortunately there aren&rsquo;t any show commands on the ASA to determine this. In other words no data is stored on the ASA regarding netflow. Instead it is sent real time to the collector.</p>
+
+<p>Netflow is supported on ASA version 8.1 and later. Note that v8.1 was for 5580&rsquo;s only. Version 8.2.x is available to any ASA. It uses netflow version 9.</p>
+
+<h2>ASA Config</h2>
+
+<h3>Define the collector(s)</h3>
+
+<p>Port 9996 is the default port.<br>
+<code>flow-export destination INSIDE 172.16.200.101 9996</code></p>
+
+<p>Indicate how often (in minutes) to send the template to the collector<br>
+<code>flow-export template timeout-rate 30</code></p>
+
+<p>Delay transmission of flow creation events for short lived flows in seconds.
+This is optional. If omitted from the configuration there will not be any delay.<br>
+<code>flow-export delay flow-create 3</code></p>
+
+<h3>Define the Traffic to be Collected</h3>
+
+<p><strong> To send netflow info for all traffic </strong></p>
+
+<p><code>policy-map global_policy</code><br>
+<code>class class-default</code><br>
+<code>flow-export event-type all destination 172.16.200.101</code></p>
+
+<p><strong> To send netflow for specific traffic </strong><br>
+Create an ACL for desired traffic<br>
+<code>access-list ACL-FLOW-EXPORT extended permit ip 172.16.200.0 255.255.255.0 any</code></p>
+
+<p>Create a class-map<br>
+<code>class-map CLASS-NETFLOW</code><br>
+<code> match access-list ACL-FLOW-EXPORT</code></p>
+
+<p>Add the class to whatever global service policy is on the firewall
+The IP must match one of the defined netflow collectors from earlier.<br>
+<code>policy-map global_policy</code><br>
+<code> class CLASS-NETFLOW</code><br>
+<code>flow-export event-type flow-create destination 172.16.200.101</code></p>
+
+<h3>Show Command</h3>
+
+<p>The only show command is just to verify it is sending netflows<br>
+<code>show flow-export counters</code></p>
+
+<h2>Sample Netflow Output</h2>
+
+<p>Sample output from a linux netflow collector using nfcap and nfdump:</p>
+
+<p><code>
+[linuxbox]~$ nfdump -T -r 2010/01/17/nfcapd.201001171035 -a  -A srcip,srcport,dstip,dstport -o extended -c 20
+nfdump filter:
+any
+Date flow start          Duration Proto      Src IP Addr:Port          Dst IP Addr:Port   Flags Tos  Packets    Bytes      pps      bps    Bpp Flows
+2010-01-17 10:34:39.616   179.955     0     172.16.100.1:41212 -&amp;gt;   172.16.200.101:9996  .A....   0        5      884        0       39    176     5
+2010-01-17 10:35:34.285     0.252     0   172.16.200.102:57274 -&amp;gt;   174.129.41.112:80    .AP.SF   0        7     1562       27    49587    223     1
+2010-01-17 10:35:34.365     0.256     0   174.129.41.112:80    -&amp;gt;   172.16.200.102:57274 .AP.SF  32        6     1103       23    34468    183     1
+2010-01-17 10:31:09.471   300.156     0     172.16.100.1:0     -&amp;gt;        224.0.0.5:0     .A.... 192       31     2108        0       56     68     1
+2010-01-17 10:36:34.352     0.320     0   172.16.200.102:57275 -&amp;gt;   174.129.41.112:80    .AP.SF   0        7     1562       21    39049    223     1
+2010-01-17 10:36:34.436     0.320     0   174.129.41.112:80    -&amp;gt;   172.16.200.102:57275 .AP.SF   0        6     1103       18    27574    183     1
+2010-01-17 10:36:36.912     0.020     0     66.102.7.100:80    -&amp;gt;   172.16.200.102:57267 .A...F   0        2      104       99    41599     52     1
+2010-01-17 10:36:36.912     0.000     0   172.16.200.102:57267 -&amp;gt;     66.102.7.100:80    .A...F   0        2      104        0        0     52     1
+2010-01-17 10:36:47.088     6.698     0     66.102.7.100:80    -&amp;gt;   172.16.200.102:57269 .A...F   0        2      104        0      124     52     2
+2010-01-17 10:36:47.092     6.676     0   172.16.200.102:57269 -&amp;gt;     66.102.7.100:80    .A...F   0        2      104        0      124     52     1
+2010-01-17 10:37:34.543     0.308     0   172.16.200.102:57279 -&amp;gt;   174.129.41.112:80    .AP.SF   0        7     1562       22    40571    223     1
+2010-01-17 10:37:34.623     0.332     0   174.129.41.112:80    -&amp;gt;   172.16.200.102:57279 .AP.SF   0        6     1103       18    26578    183     1
+2010-01-17 10:37:34.531     0.000     0   172.16.200.102:62395 -&amp;gt;     68.105.28.11:53    .A....   0        1       76        0        0     76     1
+2010-01-17 10:37:34.539     0.000     0     68.105.28.11:53    -&amp;gt;   172.16.200.102:62395 .A....   0        1      275        0        0    275     1
+2010-01-17 10:38:35.529     0.316     0   172.16.200.102:57281 -&amp;gt;   174.129.41.112:80    .AP.SF   0        7     1562       22    39544    223     1
+Summary: total flows: 20, total bytes: 13316, total packets: 92, avg bps: 238, avg pps: 0, avg bpp: 144
+Time window: 2010-01-17 10:31:09 - 2010-01-17 10:39:36
+Total flows processed: 27, Records skipped: 0, Bytes read: 1416
+Sys: 0.000s flows/second: 0.0        Wall: 0.000s flows/second: 156069.4
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

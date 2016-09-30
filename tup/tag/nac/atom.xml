@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: nac | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/nac/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Conducting Failover for Cisco NAC appliances]]></title>
+    <link href="http://tunnelsup.github.io/conducting-failover-for-cisco-nac-appliances/"/>
+    <updated>2014-05-18T18:43:00-07:00</updated>
+    <id>http://tunnelsup.github.io/conducting-failover-for-cisco-nac-appliances</id>
+    <content type="html"><![CDATA[<p>When conducting a failover of a Cisco NAC cluster, first determine the status of the node you’re currently on:</p>
+
+<p><code>
+. /perfigo/common/bin/fostate.sh
+My node is active, peer node is standby
+</code></p>
+
+<p>Next, conduct the failover by doing one of the following commands:</p>
+
+<p><code>shutdown</code><br>
+<code>reboot</code><br>
+<code>service perfigo stop</code><br></p>
+
+<h4>Source</h4>
+
+<p><a href="http://www.cisco.com/c/en/us/td/docs/security/nac/appliance/configuration_guide/416/CAM/416cam_book/m_ha.html#wp1047066">http://www.cisco.com/c/en/us/td/docs/security/nac/appliance/configuration_guide/416/CAM/416cam_book/m_ha.html#wp1047066</a></p>
+]]></content>
+  </entry>
+  
+</feed>

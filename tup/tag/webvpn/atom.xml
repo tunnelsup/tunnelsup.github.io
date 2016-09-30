@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: webvpn | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/webvpn/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[SSL VPN access is not allowed]]></title>
+    <link href="http://tunnelsup.github.io/ssl-vpn-access-is-not-allowed/"/>
+    <updated>2013-06-06T22:17:00-07:00</updated>
+    <id>http://tunnelsup.github.io/ssl-vpn-access-is-not-allowed</id>
+    <content type="html"><![CDATA[<p>Recently I tried installing WebVPN usability onto a Cisco ASA firewall. When trying to login I received the following error:<br>
+<img src="http://tunnelsup.com/images/sslvpnerror.png" alt="SSL VPN Error IMG" /></p>
+
+<blockquote><p>Clientless (browser) SSL VPN access is not allowed</p></blockquote>
+
+<p>That&rsquo;s odd. I&rsquo;m the administrator. I WANT to allow this. It&rsquo;s my goal to allow this! Also, I wish Cisco would have consistency for this type of VPN. Is it &ldquo;Clientless (browser) SSL VPN&rdquo; or &ldquo;WebVPN&rdquo; or &ldquo;SSL VPN&rdquo; or &ldquo;Clientless VPN&rdquo;? Make up your mind!</p>
+
+<p>Perhaps the logs give us more of a clue. It said:</p>
+
+<blockquote><p>May 22 2013 17:20:42: %ASA-4-722050: Group &lt;GP-WEBVPN> User &lt;test-user> IP &lt;198.198.198.198> Session terminated: SVC not enabled for the user</p></blockquote>
+
+<p>This immediately became a battle with licensing. A quick show version gives me the following details:</p>
+
+<p><code>
+Licensed features for this platform:
+Maximum Physical Interfaces       : Unlimited      perpetual
+Maximum VLANs                     : 100            perpetual
+Inside Hosts                      : Unlimited      perpetual
+Failover                          : Active/Active  perpetual
+Encryption-DES                    : Enabled        perpetual
+Encryption-3DES-AES               : Enabled        perpetual
+Security Contexts                 : 2              perpetual
+GTP/GPRS                          : Disabled       perpetual
+AnyConnect Premium Peers          : 50             perpetual
+AnyConnect Essentials             : 250            perpetual
+Other VPN Peers                   : 250            perpetual
+Total VPN Peers                   : 250            perpetual
+Shared License                    : Disabled       perpetual
+AnyConnect for Mobile             : Enabled        perpetual
+AnyConnect for Cisco VPN Phone    : Enabled        perpetual
+Advanced Endpoint Assessment      : Disabled       perpetual
+UC Phone Proxy Sessions           : 24             perpetual
+Total UC Proxy Sessions           : 24             perpetual
+Botnet Traffic Filter             : Disabled       perpetual
+Intercompany Media Engine         : Disabled       perpetual
+Cluster                           : Disabled       perpetual
+</code></p>
+
+<p>It appears we have AnyConnect Premium Peer license applied to this firewall. But is it in use?</p>
+
+<p><code>
+denver-5520/pri/act(config)# sh run webvpn
+webvpn
+ enable OUTSIDE
+ anyconnect-essentials
+ anyconnect image disk1:/anyconnect-win-3.0.0629-k9.pkg 1
+ anyconnect enable
+ tunnel-group-list enable
+</code>
+Doh! It appears <code>anyconnect-essentials</code> is enabled! Here&rsquo;s the reason why this is a problem.</p>
+
+<p>Anyconnect-essentials does NOT support WebVPN. You must have Anyconnect Premium enabled to use WebVPN. It&rsquo;s confusing because the way the licensing works is that You can either have essentials on or not. If you don&rsquo;t then you have premium on. Either way you cannot have both at the same time. In order to make this WebVPN script work I had to say <code>no anyconnect-essentials</code> which enables the premium peers. This brought us from 250 possible simultaneous VPN sessions down to 50.</p>
+
+<p>To learn more about AnyConnect license (and why anyconnect-essentials doesn&rsquo;t allow you to use WebVPN) see <a href="http://tunnelsup.com/tup/2012/08/08/understanding-cisco-asa-anyconnect-licensing">my post</a> about it.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WebVPN or SSL VPN on an ASA]]></title>
+    <link href="http://tunnelsup.github.io/webvpn-or-ssl-vpn-on-an-asa/"/>
+    <updated>2010-05-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/webvpn-or-ssl-vpn-on-an-asa</id>
+    <content type="html"><![CDATA[<p><img src="/images/webvpn.jpg" alt="WebVPN diagram - IMG" /></p>
+
+<p>WebVPN (or often called SSL VPN) (or sometimes called clientless VPN) is used when someone needs to access a web based application that is on the private network. A web browser is used for all the encryption and authentication.</p>
+
+<p>After applying the config below the web user should be able to point their browser to <a href="https://11.11.11.11">https://11.11.11.11</a> to access the device at 192.168.11.2.</p>
+
+<h3>BLUE ASA</h3>
+
+<p>First make sure to have a SSL certificate on the ASA. This is needed because the ASA is acting as a web proxy and requires an SSL cert to be there to create the connection to the client.</p>
+
+<p><code>
+! Generate a self signed certificate
+crypto ca trustpoint SELF-SIGNED-CERTIFICATE
+proxy-ldc-issuer
+id-usage ssl-ipsec
+no fqdn
+subject-name CN=firewall-name
+enrollment self
+crypto ca enroll SELF-SIGNED-CERTIFICATE noconfirm
+</code></p>
+
+<p>Configure the WebVPN</p>
+
+<p><code>
+webvpn
+  enable Outside
+  ssl trust-point SELF-SIGNED-CERTIFICATE Outside
+group-policy POL-SP-WEBVPN internal
+group-policy POL-SP-WEBVPN attributes
+  vpn-tunnel-protocol webvpn
+  webvpn
+   url-list none
+tunnel-group WEBVPN-SHAREPOINT type remote-access
+tunnel-group WEBVPN-SHAREPOINT general-attributes
+  default-group-policy POL-SP-WEBVPN
+</code>
+Once the Group Policy and Tunnel Group are created go into ASDM to control the look and control what websites the user can access.</p>
+]]></content>
+  </entry>
+  
+</feed>

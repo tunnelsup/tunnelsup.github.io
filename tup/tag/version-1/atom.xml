@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: version 1 | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/version-1/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco IPS - Turning off ssh version 1]]></title>
+    <link href="http://tunnelsup.github.io/cisco-ips-turning-off-ssh-version-1/"/>
+    <updated>2013-04-01T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-ips-turning-off-ssh-version-1</id>
+    <content type="html"><![CDATA[<p>Vulnerability scanners are reporting that ssh version 1 is on by default for Cisco IPS units. It is fairly simple to turn this off on the IPS if you have service level privilege.</p>
+
+<p>First get into the service level account. This is essentially the linux shell under the IPS.</p>
+
+<p><code>ssh service@x.x.x.x</code></p>
+
+<p>Once you are ssh&rsquo;d in, issue these commands.</p>
+
+<p><code>
+su
+vi /etc/ssh/sshd_config
+</code></p>
+
+<p>Change the line that says:</p>
+
+<p><code>#Protocol 2,1</code></p>
+
+<p>Uncomment it and take out the &lsquo;,1&rsquo; so it looks like this:</p>
+
+<p><code>Protocol 2</code></p>
+
+<p>Save the file and exit out of vi.</p>
+
+<p>Restart the ssh daemon. (Warning: This may cause a failover if these are IPSMs in a failover pair)</p>
+
+<p><code>/etc/init.d/S60ssh restart</code></p>
+
+<p>Now you can test ssh'ing into your device and you should see this error:</p>
+
+<p><code>
+[user@linuxbox1 ~]$ ssh 10.50.50.10 -1
+Protocol major versions differ: 1 vs. 2
+</code></p>
+
+<p>Voila, ssh version 1 is now disabled!</p>
+]]></content>
+  </entry>
+  
+</feed>

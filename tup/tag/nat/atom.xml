@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: nat | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/nat/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Configuring NAT in Juniper SRX Platforms using JunOS]]></title>
+    <link href="http://tunnelsup.github.io/configuring-nat-in-juniper-srx-platforms-using-junos/"/>
+    <updated>2013-07-01T11:13:00-07:00</updated>
+    <id>http://tunnelsup.github.io/configuring-nat-in-juniper-srx-platforms-using-junos</id>
+    <content type="html"><![CDATA[<p>There are 3 kinds of NAT for the JunOS SRX devices. Source NAT, destination NAT, and static NAT. We will also cover Proxy ARP. This post will only cover the basic and most common concepts and usage of NAT in SRX. But with this knowledge you should be able to do NAT for almost any occasion.</p>
+
+<p>This post assumes you know the basic concept of NAT and what it is and why we use it and why we need it.</p>
+
+<h2>JunOS NAT packet processing</h2>
+
+<p>Consider the image below of how a packet is flowing through an SRX in regards to NAT.
+<img src="/images/junos-nat-packet-flow.png" alt="NAT flow IMG" /></p>
+
+<p>In order for the SRX to process the policies, it first needs to know what zone the packet is trying to get to. That is why the destination of a static NAT and destination NAT takes place first. After the policy is evaluated then the source of the static NAT or source NAT gets translated.</p>
+
+<p>As you might have guessed from looking at the diagram, static NAT takes precedence over any other kind of NAT.</p>
+
+<p>If there are overlapping NAT rules, the most specific (longest prefix length) is used.</p>
+
+<h2>Source NAT</h2>
+
+<p>This generally refers to outgoing NAT only. Traffic from within your company that has private IPs that needs to get out to the internet is source NAT&rsquo;d to a public IP.</p>
+
+<p><strong>Note:</strong> This NAT is UNIDIRECTIONAL. Meaning, traffic will be NAT&rsquo;d one way, and be able to reply back, but it will not NAT going the other direction.</p>
+
+<p><img src="/images/junos-nat-source.png" alt="NAT Source IMG" /></p>
+
+<p>The config to conduct source NAT would look something like this:</p>
+
+<p>```
+set security nat source rule-set NAT-DMZ-TO-UNTRUST from zone DMZ
+set security nat source rule-set NAT-DMZ-TO-UNTRUST to zone UNTRUST</p>
+
+<p>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE match source-address 192.168.0.0/16
+set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE match destination-address 0.0.0.0/0
+set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE then source-nat interface
+<code>``
+To create a NAT you must create a</code>rule-set<code>and a</code>rule` within that rule-set. Only one rule-set can be applied on a zone pair. Multiple rules can then be applied in that rule-set.</p>
+
+<p>In the example above, the traffic coming from 192.168.0.0/16 that is destined for anywhere that is traveling from the DMZ zone to the UNTRUST zone will be source NAT&rsquo;d to the interface of the UNTRUST interface IP address. In this particular case we are PAT'ing the traffic, also known as NAT overload. This is where many IPs can use the same single source IP as they are NAT&rsquo;d through the firewall.</p>
+
+<h3>Then Source-NAT Options</h3>
+
+<p>In the NAT config above you see the <code>then source-nat</code> portion last. There are three options that can be added here. In the case above we use the option <code>interface</code>. There is also <code>pool</code> and <code>off</code>.</p>
+
+<h4>Pool Option</h4>
+
+<p>Suppose you don&rsquo;t want to NAT to the interface but instead you want to use another IP. To first do that you must define that IP in a <code>pool</code>. The configuration would look like so:</p>
+
+<p>```
+set security nat source pool POOL-PAT address 199.199.199.199/32</p>
+
+<p>set security nat source rule-set NAT-DMZ-TO-UNTRUST from zone DMZ
+set security nat source rule-set NAT-DMZ-TO-UNTRUST to zone UNTRUST</p>
+
+<p>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE match source-address 192.168.0.0/16
+set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE match destination-address 0.0.0.0/0
+set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE then source-nat pool POOL-PAT
+```</p>
+
+<p>Even if you only have 1 IP you still make a pool. Take note that the pool will either be defined a source pool or destination pool.</p>
+
+<p>If you have over 64,000 connections going through the firewall into a single IP, you can have multiple IP addresses in the pool and the SRX will alternate between the IP addresses defined in the pool.</p>
+
+<h4>Off Option</h4>
+
+<p>It is possible to identify traffic that you specifically <strong>don&rsquo;t</strong> want to NAT. This would be useful if you are NAT'ing everything coming from DMZ going to UNTRUST, but you didn&rsquo;t want to NAT a specific flow that is supposed to go over a VPN tunnel. To conduct something like that you would use the <code>off</code> option. Here is an example:</p>
+
+<p>```
+set security nat source rule-set NAT-DMZ-TO-UNTRUST from zone DMZ
+set security nat source rule-set NAT-DMZ-TO-UNTRUST to zone UNTRUST</p>
+
+<p>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule NAT-OFF match source-address 192.168.0.0/16
+set security nat source rule-set NAT-DMZ-TO-UNTRUST rule NAT-OFF match destination-address 172.16.57.0/24
+set security nat source rule-set NAT-DMZ-TO-UNTRUST rule NAT-OFF then source-nat off</p>
+
+<p>set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE match source-address 192.168.0.0/16
+set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE match destination-address 0.0.0.0/0
+set security nat source rule-set NAT-DMZ-TO-UNTRUST rule PAT-INTERFACE then source-nat interface
+<code>``
+Notice there are two rules. The first is called</code>NO-NAT<code>which specifically says</code>source-nat off` if the traffic matches the criteria. That is because this traffic is going over a VPN and we don&rsquo;t want it to be NAT&rsquo;d but everything else must be source NAT&rsquo;d to the interface IP.</p>
+
+<p>This is the Cisco equivalent to doing a NAT Zero, NAT 0, No NAT, or Identity NAT.</p>
+
+<h2>Destination NAT</h2>
+
+<p>Destination NAT is usually referring to incoming NAT. Specifically someone on the internet needs to access a device inside the network can be destination NAT&rsquo;d to be reachable from the outside.</p>
+
+<p><strong>Note:</strong> This NAT is UNIDIRECTIONAL. Meaning, traffic will be NAT&rsquo;d one way, and be able to reply back, but it will not NAT going the other direction.</p>
+
+<p><img src="/images/junos-nat-dest.png" alt="NAT Source IMG" /></p>
+
+<p>This type of NAT is likely to be used for the outside public network to get to a webserver which has a private IP. As the traffic comes into the SRX the destination IP will have to be changed from the public IP to the real IP or private IP.</p>
+
+<p>```
+set security nat destination pool POOL-WEBSERVER address 10.10.10.10/32</p>
+
+<p>set security nat destination rule-set NAT-UNTRUST-TO-DMZ from zone UNTRUST
+set security nat destination rule-set NAT-UNTRUST-TO-DMZ to zone DMZ</p>
+
+<p>set security nat destination rule-set NAT-UNTRUST-TO-DMZ rule DEST-NAT match destination-address 199.199.199.199/32
+set security nat destination rule-set NAT-UNTRUST-TO-DMZ rule DEST-NAT then destination-nat pool POOL-WEBSERVER
+```
+In the example above any traffic coming into the SRX on the UNTRUST zone that is destined for 199.199.199.199 will be destination translated to go to 10.10.10.10. Keep in mind, 10.10.10.10 can respond to this traffic due to the SRX being a stateful firewall, however if it initiates traffic it will not be source NAT&rsquo;d to 199.199.199.199.</p>
+
+<p>If there are multiple IPs in the pool, the SRX will load balance between the IP&rsquo;s in the pool. Sending some traffic to each of the IPs in the destination pool. Considered the poor mans way to load balance.</p>
+
+<h3>Port Forwarding</h3>
+
+<p>Sometimes you want to do port forwarding. This would be classified as destination NAT. Here is an example of that.</p>
+
+<p>```
+set security nat destination pool POOL-PORT-FORWARD address 10.10.10.10/32 port 80</p>
+
+<p>set security nat destination rule-set NAT-UNTRUST-TO-DMZ from zone UNTRUST
+set security nat destination rule-set NAT-UNTRUST-TO-DMZ to zone DMZ</p>
+
+<p>set security nat destination rule-set NAT-UNTRUST-TO-DMZ rule DEST-NAT match destination-address 199.199.199.199/32
+set security nat destination rule-set NAT-UNTRUST-TO-DMZ rule DEST-NAT match destination-port 8080
+set security nat destination rule-set NAT-UNTRUST-TO-DMZ rule DEST-NAT then destination-nat pool POOL-PORT-FORWARD
+```
+In the above example, anyone coming into this SRX from the UNTRUST interface trying to get to 199.199.199.199 on port 8080, will be translated to go to 10.10.10.10 on port 80.</p>
+
+<h2>Static NAT</h2>
+
+<p>This type of NAT is bidirection. It is one to one. Specifically one public IP can be NAT&rsquo;d to one private IP. This would essentially create a source and destination NAT all in one rule.</p>
+
+<p><strong>Note:</strong> This NAT is BIDIRECTIONAL. Meaning, traffic will be NAT&rsquo;d both if it&rsquo;s going out or coming in.</p>
+
+<p><img src="/images/junos-nat-static.png" alt="NAT Source IMG" /></p>
+
+<p>Because this is bidirectional, you would use this type of NAT if you&rsquo;d like to map a public IP to a private IP to allow traffic to that IP to be destination NAT&rsquo;d and traffic from that IP to be source NAT&rsquo;d.</p>
+
+<p>Configuration example:</p>
+
+<p><code>
+set security nat static rule-set STATIC-SERVER1 from zone UNTRUST
+set security nat static rule-set STATIC-SERVER1 rule RULE-NAME match destination-address 99.99.99.99/32
+set security nat static rule-set STATIC-SERVER1 rule RULE-NAME then static-nat 10.10.10.99/32
+</code></p>
+
+<h2>Proxy ARP</h2>
+
+<p>If you are doing NAT and the destination is not the IP address of the interface of the SRX, then you need to tell the SRX to do proxy ARP.</p>
+
+<p>Imagine the firewall has a UNTRUST IP of 99.99.99.99 and is doing a static NAT for 99.99.99.88 to be NAT&rsquo;d to 10.10.10.88. In this case next hop internet router will do an ARP to look for whoever owns 99.99.99.88. By default the SRX will not respond to this ARP request. Proxy ARP must be enabled for the SRX to say &ldquo;oh, that packet is for me, here&rsquo;s my MAC address&rdquo;.</p>
+
+<p>Here is an example of proxy ARP configuration:</p>
+
+<p><code>
+set security nat proxy-arp interface ge-0/0/0.0 address 99.99.99.88/32 to 99.99.99.99/89/32
+</code>
+Now the SRX will &lsquo;listen&rsquo; for any ARP requests for 99.99.99.88 and 99.99.99.89.</p>
+
+<h2>Show Commands</h2>
+
+<p>Here are a few show commands to watch how NAT is taking place as it passes through the firewall.</p>
+
+<p><code>show security flow session</code><br>
+<code>show security nat source summary</code><br>
+<code>show security destination source summary</code><br></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA NAT Conversion Tool]]></title>
+    <link href="http://tunnelsup.github.io/nat-converter/"/>
+    <updated>2013-05-18T13:24:00-07:00</updated>
+    <id>http://tunnelsup.github.io/nat-converter</id>
+    <content type="html"><![CDATA[<p>Do you need to convert ASA 8.2 and under code to the new ASA 8.3+ code? The NAT statements are entirely different in the new code. During the upgrade the ASA will try to convert it automatically but this is worthless because it does a horrible job at it. Cisco recommends using auto NAT. This is also bad advice to use Auto NAT because it makes extremly ugly and hard to manage code. This conversion tool will convert your NAT statements to the easist to read and manage code.<br></p>
+
+<br>
+
+
+<h3>Preparing your code</h3>
+
+
+<p>Gather the output from the following commands in your old ASA code:<br>
+<code><pre>show run global<br>
+show run nat<br>
+show run static</pre></code></p>
+
+<p>If there are any related ACLs in the NAT statements get that configuration also by doing:<br>
+<code><pre>show run access-list | include [ACL-NAME]</pre></code>
+Paste the output from the commands above into the text area and click convert. You should examine the results to verify the config is accurate.<br><br>
+<strong>Privacy Note:</strong> None of the data entered into the text area is uploaded to a server. All of the work of this tool is done on the client side. This means it&rsquo;s safe to enter sensitive data without worrying about it traveling over the internet. You can even connect to this webpage, disconnect from internet and still use the conversion tool without any difference in functionality.</p>
+
+<br><br>
+
+
+<h3>Examples</h3>
+
+
+<pre><code>      Static NAT Examples:&lt;br&gt;
+       static (INSIDE,OUTISDE) 55.55.55.2 192.168.1.2 netmask 255.255.255.255 &lt;br&gt;
+       static (DMZ,OUTSIDE) tcp interface 8080 172.16.0.10 www netmask 255.255.255.255 &lt;br&gt;
+       static (INSIDE,DMZ) 10.10.10.0 172.16.10.0 netmask 255.255.255.0 dns &lt;br&gt;
+       static (INSIDE,DMZ) 192.168.100.49 172.24.2.49 netmask 255.255.255.255 tcp 255 2000&lt;br&gt;
+       static (INSIDE,EXT) 172.16.25.25 access-list ACL-NAT2&lt;br&gt;
+       access-list ACL-NAT2 extended permit ip 192.168.29.0 255.255.255.0 host 10.1.25.205&lt;br&gt; 
+       &lt;br&gt;
+      &lt;strong&gt;*New*&lt;/strong&gt; Global+NAT Example:&lt;br&gt;
+       nat (INSIDE) 1 10.0.0.0 255.255.255.0&lt;br&gt;
+       global (OUTSIDE) 1 interface&lt;br&gt;
+       nat (INSIDE) 2 access-list ACL-NAT3&lt;br&gt;
+       global (OUTSIDE) 2 22.22.22.128 netmask 255.255.255.128&lt;br&gt;
+       access-list ACL-NAT3 standard permit host 33.33.33.33&lt;br&gt;
+       &lt;br&gt;
+      &lt;strong&gt;*New*&lt;/strong&gt; NAT Zero+ACL Example:&lt;br&gt;
+       nat (INSIDE) 0 access-list ACL-NONAT&lt;br&gt;
+       access-list ACL-NONAT extended permit ip 192.168.5.0 255.255.255.0 host 172.16.200.205&lt;br&gt; 
+       access-list ACL-NONAT extended permit ip any host 172.16.200.203 &lt;br&gt;
+       &lt;br&gt;
+</code></pre>
+
+<h3>Input ASA 8.2 NAT statements</h3>
+
+
+<pre><code>    &lt;form name="convert" method="get"&gt;
+
+    &lt;textarea class="input-block-level" rows="10" name="nat82"&gt;
+</code></pre>
+
+<p>static (INSIDE,OUTSIDE) 55.55.55.2 192.168.1.2 netmask 255.255.255.255
+static (INSIDE,OUTSIDE) 55.55.55.3 192.168.1.3 netmask 255.255.255.255
+static (INSIDE,DMZ) 10.10.10.0 172.16.10.0 netmask 255.255.255.0</p>
+
+<pre><code>    &lt;/textarea&gt;
+
+    &lt;br/&gt;
+    &lt;button id="convertit" class="button btn-success btn-large" type="button"&gt;Convert It!&lt;/button&gt;
+    &lt;br/&gt;&lt;br/&gt;
+</code></pre>
+
+<h4>Results</h4>
+
+
+<pre><code>    &lt;textarea class="input-block-level" rows="20" name="nat84"&gt;&lt;/textarea&gt;
+
+
+    &lt;/form&gt;
+</code></pre>
+
+<br>
+
+
+<h3>Next Steps</h3>
+
+
+<p>Did you use the tool and was it helpful at all? Did it save you any time at all? Please either donate to the site to show your thanks or comment below to tell me how it worked or what to improve upon. Thanks!<br></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA Static NAT Creator]]></title>
+    <link href="http://tunnelsup.github.io/nat-creator/"/>
+    <updated>2013-05-18T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/nat-creator</id>
+    <content type="html"><![CDATA[<pre><code>      &lt;p&gt;This program will create a static 1 to 1 NAT for Cisco ASA 8.4.2+ code.&lt;/p&gt;
+    &lt;p&gt;The format needed for the conversion to work is: &lt;br /&gt;
+</code></pre>
+
+<p>[Real interface] [Mapped Interface] [Real IP] [Mapped IP]</p></p>
+
+<pre><code>    &lt;p&gt;Example:&lt;/p&gt;
+    &lt;/pre&gt;INSIDE OUTSIDE 192.168.5.5 55.55.55.5&lt;/PRE&gt;
+    &lt;br /&gt;
+    &lt;br /&gt;
+
+
+    &lt;form name="convert" method="get"&gt;
+
+
+
+    &lt;textarea class="input-block-level" rows="10" name="nat82"&gt;
+</code></pre>
+
+<p>INSIDE OUTSIDE 192.168.1.2 55.55.55.2
+INSIDE OUTSIDE 192.168.1.3 55.55.55.3
+INSIDE OUTSIDE 192.168.1.4 55.55.55.4</p>
+
+<pre><code>    &lt;/textarea&gt;
+
+    &lt;br/&gt;&lt;br/&gt;
+    &lt;button id="convertit" type="button"&gt;Convert It!&lt;/button&gt;
+    &lt;br/&gt;&lt;br/&gt;
+
+    &lt;textarea class="input-block-level" rows="20" name="nat84"&gt;&lt;/textarea&gt;
+
+
+    &lt;/form&gt;
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ARPing for non-connected subnets on a Cisco ASA]]></title>
+    <link href="http://tunnelsup.github.io/arping-for-non-connected-subnets-on-a-cisco-asa/"/>
+    <updated>2013-05-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/arping-for-non-connected-subnets-on-a-cisco-asa</id>
+    <content type="html"><![CDATA[<p>Consider the following network.</p>
+
+<p><img src="/images/arpnonconnected.png" alt="ARP diagram - IMG" /></p>
+
+<p>Things to notice:</p>
+
+<p>Subnets 22.22.22.0/24 and 33.33.33.0/24 are being routed to the outside of the ASA.</p>
+
+<p>There is a static NAT statement in the ASA to translate the real IP <span style="color: #ff0000;">192.168.5.22</span> to <span style="color: #ff0000;">22.22.22.22</span></p>
+
+<p>There is a static NAT statement in the ASA to translate the real IP<span style="color: #ff0000;"> 192.168.5.33</span> to <span style="color: #ff0000;">33.33.33.33</span></p>
+
+<h2>So how do you get this to work properly?</h2>
+
+
+<p>In ASA pre-8.3 code the ASA would ARP for the static NATs it would have regardless if it&rsquo;s connected or not.</p>
+
+<p>In ASA 8.3-8.4(4), THIS IS IMPOSSIBLE</p>
+
+<p>In ASA 8.4(5)+ Cisco realized their major mistake and implemented the command:</p>
+
+<p><code>arp permit-nonconnected</code></p>
+
+<h2>When else can I use this?</h2>
+
+
+<p>Another scenario to use this is when you have a router with multiple IPs on its interface that is connected to an ASA with a single IP. The ASA won&rsquo;t accept any packets for the other subnets that the router thinks is connected. By applying this command it will accept packets for the other subnets.</p>
+
+<h2>What's the risk?</h2>
+
+
+<p>By enabling this feature it could facilitate denial of service (DoS) attack against the ASA; a user on any interface could send out many ARP replies and overload the ASA ARP table with false entries. If you enable it be careful of what is physically plugging into the ASA since it can cause this problem.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[NAT for Cisco ASA's version 8.3+]]></title>
+    <link href="http://tunnelsup.github.io/nat-for-cisco-asas-version-8-3/"/>
+    <updated>2011-06-24T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/nat-for-cisco-asas-version-8-3</id>
+    <content type="html"><![CDATA[<p>There are two major kinds of NAT in 8.3+ Auto NAT and Manual NAT. Auto is done inside the object and cannot take into consideration the destination of the traffic. Manual is done in global configuration and can NAT either the source IPs and destination IPs.</p>
+
+<h3>Auto NAT</h3>
+
+<p>The new term autoNAT is used in 8.3. Auto NAT is when the  NAT command appears INSIDE the object statement on the firewall.  There are two major variants of auto NAT: dynamic and static. Auto NAT is also sometimes referenced as Network Object NAT because the configuration is done within the network object.</p>
+
+<h5>Regular Dynamic PAT</h5>
+
+<p>To create a many-to-one NAT where the entire inside network is getting PATd to a single outside IP do the following.</p>
+
+<p>Old 8.2 command:</p>
+
+<pre><code><span style="color: #993300;">nat (inside) 1 10.0.0.0 255.255.255.0</span>
+<span style="color: #993300;">global (outside) 1 interface</span>
+</code></pre>
+
+
+<p>New 8.3 equivalent command:</p>
+
+<pre><code><span style="color: #00F000;">object network inside-net</span>
+  <span style="color: #00F000;">subnet 10.0.0.0 255.255.255.0</span>
+<span style="color: #00F000;">nat (inside,outside) <strong>dynamic</strong> interface</span>
+</pre>
+
+
+<p></code></p>
+
+<p>Note: the interface command is the 2nd interface in the nat statement, in this case the outside.</p>
+
+<h5>Static Auto-NAT</h5>
+
+<p>To create a one to one NAT within the object like when you have a webserver in your DMZ you can do the following NAT configuration.</p>
+
+<pre><code><span style="color: #00F000;">object network dmz-webserver</span>
+  <span style="color: #00F000;">host 192.168.1.23</span>
+<span style="color: #00F000;">nat (dmz,outside) <strong>static</strong> 209.165.201.28</span>
+</pre>
+
+
+<p></code></p>
+
+<p>Please note, the <code>nat (inside,outside)</code> part of these commands are a lot easier to read in 8.3. The first interface is the interface the traffic is coming into the ASA on and the second interface is the interface that this traffic is going out of the ASA on. So the command nat (dmz,outside) static 209.165.201.28 should be read as NAT the IP address 192.168.1.23 to 209.165.201.28 if the traffic is coming in on the dmz interface and going out the outside interface, or vice versa. This will not NAT traffic coming from the inside going to the DMZ, nor should it NAT the traffic coming from the DMZ going to the inside.</p>
+
+<h5>Using the <code>any</code> interface in the NAT statement</h5>
+
+<p>ASA 8.3 introduces the <code>any</code> interface when configuring NAT. For instance if you have a system on the DMZ that you wish to NAT not only to the outside interface, but to any interface you can use this command:</p>
+
+<pre><code><span style="color: #00F000;">object network dmz-webserver</span>
+  <span style="color: #00F000;">host 192.168.1.23</span>
+<span style="color: #00F000;">nat (dmz,any) static 200.200.200.200</span>
+</pre>
+
+
+<p></code></p>
+
+<p>This makes it so users on the inside can web to 200.200.200.200 and if traffic is routed to the firewall it will NAT it to the real IP in the DMZ.</p>
+
+<h5>Port forwarding using Auto NAT</h5>
+
+<p>Suppose you have 2 web servers in your DMZ but you only have 1 IP address. You can configure port forwarding using the auto NAT feature in the following way:</p>
+
+<pre><code><span style="color: #00F000;">object network dmz-webserver1</span>
+  <span style="color: #00F000;">host 192.168.1.25</span>
+<span style="color: #00F000;">nat (dmz,outside) static interface service tcp 8000 www</span>
+<span style="color: #00F000;">object network dmz-webserver2</span>
+  <span style="color: #00F000;">host 192.168.1.23</span>
+<span style="color: #00F000;">nat (dmz,outside) static interface service tcp 8080 www</span>
+</pre>
+
+
+<p></code></p>
+
+<p>This will make it so if you go to the IP address of the outside interface over port 8000 it will take you to 192.168.1.25 port 80 but if you go there using port 8080 it will take you to 192.168.1.23 port 80.</p>
+
+<p>Confused yet? I hope not because its about to get weird</p>
+
+<h3>Manual NAT or Twice NAT or Policy NAT or Reverse NAT</h3>
+
+<p>The limitation that Auto NAT has is that it cannot take the destination into consideration when conducting its NAT. This also of course results in it not being able to alter the destination address either. To accomplish either of these tasks you must use manual NAT.</p>
+
+<p>All of these terms are <strong>identical</strong>: Manual NAT, Twice NAT, Policy NAT, Reverse NAT. Dont be confused by fancy mumbo jumbo.</p>
+
+<h5>Policy NAT Exemption aka NAT Zero aka No NAT</h5>
+
+<p>In ASA 8.3 code this is known as Policy NAT exemption. This is commonly used to not NAT traffic over a VPN tunnel.</p>
+
+<pre><code><span style="color: #00F000;">object network inside-net</span>
+  <span style="color: #00F000;">subnet 10.0.0.0 255.255.255.0</span>
+<span style="color: #00F000;">object network vpn-subnets</span>
+  <span style="color: #00F000;">range 10.1.0.0 10.5.255.255</span>
+<span style="color: #00F000;">nat (inside,outside) source static inside-net inside-net destination static vpn-subnets vpn-subnets</span>
+</pre>
+
+
+<p></code></p>
+
+<h5>Policy NAT exemption for incoming remote access VPNs</h5>
+
+<p>In order for a packet to come in through a firewall from a lesser security interface to a higher security interface it must have a translation and an ACL to permit it through. If you are setting up remote access VPN then the ACL is usually bypassed since its tunneled traffic. There still needs to be a translation. This is completed by doing the following (Note the order of the interfaces in the NAT statement):</p>
+
+<pre><code><span style="color: #00F000;">object-group network OBJ-INSIDE-NETWORKS</span>
+  <span style="color: #00F000;">network-object 172.16.200.0 255.255.255.0</span>
+<span style="color: #00F000;">object network obj-172.16.101.0</span>
+  <span style="color: #00F000;">subnet 172.16.101.0 255.255.255.0</span>
+<span style="color: #00F000;">nat (OUTSIDE,INSIDE) source static obj-172.16.101.0 obj-172.16.101.0 destination static OBJ-INSIDE-NETWORKS OBJ-INSIDE-NETWORKS</span>
+</pre>
+
+
+<p></code></p>
+
+<h5>Dynamic Policy NAT</h5>
+
+<p>This is when you want to specify an ACL for your NAT traffic to match on and if it matches that ACL then NAT it to something</p>
+
+<p>Suppose you are trying to build a VPN tunnel to another site. The problem is that your private IP addresses are overlapping with their private IP addresses so they tell you that you MUST come from 172.27.27.27. If this was a static one to one translation it wouldnt be so hard but in this case we have many users all needing to use that IP address.</p>
+
+<p>In the pre 8.3 configuration your code would look something like this:</p>
+
+<pre><code><span style="color: #993300;">access-list ACL-VENDOR-VPN-NAT extended permit ip 192.168.1.0 255.255.255.0 host 172.16.75.5</span>
+<span style="color: #993300;">nat (inside) 3 access-list ACL-VENDOR-VPN-NAT</span>
+<span style="color: #993300;">global (outside) 3 172.27.27.27</span>
+</pre>
+
+
+<p></code></p>
+
+<p>In the new ASA 8.3 config the code looks like this:</p>
+
+<pre><code><span style="color: #00F000;">object network inside-net</span>
+  <span style="color: #00F000;">subnet 192.168.1.0 255.255.255.0</span>
+<span style="color: #00F000;">object network vendor-vpn-nat</span>
+  <span style="color: #00F000;">host 172.16.75.5</span>
+<span style="color: #00F000;">object network translated-ip</span>
+  <span style="color: #00F000;">host 172.27.27.27</span>
+<span style="color: #00F000;">nat (inside,outside) source dynamic inside-net translated-ip destination static vendor-vpn-nat vendor-vpn-nat</span>
+</pre>
+
+
+<p></code></p>
+
+<h3>Miscellaneous Notes</h3>
+
+<h5>Use real IPs in access-lists</h5>
+
+<p>In ASA version 8.3 you must specify the real IP and not the translate IP. For instance to permit your traffic  to the webserver through the outside ACL you must put:</p>
+
+<p>access-list ACL-OUTSIDE-IN extended permit tcp any host 192.168.1.25 eq 80</p>
+
+<p>This is a major change from pre 8.3 which would specify the public or NATd IP address.</p>
+
+<h3>Show commands</h3>
+
+<p>To view this configuration you must check two places to see what is being NATd.</p>
+
+<p><code>show run object</code></p>
+
+<p><code>show run nat</code></p>
+
+<p>The command show run object in-line is sometimes useful to when using the pipe commands.</p>
+
+<p>You can also see the order of NAT and number of NAT translation hit counts with:</p>
+
+<p><code>show nat</code></p>
+
+<h3>Optional Destination keyword in manual NAT</h3>
+
+<p>The destination keyword and addresses in the manual NAT command is optional.  This means that both of these configurations do the same work:</p>
+
+<pre><code><span style="color: #00F000;">object network inside-net</span>
+<span style="color: #00F000;">subnet 10.0.0.0 255.255.255.0</span>
+<span style="color: #00F000;">nat (inside,outside) dynamic interface</span>
+<span style="color: #00F000;">!</span>
+<span style="color: #00F000;">object network inside-net</span>
+<span style="color: #00F000;">subnet 10.0.0.0 255.255.255.0</span>
+<span style="color: #00F000;">nat (inside,outside) source dynamic inside-net interface</span>
+</pre>
+
+
+<p></code></p>
+
+<h3>NAT order and after-auto NATing</h3>
+
+<p>The order of operation in NAT commands is documented here:</p>
+
+<p><a href="http://www.cisco.com/en/US/partner/docs/security/asa/asa83/configuration/guide/nat_overview.html#wp1118157"><a href="http://www.cisco.com/en/US/partner/docs/security/asa/asa83/configuration/guide/nat_overview.html#wp1118157">http://www.cisco.com/en/US/partner/docs/security/asa/asa83/configuration/guide/nat_overview.html#wp1118157</a></a></p>
+
+<p>The NAT operation will only take place once. Once there is a match on a NAT it will stop looking down the line to see whether it needs to NAT this traffic or not. The order of operation for this is like so:</p>
+
+<ol>
+    <li>Twice NAT statements</li>
+    <li>Auto NAT statements</li>
+    <li>After-Auto NAT statements</li>
+</ol>
+
+
+<p>Let&rsquo;s say you have a Manual or Twice NAT that you want to be considered AFTER all of the auto NATs. You can specify this by adding the after-auto keyword which would look something like this:</p>
+
+<p><span style="color: #00F000;"><code>nat (inside,outside) after-auto source dynamic any</code></span></p>
+
+<h3>Using Descriptions</h3>
+
+<p>The description keyword can be added to the end of a manual NAT statement to keep things more organized like so:</p>
+
+<pre><code><span style="color: #00F000;">nat (OUTSIDE,INSIDE) source static obj-172.16.101.0 obj-172.16.101.0 destination static OBJ-INSIDE-NETWORKS OBJ-INSIDE-NETWORKS description ANYCON-NONAT</span>
+</pre>
+
+
+<p></code></p>
+
+<h3>Inactive NAT statements</h3>
+
+<p>You may deactivate a manual NAT statement by adding the inactive keyword at the end of the statement like so:</p>
+
+<pre><code><span style="color: #00F000;">nat (OUTSIDE,INSIDE) source static obj-172.16.101.0 obj-172.16.101.0 destination static OBJ-INSIDE-NETWORKS OBJ-INSIDE-NETWORKS inactive</span>
+</pre>
+
+
+<p></code></p>
+
+<h3>Cisco Documentation on NAT for 8.3</h3>
+
+<p>CLI NAT configuration guide for ASA 8.3
+<a href="http://www.cisco.com/en/US/partner/docs/security/asa/asa83/configuration/guide/nat_overview.html"><a href="http://www.cisco.com/en/US/partner/docs/security/asa/asa83/configuration/guide/nat_overview.html">http://www.cisco.com/en/US/partner/docs/security/asa/asa83/configuration/guide/nat_overview.html</a></a></p>
+
+<p>Upgrading to ASA 8.3  What you need to know
+<a href="https://supportforums.cisco.com/docs/DOC-12690"><a href="https://supportforums.cisco.com/docs/DOC-12690">https://supportforums.cisco.com/docs/DOC-12690</a></a></p>
+
+<p>Video examples and tutorial
+<a href="https://supportforums.cisco.com/docs/DOC-12324"><a href="https://supportforums.cisco.com/docs/DOC-12324">https://supportforums.cisco.com/docs/DOC-12324</a></a></p>
+
+<p><span id="307d6c73_b603_4925_99da_e8f83599f5eb"><object id="embedded_playerb198756c208b6" width="520" height="328" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="codebase" value="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,30,0" /><param name="pluginspage" value="http://www.macromedia.com/go/getflashplayer" /><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="wmode" value="transparent" /><param name="quality" value="high" /><param name="base" value="http://videosvc.jivesoftware.com" /><param name="flashvars" value="v=0&amp;l=[{video_id:'b198756c208b6',logo_file:'https://supportforums.cisco.com/servlet/JiveServlet/downloadImage/6472/cisco_logo.png'}]" /><param name="src" value="http://videosvc.jivesoftware.com/plugins/player.swf?p=document&amp;auth_token=f9452220e1f763ff8e22c12e7b2c58919415c30b8951481284b76921d6012549" /><embed id="embedded_playerb198756c208b6" width="520" height="328" type="application/x-shockwave-flash" src="http://videosvc.jivesoftware.com/plugins/player.swf?p=document&amp;auth_token=f9452220e1f763ff8e22c12e7b2c58919415c30b8951481284b76921d6012549" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,30,0" pluginspage="http://www.macromedia.com/go/getflashplayer" allowfullscreen="true" allowscriptaccess="always" wmode="transparent" quality="high" base="http://videosvc.jivesoftware.com" flashvars="v=0&amp;l=[{video_id:'b198756c208b6',logo_file:'https://supportforums.cisco.com/servlet/JiveServlet/downloadImage/6472/cisco_logo.png'}]" /></object></span></p>
+
+<p>ASA Pre-8.3 to 8.3 NAT configuration examples
+<a href="https://supportforums.cisco.com/docs/DOC-9129"><a href="https://supportforums.cisco.com/docs/DOC-9129">https://supportforums.cisco.com/docs/DOC-9129</a></a></p>
+
+<p>ASA NAT migration problems when upgrading to 8.3 ; Syslog &ldquo;%ASA-5-305013: Asymmetric NAT rules matched for forward and reverse flows&rdquo;
+<a href="https://supportforums.cisco.com/docs/DOC-12569"><a href="https://supportforums.cisco.com/docs/DOC-12569">https://supportforums.cisco.com/docs/DOC-12569</a></a></p>
+]]></content>
+  </entry>
+  
+</feed>

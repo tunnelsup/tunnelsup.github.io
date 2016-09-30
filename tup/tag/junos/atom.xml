@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: junos | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/junos/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Troubleshooting high CPU on Juniper SRX Junos devices]]></title>
+    <link href="http://tunnelsup.github.io/troubleshooting-high-cpu-on-juniper-srx-junos-devices/"/>
+    <updated>2015-09-30T19:20:00-07:00</updated>
+    <id>http://tunnelsup.github.io/troubleshooting-high-cpu-on-juniper-srx-junos-devices</id>
+    <content type="html"><![CDATA[<p>Occasionally a Juniper SRX device running Junos will have a high CPU. Here are some tips for troubleshooting these incidents.</p>
+
+<h2>Validate</h2>
+
+<p>Check the routing engine (control plane). Check the CPU status by doing <code>show chassis routing-engine</code>.</p>
+
+<p>```
+user@USPHIFW1> show chassis routing-engine
+Routing Engine status:</p>
+
+<pre><code>Temperature                 40 degrees C / 104 degrees F
+CPU temperature             38 degrees C / 100 degrees F
+Total memory              1024 MB Max   758 MB used ( 74 percent)
+  Control plane memory     560 MB Max   442 MB used ( 79 percent)
+  Data plane memory        464 MB Max   316 MB used ( 68 percent)
+CPU utilization:
+  User                      90 percent
+  Background                 0 percent
+  Kernel                     6 percent
+  Interrupt                  0 percent
+  Idle                       4 percent
+Model                          RE-SRX240H
+Serial ID                      AAEM9236
+Start time                     2014-02-23 10:25:39 CST
+Uptime                         584 days, 7 hours, 58 minutes, 37 seconds
+Last reboot reason             0x1:power cycle/failure
+Load averages:                 1 minute   5 minute  15 minute
+                                   0.46       0.48       0.49
+</code></pre>
+
+<p>```</p>
+
+<p>Above you can see that the CPUs are 4% idle which means it&rsquo;s 96% utilized. I would say anything over 90% is considered bad. Once the CPU gets gets to 100% utilization it will start dropping packets and possibly overheating.</p>
+
+<p>Next you want to look further and see what processes are running high. Do this with the command <code>show system processes extensive</code>.</p>
+
+<p>```
+user@USPHIFW1> show system processes extensive
+last pid: 15924;  load averages:  0.50,  0.50,  0.50  up 584+08:03:00    19:28:16
+149 processes: 19 running, 115 sleeping, 3 zombie, 12 waiting</p>
+
+<p>Mem: 172M Active, 140M Inact, 539M Wired, 73M Cache, 112M Buf, 46M Free Swap:</p>
+
+<p>  PID USERNAME       THR PRI NICE   SIZE    RES STATE  C   TIME   WCPU COMMAND
+ 1306 nobody           2 139    0  8996K  3440K RUN    0  20.5H 7518.75% httpd
+ 1377 root             7  76    0   499M 52316K select 0    ??? 281.15% flowd_octeon_hm
+ 1106 root             1  87    0 13692K  3200K RUN    0 1712.2 22.51% eventd
+15922 root             1   4    0  7732K  2968K sbwait 0   0:00  2.25% sshd
+```</p>
+
+<p>Usually even under good conditions, there will be processes that are running at well over 100% utilization. The Junos does a terrible job at adding in this case, something to do with multi core processors confusing the output. You can do <code>start shell</code> then <code>top -H</code> to see the actual utilization per core.</p>
+
+<h2>Analyze the processes</h2>
+
+<p>Now that you know what processes are running high, we can look into why it&rsquo;s causing it.</p>
+
+<h3>Process: httpd</h3>
+
+<p>If you see the process <code>httpd</code> as one of the <strong>first three</strong> processes with the highest CPU, chances are the web UI is having issues and needs to be restarted. Restarting this process only impacts any user that are currently in the web UI of this SRX.</p>
+
+<p>To restart the httpd process run the following command:</p>
+
+<p><code>
+restart web-management
+</code></p>
+
+<p>This will immediately restart the process without confirmation. After doing so, look at <code>show chassis routing-engine</code> over and over to see if the percent idle has gone up over 30%. If so, that has fixed your problem.</p>
+
+<p>I very frequently see this process get stuck at a high percent. I&rsquo;m not sure what causes it, but the fix is quick and easy so that&rsquo;s nice.</p>
+
+<h3>Process: eventd</h3>
+
+<p>If the process <code>eventd</code> is running high (over 20%) then this is probably something worth looking into. This process handles the events on the Juniper device itself which includes:</p>
+
+<ul>
+<li>Storing internal syslog messages</li>
+<li>Sending syslog messages to another system</li>
+<li>Sending/responding to SNMP traps/polls</li>
+<li>Sampling handling</li>
+<li>Traceoptions handling</li>
+</ul>
+
+
+<p>If this is running high check if any of the above are turned on a little too high. Perhaps too many traceoptions are on, or too much sampling is turned on. Try turning these off and see if the CPU goes back to normal.</p>
+
+<p>There are two modes for syslogs, event and stream. Perhaps changing it to stream will reduce the CPU utilization.</p>
+
+<h3>Process: flowd_octeon</h3>
+
+<p>The process <code>flowd_octeon</code> seems to always run over 200%. This is normal. Usually this isn&rsquo;t the problem and try looking at the next highest CPU hog as the culprit.</p>
+
+<p>This processes is responsible for packet handling, data processing, or flow processing. The flow processing is all done on the data plane.</p>
+
+<h5>Check the packet forwarding engine (data plane)</h5>
+
+<p>The following two commands shows us what&rsquo;s happening on the data plane.</p>
+
+<p><code>
+user@USPHIFW1&gt; show chassis forwarding
+FWDD status:
+  State                                 Online
+  Microkernel CPU utilization         5 percent
+  Real-time threads CPU utilization   0 percent
+  Heap utilization                   68 percent
+  Buffer utilization                  1 percent
+  Uptime:                               584 days, 8 hours, 43 minutes, 30 seconds
+</code></p>
+
+<p>```
+user@USPHIFW1> show security monitoring fpc 0
+FPC 0
+  PIC 0</p>
+
+<pre><code>CPU utilization      :    2 %
+Memory utilization   :   68 %
+Current flow session :  929
+Max flow session     : 131072
+</code></pre>
+
+<p>Session Creation Per Second (for last 96 seconds on average):    0
+```</p>
+
+<p>If the CPU utilization here is low, then you don&rsquo;t have a problem with the data plane.</p>
+
+<p><a href="http://www.juniper.net/documentation/en_US/junos12.1/topics/concept/chassis-cluster-data-plane-understanding.html">The data plane (aka forwarding plane)</a> is where the SRX decides what to do with the packet. This is where the SRX looks at the forwarding table and routing table to determine where to send the packet. If your CPU here is high, then it&rsquo;s possible you are reaching the capacity of this device. Start looking at things like how many packets and bytes each interface is receiving and comparing it with the model specifications.</p>
+
+<p>To examine the throughput of each interface use the following command:</p>
+
+<p><code>show interfaces detail | match "link is Up| bps| pps" | except "0 bps|0 pps"</code></p>
+
+<p>To examine the number of sessions use the following command:</p>
+
+<p><code>show security flow statistics</code></p>
+
+<p>Check the model for limitations here:</p>
+
+<p><a href="http://www.juniper.net/us/en/products-services/security/srx-series/compare/#a=SRX100,SRX110,SRX210,SRX220,SRX240,SRX300,SRX550,SRX650,SRX1400,SRX1500,SRX3400,SRX3600,SRX5400,SRX5600,SRX5800">http://www.juniper.net/us/en/products-services/security/srx-series/compare/#a=SRX100,SRX110,SRX210,SRX220,SRX240,SRX300,SRX550,SRX650,SRX1400,SRX1500,SRX3400,SRX3600,SRX5400,SRX5600,SRX5800</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Useful Juniper SRX Troubleshooting Commands]]></title>
+    <link href="http://tunnelsup.github.io/useful-juniper-srx-troubleshooting-commands/"/>
+    <updated>2015-09-06T13:04:00-07:00</updated>
+    <id>http://tunnelsup.github.io/useful-juniper-srx-troubleshooting-commands</id>
+    <content type="html"><![CDATA[<p>Here&rsquo;s a list of my favorite Juniper SRX Junos commands I use for troubleshooting.</p>
+
+<h3>Show config as single lines instead of stanzas</h3>
+
+<p><code>
+edit
+show | display set
+</code></p>
+
+<p>This is useful for displaying the config to look more like the way a Cisco config looks. It&rsquo;s easier to search for keywords in the config with this command by doing things like <code>show | display set | match interface</code>.</p>
+
+<h3>Show the connections going through the SRX</h3>
+
+<p><code>
+user@SRX1&gt; show security flow session
+Session ID: 18999, Policy name: POL-INSIDE-TO-OUTSIDE/6, Timeout: 1632
+  In: 172.16.200.43/37689 --&gt; 199.199.199.199/443;tcp, If: ge-0/0/1.0
+  Out: 199.199.199.199/443 --&gt; 200.200.200.200/8915;tcp, If: ge-0/0/0.0
+</code></p>
+
+<p>This will show detailed information of all the connections and flows going through the SRX. The output will look like this.</p>
+
+<p>The output above displays a user on the inside going to a website on the outside. The user IP is <code>172.16.200.43</code>, the web server is <code>199.199.199.199</code>, and the SRX NAT&rsquo;d this outbound flow to <code>200.200.200.200</code>.</p>
+
+<h3>See uncommitted changes</h3>
+
+<p><code>
+edit
+show | compare
+</code></p>
+
+<p>When you want to make changes to an SRX it&rsquo;s best to check whether there are any uncommited changes before you begin making changes. This commands shows you what those are.</p>
+
+<h3>Show previous commits</h3>
+
+<p>```
+user@SRX-1> edit
+Entering configuration mode</p>
+
+<p>[edit]
+user@SRX-1# rollback ?
+Possible completions:
+  &lt;[Enter]>            Execute this command
+  0                    2015-06-15 20:23:16 UTC by zaphod via cli
+  1                    2015-05-19 23:40:21 UTC by arthur via cli
+  2                    2015-05-17 23:35:05 UTC by zaphod via cli
+  3                    2015-05-16 23:34:35 UTC by arthur via cli
+  4                    2015-05-11 23:33:20 UTC by ford via cli
+  5                    2015-05-10 23:31:48 UTC by ford via cli
+  |                    Pipe through a command
+[edit]
+```</p>
+
+<p>The output above shows you the history of who did a change and when. This is why it&rsquo;s important that each user has their own username.</p>
+
+<h3>See what was in a previous commit</h3>
+
+<p><code>
+edit
+show | compare rollback 5
+</code></p>
+
+<p>This will display the contents of rollback 5.</p>
+
+<h3>Show CPU/Uptime/memory/temperature</h3>
+
+<p><code>
+show chassis routing-engine
+</code></p>
+
+<p>Useful command to give a snapshot of multiple health statistics.</p>
+
+<h3>Show front panel alarms</h3>
+
+<p><code>
+show chassis craft-interface
+</code></p>
+
+<p>Some models of Juniper SRX have a craft interface. This command will show you the LED status of the front panel.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Site to Site VPN Tunnel Between Cisco ASA and Juniper SRX JunOS]]></title>
+    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos/"/>
+    <updated>2013-01-16T00:00:00-08:00</updated>
+    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos</id>
+    <content type="html"><![CDATA[<p><img src="/images/asasitetosite.jpg" alt="ASA Site to site diagram - IMG" /></p>
+
+<p>Blue firewall: Juniper SRX 210 (JunOS 10.0R1.8)</p>
+
+<p>Red firewall: Cisco ASA 5510 (OS 8.4)</p>
+
+<p>This is a script to create a site to site VPN tunnel between a Cisco ASA and a Juniper SRX. The Juniper SRX will be using a policy based VPN.</p>
+
+<h3>Blue Juniper SRX</h3>
+
+<p>```</p>
+
+<h1>Create the IKE proposal</h1>
+
+<p>set security ike proposal IKE-SHA-AES128-DH1 authentication-method pre-shared-keys
+set security ike proposal IKE-SHA-AES128-DH1 dh-group group2
+set security ike proposal IKE-SHA-AES128-DH1 encryption-algorithm aes-128-cbc
+set security ike proposal IKE-SHA-AES128-DH1 authentication algorithm sha1
+set security ike proposal IKE-SHA-AES128-DH1 lifetime-seconds 86400</p>
+
+<h1>Create the IKE policy</h1>
+
+<p>set security ike policy IKE-POLICY-HQ mode main
+set security ike policy IKE-POLICY-HQ proposals IKE-SHA-AES128-DH1
+set security ike policy IKE-POLICY-HQ pre-shared-key ascii-text s3kreTKey</p>
+
+<h1>Create an IKE gateway</h1>
+
+<p>set security ike gateway IKE-GATEWAY-HQ ike-policy IKE-POLICY-HQ
+set security ike gateway IKE-GATEWAY-HQ address 22.22.22.22
+set security ike gateway IKE-GATEWAY-HQ external-interface ge-0/0/0.0</p>
+
+<h1>Create an IPSec proposal/transform set</h1>
+
+<p>set security ipsec proposal IPSEC-SHA-AES128-ESP encryption-algorithm aes-128-cbc
+set security ipsec proposal IPSEC-SHA-AES128-ESP authentication-algorithm hmac-sha1-96
+set security ipsec proposal IPSEC-SHA-AES128-ESP protocol esp
+set security ipsec proposal IPSEC-SHA-AES128-ESP lifetime-seconds 3600</p>
+
+<h1>Create a IPSec policy</h1>
+
+<p>set security ipsec policy VPN-POLICY-HQ proposals IPSEC-SHA-AES128-ESP</p>
+
+<h1>Create the IPSec VPN</h1>
+
+<p>set security ipsec vpn VPN-HQ ike gateway IKE-GATEWAY-HQ
+set security ipsec vpn VPN-HQ ike ipsec-policy VPN-POLICY-HQ</p>
+
+<h1>Add some networks into the address book</h1>
+
+<p>set security zones security-zone OUTSIDE address-book address NET-REMOTE-VPN 172.16.22.0/24
+set security zones security-zone INSIDE address-book address NET-LOCAL 192.168.11.0/24</p>
+
+<h1>Create the policies to define the interesting traffic</h1>
+
+<p>set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match source-address NET-LOCAL
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match destination-address NET-REMOTE-VPN
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match application any
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT then permit tunnel ipsec-vpn VPN-HQ
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT then permit tunnel pair-policy VPN-POLICY-HQ-IN</p>
+
+<p>set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match source-address NET-REMOTE-VPN
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match destination-address NET-LOCAL
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match application any
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN then permit tunnel ipsec-vpn VPN-HQ
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN then permit tunnel pair-policy VPN-POLICY-HQ-OUT</p>
+
+<h1>You want to exclude the VPN traffic from being NAT&rsquo;d</h1>
+
+<p>set security nat source rule-set NAT-INTERFACE rule NO-NAT match source-address 192.168.11.0/24
+set security nat source rule-set NAT-INTERFACE rule NO-NAT match destination-address 172.16.22.0/24
+set security nat source rule-set NAT-INTERFACE rule NO-NAT then source-nat off</p>
+
+<h1>My config already had a rule in the rule-set. So I had to move the new rule above the old rule so it processes the no nat first.</h1>
+
+<p>insert source rule-set NAT-INTERFACE rule NO-NAT before rule RULE-NAME
+```</p>
+
+<h3>Red Cisco ASA Firewall</h3>
+
+<p>```
+! Define the interesting traffic
+access-list ACL-VPN-SRX extended permit ip 172.16.22.0 255.255.255.0 192.168.11.0 255.255.255.0</p>
+
+<p>! Set the IKE parameters
+crypto ikev1 enable OUTSIDE
+crypto ikev1 policy 5
+authentication pre-share
+encryption aes
+hash sha
+group 2
+lifetime 86400</p>
+
+<p>! Create the IPSec settings
+crypto ipsec ikev1 transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+crypto map MAP-VPN 10 match address ACL-VPN-SRX
+crypto map MAP-VPN 10 set peer 11.11.11.11
+crypto map MAP-VPN 10 set ikev1 transform-set ESP-AES128-SHA
+crypto map MAP-VPN interface OUTSIDE</p>
+
+<p>! Create the tunnel group
+tunnel-group 11.11.11.11 type ipsec-l2l
+tunnel-group 11.11.11.11 ipsec-attributes
+ikev1 pre-shared-key s3kreTKey</p>
+
+<p>! In my case I needed to tell this VPN traffic to not be NAT&rsquo;d as it goes through the firewall
+object network OBJ-172.16.22.0
+subnet 172.16.22.0 255.255.255.0
+object network OBJ-192.168.11.0
+subnet 192.168.11.0 255.255.255.0
+nat (INSIDE,OUTSIDE) source static OBJ-172.16.22.0 OBJ-172.16.22.0 destination static OBJ-192.168.11.0 OBJ-192.168.11.0 no-proxy-arp description No NAT for VPN to SRX
+```</p>
+
+<p>There is a great tool to generate the Juniper SRX code on Juniper&rsquo;s site:</p>
+
+<p><a href="https://www.juniper.net/customers/support/configtools/vpnconfig.html"><a href="https://www.juniper.net/customers/support/configtools/vpnconfig.html">https://www.juniper.net/customers/support/configtools/vpnconfig.html</a></a></p>
+
+<p>To build the Juniper config I used this page as a reference guide:</p>
+
+<p><a href="http://www.juniper.net/techpubs/en_US/junos/topics/example/policy-based-vpn-using-j-series-srx-series-device-configuring.html"><a href="http://www.juniper.net/techpubs/en_US/junos/topics/example/policy-based-vpn-using-j-series-srx-series-device-configuring.html">http://www.juniper.net/techpubs/en_US/junos/topics/example/policy-based-vpn-using-j-series-srx-series-device-configuring.html</a></a></p>
+]]></content>
+  </entry>
+  
+</feed>

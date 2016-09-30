@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: connection | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/connection/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Understanding Cisco ASA Connection Flags]]></title>
+    <link href="http://tunnelsup.github.io/understanding-cisco-asa-connection-flags/"/>
+    <updated>2013-07-13T10:33:00-07:00</updated>
+    <id>http://tunnelsup.github.io/understanding-cisco-asa-connection-flags</id>
+    <content type="html"><![CDATA[<p>Have you ever wondered what the flags meant when you issued the <code>show conn</code> or <code>show connections</code> command? This post will demystify that for you.</p>
+
+<h2>Viewing the Connections</h2>
+
+<p>Use the command <code>show conn</code> to view the connections currently going through the firewall. It should look something like this:</p>
+
+<p><code>
+TCP VPN 10.99.55.44(18.17.16.15):11515 inside 10.88.77.66:30854, idle 0:02:48, bytes 178, flags UIO
+TCP outside 77.66.55.44:49368 VPN 15.15.15.15:443, idle 0:00:21, bytes 100531, flags UfrIOB
+UDP VPN 10.17.17.17:8500 inside 10.20.20.20:4167, idle 0:01:38, bytes 616, flags -
+TCP VPN 77.66.55.44:30031 inside 10.20.20.20:51716, idle 0:00:11, bytes 0, flags U
+TCP outside 10.20.20.20:10101 outside 10.30.30.30:4450, idle 0:00:14, bytes 0, flags SaAB
+TCP outside 20.30.40.50:45174 inside 10.30.30.30:443, idle 0:00:05, bytes 0, flags aB
+</code></p>
+
+<h2>Understanding the Flags</h2>
+
+<p>In earlier versions of Cisco ASA versions it used to list the following table when issuing the <code>show conn</code> command.</p>
+
+<ul>
+<li>A &ndash; awaiting inside ACK to SYN</li>
+<li>a &ndash; awaiting outside ACK to SYN</li>
+<li>B &ndash; initial SYN from outside</li>
+<li>C &ndash; CTIQBE media</li>
+<li>D &ndash; DNS</li>
+<li>d &ndash; dump</li>
+<li>E &ndash; outside back connection</li>
+<li>F &ndash; outside FIN</li>
+<li>f &ndash; inside FIN</li>
+<li>G &ndash; group</li>
+<li>g &ndash; MGCP</li>
+<li>H &ndash; H.323</li>
+<li>h &ndash; H.225.0</li>
+<li>I &ndash; inbound data</li>
+<li>i &ndash; incomplete</li>
+<li>k &ndash; Skinny media</li>
+<li>M &ndash; SMTP data</li>
+<li>m &ndash; SIP media</li>
+<li>O &ndash; outbound data</li>
+<li>P &ndash; inside back connection</li>
+<li>q &ndash; SQL*Net data</li>
+<li>R &ndash; outside acknowledged FIN</li>
+<li>R &ndash; UDP RPC</li>
+<li>r &ndash; inside acknowledged FIN</li>
+<li>S &ndash; awaiting inside SYN</li>
+<li>s &ndash; awaiting outside SYN</li>
+<li>T &ndash; SIP</li>
+<li>t &ndash; SIP transient</li>
+<li>U &ndash; up</li>
+</ul>
+
+
+<h2>Adding it up</h2>
+
+<p>Often a single flag isn&rsquo;t seen, but multiple flags will be displayed. Use this handy guide to understand flag combinations.</p>
+
+<p><img src="/images/asa-conn-flags.png" alt="ASA Conn Flags IMG" /></p>
+
+<p>The green circles in the image above indicates two way traffic is seen for that connection which means the connection is good and healthy usually.</p>
+
+<h2>Case Studies</h2>
+
+<p>Let&rsquo;s look at a few examples. Suppose you see the lines in the &lsquo;show conn&rsquo; output.</p>
+
+<p><code>
+TCP VPN 10.99.55.44(18.17.16.15):11515 inside 10.88.77.66:30854, idle 0:02:48, bytes 178, flags UIO
+</code>
+This traffic flow has completed the 3 way TCP handshake (U), has had both inbound (I) packet and outbound (O) packets.</p>
+
+<hr />
+
+<br>
+
+
+<p><code>
+TCP outside 77.66.55.44:49368 VPN 15.15.15.15:443, idle 0:00:21, bytes 100531, flags UfrIOB
+</code>
+This traffic flow originated from the outside (B), has completed the 3 way TCP handshake (U), has had both inbound (I) packet and outbound (O) packets. This flow also saw a fin packet sent to the inside (f) and the inside also acknowledged the fin &reg;.</p>
+
+<hr />
+
+<br>
+
+
+<p><code>
+UDP VPN 10.17.17.17:8500 inside 10.20.20.20:4167, idle 0:01:38, bytes 616, flags -
+</code>
+This flow has no flags because it&rsquo;s a UDP packet and therefore is stateless.</p>
+
+<hr />
+
+<br>
+
+
+<p><code>
+TCP VPN 77.66.55.44:30031 inside 10.20.20.20:51716, idle 0:00:11, bytes 0, flags U
+</code>
+This flow is just completing the 3 way handshake (U).</p>
+
+<hr />
+
+<br>
+
+
+<p><code>
+TCP inside 10.20.20.20:10101 outside 10.30.30.30:4450, idle 0:00:14, bytes 0, flags SaAB
+</code>
+A SYN was sent from 10.20.20.20 on the inside to 10.30.30.30 on the outside.</p>
+
+<hr />
+
+<br>
+
+
+<p><code>
+TCP outside 20.30.40.50:45174 inside 10.30.30.30:443, idle 0:00:05, bytes 0, flags aB
+</code>
+A SYN+ACK has been seen coming from the outside coming in.</p>
+]]></content>
+  </entry>
+  
+</feed>

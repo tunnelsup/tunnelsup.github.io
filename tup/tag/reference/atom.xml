@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: reference | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/reference/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Default Router Passwords]]></title>
+    <link href="http://tunnelsup.github.io/default-router-passwords/"/>
+    <updated>2014-07-25T22:37:00-07:00</updated>
+    <id>http://tunnelsup.github.io/default-router-passwords</id>
+    <content type="html"><![CDATA[<div>
+  <style>
+     table.ztab1 {
+        margin: auto;
+        border: 1px solid black;
+      }
+
+      table.ztab1 th {
+        font-weight: bold;
+        background-color: #AAAAAA;
+        border-bottom: 2px solid black;
+      }
+
+      table.ztab1 th,td {
+        padding: 4px 5px;
+      }
+
+      table.ztab1 tr:nth-of-type(odd) {
+        background-color: #FFFFFF;
+      }
+
+      table.ztab1 tr:nth-of-type(even) {
+        background-color: #CCCCCC;
+      }
+  </style>
+</div>
+
+
+<p>Looking for the default password for a router? The list below will give the default credentials to many of the broadband routers, wireless router and even managed routers.</p>
+
+<table class="ztab1" width="100%">
+<tbody>
+<tr>
+    <th>Make</th>
+    <th>Model</th>
+    <th>Username</th>
+    <th>Password</th>
+</tr>
+
+<tr>
+    <td>Linksys</td>
+    <td>BEFW11S4, WRT54G</td>
+    <td>admin</td>
+    <td>[blank]</td>
+</tr>
+<tr>
+    <td>Linksys</td>
+    <td>EtherFast Cable/DSL Ethernet routers</td>
+    <td>Administrator</td>
+    <td>admin</td>
+</tr>
+<tr>
+    <td>Linksys</td>
+    <td>Comcast routers</td>
+    <td>comcast</td>
+    <td>1234</td>
+</tr>
+<tr>
+    <td>Linksys</td>
+    <td>Other models</td>
+    <td>[blank]</td>
+    <td>admin</td>
+</tr>
+<tr>
+    <td>Netgear</td>
+    <td>MR314/RT314</td>
+    <td>admin</td>
+    <td>1234</td>
+</tr>
+<tr>
+    <td>Netgear</td>
+    <td>WGR614</td>
+    <td>admin</td>
+    <td>setup</td>
+</tr>
+<tr>
+    <td>Netgear</td>
+    <td>Routers</td>
+    <td>admin</td>
+    <td>password</td>
+</tr>
+<tr>
+    <td>Belkin</td>
+    <td>Broadband router</td>
+    <td>admin (or none)</td>
+    <td>[blank]</td>
+</tr>
+<tr>
+    <td>D-Link</td>
+    <td>DI-514, DI-524, DI-604, DI-704, DI-804</td>
+    <td>admin</td>
+    <td>[blank]</td>
+</tr>
+<tr>
+    <td>D-Link</td>
+    <td>Routers</td>
+    <td>admin</td>
+    <td>admin</td>
+</tr>
+<tr>
+    <td>Cisco</td>
+    <td>Managed Routers (1800, 2800, 6500)</td>
+    <td>cisco</td>
+    <td>cisco</td>
+</tr>
+<tr>
+    <td>Cisco</td>
+    <td>ASA firewall (adaptive security appliance)</td>
+    <td>cisco</td>
+    <td>cisco</td>
+</tr>
+<tr>
+    <td>Cisco</td>
+    <td>PIX firewall</td>
+    <td>pix</td>
+    <td>cisco</td>
+</tr>
+<tr>
+    <td>Juniper</td>
+    <td>Netscreen</td>
+    <td>netscreen</td>
+    <td>netscreen</td>
+</tr>
+<tr>
+    <td>Juniper</td>
+    <td>SRX Firewall</td>
+    <td>root</td>
+    <td>[blank]</td>
+</tr>
+</tbody>
+</table>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA to Juniper ScreenOS to Juniper JunOS Command Reference Cheat Sheet]]></title>
+    <link href="http://tunnelsup.github.io/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet/"/>
+    <updated>2012-07-06T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet</id>
+    <content type="html"><![CDATA[<div>
+  <style>
+     table.ztab1 {
+        margin: auto;
+        border: 1px solid black;
+      }
+
+      table.ztab1 th {
+        font-weight: bold;
+        background-color: #AAAAAA;
+        border-bottom: 2px solid black;
+      }
+
+      table.ztab1 th,td {
+        padding: 4px 5px;
+      }
+
+      table.ztab1 tr:nth-of-type(odd) {
+        background-color: #FFFFFF;
+      }
+
+      table.ztab1 tr:nth-of-type(even) {
+        background-color: #CCCCCC;
+      }
+  </style>
+</div>
+
+
+<p>Here is a basic reference sheet for looking up equivalent commands between a Cisco ASA and a Juniper ScreenOS (or Netscreen) SSG and a Juniper JunOS SRX firewall.</p>
+
+<table class="ztab1">
+<tbody>
+<tr>
+    <th>Cisco ASA</th>
+    <th>Juniper ScreenOS (SSG)</th>
+    <th>Juniper JunOS (SRX)</th>
+</tr>
+
+<tr>
+    <td>show log</td>
+    <td>get event</td>
+    <td>show log messages<br>
+show log messages | last 20 (see the 20 most recent logs)</td>
+</tr>
+
+<tr>
+    <td>show ip</td>
+    <td>get interface</td>
+    <td>show interface terse</td>
+</tr>
+<tr>
+    <td>show failover</td>
+    <td>get nsrp</td>
+    <td>show log jsrp<br>
+show chassis cluster [status|statistics|interfaces]</td>
+</tr>
+<tr>
+    <td>no failover active</td>
+    <td>exec nsrp vsd [vsd] mode backup</td>
+    <td>request chassis cluster failover redundancy-group [group] node <node></td>
+</tr>
+<tr>
+    <td>show route</td>
+    <td>get route</td>
+    <td>show route</td>
+</tr>
+<tr>
+    <td>show connections</td>
+    <td>get session</td>
+    <td>show security flow session</td>
+</tr>
+<tr>
+    <td>show clock</td>
+    <td>get clock</td>
+    <td>show system uptime</td>
+</tr>
+<tr>
+    <td>show version (to get uptime)</td>
+    <td>get system</td>
+    <td>show system uptime</td>
+</tr>
+<tr>
+    <td>show running-config</td>
+    <td>get config</td>
+    <td>show config</td>
+</tr>
+<tr>
+    <td>show version (to get serial number)</td>
+    <td>get chassis</td>
+    <td>show chassis hardware detail</td>
+</tr>
+<tr>
+    <td>show access-list</td>
+    <td>get policy</td>
+    <td>show security policies</td>
+</tr>
+<tr>
+    <td>show crypto isakmp sa</td>
+    <td>get ike cookie</td>
+    <td>show security ike security-associations</td>
+</tr>
+<tr>
+    <td>show crypto ipsec sa</td>
+    <td><a href="http://kb.juniper.net/InfoCenter/index?page=content&id=KB6134&actp=search">get sa</a></td>
+    <td>show security ipsec security-associations</td>
+</tr>
+<tr>
+    <td>clear crypto isakmp sa</td>
+    <td>clear ike cookie</td>
+    <td>clear security ike security-associations</td>
+</tr>
+<tr>
+    <td>clear crypto ipsec sa</td>
+    <td>clear sa</td>
+    <td>clear security ipsec security-associations</td>
+</tr>
+<tr>
+    <td>show cpu</td>
+    <td>get perf cpu</td>
+    <td>show chassis routing-engine</td>
+</tr>
+<tr>
+    <td>show proc cpu-usage</td>
+    <td></td>
+    <td>show system processes extensive</td>
+</tr>
+<tr>
+<td>show int (for i/o of bytes)</td>
+<td> get counter statistics</td>
+<td>sh int</td>
+</tr>
+
+<tr>
+<td>ssh x.x.x.0 y.y.y.0 inside</td>
+<td>set admin manager-ip x.x.x.0 y.y.y.0<br />
+set ssh enable</td>
+<td>set security zones security-zone TRUST host-inbound-traffic system-services ssh</td>
+</tr>
+<tr>
+<td>show run [cry isakmp|tunnel-group]?</td>
+<td>get ike gateway</td>
+<td>show config security ike<br>
+show config security ipsec</td>
+</tr>
+<tr>
+<td>interface Ethernet1<br />
+shutdown</td>
+<td>set interface ethernet0/0 phy link-down</td>
+<td>set interfaces ge-0/0/3 disable</td>
+</tr>
+<tr>
+<td>interface Ethernet1<br />
+no shutdown</td>
+<td>unset interface ethernet0/0 phy link-down</td>
+<td>delete interfaces ge-0/0/3 disable</td>
+</tr>
+<tr>
+<td>route outside 1.1.1.0 255.255.255.0 1.1.1.2</td>
+<td>set route 1.1.1.0/24 interface bgroup3/0 gateway 1.1.1.2</td>
+<td>set routing-options static route 10.10.10.128/25 next-hop 172.16.100.1</td>
+</tr>
+<tr>
+<td>logging host INSIDE 1.1.1.1<br />
+logging trap notification</td>
+<td>set syslog config 1.1.1.1 facilities local5<br />
+set syslog src-interface ethernet1/0<br />
+set syslog enable</td>
+<td>set system syslog source-address 10.14.4.4<br>
+set system syslog host 1.1.1.1 any notice</td>
+</tr>
+<tr>
+<td>ntp server 1.1.1.1 source OUTSIDE</td>
+<td>set ntp server 1.1.1.1<br />
+set ntp server src-interface ethernet3/0<br />
+set clock ntp<br />
+exec ntp update</td>
+<td>set system ntp server 1.1.1.1 prefer</td>
+</tr>
+<tr>
+<td>capture CAP1 match ip host 1.1.1.1 host 2.2.2.2</td>
+<td>clear db<br />
+set console dbuf<br />
+set ffilter src-ip 1.1.1.1 dst-ip 2.2.2.2<br />
+debug flow basic<br />
+<br />
+--- OR ---<br />
+<br />
+snoop filter ip src-ip 1.1.1.1 dst-ip 2.2.2.2 direction both<br />
+clear dbuf<br />
+snoop</td>
+<td>edit security flow traceoptions<br>
+set file TSHOOT<br>
+set flag basic-datapath<br>
+set packet-filter IN-TO-OUT source-prefix 10.1.1.100/32 destination-prefix 10.2.0.3/32
+</td>
+</tr>
+<tr>
+<td>show capture CAP1</td>
+<td>get dbuf stream</td>
+<td>show log TSHOOT</td>
+</tr>
+<tr>
+<td>clear capture CAP1</td>
+<td>undebug all<br />
+unset ffilter<br />
+<br />
+--- OR ---<br />
+<br />
+snoop filter delete</td>
+<td>deactivate security flow traceoptions<br>
+delete security flow traceoptions
+</td>
+</tr>
+
+</tbody>
+</table>
+
+
+<p>Additional reading material regarding Juniper SSG and ScreenOS commands:
+<a href="http://www.juniper.net/techpubs/software/screenos/screenos6.2.0/index.html"><a href="http://www.juniper.net/techpubs/software/screenos/screenos6.2.0/index.html">http://www.juniper.net/techpubs/software/screenos/screenos6.2.0/index.html</a></a></p>
+]]></content>
+  </entry>
+  
+</feed>

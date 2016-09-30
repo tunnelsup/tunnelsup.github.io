@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: raspian | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/raspian/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Raspberry Pi boots into emergency kernel when loading raspian]]></title>
+    <link href="http://tunnelsup.github.io/raspberry-pi-boots-into-emergency-kernel-when-loading-raspian/"/>
+    <updated>2013-07-20T15:36:00-07:00</updated>
+    <id>http://tunnelsup.github.io/raspberry-pi-boots-into-emergency-kernel-when-loading-raspian</id>
+    <content type="html"><![CDATA[<p>Recently I tried updating my Raspian OS on my Pi. After writing the OS to the card and popping it into the Pi, the Pi would only boot into the emergency kernel mode. Basically it dumped me into a very basic shell without the need to login or anything. It gives very limited commands and doesn&rsquo;t really allow for any real operation. Something definitely isn&rsquo;t right.</p>
+
+<h2>The Fix</h2>
+
+<p>Edit the file <code>config.txt</code> and add this line into the bottom of the file:</p>
+
+<p><code>
+avoid_safe_mode=1
+</code></p>
+
+<p>This should now allow you to boot into regular kernel mode.</p>
+
+<h2>The Reason for the Problem</h2>
+
+<p>The problem seems to be related to early Revision 1 model B boards. My board in particular shows this:</p>
+
+<p><code>
+pi@raspberrypi:~$ grep Rev /proc/cpuinfo
+Revision : 0002
+</code>
+It looks like it&rsquo;s Rev 2, but that output actually is saying Rev 1.</p>
+
+<p>What&rsquo;s likely happening here is that I have a Rev 2 board but for some reason the OS thinks it&rsquo;s Rev 1. There are different pins that do different things on the two boards and therefore cause the wrong behavior to occur.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mars | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/mars/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco MARS how to get logs off it]]></title>
+    <link href="http://tunnelsup.github.io/cisco-mars-how-to-get-logs-off-it/"/>
+    <updated>2015-10-18T16:31:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-mars-how-to-get-logs-off-it</id>
+    <content type="html"><![CDATA[<p>Below is the procedure below explains how to get logs off Mars Box from <a href="/cisco-mars-siem-expert-password">expert mode</a> using FTP.</p>
+
+<p>If you have an scp server you can use the <code>pnlog scpto</code> command. But if all you have is an FTP server, then this is more complicated. First we do the <code>pnlog scpto</code> command, but we do that only so the system packages up the logs pretty for us.</p>
+
+<p><code>
+[pnadmin]$ pnlog scpto test
+scp /tmp/error-logs.tar.gz tmp/error-logs.tar.gz
+cp: cannot create regular file `tmp/error-logs.tar.gz':
+No such file or directory Fail to copy error-logs.tar.gz, skip copying janus-log.tar.gz.
+</code></p>
+
+<p>The argument &lsquo;test&rsquo; is just a name. Syntax pnlog scpto <anything>. But even when scp fails, mars copies the file to &lsquo;tmp&rsquo; directory. It saves some steps of logging into expert mode and copying files over to tmp directory.</p>
+
+<p><code>
+[pnadmin]$ expert Password:
+[expert@TRAINING-MARS]# su
+[root@TRAINING-MARS bin]# cd /tmp
+[root@TRAINING-MARS tmp]# ls
+[root@TRAINING-MARS tmp]# mv error-logs.tar.gz 60011122error-logs.tar.gz
+[root@TRAINING-MARS tmp]# mv janus-logs.tar.gz 60011122janus-logs.tar.gz
+</code>
+The <code>error-logs.tar.gz</code> and <code>janus-logs.tar.gz</code> files are where the logs are stored.</p>
+
+<p>Optional: Rename the files, making it easy to find on a ftp server, when they are copied over. Only way to rename files is to move them by <code>mv</code> command in unix.</p>
+
+<p><code>
+[root@TRAINING-MARS tmp]# ftp &lt;ftp IP address&gt;
+Name (ftp IP): &lt;username&gt;
+331 Password required for &lt; &gt; Password: &lt;password&gt;
+ftp&gt;
+ftp&gt; cd /incoming
+250 CWD command successful.
+ftp&gt; bin
+200
+ftp&gt; put 60011122error-logs.tar.gz
+local: 60011122error-logs.tar.gz remote: 60011122error-logs.tar.gz 227
+Entering Passive Mode (64,102,255,116,160,128) 150
+Opening BINARY mode data connection for 60011122error-logs.tar.gz 226
+Transfer complete. 1987611 bytes sent in 0.96 seconds (2e+03 Kbytes/s)
+ftp&gt; put 60011122janus-logs.tar.gz
+local: 60011122janus-logs.tar.gz remote: 60011122janus-logs.tar.gz 227
+Entering Passive Mode (64,102,255,116,160,129) 150
+Opening BINARY mode data connection for 60011122janus-logs.tar.gz 226
+Transfer complete. 4301304
+ftp&gt; bye
+421 Idle Timeout (120 seconds): Closing control connection
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco MARS SIEM expert password]]></title>
+    <link href="http://tunnelsup.github.io/cisco-mars-siem-expert-password/"/>
+    <updated>2015-09-06T11:58:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-mars-siem-expert-password</id>
+    <content type="html"><![CDATA[<p>The Cisco MARS SIEM devices are built on a linux OS. It&rsquo;s possible to get to that linux shell but Cisco tries to keep that method private. I&rsquo;ve learned over time that most MARS devices have theh same expert password which allows access to the root shell.</p>
+
+<p>Expert password: <code>x3*Gd=y/Dq98</code></p>
+
+<p>Here is an example on how to use the password.</p>
+
+<p>```
+[linuxbox ~]$  ssh <a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#112;&#x6e;&#97;&#100;&#x6d;&#x69;&#110;&#64;&#49;&#48;&#46;&#49;&#x30;&#46;&#x31;&#48;&#46;&#x31;&#48;">&#112;&#110;&#97;&#x64;&#x6d;&#105;&#110;&#x40;&#49;&#x30;&#46;&#x31;&#x30;&#46;&#x31;&#48;&#x2e;&#49;&#48;</a>
+<a href="&#x6d;&#97;&#105;&#108;&#116;&#x6f;&#58;&#x70;&#x6e;&#97;&#100;&#x6d;&#105;&#110;&#x40;&#x31;&#48;&#x2e;&#x31;&#x30;&#46;&#49;&#x30;&#x2e;&#x31;&#x30;">&#x70;&#x6e;&#x61;&#x64;&#x6d;&#105;&#110;&#x40;&#49;&#48;&#x2e;&#49;&#48;&#46;&#49;&#48;&#46;&#49;&#x30;</a>&rsquo;s password:
+Last login: Sun Aug 30 10:28:03 2015 from 10.10.10.200</p>
+
+<p>  CS MARS &ndash; Mitigation and Response System</p>
+
+<pre><code>? for list of commands
+</code></pre>
+
+<p>[pnadmin]$ expert
+Password: x3*Gd=y/Dq98
+[root@mars-lc01 bin]# pwd
+/opt/janus/release/bin
+[root@mars-lc01 bin]#
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to determine the current EPS for Cisco MARS]]></title>
+    <link href="http://tunnelsup.github.io/how-to-determine-the-current-eps-for-cisco-mars/"/>
+    <updated>2015-09-04T11:08:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-determine-the-current-eps-for-cisco-mars</id>
+    <content type="html"><![CDATA[<p>There are two ways to determine the events per second for a Cisco MARS SIEM system.</p>
+
+<h3>See the current EPS the system is processing</h3>
+
+<p>You can see the real time EPS the system is currently handling by looking in the logs. This is found under Admin > System Maintenance > View Log Files.</p>
+
+<p>Once there, expand the time frame and search for something that looks like this:</p>
+
+<p><code>
+Source: ./pnparser
+2016:message rate: 1068.164429 msgs/sec, total: 2147550000 msgs, total avg rate: 420.480804 msgs/sec
+</code></p>
+
+<p>The <code>total avg rate</code> is the current EPS the system is processing.</p>
+
+<h3>Calculate it based on events per month</h3>
+
+<p>On the Summary screen there is a table on the top left side that says how many events have been received. You can change this to month and then divide the value by the number of seconds in a month.</p>
+
+<p>In my case I see there are <code>1,137,479,506</code> events for the last 30 days. I divide this by <code>2,592,000</code> which is how many seconds are in 30 days. This leaves me with <code>438 EPS</code>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MARS hard drive issues]]></title>
+    <link href="http://tunnelsup.github.io/mars-hard-drive-issues/"/>
+    <updated>2013-06-06T10:52:00-07:00</updated>
+    <id>http://tunnelsup.github.io/mars-hard-drive-issues</id>
+    <content type="html"><![CDATA[<h3>Possible results from the <code>raidstatus</code> command for MARS 55, 110R, 110, 210, GC2R, and GC2</h3>
+
+<p>Use the <code>raidstatus</code> CLI command to view the status of the RAID array (virtual disk) and of the individual HDDs.</p>
+
+<p><strong>Status:</strong> Failed<br>
+<strong>Possible Cause:</strong> Unrecoverable error on previously operative HDD.<br>
+<strong>Recommended Action:</strong> Hotswap with a new HDD.</p>
+
+<p><strong>Status:</strong> Offline<br>
+<strong>Possible Cause:</strong> The hotswap remove command was executed for this HDD.<br>
+<strong>Recommended Action:</strong> Execute a hotswap add on the HDD if the HDD is known to be good.</p>
+
+<p><strong>Status:</strong> Unconfigured Good<br>
+<strong>Possible Cause:</strong> An online HDD was removed and inserted without executing a hotswap command sequence.<br>
+<strong>Recommended Action:</strong> Execute a hotswap remove and hotswap add on the HDD.</p>
+
+<p><strong>Status:</strong> Unconfigured Bad<br>
+<strong>Possible Cause:</strong> An online HDD was removed or inserted without executing a hotswap sequence and the HDD has a media error.<br>
+<strong>Recommended Action:</strong> Hotswap with a new HDD.</p>
+
+<p><strong>Status:</strong> N/A<br>
+<strong>Possible Cause:</strong> The HDD slot is empty.<br>
+<strong>Recommended Action:</strong> Insert a new HDD with the hotswap add command</p>
+
+<h3>Procedure to hotswap a MARS hard drive</h3>
+
+<p>This section pertains only to the MARS 55, 110R, 110, 210, GC2R, and GC2 appliances.
+An HDD can be hotswapped, that is, replaced without rebooting the MARS appliance. The hotswap
+actions can be summarized in the following five steps. The detailed procedure is in the section,
+Procedure to Hotswap a Hard Drive.</p>
+
+<ol>
+<li>Establish a console connection to the MARS appliance.</li>
+<li>Enter the <code>raidstatus</code> command to determine the status and the chassis HDD slot number of the HDD to hotswap.</li>
+<li>Execute a <code>hotswap remove &lt;disk&gt;</code> command, then remove the HDD.</li>
+<li>Execute a <code>hotswap add &lt;disk&gt;</code> command then insert the replacement HDD.</li>
+<li>Enter the <code>raidstatus</code> command to monitor the progress of the replacement HDD as it is rebuilt.</li>
+</ol>
+
+
+<hr />
+
+<p>Source: <a href="http://www.cisco.com/en/US/docs/security/security_management/cs-mars/6.0/hardware/installation/guide/hig_mars_6x.pdf">http://www.cisco.com/en/US/docs/security/security_management/cs-mars/6.0/hardware/installation/guide/hig_mars_6x.pdf</a></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: troubleshooting | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/troubleshooting/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA command to show listening ports]]></title>
+    <link href="http://tunnelsup.github.io/cisco-asa-command-to-show-listening-ports/"/>
+    <updated>2016-09-29T15:05:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-asa-command-to-show-listening-ports</id>
+    <content type="html"><![CDATA[<p>Do you wish there was a <code>netstat</code> command for a Cisco ASA? Are you looking to see what ports the ASA has open and is listening on? Try this command:</p>
+
+<p>```
+ASA5506# sh asp table socket</p>
+
+<p>Protocol  Socket    State      Local Address        Foreign Address
+SSL       0001ebf8  LISTEN     172.16.3.1:443       0.0.0.0:<em>
+TCP       000216f8  LISTEN     172.16.3.1:22        0.0.0.0:</em>
+TCP       370c1d68  LISTEN     99.99.99.99:22       0.0.0.0:*
+TCP       3712d678  ESTAB      172.16.3.1:22        172.16.2.3:50233
+```</p>
+
+<p>This command displays all of the ports that are open and established on the ASA.</p>
+
+<p>The <code>state</code> indicates whether the port is listening or established.</p>
+
+<p>The <code>local address</code> says which IP it&rsquo;s listening on. In the example above, 99.99.99.99 is the outside interface and the 172.16.3.1 is the inside interface.</p>
+
+<p>The <code>foreign address</code> will show up when someone connects to that port. In this case I was ssh&rsquo;d into the firewall coming from 172.16.2.3.</p>
+
+<p>The output above should be a direct reflection of the <code>ssh</code>, <code>telnet</code>, and <code>http</code> commands in the ASA.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to show and clear user sessions on a Cisco ASA]]></title>
+    <link href="http://tunnelsup.github.io/how-to-show-and-clear-user-sessions-on-a-cisco-asa/"/>
+    <updated>2016-06-18T16:36:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-show-and-clear-user-sessions-on-a-cisco-asa</id>
+    <content type="html"><![CDATA[<p>Sometimes you need to disconnect someone&rsquo;s ssh session to a Cisco ASA. This may be needed because users haven&rsquo;t logged out properly and have taken up all the sessions allowed.</p>
+
+<h2>Check Usage Limits</h2>
+
+<p>You can check usage limits by seeing how many sessions the ASA <em>thinks</em> are connected.</p>
+
+<p><code>
+FWL1# show resource usage resource ssh
+Resource                 Current        Peak      Limit        Denied Context
+SSH Server                     5           5          5           109 System
+</code></p>
+
+<p>In this case the ASA can only connect 5 years and it thinks there are 5 sessions open and therefore it cannot connect any more.</p>
+
+<p>There&rsquo;s a bug that doesn&rsquo;t properly release sessions from the ASA. <a href="https://bst.cloudapps.cisco.com/bugsearch/bug/CSCsm68097">https://bst.cloudapps.cisco.com/bugsearch/bug/CSCsm68097</a></p>
+
+<h2>Show current ssh sessions</h2>
+
+<p>To display all ssh sessions connected run this command.</p>
+
+<p>```
+FWL1# show ssh sessions                      <br/>
+SID Client IP       Version Mode Encryption Hmac     State            Username
+0   10.1.1.21       2.0     IN   aes128-ctr sha1     SessionStarted   james</p>
+
+<pre><code>                        OUT  aes128-ctr sha1     SessionStarted   james
+</code></pre>
+
+<p>2   10.1.1.22       2.0     IN   aes128-ctr sha1     SessionStarted   frank</p>
+
+<pre><code>                        OUT  aes128-ctr sha1     SessionStarted   frank
+</code></pre>
+
+<p>3   10.1.1.20       2.0     IN   aes128-ctr sha1     SessionStarted   henry</p>
+
+<pre><code>                        OUT  aes128-ctr sha1     SessionStarted   henry
+</code></pre>
+
+<p>```</p>
+
+<h2>Disconnect user</h2>
+
+<p>If you want to disconnect user henry, find the SID and use this command:</p>
+
+<p><code>
+FWL1# ssh disconnect 3
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA TCP Randomization Issue]]></title>
+    <link href="http://tunnelsup.github.io/cisco-asa-tcp-randomization-issue/"/>
+    <updated>2016-03-29T23:21:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-asa-tcp-randomization-issue</id>
+    <content type="html"><![CDATA[<p>You may sometimes see this syslog message from a Cisco ASA:</p>
+
+<p><code>%ASA-4-419002: Received duplicate TCP SYN from in_interface : src_address / src_port to out_interface : dest_address / dest_port with different initial sequence number.</code></p>
+
+<p>I see this a lot on VPN firewalls where packets are dropped due to the sequence numbers not being correct in TCP.  This happens when the ASA randomizes the TCP sequence numbers and another device is also performing the same randomization of the TCP sequence numbers.</p>
+
+<p>One way to bypass this is to disable TCP Sequence Number randomization on the ASA.  This can be done on a selective basis.  (NOTE:  You may need this as well as Option 19 permissions if you are putting BGP through the firewall).</p>
+
+<p>Here is a sample conf to disable TCP randomization for a specific subnet:</p>
+
+<p>```
+access-list ACL-SEQUENCE-NUMBER extended permit tcp vpn-ip-pool any
+access-list ACL-SEQUENCE-NUMBER extended permit tcp any vpn-ip-pool</p>
+
+<p>class-map CM-SEQUENCE-NUMBER
+  match access-list ACL-SEQUENCE-NUMBER</p>
+
+<p>policy-map global_policy
+class CM-SEQUENCE-NUMBER
+  set connection random-sequence-number disable
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco Nexus Packet Captures with Ethanalyzer]]></title>
+    <link href="http://tunnelsup.github.io/cisco-ios-packet-captures-with-ethanalyzer/"/>
+    <updated>2015-11-11T22:46:00-08:00</updated>
+    <id>http://tunnelsup.github.io/cisco-ios-packet-captures-with-ethanalyzer</id>
+    <content type="html"><![CDATA[<p>There is a lesser known built in packet capture tool in Nexus OS called Ethanalyzer.</p>
+
+<p>Valid for Nexus models
+7k, 6k, 5k, 3k, 1kv</p>
+
+<p><a href="/packet-captures-on-cisco-asa/">How to do packet captures on a Cisco ASA</a></p>
+
+<p><a href="/packet-capture-for-cisco-ios-router/">How to do packet capture on Cisco IOS Router</a></p>
+
+<h2>Capturing packets on the data-plane</h2>
+
+<p>To capture specific IP flows.</p>
+
+<p>Any traffic that is logged in an interface ACL can then be seen in the ethanalyzer.</p>
+
+<p>```
+ip access-list ACL-CAPTURE
+permit ip 10.0.0.250/32 10.1.7.250/32 log
+permit ip any any</p>
+
+<p>int vlan 50
+  ip access-group ACL-CAPTURE in</p>
+
+<p>ethanalyzer local interface inband display-filter ip.src==10.0.0.250 limit-captured-frames 50
+```</p>
+
+<ul>
+<li>Use <a href="http://packetlife.net/media/library/13/Wireshark_Display_Filters.pdf">wireshark display-filters</a>! This will change what’s displayed.</li>
+<li>Use capture filters to change what is captured</li>
+<li>Command only available from the default VDC.</li>
+</ul>
+
+
+<p>Use this command to create a pcap</p>
+
+<p><code>
+ethanalyzer local interface inband write MYCAPTURE.pcap display-filter ip.src==10.0.0.250 limit-captured-frames 50
+</code></p>
+
+<p>This will save the pcap file to the nexus which you can then use the <code>copy flash ftp</code> command to move it off the device.</p>
+
+<h3>Limitation</h3>
+
+<p>It only runs in the default VDC. If you do not have access to the admin or default VDC you cannot use this command. You can still capture from another VDC by setting an interface ACL and log the traffic you want in the VDC you want. Then you can go to the default VDC and run ethanalyzer to see your traffic.</p>
+
+<h3>References:</h3>
+
+<p>Using Ethanalyzer<br>
+<a href="https://supportforums.cisco.com/docs/DOC-31148">https://supportforums.cisco.com/docs/DOC-31148</a></p>
+
+<p>Understanding wireshark relating to Cisco Catalyst and IOS devices<br>
+<a href="http://www.cisco.com/en/US/docs/switches/lan/catalyst3850/software/release/3se/consolidated_guide/configuration_guide/b_consolidated_3850_3se_cg_chapter_01100110.html">http://www.cisco.com/en/US/docs/switches/lan/catalyst3850/software/release/3se/consolidated_guide/configuration_guide/b_consolidated_3850_3se_cg_chapter_01100110.html</a></p>
+
+<p>Using the “monitor capture” command on IOS devices<br>
+<a href="http://www.cisco.com/en/US/docs/ios-xml/ios/epc/command/monitor_capture_through_show_monitor_capture.html">http://www.cisco.com/en/US/docs/ios-xml/ios/epc/command/monitor_capture_through_show_monitor_capture.html</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA Troubleshooting Intermittent Connectivity Issues]]></title>
+    <link href="http://tunnelsup.github.io/cisco-asa-troubleshooting-intermittent-connectivity-issues/"/>
+    <updated>2015-11-11T22:19:00-08:00</updated>
+    <id>http://tunnelsup.github.io/cisco-asa-troubleshooting-intermittent-connectivity-issues</id>
+    <content type="html"><![CDATA[<p>Normally a Cisco ASA firewall either permits or denies traffic. It&rsquo;s very rare that traffic works sometimes but not all the time. Here are some troubleshooting tips for when the ASA is causing intermittent or sporadic connectivity issues.</p>
+
+<h2>Embryonic Connections issues</h2>
+
+<p>Check the <a href="/understanding-cisco-asa-connection-flags/">show conn</a> output to see if there are a lot of half opened or embryonic connections.</p>
+
+<p>Is the number of embryonic connections very high? This could be filling up the max connection table on the ASA or on the destination system.</p>
+
+<p>You can set the max embryonic connections with this:</p>
+
+<p><code>
+access-list 140 extended permit tcp any host 192.168.1.50 eq www
+!
+class-map protect
+ description Protect web server from attacks
+ match access-list 140
+!
+policy-map interface_policy
+ class protect
+  set connection embryonic-conn-max 100 per-client-max 25
+!
+service-policy interface_policy interface outside
+</code></p>
+
+<p>This sets a maximum amount of connections to 192.168.1.50 on port 80 to be 100 connections total and 25 per source IP. The <code>per-client-max 25</code> statement is optional at the end of the <code>set connection</code> command.</p>
+
+<h2>Check bandwidth</h2>
+
+<p>If the bandwidth of an interface is hitting the max capacity it will drop packets.</p>
+
+<p>Use the <code>show traffic</code> command to verify no interface is nearing the limit.</p>
+
+<p>Look at <code>show int</code> and confirm the BW setting, and duplex settings are correct.</p>
+
+<h2>Check CPU</h2>
+
+<p>If the CPU reaches 100% it will start dropping packets.</p>
+
+<p><a href="/troubleshooting-high-cpu-on-a-cisco-asa">Troubleshoot any high CPU issues.</a></p>
+
+<h2>Check interface and memory statistics</h2>
+
+<p><a href="/understanding-cisco-asa-interface-counters-and-statistics/">Check interface statistics</a> and look for any dropped packet counters rising.</p>
+
+<p>Check the <a href="/cisco-asa-understanding-the-show-blocks-command/">show blocks</a> for memory usage issues.</p>
+
+<p>Some notes on packets, performance, and memory:</p>
+
+<blockquote><p>If ingress FIFO (queue) is full, frames are dropped</p>
+
+<ul>
+<li>No free slots in RX ring (CPU/memory bound)</li>
+<li>Unable to acquire bus (used by another component)</li>
+<li>“No buffer” on memory move errors, “overruns” on FIFO drops</li>
+</ul>
+
+
+<p>FIFO is not affected by packet rates, but RX rings are</p>
+
+<ul>
+<li>Fixed memory block size regardless of actual frame size</li>
+<li>Ingress packet bursts may cause congestion even at low bits/sec</li>
+</ul>
+
+
+<p>Fixed bus overhead for memory transfers</p>
+
+<ul>
+<li>30% or 80% bus efficiency for 64 or 1400 byte packets</li>
+<li>Maximize frame size and minimize rate for best efficiency</li>
+</ul>
+
+
+<p>Overruns on all interfaces may mean several things</p>
+
+<ul>
+<li>Interface oversubscription</li>
+<li>CPU oversubscription on a single core system</li>
+<li>Uneven CPU load distribution on a multi-core system</li>
+<li>Memory block exhaustion</li>
+</ul>
+</blockquote>
+]]></content>
+  </entry>
+  
+</feed>

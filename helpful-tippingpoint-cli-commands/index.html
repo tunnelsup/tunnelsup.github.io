@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>Helpful TippingPoint CLI Commands - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="Below are some helpful TippingPoint commands I use frequently. Rule-stats If the TippingPoint is going into performance protection or throwing high &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tunnelsup.github.io/helpful-tippingpoint-cli-commands">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Helpful TippingPoint CLI Commands</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-03-29T23:58:00-07:00" pubdate data-updated="true">Mar 29<span>th</span>, 2016</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Below are some helpful TippingPoint commands I use frequently.</p>
+
+<h3>Rule-stats</h3>
+
+<p>If the TippingPoint is going into performance protection or throwing high CPU alarms this command is helpful. It will show you which rules (filters) are taking up a lot of resources. The ones that are top on the list should be checked to see if this is on by default or manually turned on. Disabling the filter could help performance.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>nyc-tp# show np
+</span><span class='line'>nyc-tp(show-np)# rule-stats
+</span><span class='line'>  Filter      Flows  Success  % Total  % Success    Zoneless  % Zoneless
+</span><span class='line'>    3014   17997256        1        7       0.00           0           0
+</span><span class='line'>    2772   16133878        0        6       0.00           0           0
+</span><span class='line'>    2341   16133873        0        6       0.00           0           0
+</span><span class='line'>    2356   16133873        0        6       0.00           0           0
+</span><span class='line'>    2289   16133873        0        6       0.00           0           0
+</span><span class='line'>    2342   16133873        0        6       0.00           0           0
+</span><span class='line'>   10855   15738004        0        6       0.00           0           0
+</span><span class='line'>    4616   10306210        0        4       0.00           0           0
+</span><span class='line'>    5457   10306205        0        4       0.00           0           0
+</span><span class='line'>    5456   10306205        0        4       0.00           0           0
+</span><span class='line'>    6545   10306204      797        4       0.00           0           0
+</span><span class='line'>    6515   10306204        0        4       0.00           0           0
+</span><span class='line'>    2568    5929575        0        2       0.00           0           0
+</span><span class='line'>    5409    3275897        0        1       0.00           0           0
+</span><span class='line'>    4460    2681388        0        1       0.00           0           0
+</span><span class='line'>   4488    2010966        0        0       0.00           0           0
+</span><span class='line'>    3037    1863347        0        0       0.00           0           0
+</span><span class='line'>    8263    1810400        6        0       0.00           0           0
+</span><span class='line'>    8386    1770011        0        0       0.00           0           0
+</span><span class='line'>    4847    1770011        0        0       0.00           0           0
+</span><span class='line'>Total of 234867225 flows</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Sxoftlinx</h3>
+
+<p>Run softlinx a few times. Hope that the false trigger string is changing each time you run it. If it is the same every time then check the signature ID to get more info.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>nyc-tp(show-np)# softlinx
+</span><span class='line'>Matched both softlinx and a rule:               673348
+</span><span class='line'>Matched softlinx, but not a rule:               1563846277
+</span><span class='line'>Matched a rule, but not softlinx:               2391595
+</span><span class='line'>Did not pass through the softlinx:              42380660
+</span><span class='line'>
+</span><span class='line'>Highest single trigger match:                   681137330
+</span><span class='line'>Highest single trigger string:                  4A 50 47 3F 26  "JPG?&"
+</span><span class='line'>  Associated policies:
+</span><span class='line'>    00000002-0002-0002-0002-000000003885
+</span><span class='line'>
+</span><span class='line'>Highest single false trigger (RTN):     80
+</span><span class='line'>Highest single false trigger string:            50 52 56 54 41 51 49 53  "PRVTAQIS"
+</span><span class='line'>  Associated policies:
+</span><span class='line'>    00000002-0002-0002-0002-000000005572
+</span><span class='line'>    00000002-0002-0002-0002-000000005573</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>General stats</h3>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>nyc-tp(show-np)# general statistics
+</span><span class='line'>General Statistics:
+</span><span class='line'>-------------------
+</span><span class='line'>Incoming                  =          629753382103
+</span><span class='line'>Outgoing                  =          629727486632
+</span><span class='line'>Congestion                =                117018
+</span><span class='line'>Drop by tcpreorder        =                     0
+</span><span class='line'>Second Tier               =            1540729682
+</span><span class='line'>Matched                   =               3064898
+</span><span class='line'>Blocked                   =              25769090
+</span><span class='line'>Permitted                 =                374636
+</span><span class='line'>Invalid                   =                  1906</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Tier-stats</h3>
+
+<p>Tier 1 = hardware
+Tier 2 = buffer to send to tier 3 (should always be close to or at 100%)
+Tier 3 = cpu and deep inspection</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>nyc-tp(show-np)# tier-stats
+</span><span class='line'>Tier 1:
+</span><span class='line'>  Receive  Mbps      = 45
+</span><span class='line'>  Transmit Mbps      = 45
+</span><span class='line'>  Max. receive Mbps  = 387
+</span><span class='line'>  Max. transmit Mbps = 387
+</span><span class='line'>  Receive  pkts/sec  = 10146
+</span><span class='line'>  Maximum  pkts/sec  = 106520
+</span><span class='line'>  Average pkt size   = 558
+</span><span class='line'>  Utilization        = 3 %
+</span><span class='line'>  Ratio to next tier = 40.77 %
+</span><span class='line'>
+</span><span class='line'>Tier 2:
+</span><span class='line'>  Utilization        = 3 %
+</span><span class='line'>  Ratio to next tier = 100.00 %
+</span><span class='line'>
+</span><span class='line'>Tier 3:
+</span><span class='line'>  Receive  Mbps      = 18
+</span><span class='line'>  Transmit Mbps      = 18
+</span><span class='line'>  Max. receive Mbps  = 216
+</span><span class='line'>  Max. transmit Mbps = 216
+</span><span class='line'>  Receive  pkts/sec  = 2106
+</span><span class='line'>  Maximum  pkts/sec  = 33058
+</span><span class='line'>  Average pkt size   = 1097
+</span><span class='line'>  Utilization        = 12 %
+</span><span class='line'>  Ratio to next tier = 0.30 %</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-03-29T23:58:00-07:00" pubdate data-updated="true">Mar 29<span>th</span>, 2016</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/misc/'>misc</a>, <a class='category' href='/tup/tag/tippingpoint/'>tippingpoint</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tunnelsup.github.io/helpful-tippingpoint-cli-commands/" data-via="tunnelsup" data-counturl="http://tunnelsup.github.io/helpful-tippingpoint-cli-commands/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tunnelsup.github.io/helpful-tippingpoint-cli-commands/';
+        var disqus_url = 'http://tunnelsup.github.io/helpful-tippingpoint-cli-commands/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: dynamic | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/dynamic/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Dynamic/DHCP VPN tunnel between two Cisco ASA's]]></title>
+    <link href="http://tunnelsup.github.io/dynamicdhcp-vpn-tunnel-between-two-asas/"/>
+    <updated>2010-05-10T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/dynamicdhcp-vpn-tunnel-between-two-asas</id>
+    <content type="html"><![CDATA[<p>This script will create a vpn tunnel between one Cisco ASA that has a statically assigned IP and one Cisco ASA that has DHCP assigned IP which will change.</p>
+
+<p>The caveat here is that the LAN with the DHCP side ASA needs to be the one that initiates the tunnel by sending interesting traffic. The Static side will not know which IP to peer with and therefor cannot bring this tunnel up, however, once the tunnel is up the static side can go across the tunnel because the peer is established.</p>
+
+<h3>ASA WITH STATIC IP</h3>
+
+<p>```
+! Create isakmp policy to negotiate on
+crypto isakmp policy 5
+  authentication pre-share
+  encryption aes
+  hash sha
+  group 2
+  lifetime 86400
+crypto isakmp enable OUTSIDE</p>
+
+<p>! The dynamic map tunnel group is DefaultL2LGroup. The pre-shared key needs to be defined within this tunnel group
+tunnel-group DefaultL2LGroup ipsec-attributes
+  pre-shared-key sekretk3y</p>
+
+<p>crypto ipsec transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+! Create  a dynamic-map
+crypto dynamic-map MAP-DYN 20 set transform-set ESP-AES128-SHA
+! Assign dynamic-map to crypto map
+crypto map MAP-VPN 55 ipsec-isakmp dynamic MAP-DYN
+crypto map MAP-VPN interface OUTSIDE</p>
+
+<p>! create no-nat statements
+access-list ACL-INSIDE-NONAT extended permit ip 192.168.100.0 255.255.255.0 192.168.200.0 255.255.255.0
+nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
+```</p>
+
+<h3>ASA WITH DYNAMIC/DHCP IP ADDRESS</h3>
+
+<p>Note: This config is exactly the same as a normal site to site VPN</p>
+
+<p>```
+!^^^^^^^ ISAKMP (Phase 1) ^^^^^^^!
+crypto isakmp policy 15
+ authentication pre-share
+ encryption aes
+ hash sha
+ group 2
+ lifetime 86400
+crypto isakmp enable OUTSIDE
+tunnel-group 11.11.11.11 type ipsec-l2l
+tunnel-group 11.11.11.11 ipsec-attributes
+ pre-shared-key sekretk3y</p>
+
+<p>!^^^^^^^ IPSEC (Phase 2) ^^^^^^^!
+access-list ACL-BLUE-VPN permit ip 192.168.200.0 255.255.255.0 192.168.100.0 255.255.255.0
+crypto ipsec transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+crypto map MAP-VPN 10 match address ACL-BLUE-VPN
+crypto map MAP-VPN 10 set peer 11.11.11.11
+crypto map MAP-VPN 10 set transform-set ESP-AES128-SHA
+crypto map MAP-VPN 10 set security-association lifetime kilobytes 10000
+crypto map MAP-VPN interface OUTSIDE</p>
+
+<p>!^^^^^^^ Routes and No-NATS ^^^^^^^!
+route OUTSIDE 192.168.100.0 255.255.255.0 22.22.22.1
+access-list ACL-INSIDE-NONAT extended permit ip 192.168.200.0 255.255.255.0 192.168.100.0 255.255.255.0
+nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
+```</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: wiki | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/wiki/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Using PHP and the Sharepoint 2013 Wiki API]]></title>
+    <link href="http://tunnelsup.github.io/using-the-sharepoint-2013-wiki-api/"/>
+    <updated>2013-06-11T19:57:00-07:00</updated>
+    <id>http://tunnelsup.github.io/using-the-sharepoint-2013-wiki-api</id>
+    <content type="html"><![CDATA[<p>Sharepoint has the ability to create a Wiki within it. It also has the ability for web developers to query these wiki pages and interact with them using the API. Here are some common usages for the Wiki API using PHP, curl, and hyperlinks.</p>
+
+<h2>Read Existing Article</h2>
+
+<p>It is possible to read the data of a wiki article from Sharepoint and have it display into another website. The results will be returned with the HTML formatting that was used to style the article within sharepoint. To make a php/curl call to get just the wiki article data the following code can be used.</p>
+
+<p>``` php
+&lt;?php
+//Build the URL &amp; Request JSON format
+$url = &ldquo;<a href="https://sharepoint.example.com/_api/web/GetFileByServerRelativeUrl">https://sharepoint.example.com/_api/web/GetFileByServerRelativeUrl</a>(&lsquo;/wikiname/folder/file.aspx&rsquo;)/ListItemAllFields/?\$select=WikiField&rdquo;;</p>
+
+<p>$loginDomain = &ldquo;DOMAIN&rdquo;;
+$loginUser = &ldquo;USER&rdquo;;
+$loginPass = &ldquo;PASS&rdquo;;
+$login = $loginDomain . &ldquo;/&rdquo; . $loginUser . &ldquo;:&rdquo; . $loginPass;</p>
+
+<p>$mycurl = curl_init();
+curl_setopt($mycurl, CURLOPT_HEADER, 0);
+curl_setopt($mycurl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($mycurl, CURLOPT_URL, $url);
+curl_setopt($mycurl, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);    // Optional only if the sharepoint requires authentication
+curl_setopt($mycurl, CURLOPT_USERPWD, $login);            // Optional only if the sharepoint requires authentication
+curl_setopt($mycurl, CURLOPT_USERAGENT,&lsquo;Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1&rsquo;);
+curl_setopt($mycurl, CURLOPT_HTTPHEADER,array(&lsquo;Accept: application/json;odata=verbose&rsquo;));
+curl_setopt($mycurl, CURLOPT_SSL_VERIFYPEER, FALSE);
+curl_setopt($mycurl, CURLOPT_SSL_VERIFYHOST, FALSE);
+$webResponse =  curl_exec($mycurl);
+$resultsJSON = json_decode($webResponse, true);
+if (isset($resultsJSON[&rsquo;d'])) {</p>
+
+<pre><code>   $article = $resultsJSON['d']['WikiField'];
+   echo $article;
+</code></pre>
+
+<p>} else {</p>
+
+<pre><code>   echo "Article not present.";
+</code></pre>
+
+<p>}
+?>
+```</p>
+
+<h2>List all Wiki Articles Within a Specific Folder</h2>
+
+<p>If you use folders to store where your wiki articles live then you can grab all of the articles from a specific folder. Once you have the links to the articles you can then display the contents using the previous section.</p>
+
+<p>``` php
+&lt;?php
+$url = &ldquo;<a href="https://sharepoint.example.com/_api/web/GetFolderByServerRelativeUrl">https://sharepoint.example.com/_api/web/GetFolderByServerRelativeUrl</a>(&lsquo;/WIKINAME/FOLDER/Articles&rsquo;)/Files/&rdquo;;</p>
+
+<p>$loginDomain = &ldquo;DOMAIN&rdquo;;
+$loginUser = &ldquo;USER&rdquo;;
+$loginPass = &ldquo;PASS&rdquo;;
+$login = $loginDomain . &ldquo;/&rdquo; . $loginUser . &ldquo;:&rdquo; . $loginPass;</p>
+
+<p>$mycurl = curl_init();
+curl_setopt($mycurl, CURLOPT_HEADER, 0);
+curl_setopt($mycurl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($mycurl, CURLOPT_URL, $url);
+curl_setopt($mycurl, CURLOPT_HTTPAUTH, CURLAUTH_NTLM);    // Optional only if the sharepoint requires authentication
+curl_setopt($mycurl, CURLOPT_USERPWD, $login);            // Optional only if the sharepoint requires authentication
+curl_setopt($mycurl, CURLOPT_USERAGENT,&lsquo;Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1&rsquo;);
+curl_setopt($mycurl, CURLOPT_HTTPHEADER,array(&lsquo;Accept: application/json;odata=verbose&rsquo;));
+curl_setopt($mycurl, CURLOPT_SSL_VERIFYPEER, FALSE);
+curl_setopt($mycurl, CURLOPT_SSL_VERIFYHOST, FALSE);</p>
+
+<p>$webResponse =  curl_exec($mycurl);</p>
+
+<p>$resultsJSON = json_decode($webResponse, true);</p>
+
+<p>$articlesArray = $resultsJSON[&rsquo;d'][&lsquo;results&rsquo;];
+print_r($articlesArray);
+?>
+```
+This will return an array of all the articles in JSON format. By looking at that you can examine the array and start picking out items that you want. Your code may continue like this:</p>
+
+<p>``` php
+&lt;?php</p>
+
+<pre><code>    echo "Number of articles found: " . sizeof($articlesArray);
+    foreach ($articlesArray as $value) {
+            echo "&lt;hr&gt;";
+            // Get title from the "Name" but strip off the last 5 chars ".aspx"
+            $title = substr($value['Name'], 0, -5);
+            echo $title;
+            echo "&lt;br&gt;";
+            // Build the URL to view each article in this list
+            $url = $value['__metadata']['uri'] . "/ListItemAllFields/?\$select=WikiField";
+            curl_setopt($mycurl, CURLOPT_URL, $url);
+            $web_response =  curl_exec($mycurl);
+            $resultsFull = json_decode($web_response, true);
+            $article = $resultsFull['d']['WikiField'];
+            print_r($article);           
+    }
+</code></pre>
+
+<p>?></p>
+
+<p>```</p>
+
+<h2>URL to Create Wiki Article</h2>
+
+<p>Suppose you have a website and from that website you want to give the user an ability to create a new Wiki article. There are a few ways to accomplish this depending on the situation.</p>
+
+<h3>Create New Article Link</h3>
+
+<p>You may want to create a link to prompt the user for a article name and create it in a specific directory. To do that you first need to get the &ldquo;List number&rdquo; for the Wiki you&rsquo;ve created on Sharepoint. Once you have that you can do something like the following:</p>
+
+<p><code>
+https://sharepoint.example.com/_layouts/15/CreateWebPage.aspx?List={BD29BF41-E43D-4024-84F1-048F209DBCB3}&amp;RootFolder=%2FWIKINAME%2FFOLDER%2FArticles/
+</code>
+This will prompt the user to create a new Wiki article in /WIKINAME/FOLDER/Articles/.</p>
+
+<h3>Link to Optionally Create New Article</h3>
+
+<p>You may want to have a link to function with the following</p>
+
+<ul>
+<li>If article exists, user is taken to the article</li>
+<li>If article doesn&rsquo;t exist, user is prompted to create a new article</li>
+</ul>
+
+
+<p><code>
+https://sharepoint.example.com/_layouts/15/WikiRedirect.aspx?url=/WIKINAME/Folder/ArticleName.aspx
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

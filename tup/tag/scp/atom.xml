@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: scp | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/scp/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to SCP transfer a file off of a Checkpoint Firewall]]></title>
+    <link href="http://tunnelsup.github.io/how-to-scp-transfer-a-file-off-of-a-checkpoint-firewall/"/>
+    <updated>2015-07-26T10:52:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-scp-transfer-a-file-off-of-a-checkpoint-firewall</id>
+    <content type="html"><![CDATA[<p>Sometimes there is a need to move a file off a Checkpoint firewall. Often what I try first is to go into expert mode on the Checkpoint CLI and see if there&rsquo;s a FTP server that I can connect to and transfer the file that way. If that doesn&rsquo;t work then I try SCP.</p>
+
+<h3>Setting up the Checkpoint</h3>
+
+<p>From the CLI of Checkpoint, go into expert mode by typing <code>expert</code>.</p>
+
+<p>Now change the shell for the user you are logged in as to be the linux command line and not the Checkpoint CLI.</p>
+
+<p><code>
+[Expert@FW1]# chsh username
+Changing shell for username.
+New shell [/etc/cli.sh]: /bin/bash
+Shell changed.
+</code></p>
+
+<p>Now make sure the policy on the checkpoint allows TCP port 22 to connect to the checkpoint from the system you want to run the SCP client.</p>
+
+<h3>Using SCP software</h3>
+
+<p>Now grab something like WinSCP (unfortunately Filezilla still doesn&rsquo;t do SCP) and launch the program.</p>
+
+<p>Add the IP/username/password you normally use to login to Checkpoint with and choose port 22 if it asks. Once it connects you will be able to browse the files and download the ones you need.</p>
+
+<h3>Finishing up</h3>
+
+<p>Don&rsquo;t forget when done to change the shell back to the Checkpoint CLI.</p>
+
+<p><code>
+[Expert@FW1]# chsh username
+Changing shell for username.
+New shell [/bin/bash]: /etc/cli.sh
+Shell changed.
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

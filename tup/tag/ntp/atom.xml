@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ntp | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/ntp/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to test an NTP server using ntpdate]]></title>
+    <link href="http://tunnelsup.github.io/how-to-test-an-ntp-server-using-ntpdate/"/>
+    <updated>2016-04-19T21:29:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-test-an-ntp-server-using-ntpdate</id>
+    <content type="html"><![CDATA[<p>Do you want to check if an NTP server is alive and responding to NTP queries? Do you need to manually check an NTP server to see if the clock is correct? Try using <code>ntpdate</code> from a linux CLI to query the NTP server.</p>
+
+<p><code>
+$ ntpdate -q pool.ntp.org
+server 64.71.128.26, stratum 2, offset 1.552116, delay 0.06792
+server 104.236.236.188, stratum 2, offset 1.556884, delay 0.11574
+server 108.59.2.24, stratum 2, offset 1.569006, delay 0.11952
+server 209.114.111.1, stratum 2, offset 1.542965, delay 0.11389
+19 Apr 21:30:06 ntpdate[32062]: step time server 64.71.128.26 offset 1.552116 sec
+</code></p>
+
+<p>The <code>-q</code> switch says to query only and not set the time. With this command you can query an NTP server and it will return the date it has set.</p>
+]]></content>
+  </entry>
+  
+</feed>

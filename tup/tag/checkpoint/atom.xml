@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: checkpoint | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/checkpoint/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to SCP transfer a file off of a Checkpoint Firewall]]></title>
+    <link href="http://tunnelsup.github.io/how-to-scp-transfer-a-file-off-of-a-checkpoint-firewall/"/>
+    <updated>2015-07-26T10:52:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-scp-transfer-a-file-off-of-a-checkpoint-firewall</id>
+    <content type="html"><![CDATA[<p>Sometimes there is a need to move a file off a Checkpoint firewall. Often what I try first is to go into expert mode on the Checkpoint CLI and see if there&rsquo;s a FTP server that I can connect to and transfer the file that way. If that doesn&rsquo;t work then I try SCP.</p>
+
+<h3>Setting up the Checkpoint</h3>
+
+<p>From the CLI of Checkpoint, go into expert mode by typing <code>expert</code>.</p>
+
+<p>Now change the shell for the user you are logged in as to be the linux command line and not the Checkpoint CLI.</p>
+
+<p><code>
+[Expert@FW1]# chsh username
+Changing shell for username.
+New shell [/etc/cli.sh]: /bin/bash
+Shell changed.
+</code></p>
+
+<p>Now make sure the policy on the checkpoint allows TCP port 22 to connect to the checkpoint from the system you want to run the SCP client.</p>
+
+<h3>Using SCP software</h3>
+
+<p>Now grab something like WinSCP (unfortunately Filezilla still doesn&rsquo;t do SCP) and launch the program.</p>
+
+<p>Add the IP/username/password you normally use to login to Checkpoint with and choose port 22 if it asks. Once it connects you will be able to browse the files and download the ones you need.</p>
+
+<h3>Finishing up</h3>
+
+<p>Don&rsquo;t forget when done to change the shell back to the Checkpoint CLI.</p>
+
+<p><code>
+[Expert@FW1]# chsh username
+Changing shell for username.
+New shell [/bin/bash]: /etc/cli.sh
+Shell changed.
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Checkpoint Packet Capture Creator]]></title>
+    <link href="http://tunnelsup.github.io/checkpoint-packet-capture-creator/"/>
+    <updated>2014-03-29T17:28:00-07:00</updated>
+    <id>http://tunnelsup.github.io/checkpoint-packet-capture-creator</id>
+    <content type="html"><![CDATA[
+
+
+
+<p>The CLI of Checkpoint allows users to create packet captures. This webpage will help create the config needed to be used for Checkpoint packet captures. The user must be in expert mode in order to conduct the packet capture from the command line.</p>
+
+
+<br>
+
+
+<h3>Inputs</h3>
+
+
+<p><form name="creator" id="form"></p>
+
+<pre><code>&lt;div class="well"&gt;
+    &lt;div class="errorMessage"&gt; &lt;/div&gt;
+    Source IP: (example: 192.168.1.1, any)&lt;br&gt;
+    &lt;input type="text" class="formsize" value="any" name="srcip"&gt;
+    Destination IP:&lt;br&gt;
+    &lt;input type="text" class="formsize" value="any" name="dstip"&gt;
+    Destination port: (example: 80, any)&lt;br&gt;
+    &lt;input type="text" class="formsize" value="any" name="dstport"&gt;
+    Dump to filename. Leave blank to output results to screen. (example: capture.pcap).&lt;br&gt;
+    &lt;input type="text" class="formsize" name="file"&gt;
+
+
+
+
+    &lt;button id="create" class="button btn-success btn-large" type="button"&gt;Create&lt;/button&gt; 
+
+&lt;/div&gt;
+</code></pre>
+
+<p></form></p>
+
+<h3>Config</h3>
+
+
+<div id="resultsblock">
+    <div class="well">
+        <code>
+        <div id="results">
+            fw monitor
+        </div>
+        </code>
+    </div>  
+</div>
+
+
+<h3> Understanding the Output </h3>
+
+
+<p>
+Suppose there is a capture to see all packets going to or coming from 99.99.99.99. The capture statement would look like this:
+
+
+<code>fw monitor -e 'accept (([16:4,b]=99.99.99.99) or ([12:4,b]=99.99.99.99));'</code>
+<br>
+
+Then we have an inside host attempt to go to that IP over port 80. We will see the following output:
+
+```
+[fw_1] Lan1:i[64]: 10.22.22.22 -> 99.99.99.99 (TCP) len=64 id=641
+TCP: 35592 -> 80 .S.... seq=a830ff8b ack=00000000
+[fw_1] Lan1:I[64]: 10.22.22.22 -> 99.99.99.99 (TCP) len=64 id=641
+TCP: 35592 -> 80 .S.... seq=a830ff8b ack=00000000
+[fw_1] Lan8:o[64]: 10.22.22.22 -> 99.99.99.99 (TCP) len=64 id=641
+TCP: 35592 -> 80 .S.... seq=a830ff8b ack=00000000
+[fw_1] Lan8:O[64]: 44.44.44.44 -> 99.99.99.99 (TCP) len=64 id=641
+TCP: 27026 -> 80 .S.... seq=a830ff8b ack=00000000
+```
+
+The above is only the SYN packet going out to the destination host. Dissecting the results we can understand more:
+
+<ul>    
+<li><code>Lan1</code> means the packet is being processed on the Lan1 interface</li>
+<li><code>Lan1:i</code> indicates this packet is captured <strong>pre-inbound</strong> rules</li>
+<li><code>Lan1:I</code> indicates this packet is captured <strong>post-Inbound</strong> rules</li>
+<li><code>Lan8</code> indicates the interface the packet will be routed out of</li>
+<li><code>Lan8:o</code> indicates the packet was captured <strong>pre-outbound</strong> rules</li>
+<li><code>Lan8:O</code> indicates the packet was captured <strong>post-Outbound</strong> rules. You can see the source IP has changed due to NAT during the outbound rules.</li>
+<li><code>TCP: 35592 -> 80</code> indicates this packet is a TCP packet with a source port of 35592 and destination port of 80</li>
+<li><code>.S....</code> indicates this packet has the SYN flag set</li>
+</ul>
+
+ 
+
+Now let's look at the return packet, the SYN-ACK packet and how it looks coming back through the firewall:
+
+ 
+
+<code><pre>
+[fw_1] Lan8:i[44]: 99.99.99.99 -> 44.44.44.44 (TCP) len=44 id=45516
+TCP: 80 -> 27026 .S..A. seq=b0e2ca42 ack=a830ff8c
+[fw_1] Lan8:I[44]: 99.99.99.99 -> 10.22.22.22 (TCP) len=44 id=45516
+TCP: 80 -> 35592 .S..A. seq=b0e2ca42 ack=a830ff8c
+[fw_1] Lan1:o[44]: 99.99.99.99 -> 10.22.22.22 (TCP) len=44 id=45516
+TCP: 80 -> 35592 .S..A. seq=b0e2ca42 ack=a830ff8c
+[fw_1] Lan1:O[44]: 99.99.99.99 -> 10.22.22.22 (TCP) len=44 id=45516
+TCP: 80 -> 35592 .S..A. seq=b0e2ca42 ack=a830ff8c
+</pre></code>
+
+ 
+<ul>
+<li><code>.S..A.</code> indicates this packet has the SYN ACK flags set.</li>
+</ul>
+
+Take note:<br>
+<strong>A denied packet due a policy will be denied in the inbound rules.<br>
+A NAT will take place in the outbound rules.
+</strong>
+</p>
+
+]]></content>
+  </entry>
+  
+</feed>

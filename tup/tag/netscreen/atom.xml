@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: netscreen | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/netscreen/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Juniper Netscreen troubleshooting NSRP and HA]]></title>
+    <link href="http://tunnelsup.github.io/juniper-netscreen-troubleshooting-nsrp-and-ha/"/>
+    <updated>2014-08-26T15:47:00-07:00</updated>
+    <id>http://tunnelsup.github.io/juniper-netscreen-troubleshooting-nsrp-and-ha</id>
+    <content type="html"><![CDATA[<p>Some basic commands to help troubleshoot NSRP (failover/high availability) with Juniper Netscreen SSG devices.</p>
+
+<h3>Review the NSRP configuration</h3>
+
+<p>Here is a config pull from a working HA firewall config.</p>
+
+<p><code>
+netscreen:netscreen-cluster-pri(M)-&gt; get config | i nsrp
+set nsrp cluster id 1
+set nsrp cluster name netscreen-cluster
+set nsrp rto-mirror sync
+set nsrp rto-mirror route
+set nsrp vsd-group id 0 priority 1
+set nsrp vsd-group id 0 preempt
+set nsrp vsd-group id 0 preempt hold-down 20
+set nsrp secondary-path ethernet0/1
+set nsrp monitor interface ethernet0/0
+set nsrp monitor interface ethernet0/1
+set nsrp monitor interface ethernet2/6
+set nsrp monitor interface ethernet2/5
+set nsrp monitor interface ethernet2/4
+set nsrp monitor interface ethernet2/0
+set nsrp monitor interface ethernet2/1
+</code></p>
+
+<h3>Examine the current NSRP state</h3>
+
+<p>Some commands to examine the state of the situation</p>
+
+<p>```
+netscreen:netscreen-pri(M)&ndash;> get nsrp vsd-group all</p>
+
+<p>VSD group info:
+init hold time: 8
+heartbeat lost threshold: 3
+heartbeat interval: 1000(ms)
+master always exist: disabled
+group priority preempt holddown inelig   master       PB other members</p>
+
+<pre><code>0        1 yes           20 no       myself 13691648
+</code></pre>
+
+<p>total number of vsd groups: 1
+Total iteration=16523170,time=603985353,max=119017,min=2779,average=36</p>
+
+<p>vsd group id: 0, member count: 2, master: 13690368</p>
+
+<h2>member information:</h2>
+
+<h2>group  unit_id  state          prio flag rto_peer   hb miss holddown</h2>
+
+<pre><code>0 13691648  primary backup  100    0        0    1    0        3
+0 13690368  master            1    2        0    0    0       20
+</code></pre>
+
+<p>```</p>
+
+<p>Some interesting things to get out of this command:</p>
+
+<p><code>master = myself</code> This is good to know who the current active or master firewall is.</p>
+
+<p><code>member count = 2</code> If this is 2 it means there is another firewall joined to this VSD group.</p>
+
+<p>Another command is simply <code>get nsrp</code>. This will show the <em>which is the HA interface</em>, as well as other information.</p>
+
+<h3>Determine the last time a failover occurred</h3>
+
+<p>The only way to do this is to check the logs.</p>
+
+<p><code>
+netscreen:netscreen-pri(M)-&gt; get event | incl nsrp
+2014-08-25 14:03:39 system crit  00015 NSRP: HA control channel change to
+2014-08-25 14:03:27 system crit  00015 NSRP: HA control channel change to
+2014-08-25 14:01:44 system crit  00015 NSRP: HA control channel change to
+2014-08-25 14:00:53 system crit  00015 NSRP: HA control channel change to
+</code></p>
+
+<p>This only tells half the story. From here we can see that the syslog type is 00015. Let&rsquo;s take a look at the logs filtering on that log type only:</p>
+
+<p>```
+netscreen:netscreen-pri(M)&ndash;> get event type 00015
+get event type 00015
+Date       Time     Module Level  Type Description
+2014-08-25 14:03:39 system crit  00015 NSRP: HA control channel change to</p>
+
+<pre><code>                                   ethernet2.
+</code></pre>
+
+<p>2014-08-25 14:03:27 system crit  00015 NSRP: HA control channel change to</p>
+
+<pre><code>                                   NULL.(disconnected).
+</code></pre>
+
+<p>2014-08-25 14:01:44 system crit  00015 NSRP: HA control channel change to</p>
+
+<pre><code>                                   ethernet2.
+</code></pre>
+
+<p>2014-08-25 14:00:53 system crit  00015 NSRP: HA control channel change to</p>
+
+<pre><code>                                   NULL.(disconnected).
+</code></pre>
+
+<p>2014-08-25 14:00:49 system crit  00015 NSRP: HA control channel change to</p>
+
+<pre><code>                                   ethernet2.
+</code></pre>
+
+<p>2014-08-25 14:00:41 system crit  00015 NSRP: HA control channel change to</p>
+
+<pre><code>                                   NULL.(disconnected).
+</code></pre>
+
+<p>```</p>
+
+<h3>Initiate a manual failover</h3>
+
+<p>Here is the command to conduct a failover. Execute this from the primary firewall:</p>
+
+<p><code>exec nsrp vsd-group 0 mode backup</code></p>
+
+<h3>Additional problems</h3>
+
+<p>From the primary firewall there is not a way to see what the IP is of the backup firewall. The primary firewall will utilize the IP addresses in the config. The one exception to this is the management IP. This is configured seperately on each firewall in the cluster.</p>
+
+<p>There is not a way to view the logs in the backup device from the primary.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Site to Site VPN tunnel config between a Cisco ASA and a Juniper SSG ScreenOS]]></title>
+    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos/"/>
+    <updated>2012-07-06T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos</id>
+    <content type="html"><![CDATA[<p>Below is a config to create a VPN tunnel between a Cisco ASA (Blue side) to a Juniper SSG ScreenOS (Red Side).</p>
+
+<p>Juniper Settings:</p>
+
+<p>ethernet0/0: 22.22.22.22, Untrust
+bgroup0: 172.16.22.1, Trust</p>
+
+<p><img src="/images/asasitetosite.jpg" alt="ASA network diagram - IMG" /></p>
+
+<h3>Cisco ASA config (Blue):</h3>
+
+<p>```
+!^^^^^^^ ISAKMP (Phase 1) ^^^^^^^!
+! must match with the other side in order for Phase 1 to complete.
+! Lower policy numbers will likely be used before higher ones.
+crypto isakmp policy 5
+  authentication pre-share
+  encryption aes
+  hash sha
+  group 2
+  lifetime 86400</p>
+
+<p>! Enable ISAKMP on the outside interface
+crypto isakmp enable OUTSIDE
+! Define the pre-shared-key
+tunnel-group 22.22.22.22 type ipsec-l2l
+tunnel-group 22.22.22.22 ipsec-attributes
+ pre-shared-key sekretk3y</p>
+
+<p>!^^^^^^^ IPSEC (Phase 2) ^^^^^^^!
+! Define the interesting traffic in the ACL
+access-list ACL-RED-VPN permit ip 192.168.11.0 255.255.255.0 172.16.22.0 255.255.255.0
+crypto ipsec transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+! Create a crypto map entry that defines the tunnel
+crypto map MAP-OUTSIDE 20 set peer 22.22.22.22
+! ACL must be exactly the opposite of the other sides ACL
+crypto map MAP-OUTSIDE 20 match address ACL-RED-VPN
+! Transform set must match other side identically
+crypto map MAP-OUTSIDE 20 set transform-set ESP-AES128-SHA
+crypto map MAP-OUTSIDE 20 set security-association lifetime kilobytes 10000
+! Apply crypto map to an interface
+crypto map MAP-OUTSIDE interface OUTSIDE</p>
+
+<p>!^^^^^^^ Routes and No-NATS ^^^^^^^!
+! Point the destination network out the outside interface with a next hop as the default gateway.
+route OUTSIDE 172.16.22.0 255.255.255.0 11.11.11.1
+! Make sure that the VPN traffic is NOT NATd
+access-list ACL-INSIDE-NONAT extended permit ip 192.168.11.0 255.255.255.0 172.16.22.0 255.255.255.0
+nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
+```</p>
+
+<h3>Juniper SSG-5 ScreenOS config (Red):</h3>
+
+<p>```
+! Create a tunnel interface
+set interface tunnel.1 zone Untrust
+set interface tunnel.1 ip unnumbered interface ethernet0/0</p>
+
+<h1>Create the gateway (IKE settings)</h1>
+
+<h1>note that &ldquo;sec-level standard&rdquo; means the IKE policies will try to use:  pre-g2-3des-sha and pre-g2-aes128-sha</h1>
+
+<p>set ike gateway &ldquo;VPN-GATEWAY&rdquo; ip 11.11.11.11 outgoing-interface ethernet0/0 preshare &ldquo;sekretk3y&rdquo; sec-level standard</p>
+
+<h1>Configure VPN IPSEC settings</h1>
+
+<p>set vpn &ldquo;VPN&rdquo; gateway &ldquo;VPN-GATEWAY&rdquo; replay tunnel idletime 0 proposal &ldquo;nopfs-esp-aes128-sha&rdquo;
+set vpn &ldquo;VPN&rdquo; id 1 bind interface tunnel.1
+set vpn &ldquo;VPN&rdquo; proxy-id local-ip 172.16.22.0/24 remote-ip 192.168.11.0/24 &ldquo;ANY&rdquo;</p>
+
+<h1>Configure a route for the remote end traffic</h1>
+
+<p>set vrouter trust-vr route 192.168.11.0/24 interface tunnel.1</p>
+
+<h1>Create 2 address book entries and create two policies to permit this traffic</h1>
+
+<p>set address Untrust &ldquo;192.168.11.0/24&rdquo; 192.168.11.0/24
+set address Trust &ldquo;172.16.22.0/24&rdquo; 172.16.22.0/24
+set policy top from &ldquo;Trust&rdquo; to &ldquo;Untrust&rdquo; &ldquo;172.16.22.0/24&rdquo; &ldquo;192.168.11.0/24&rdquo; &ldquo;ANY&rdquo; Permit log count
+set policy top from &ldquo;Untrust&rdquo; to &ldquo;Trust&rdquo; &ldquo;192.168.11.0/24&rdquo; &ldquo;172.16.22.0/24&rdquo; &ldquo;ANY&rdquo; Permit log count
+```</p>
+
+<h3>Notes:</h3>
+
+<p>Coming at this from my Cisco background I had to learn some new ways of looking at this.</p>
+
+<p>The traffic that can go over the tunnel is called the proxy-id. It is defined in the vpn settings. You also have to then permit this traffic in a policy between the two zones of your tunnel interface and whatever internal interface you have. In my case my Trust interface was bgroup0.</p>
+
+<h3>Troubleshooting:</h3>
+
+<p>Some show commands to see what&rsquo;s going on:</p>
+
+<p><code>get sa</code></p>
+
+<p><code>get ike gateway</code></p>
+
+<p><code>get event</code></p>
+
+<p>Try creating a packet capture to see what is happening to the packet. With a packet capture you can see what is going on between the two VPN peers, or why your interesting traffic is not making it through the SSG.</p>
+
+<p>```
+clear db
+set console dbuf
+set ffilter src-ip 1.1.1.1 dst-ip 2.2.2.2
+debug flow basic</p>
+
+<h1>generate some traffic</h1>
+
+<h1>to see the capture:</h1>
+
+<p>get dbuf stream</p>
+
+<h1>to stop capturing:</h1>
+
+<p>undebug all
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA to Juniper ScreenOS to Juniper JunOS Command Reference Cheat Sheet]]></title>
+    <link href="http://tunnelsup.github.io/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet/"/>
+    <updated>2012-07-06T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet</id>
+    <content type="html"><![CDATA[<div>
+  <style>
+     table.ztab1 {
+        margin: auto;
+        border: 1px solid black;
+      }
+
+      table.ztab1 th {
+        font-weight: bold;
+        background-color: #AAAAAA;
+        border-bottom: 2px solid black;
+      }
+
+      table.ztab1 th,td {
+        padding: 4px 5px;
+      }
+
+      table.ztab1 tr:nth-of-type(odd) {
+        background-color: #FFFFFF;
+      }
+
+      table.ztab1 tr:nth-of-type(even) {
+        background-color: #CCCCCC;
+      }
+  </style>
+</div>
+
+
+<p>Here is a basic reference sheet for looking up equivalent commands between a Cisco ASA and a Juniper ScreenOS (or Netscreen) SSG and a Juniper JunOS SRX firewall.</p>
+
+<table class="ztab1">
+<tbody>
+<tr>
+    <th>Cisco ASA</th>
+    <th>Juniper ScreenOS (SSG)</th>
+    <th>Juniper JunOS (SRX)</th>
+</tr>
+
+<tr>
+    <td>show log</td>
+    <td>get event</td>
+    <td>show log messages<br>
+show log messages | last 20 (see the 20 most recent logs)</td>
+</tr>
+
+<tr>
+    <td>show ip</td>
+    <td>get interface</td>
+    <td>show interface terse</td>
+</tr>
+<tr>
+    <td>show failover</td>
+    <td>get nsrp</td>
+    <td>show log jsrp<br>
+show chassis cluster [status|statistics|interfaces]</td>
+</tr>
+<tr>
+    <td>no failover active</td>
+    <td>exec nsrp vsd [vsd] mode backup</td>
+    <td>request chassis cluster failover redundancy-group [group] node <node></td>
+</tr>
+<tr>
+    <td>show route</td>
+    <td>get route</td>
+    <td>show route</td>
+</tr>
+<tr>
+    <td>show connections</td>
+    <td>get session</td>
+    <td>show security flow session</td>
+</tr>
+<tr>
+    <td>show clock</td>
+    <td>get clock</td>
+    <td>show system uptime</td>
+</tr>
+<tr>
+    <td>show version (to get uptime)</td>
+    <td>get system</td>
+    <td>show system uptime</td>
+</tr>
+<tr>
+    <td>show running-config</td>
+    <td>get config</td>
+    <td>show config</td>
+</tr>
+<tr>
+    <td>show version (to get serial number)</td>
+    <td>get chassis</td>
+    <td>show chassis hardware detail</td>
+</tr>
+<tr>
+    <td>show access-list</td>
+    <td>get policy</td>
+    <td>show security policies</td>
+</tr>
+<tr>
+    <td>show crypto isakmp sa</td>
+    <td>get ike cookie</td>
+    <td>show security ike security-associations</td>
+</tr>
+<tr>
+    <td>show crypto ipsec sa</td>
+    <td><a href="http://kb.juniper.net/InfoCenter/index?page=content&id=KB6134&actp=search">get sa</a></td>
+    <td>show security ipsec security-associations</td>
+</tr>
+<tr>
+    <td>clear crypto isakmp sa</td>
+    <td>clear ike cookie</td>
+    <td>clear security ike security-associations</td>
+</tr>
+<tr>
+    <td>clear crypto ipsec sa</td>
+    <td>clear sa</td>
+    <td>clear security ipsec security-associations</td>
+</tr>
+<tr>
+    <td>show cpu</td>
+    <td>get perf cpu</td>
+    <td>show chassis routing-engine</td>
+</tr>
+<tr>
+    <td>show proc cpu-usage</td>
+    <td></td>
+    <td>show system processes extensive</td>
+</tr>
+<tr>
+<td>show int (for i/o of bytes)</td>
+<td> get counter statistics</td>
+<td>sh int</td>
+</tr>
+
+<tr>
+<td>ssh x.x.x.0 y.y.y.0 inside</td>
+<td>set admin manager-ip x.x.x.0 y.y.y.0<br />
+set ssh enable</td>
+<td>set security zones security-zone TRUST host-inbound-traffic system-services ssh</td>
+</tr>
+<tr>
+<td>show run [cry isakmp|tunnel-group]?</td>
+<td>get ike gateway</td>
+<td>show config security ike<br>
+show config security ipsec</td>
+</tr>
+<tr>
+<td>interface Ethernet1<br />
+shutdown</td>
+<td>set interface ethernet0/0 phy link-down</td>
+<td>set interfaces ge-0/0/3 disable</td>
+</tr>
+<tr>
+<td>interface Ethernet1<br />
+no shutdown</td>
+<td>unset interface ethernet0/0 phy link-down</td>
+<td>delete interfaces ge-0/0/3 disable</td>
+</tr>
+<tr>
+<td>route outside 1.1.1.0 255.255.255.0 1.1.1.2</td>
+<td>set route 1.1.1.0/24 interface bgroup3/0 gateway 1.1.1.2</td>
+<td>set routing-options static route 10.10.10.128/25 next-hop 172.16.100.1</td>
+</tr>
+<tr>
+<td>logging host INSIDE 1.1.1.1<br />
+logging trap notification</td>
+<td>set syslog config 1.1.1.1 facilities local5<br />
+set syslog src-interface ethernet1/0<br />
+set syslog enable</td>
+<td>set system syslog source-address 10.14.4.4<br>
+set system syslog host 1.1.1.1 any notice</td>
+</tr>
+<tr>
+<td>ntp server 1.1.1.1 source OUTSIDE</td>
+<td>set ntp server 1.1.1.1<br />
+set ntp server src-interface ethernet3/0<br />
+set clock ntp<br />
+exec ntp update</td>
+<td>set system ntp server 1.1.1.1 prefer</td>
+</tr>
+<tr>
+<td>capture CAP1 match ip host 1.1.1.1 host 2.2.2.2</td>
+<td>clear db<br />
+set console dbuf<br />
+set ffilter src-ip 1.1.1.1 dst-ip 2.2.2.2<br />
+debug flow basic<br />
+<br />
+--- OR ---<br />
+<br />
+snoop filter ip src-ip 1.1.1.1 dst-ip 2.2.2.2 direction both<br />
+clear dbuf<br />
+snoop</td>
+<td>edit security flow traceoptions<br>
+set file TSHOOT<br>
+set flag basic-datapath<br>
+set packet-filter IN-TO-OUT source-prefix 10.1.1.100/32 destination-prefix 10.2.0.3/32
+</td>
+</tr>
+<tr>
+<td>show capture CAP1</td>
+<td>get dbuf stream</td>
+<td>show log TSHOOT</td>
+</tr>
+<tr>
+<td>clear capture CAP1</td>
+<td>undebug all<br />
+unset ffilter<br />
+<br />
+--- OR ---<br />
+<br />
+snoop filter delete</td>
+<td>deactivate security flow traceoptions<br>
+delete security flow traceoptions
+</td>
+</tr>
+
+</tbody>
+</table>
+
+
+<p>Additional reading material regarding Juniper SSG and ScreenOS commands:
+<a href="http://www.juniper.net/techpubs/software/screenos/screenos6.2.0/index.html"><a href="http://www.juniper.net/techpubs/software/screenos/screenos6.2.0/index.html">http://www.juniper.net/techpubs/software/screenos/screenos6.2.0/index.html</a></a></p>
+]]></content>
+  </entry>
+  
+</feed>

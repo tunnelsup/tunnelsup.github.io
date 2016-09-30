@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: router | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/router/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Packet capture for Cisco IOS Router]]></title>
+    <link href="http://tunnelsup.github.io/packet-capture-for-cisco-ios-router/"/>
+    <updated>2015-11-11T23:05:00-08:00</updated>
+    <id>http://tunnelsup.github.io/packet-capture-for-cisco-ios-router</id>
+    <content type="html"><![CDATA[<p>Having the ability to conduct packet captures is a valuable tool for troubleshooting connectivity issues within a network. IOS routers 12.4(20)T and up has the Embedded Packet Capture (EPC) built in to it.</p>
+
+<p><a href="/packet-captures-on-cisco-asa/">How to do packet captures on a Cisco ASA</a></p>
+
+<p><a href="/cisco-ios-packet-captures-with-ethanalyzer/">How to do packet capture on Cisco Nexus OS</a></p>
+
+<h3>Routers</h3>
+
+<p>(All commands can be done from the exec mode except for creating the ACL which requires config mode)</p>
+
+<p>Define the capture point/interface/direction</p>
+
+<p><code>
+monitor capture point ip cef CAPTURE FastEthernet0 both
+</code></p>
+
+<p>Define the buffer and size and how to react when it fills up</p>
+
+<p><code>
+monitor capture buffer CAPBUF size 512 max-size 1024 circular
+</code></p>
+
+<p>Create an ACL to hit on the interesting traffic and assign it to the capture buffer</p>
+
+<p><code>
+monitor capture buffer CAPBUF filter access-list ACL-CAP
+</code></p>
+
+<p>Associate the capture point with the capture buffer</p>
+
+<p><code>
+monitor capture point associate CAPTURE CAPBUF
+</code></p>
+
+<p>Start the packet capture</p>
+
+<p><code>
+monitor capture point start CAPTURE
+</code></p>
+
+<p>To stop it:</p>
+
+<p><code>
+monitor capture point stop CAPTURE
+</code></p>
+
+<p>Now show what you’ve collected:</p>
+
+<p><code>
+show monitor capture buffer CAPBUF [dump]
+</code></p>
+
+<p>It is probably easier to read this in wireshark so here is how to export it:</p>
+
+<p><code>
+monitor buffer export CAPBUF tftp://192.168.1.21/myrouter.pcap
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Encrypt Passwords on Cisco Router]]></title>
+    <link href="http://tunnelsup.github.io/encrypt-passwords-on-cisco-router/"/>
+    <updated>2013-06-17T22:26:00-07:00</updated>
+    <id>http://tunnelsup.github.io/encrypt-passwords-on-cisco-router</id>
+    <content type="html"><![CDATA[<p>By default, when adding a username and password to a Cisco router or switch, the password will show up as clear text. So the question then becomes:</p>
+
+<h3>How do you encrypt the password on a Cisco Router?</h3>
+
+<p>You should avoid creating a username like this:<br>
+<code>username TESTUSER password TESTPASS</code></p>
+
+<p>This will result in a clear text password in the configuration. To encrypt all of the passwords after that has been done you can do the following command:</p>
+
+<p><code>service password-encryption</code></p>
+
+<p>However that only does a very weak encryption. It only does a type 7 encryption which is incredibly easy to decipher. A quick google search and you&rsquo;ll find many password decrypting tools to break those types of passwords.</p>
+
+<p>A more secure password encryption is to use the <code>secret</code> command as in the following:<br>
+<code>username TESTUSER secret TESTPASS</code></p>
+
+<p>This will create level 5 encryption by default and doesn&rsquo;t even require you to use the &lsquo;service password-encryption&rsquo; command.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Recovering the password when No Service Password-Recovery is enabled on a router]]></title>
+    <link href="http://tunnelsup.github.io/recovering-the-password-when-no-service-password-recovery-is-enabled-on-a-router/"/>
+    <updated>2013-01-04T00:00:00-08:00</updated>
+    <id>http://tunnelsup.github.io/recovering-the-password-when-no-service-password-recovery-is-enabled-on-a-router</id>
+    <content type="html"><![CDATA[<p>Goal: Get into an 1811 that has the No Service Password-Recovery feature enabled.</p>
+
+<p>Limitation: Because this feature is enabled it simply means when you do password recovery the entire config will be wiped.</p>
+
+<p>Problem: <a href="http://www.cisco.com/en/US/docs/ios/12_3/12_3y/12_3ya8/gtnsvpwd.html#wp1062060">Cisco&rsquo;s documentation on this is WRONG. </a></p>
+
+<p>Solution: Using SecureCRT and consoled into the router the break sequence is CTRL+BREAK (if you are on a lenovo laptop then hold CTRL then push Fn+BREAK). You have to send it at the right time. Look at the output below to see when to hit the break sequence.</p>
+
+<pre><code>
+System Bootstrap, Version 12.3(8r)YH13, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 2008 by cisco Systems, Inc.
+C1800 platform with 131072 Kbytes of main memory with parity disabled
+
+Readonly ROMMON initialized
+PASSWORD RECOVERY FUNCTIONALITY IS DISABLED
+program load complete, entry point: 0x80012000, size: 0xc0c0
+
+Initializing ATA monitor library.......
+program load complete, entry point: 0x80012000, size: 0xc0c0
+
+Initializing ATA monitor library.......
+
+program load complete, entry point: 0x80012000, size: 0x1974ba0
+Self decompressing the image : ######################################################################
+######################################################################
+######################################################################
+################################ [OK]
+
+Restricted Rights Legend
+
+Use, duplication, or disclosure by the Government is
+subject to restrictions as set forth in subparagraph
+(c) of the Commercial Computer Software - Restricted
+Rights clause at FAR sec. 52.227-19 and subparagraph
+(c) (1) (ii) of the Rights in Technical Data and Computer
+Software clause at DFARS sec. 252.227-7013.
+
+cisco Systems, Inc.
+170 West Tasman Drive
+San Jose, California 95134-1706
+
+Cisco IOS Software, C181X Software (C181X-ADVIPSERVICESK9-M), Version 15.0(1)M3, RELEASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2010 by Cisco Systems, Inc.
+Compiled Sun 18-Jul-10 00:57 by prod_rel_team
+Image text-base: 0x80012118, data-base: 0x82E13000
+<strong><span style="color: #ff0000;">[ 5 Second window begins here to send BREAK ]</span></strong>
+
+PASSWORD RECOVERY IS DISABLED.
+Do you want to reset the router to factory default
+configuration and proceed [y/n] ? <strong>y</strong>
+Reset router configuration to factory default.
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+Installed image archive
+Cisco 1811 (MPC8500) processor (revision 0x400) with 118784K/12288K bytes of memory.
+Processor board ID FTX141780Z7, with hardware revision 0000
+
+10 FastEthernet interfaces
+1 Serial interface
+1 terminal line
+1 Virtual Private Network (VPN) Module
+62720K bytes of ATA CompactFlash (Read/Write)
+[OK][OK]
+SETUP: new interface FastEthernet0 placed in "shutdown" state
+SETUP: new interface FastEthernet1 placed in "shutdown" state
+
+Press RET5 01:35:07.427: %LINK-5-CHANGED: Interface FastEthernet0, changed state to administratively down
+*Jan  5 01:35:07.431: %SYS-5-RESTART: System restarted --
+Cisco IOS Software, C181X Software (C181X-ADVIPSERVICESK9-M), Version 15.0(1)M3, RELEASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2010 by Cisco Systems, Inc.
+Compiled Sun 18-Jul-10 00:57 by prod_rel_team
+*Jan  5 01:35:07.431: %SNMP-5-COLDSTART: SNMP agent on host Router is undergoing a cold start
+*Jan  5 01:35:07.459: %CRYPTO-6-ISAKMP_ON_OFF: ISAKMP is OFF
+*Jan  5 01:35:07.459: %CRYPTO-6-GDOI_ON_OFF: GDOI is OFF
+*Jan  5 01:35:07.943: %LINK-5-CHANGED: Interface FastEthernet1, changed state to administratively down
+*Jan  5 01:35:08.823: %LINK-3-UPDOWN: Interface FastEthernet2, changed state to up
+*Jan  5 01:35:08.823: %LINK-3-UPDOWN: Interface FastEthernet3, changed state to up
+*Jan  5 01:35:08.823: %LINK-3-UPDOWN: Interface FastEthernet4, changed state to up
+*Jan  5 01:35:08.827: %LINK-3-UPDOWN: Interface FastEthernet5, changed state to up
+*Jan  5 01:35:08.827: %LINK-3-UPDOWN: Interface FastEthernet6, changed state to up
+*Jan  5 01:35:08.827: %LINK-3-UPDOWN: Interface FastEthernet7, changed state to up
+*Jan  5 01:35:08.831: %LINK-3-UPDOWN: Interface FastEthernet8, changed state to up
+*Jan  5 01:35:08.831: %LINK-3-UPDOWN: Interface FastEthernet9, changed state to up
+*Jan  5 01:35:09.823: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet2, changed state to down
+*Jan  5 01:35:09.823: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet3, changed state to down
+*Jan  5 01:35:09.823: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet4, changed state to down
+*Jan  5 01:35:09.827: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet5, changed state to down
+*Jan  5 01:35:09.827: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet6, changed state to down
+*Jan  5 01:35:09.827: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet7, changed state to down
+*Jan  5 01:35:09.831: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet8, changed state to down
+*Jan  5 01:35:09.831: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet9, changed state to down
+Router&gt;
+</code></pre>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Site to site VPN tunnel between ASA and Router]]></title>
+    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-asa-and-cisco-router/"/>
+    <updated>2010-05-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-asa-and-cisco-router</id>
+    <content type="html"><![CDATA[<p><img src="/images/asa-isr.jpg" alt="ASR ISR network diagram- IMG" /></p>
+
+<p>Using the above network diagram, the scripts below can be applied to both ASA&rsquo;s to build a site to site VPN tunnel. The firewall on the left is a Cisco ASA and device on the right is a Cisco Router. The router needs to have an IOS that supports VPN&rsquo;s. You can test this by typing &lsquo;crypto ?&rsquo; and see if it has the commands available to make the tunnel. Usually a router with a K9 image on it is good enough. If not then it&rsquo;ll require the security image to have IPSec capabilities.</p>
+
+<p>After applying the config below the device at 192.168.11.2 should be able to access 172.16.22.2 and vice versa.</p>
+
+<h3>BLUE ASA</h3>
+
+<p><code>
+!^^^^^^^ ISAKMP (Phase 1) ^^^^^^^!
+! The policy number is arbitrary. The parameters inside the policy
+! must match with the other side in order for Phase 1 to complete.
+! Lower policy numbers will likely be used before higher ones.
+crypto isakmp policy 5
+  authentication pre-share
+  encryption aes
+  hash sha
+  group 2
+  lifetime 86400
+! Enable ISAKMP on the outside interface
+crypto isakmp enable OUTSIDE
+! Define the pre-shared-key
+tunnel-group 22.22.22.22 type ipsec-l2l
+tunnel-group 22.22.22.22 ipsec-attributes
+  pre-shared-key sekretk3y
+!^^^^^^^ IPSEC (Phase 2) ^^^^^^^!
+! Define the interesting traffic in the ACL
+access-list ACL-RED-VPN permit ip 192.168.11.0 255.255.255.0 172.16.22.0 255.255.255.0
+crypto ipsec transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+! Create a crypto map entry that defines the tunnel
+crypto map MAP-OUTSIDE 20 set peer 22.22.22.22
+! ACL must be exactly the opposite of the other sides ACL
+crypto map MAP-OUTSIDE 20 match address ACL-RED-VPN
+! Transform set must match other side identically
+crypto map MAP-OUTSIDE 20 set transform-set ESP-AES128-SHA
+crypto map MAP-OUTSIDE 20 set security-association lifetime kilobytes 10000
+! Apply crypto map to an interface
+crypto map MAP-OUTSIDE interface OUTSIDE
+!^^^^^^^ Routes and No-NATS ^^^^^^^!
+! Point the destination network out the outside interface with a next hop as the default gateway.
+route OUTSIDE 172.16.22.0 255.255.255.0 11.11.11.1
+! Make sure that the VPN traffic is NOT NAT'd
+access-list ACL-INSIDE-NONAT extended permit ip 192.168.11.0 255.255.255.0 172.16.22.0 255.255.255.0
+nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
+</code></p>
+
+<h3>RED ROUTER WITH CRYPTO SUPPORT</h3>
+
+<p>```
+!^^^^^^^ ISAKMP (Phase 1) ^^^^^^^!
+! Note: The default isakmp settings on a router are Encr:DES Hash:SHA DH:Group 1
+! If these settings are used, they will not show under &lsquo;show run&rsquo;
+crypto isakmp policy 5
+  encr aes
+  hash sha
+  authentication pre-share
+  group 2
+crypto isakmp key sekretk3y address 11.11.11.11</p>
+
+<p>!^^^^^^^ IPSEC (Phase 2) ^^^^^^^!
+! Define the interesting traffic in the ACL
+ip access-list extended ACL-VPN
+  permit ip 172.16.22.0 0.0.0.255 192.168.11.0 0.0.0.255
+crypto ipsec transform-set AES-SHA esp-aes esp-sha-hmac
+crypto map VPN-TUNNEL 1 ipsec-isakmp
+  set peer 11.11.11.11
+  set transform-set AES-SHA
+  match address ACL-VPN</p>
+
+<p>interface Fa0/0
+  crypto map VPN-TUNNEL
+  ip nat outside</p>
+
+<p>interface Vlan2
+  ip nat inside</p>
+
+<p>!^^^^^^^ Routes and No-NATS ^^^^^^^!
+! Point the destination network out the outside interface with a next hop as the default gateway.
+ip route 192.168.11.0 255.255.255.0 22.22.22.1</p>
+
+<p>! Make sure that the VPN traffic is NOT NAT&rsquo;d
+ip access-list extended ACL-NAT
+  deny   ip 172.16.22.0 0.0.0.255 192.168.11.0 0.0.0.255
+  permit ip any any
+ip nat inside source list ACL-NAT interface Fa0/0 overload</p>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Remote access VPN connection using Cisco Router]]></title>
+    <link href="http://tunnelsup.github.io/remote-access-vpn-connection-using-a-cisco-router/"/>
+    <updated>2010-05-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/remote-access-vpn-connection-using-a-cisco-router</id>
+    <content type="html"><![CDATA[<p><img src="/images/ra-isr.jpg" alt="Network Diagram - IMG" /></p>
+
+<p>The blue router on the left is a Cisco router with VPN capabilities and the red computer on the right is any computer that is running the Cisco VPN Client.</p>
+
+<p>After applying the config below the remote access user will be able to access the device at 192.168.11.2 as if it was on the same network as it. We will also be implementing a DNS entry so the Remote Access user can use hostnames.</p>
+
+<h3>Blue Cisco Router Configuration</h3>
+
+<p><code>
+aaa authentication login VPNUSERSAUTH local
+aaa authorization network VPNUSERS local
+username ra-user password 0 passw0rd
+crypto isakmp policy 7
+encr 3des
+hash md5
+authentication pre-share
+group 2
+crypto isakmp client configuration group VPNUSERS
+key sekretK3Y
+pool VPN-POOL
+acl ACL-SPLIT-VPN
+crypto ipsec transform-set 3DES-SHA esp-3des esp-sha-hmac
+crypto dynamic-map VPNDYNMAP 1
+set transform-set ESP-AES128-SHA
+reverse-route
+crypto map MAP-OUTSIDE client authentication list VPNUSERSAUTH
+crypto map MAP-OUTSIDE isakmp authorization list VPNUSERS
+crypto map MAP-OUTSIDE client configuration address respond
+crypto map MAP-OUTSIDE 6500 ipsec-isakmp dynamic VPNDYNMAP
+ip local pool VPN-POOL 10.1.74.5 10.1.74.250
+ip access-list extended ACL-SPLIT-VPN
+permit ip 192.168.11.0 0.0.0.255 10.1.74.0 0.0.0.255
+</code></p>
+
+<h3>Cisco VPN Client Configuration</h3>
+
+<p>Create a new VPN profile in the Cisco VPN Client</p>
+
+<p><img src="/images/ra-vpnclient.jpg" alt="VPN Client Config - IMG" /></p>
+
+<p>Now select the new profile and click connect. Use the username ra-user/passw0rd</p>
+
+<p><img src="/images/ravpncl.jpg" alt="VPN Client Config - IMG" /></p>
+]]></content>
+  </entry>
+  
+</feed>

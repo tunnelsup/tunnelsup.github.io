@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: hostscan | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/hostscan/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[AnyConnect Hostscan results exceed default limit]]></title>
+    <link href="http://tunnelsup.github.io/anyconnect-hostscan-results-exceed-default-limit/"/>
+    <updated>2014-07-03T20:09:00-07:00</updated>
+    <id>http://tunnelsup.github.io/anyconnect-hostscan-results-exceed-default-limit</id>
+    <content type="html"><![CDATA[<p>I have a user who is unable to login using AnyConnect. Their screen hangs at the AnyConnect message: “Hostscan is waiting for the next scan”.</p>
+
+<p>Looking at the logs on the ASA I saw the following log:</p>
+
+<p><code>Jun 25 2014 16:25:21: %ASA-3-716600: Rejected 266KB Hostscan data from IP &lt;10.5.1.50&gt;. Hostscan results exceed default limit of 200KB.</code></p>
+
+<p><a href="http://www.cisco.com/c/en/us/td/docs/security/asa/syslog-guide/syslogs/logmsgs.html#pgfId-7474251">The syslog database</a> says to increase the limit I need to contact Cisco TAC. So I did.</p>
+
+<p>Cisco TAC gave me the following commands which fixed the issue:</p>
+
+<p><code>
+ASA(config)# service internal
+ASA(config)# webvpn
+ASA(config)# hostscan data-limit &lt;size-in-kilobytes&gt;
+</code></p>
+
+<p>Additional questions I asked Cisco but there was no answer:</p>
+
+<ul>
+<li>Why is this a secret command?</li>
+<li>My current hostscan only checks one registry string. Why is it generating more than 200KB of data for this?</li>
+<li>Why is the default setting not good enough?</li>
+<li>Why is this only happening for some users?</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

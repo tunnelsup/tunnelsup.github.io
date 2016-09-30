@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: tools | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/tools/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA show connections analyzer]]></title>
+    <link href="http://tunnelsup.github.io/cisco-asa-show-connections-analyzer/"/>
+    <updated>2015-09-04T11:37:00-07:00</updated>
+    <id>http://tunnelsup.github.io/cisco-asa-show-connections-analyzer</id>
+    <content type="html"><![CDATA[<p>This tool will examine the output of <code>show conn</code> from a Cisco ASA firewall and display relevant information about the connections.</p>
+
+<br><br>
+
+
+<div class="alert alert-info">
+    <strong>Special note:</strong> This tool does not send any data entered to the server. The analysis is done client side. This means none of the data entered will be sent over the internet.
+</div>
+
+
+<p>Paste the entire contents of <code>show conn</code> from a Cisco ASA below.</p>
+
+<pre><code>&lt;form name="conns" method="get"&gt;
+
+&lt;textarea rows="10" name="showconninput" id="showconninput" class="input-block-level"&gt;
+&lt;/textarea&gt;
+&lt;br /&gt;
+&lt;button id="analyze" type="button" class="button btn-success"&gt;Analyze!&lt;/button&gt;
+&lt;button id="demo" type="button" class="button"&gt;Load sample data&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+
+<p><div id="results"></p>
+
+<pre><code>&lt;hr&gt;
+
+&lt;h2&gt; Results &lt;/h2&gt;
+
+&lt;table class="table table-bordered"&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;h3 id='totalconns'&gt;0&lt;/h3&gt;&lt;br&gt;Total Conns&lt;/td&gt;
+        &lt;td&gt;&lt;h3 id='tcpconns'&gt;0&lt;/h3&gt;&lt;br&gt;TCP Conns&lt;/td&gt;
+        &lt;td&gt;&lt;h3 id='udpconns'&gt;0&lt;/h3&gt;&lt;br&gt;UDP Conns&lt;/td&gt;
+    &lt;/tr&gt;       
+    &lt;tr&gt;
+        &lt;td&gt;&lt;h3 id='icmpconns'&gt;0&lt;/h3&gt;&lt;br&gt;ICMP Conns&lt;/td&gt;
+        &lt;td&gt;&lt;h3 id='greconns'&gt;0&lt;/h3&gt;&lt;br&gt;GRE Conns&lt;/td&gt;
+        &lt;td&gt;&lt;h3 id='espconns'&gt;0&lt;/h3&gt;&lt;br&gt;ESP Conns&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;small&gt;&lt;div id="topTalkers"&gt;&lt;/div&gt;&lt;/small&gt;
+
+&lt;br&gt;
+&lt;div class="row-fluid"&gt;
+    &lt;div class="span6"&gt;
+        &lt;div id="topInboundPorts"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="span6"&gt;
+        &lt;div id="topOutboundPorts"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="topInboundHalfs"&gt;&lt;/div&gt;
+&lt;br&gt;
+&lt;div class="row-fluid"&gt;
+    &lt;div class="span6"&gt;
+        &lt;div id="topUDPsrcPorts"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="span6"&gt;
+        &lt;div id="topUDPdstPorts"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;br&gt;
+&lt;div id="connTypes"&gt;&lt;/div&gt;
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Checkpoint Packet Capture Creator]]></title>
+    <link href="http://tunnelsup.github.io/checkpoint-packet-capture-creator/"/>
+    <updated>2014-03-29T17:28:00-07:00</updated>
+    <id>http://tunnelsup.github.io/checkpoint-packet-capture-creator</id>
+    <content type="html"><![CDATA[
+
+
+
+<p>The CLI of Checkpoint allows users to create packet captures. This webpage will help create the config needed to be used for Checkpoint packet captures. The user must be in expert mode in order to conduct the packet capture from the command line.</p>
+
+
+<br>
+
+
+<h3>Inputs</h3>
+
+
+<p><form name="creator" id="form"></p>
+
+<pre><code>&lt;div class="well"&gt;
+    &lt;div class="errorMessage"&gt; &lt;/div&gt;
+    Source IP: (example: 192.168.1.1, any)&lt;br&gt;
+    &lt;input type="text" class="formsize" value="any" name="srcip"&gt;
+    Destination IP:&lt;br&gt;
+    &lt;input type="text" class="formsize" value="any" name="dstip"&gt;
+    Destination port: (example: 80, any)&lt;br&gt;
+    &lt;input type="text" class="formsize" value="any" name="dstport"&gt;
+    Dump to filename. Leave blank to output results to screen. (example: capture.pcap).&lt;br&gt;
+    &lt;input type="text" class="formsize" name="file"&gt;
+
+
+
+
+    &lt;button id="create" class="button btn-success btn-large" type="button"&gt;Create&lt;/button&gt; 
+
+&lt;/div&gt;
+</code></pre>
+
+<p></form></p>
+
+<h3>Config</h3>
+
+
+<div id="resultsblock">
+    <div class="well">
+        <code>
+        <div id="results">
+            fw monitor
+        </div>
+        </code>
+    </div>  
+</div>
+
+
+<h3> Understanding the Output </h3>
+
+
+<p>
+Suppose there is a capture to see all packets going to or coming from 99.99.99.99. The capture statement would look like this:
+
+
+<code>fw monitor -e 'accept (([16:4,b]=99.99.99.99) or ([12:4,b]=99.99.99.99));'</code>
+<br>
+
+Then we have an inside host attempt to go to that IP over port 80. We will see the following output:
+
+```
+[fw_1] Lan1:i[64]: 10.22.22.22 -> 99.99.99.99 (TCP) len=64 id=641
+TCP: 35592 -> 80 .S.... seq=a830ff8b ack=00000000
+[fw_1] Lan1:I[64]: 10.22.22.22 -> 99.99.99.99 (TCP) len=64 id=641
+TCP: 35592 -> 80 .S.... seq=a830ff8b ack=00000000
+[fw_1] Lan8:o[64]: 10.22.22.22 -> 99.99.99.99 (TCP) len=64 id=641
+TCP: 35592 -> 80 .S.... seq=a830ff8b ack=00000000
+[fw_1] Lan8:O[64]: 44.44.44.44 -> 99.99.99.99 (TCP) len=64 id=641
+TCP: 27026 -> 80 .S.... seq=a830ff8b ack=00000000
+```
+
+The above is only the SYN packet going out to the destination host. Dissecting the results we can understand more:
+
+<ul>    
+<li><code>Lan1</code> means the packet is being processed on the Lan1 interface</li>
+<li><code>Lan1:i</code> indicates this packet is captured <strong>pre-inbound</strong> rules</li>
+<li><code>Lan1:I</code> indicates this packet is captured <strong>post-Inbound</strong> rules</li>
+<li><code>Lan8</code> indicates the interface the packet will be routed out of</li>
+<li><code>Lan8:o</code> indicates the packet was captured <strong>pre-outbound</strong> rules</li>
+<li><code>Lan8:O</code> indicates the packet was captured <strong>post-Outbound</strong> rules. You can see the source IP has changed due to NAT during the outbound rules.</li>
+<li><code>TCP: 35592 -> 80</code> indicates this packet is a TCP packet with a source port of 35592 and destination port of 80</li>
+<li><code>.S....</code> indicates this packet has the SYN flag set</li>
+</ul>
+
+ 
+
+Now let's look at the return packet, the SYN-ACK packet and how it looks coming back through the firewall:
+
+ 
+
+<code><pre>
+[fw_1] Lan8:i[44]: 99.99.99.99 -> 44.44.44.44 (TCP) len=44 id=45516
+TCP: 80 -> 27026 .S..A. seq=b0e2ca42 ack=a830ff8c
+[fw_1] Lan8:I[44]: 99.99.99.99 -> 10.22.22.22 (TCP) len=44 id=45516
+TCP: 80 -> 35592 .S..A. seq=b0e2ca42 ack=a830ff8c
+[fw_1] Lan1:o[44]: 99.99.99.99 -> 10.22.22.22 (TCP) len=44 id=45516
+TCP: 80 -> 35592 .S..A. seq=b0e2ca42 ack=a830ff8c
+[fw_1] Lan1:O[44]: 99.99.99.99 -> 10.22.22.22 (TCP) len=44 id=45516
+TCP: 80 -> 35592 .S..A. seq=b0e2ca42 ack=a830ff8c
+</pre></code>
+
+ 
+<ul>
+<li><code>.S..A.</code> indicates this packet has the SYN ACK flags set.</li>
+</ul>
+
+Take note:<br>
+<strong>A denied packet due a policy will be denied in the inbound rules.<br>
+A NAT will take place in the outbound rules.
+</strong>
+</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Subnet Calculator - IPv4/IPv6]]></title>
+    <link href="http://tunnelsup.github.io/subnet-calculator/"/>
+    <updated>2013-09-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/subnet-calculator</id>
+    <content type="html"><![CDATA[<p>Page has been moved. Please go to <a href="http://www.tunnelsup.com/subnet-calculator"><a href="http://www.tunnelsup.com/subnet-calculator">http://www.tunnelsup.com/subnet-calculator</a></a></p>
+
+<!-- This page exists only so it shows up in the 'all articles' page. Actual page found in source/subnet-calculator/index.html -->
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Chromaterm]]></title>
+    <link href="http://tunnelsup.github.io/chromaterm/"/>
+    <updated>2013-06-16T22:31:00-07:00</updated>
+    <id>http://tunnelsup.github.io/chromaterm</id>
+    <content type="html"><![CDATA[<h2>About</h2>
+
+<p>Chromaterm is a terminal colorization tool that runs on linux and is produced by TunnelsUp.com. It essentially acts as a wrapper for the linux shell. Once it starts it then starts a new shell. Any activity within that new shell will be ran through Chromaterm. Chromaterm listens for keywords, that are user defined, and will highlight them with user defined colors.</p>
+
+<p>This can be extremely helpful especially when accessing Cisco routers and firewalls from a central Linux server. Colorizing the ssh screen of a Cisco CLI output is very convenient.</p>
+
+<h2>Screenshots</h2>
+
+<p>Below are screenshots of using chromaterm while SSH&rsquo;d into a Cisco firewall.<br>
+<img src="/images/chroma1.PNG" alt="Chromaterm IMG" /><br>
+<img src="/images/chroma2.PNG" alt="Chromaterm IMG" /><br>
+<img src="/images/chroma3.PNG" alt="Chromaterm IMG" /></p>
+
+<h2>Install</h2>
+
+<p>Installation is easy.</p>
+
+<ul>
+<li><p><a href="https://github.com/tunnelsup/chromaterm">Download the files from github</a>. Either by using the download link or by doing <code>git clone https://github.com/tunnelsup/chromaterm.git</code></p></li>
+<li><p><code>cd chromaterm/src/</code> Go into the src directory.</p></li>
+<li><p><code>./configure</code> Configure the program.</p></li>
+<li><p><code>make</code> Create the binary called ct.</p></li>
+<li><p><code>make install</code> Optional. It will move ct to the ~ directory.</p></li>
+</ul>
+
+
+<p>Once installation is complete a new file called <code>ct</code> will be in the src/ directory. Move this to your home directory. You can start the program by doing the following:</p>
+
+<p><code>./ct &lt;config_file&gt;</code></p>
+
+<h2>Creating the Config file</h2>
+
+<p>Use your text editor of choice to create a file called ct.cfg and put the following in it.</p>
+
+<p>```</p>
+
+<h1>run session bash</h1>
+
+<h1>config regex on</h1>
+
+<h1>event {SESSION DISCONNECTED} {#end}</h1>
+
+<h1>highlight {&#037;d.&#037;d.&#037;d.&#037;d} {bold yellow}</h1>
+
+<h1>highlight { any } {bold white}</h1>
+
+<h1>highlight {&#123;permit(ted)*}} {bold green}</h1>
+
+<h1>highlight {&#123;(d|D)eny}} {bold red}</h1>
+
+<h1>highlight {&#123; (E|e)rr..}} {bold white}</h1>
+
+<h1>highlight {INSIDE} {bold blue}</h1>
+
+<h1>highlight {OUTSIDE} {bold green}</h1>
+
+<h1>highlight {DMZ} {bold magenta}</h1>
+
+<h1>substitute {^Cisco %1 Version %2, %3} {Cisco %1 <134>Version %2<088>, %3}</h1>
+
+<h1>substitute {&#037;1pkts encaps: %d, %3} {&#037;1pkts encaps: <150>%2<088>, %3}</h1>
+
+<h1>substitute {&#037;1pkts decaps: %d, %3} {&#037;1pkts decaps: <120>%2<088>, %3}</h1>
+
+<h1>substitute {&#037;1 uptime is %2} {&#037;1 uptime is <150>%2<088>}</h1>
+
+<p><code>``
+The</code>highlight` keyword will simply look for the text in the first argument and colorize it using the color chosen in the second argument.</p>
+
+<p>The <code>substitute</code> keyword will search and replace text display. %1, %2 etc are variables that are stored. They can then be called later to colorize a variable.</p>
+
+<h2>Usage</h2>
+
+<p>You will need a terminal program that can handle VT100 and ANSI color codes. Such programs that can do this are putty, SecureCRT, or any native Linux terminal.</p>
+
+<p>Start chromaterm using the following command: <code>./ct ct.cfg</code></p>
+
+<p>Once Chromaterm is running use the <code>#help</code> command to display help. Some useful help commands:</p>
+
+<p><code>#help highlight</code><br>
+<code>#help substitute</code><br>
+<code>#help colors</code><br>
+<code>#help colordemo</code></p>
+
+<p>To exit chromaterm type:<br>
+<code>#end</code></p>
+
+<p>You can then edit the ct.cfg file to your satisfaction to add more keyword highlighting or change colors. A sample ct.cfg file is included in the files which is what I use as my config.</p>
+
+<p>Now that it&rsquo;s running you can test it by telnetting or ssh'ing into a device and watch how highlighted keywords defined in the config file will become colorized.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA NAT Conversion Tool]]></title>
+    <link href="http://tunnelsup.github.io/nat-converter/"/>
+    <updated>2013-05-18T13:24:00-07:00</updated>
+    <id>http://tunnelsup.github.io/nat-converter</id>
+    <content type="html"><![CDATA[<p>Do you need to convert ASA 8.2 and under code to the new ASA 8.3+ code? The NAT statements are entirely different in the new code. During the upgrade the ASA will try to convert it automatically but this is worthless because it does a horrible job at it. Cisco recommends using auto NAT. This is also bad advice to use Auto NAT because it makes extremly ugly and hard to manage code. This conversion tool will convert your NAT statements to the easist to read and manage code.<br></p>
+
+<br>
+
+
+<h3>Preparing your code</h3>
+
+
+<p>Gather the output from the following commands in your old ASA code:<br>
+<code><pre>show run global<br>
+show run nat<br>
+show run static</pre></code></p>
+
+<p>If there are any related ACLs in the NAT statements get that configuration also by doing:<br>
+<code><pre>show run access-list | include [ACL-NAME]</pre></code>
+Paste the output from the commands above into the text area and click convert. You should examine the results to verify the config is accurate.<br><br>
+<strong>Privacy Note:</strong> None of the data entered into the text area is uploaded to a server. All of the work of this tool is done on the client side. This means it&rsquo;s safe to enter sensitive data without worrying about it traveling over the internet. You can even connect to this webpage, disconnect from internet and still use the conversion tool without any difference in functionality.</p>
+
+<br><br>
+
+
+<h3>Examples</h3>
+
+
+<pre><code>      Static NAT Examples:&lt;br&gt;
+       static (INSIDE,OUTISDE) 55.55.55.2 192.168.1.2 netmask 255.255.255.255 &lt;br&gt;
+       static (DMZ,OUTSIDE) tcp interface 8080 172.16.0.10 www netmask 255.255.255.255 &lt;br&gt;
+       static (INSIDE,DMZ) 10.10.10.0 172.16.10.0 netmask 255.255.255.0 dns &lt;br&gt;
+       static (INSIDE,DMZ) 192.168.100.49 172.24.2.49 netmask 255.255.255.255 tcp 255 2000&lt;br&gt;
+       static (INSIDE,EXT) 172.16.25.25 access-list ACL-NAT2&lt;br&gt;
+       access-list ACL-NAT2 extended permit ip 192.168.29.0 255.255.255.0 host 10.1.25.205&lt;br&gt; 
+       &lt;br&gt;
+      &lt;strong&gt;*New*&lt;/strong&gt; Global+NAT Example:&lt;br&gt;
+       nat (INSIDE) 1 10.0.0.0 255.255.255.0&lt;br&gt;
+       global (OUTSIDE) 1 interface&lt;br&gt;
+       nat (INSIDE) 2 access-list ACL-NAT3&lt;br&gt;
+       global (OUTSIDE) 2 22.22.22.128 netmask 255.255.255.128&lt;br&gt;
+       access-list ACL-NAT3 standard permit host 33.33.33.33&lt;br&gt;
+       &lt;br&gt;
+      &lt;strong&gt;*New*&lt;/strong&gt; NAT Zero+ACL Example:&lt;br&gt;
+       nat (INSIDE) 0 access-list ACL-NONAT&lt;br&gt;
+       access-list ACL-NONAT extended permit ip 192.168.5.0 255.255.255.0 host 172.16.200.205&lt;br&gt; 
+       access-list ACL-NONAT extended permit ip any host 172.16.200.203 &lt;br&gt;
+       &lt;br&gt;
+</code></pre>
+
+<h3>Input ASA 8.2 NAT statements</h3>
+
+
+<pre><code>    &lt;form name="convert" method="get"&gt;
+
+    &lt;textarea class="input-block-level" rows="10" name="nat82"&gt;
+</code></pre>
+
+<p>static (INSIDE,OUTSIDE) 55.55.55.2 192.168.1.2 netmask 255.255.255.255
+static (INSIDE,OUTSIDE) 55.55.55.3 192.168.1.3 netmask 255.255.255.255
+static (INSIDE,DMZ) 10.10.10.0 172.16.10.0 netmask 255.255.255.0</p>
+
+<pre><code>    &lt;/textarea&gt;
+
+    &lt;br/&gt;
+    &lt;button id="convertit" class="button btn-success btn-large" type="button"&gt;Convert It!&lt;/button&gt;
+    &lt;br/&gt;&lt;br/&gt;
+</code></pre>
+
+<h4>Results</h4>
+
+
+<pre><code>    &lt;textarea class="input-block-level" rows="20" name="nat84"&gt;&lt;/textarea&gt;
+
+
+    &lt;/form&gt;
+</code></pre>
+
+<br>
+
+
+<h3>Next Steps</h3>
+
+
+<p>Did you use the tool and was it helpful at all? Did it save you any time at all? Please either donate to the site to show your thanks or comment below to tell me how it worked or what to improve upon. Thanks!<br></p>
+]]></content>
+  </entry>
+  
+</feed>

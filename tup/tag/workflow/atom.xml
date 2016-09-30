@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: workflow | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/workflow/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Chromaterm]]></title>
+    <link href="http://tunnelsup.github.io/chromaterm/"/>
+    <updated>2013-06-16T22:31:00-07:00</updated>
+    <id>http://tunnelsup.github.io/chromaterm</id>
+    <content type="html"><![CDATA[<h2>About</h2>
+
+<p>Chromaterm is a terminal colorization tool that runs on linux and is produced by TunnelsUp.com. It essentially acts as a wrapper for the linux shell. Once it starts it then starts a new shell. Any activity within that new shell will be ran through Chromaterm. Chromaterm listens for keywords, that are user defined, and will highlight them with user defined colors.</p>
+
+<p>This can be extremely helpful especially when accessing Cisco routers and firewalls from a central Linux server. Colorizing the ssh screen of a Cisco CLI output is very convenient.</p>
+
+<h2>Screenshots</h2>
+
+<p>Below are screenshots of using chromaterm while SSH&rsquo;d into a Cisco firewall.<br>
+<img src="/images/chroma1.PNG" alt="Chromaterm IMG" /><br>
+<img src="/images/chroma2.PNG" alt="Chromaterm IMG" /><br>
+<img src="/images/chroma3.PNG" alt="Chromaterm IMG" /></p>
+
+<h2>Install</h2>
+
+<p>Installation is easy.</p>
+
+<ul>
+<li><p><a href="https://github.com/tunnelsup/chromaterm">Download the files from github</a>. Either by using the download link or by doing <code>git clone https://github.com/tunnelsup/chromaterm.git</code></p></li>
+<li><p><code>cd chromaterm/src/</code> Go into the src directory.</p></li>
+<li><p><code>./configure</code> Configure the program.</p></li>
+<li><p><code>make</code> Create the binary called ct.</p></li>
+<li><p><code>make install</code> Optional. It will move ct to the ~ directory.</p></li>
+</ul>
+
+
+<p>Once installation is complete a new file called <code>ct</code> will be in the src/ directory. Move this to your home directory. You can start the program by doing the following:</p>
+
+<p><code>./ct &lt;config_file&gt;</code></p>
+
+<h2>Creating the Config file</h2>
+
+<p>Use your text editor of choice to create a file called ct.cfg and put the following in it.</p>
+
+<p>```</p>
+
+<h1>run session bash</h1>
+
+<h1>config regex on</h1>
+
+<h1>event {SESSION DISCONNECTED} {#end}</h1>
+
+<h1>highlight {&#037;d.&#037;d.&#037;d.&#037;d} {bold yellow}</h1>
+
+<h1>highlight { any } {bold white}</h1>
+
+<h1>highlight {&#123;permit(ted)*}} {bold green}</h1>
+
+<h1>highlight {&#123;(d|D)eny}} {bold red}</h1>
+
+<h1>highlight {&#123; (E|e)rr..}} {bold white}</h1>
+
+<h1>highlight {INSIDE} {bold blue}</h1>
+
+<h1>highlight {OUTSIDE} {bold green}</h1>
+
+<h1>highlight {DMZ} {bold magenta}</h1>
+
+<h1>substitute {^Cisco %1 Version %2, %3} {Cisco %1 <134>Version %2<088>, %3}</h1>
+
+<h1>substitute {&#037;1pkts encaps: %d, %3} {&#037;1pkts encaps: <150>%2<088>, %3}</h1>
+
+<h1>substitute {&#037;1pkts decaps: %d, %3} {&#037;1pkts decaps: <120>%2<088>, %3}</h1>
+
+<h1>substitute {&#037;1 uptime is %2} {&#037;1 uptime is <150>%2<088>}</h1>
+
+<p><code>``
+The</code>highlight` keyword will simply look for the text in the first argument and colorize it using the color chosen in the second argument.</p>
+
+<p>The <code>substitute</code> keyword will search and replace text display. %1, %2 etc are variables that are stored. They can then be called later to colorize a variable.</p>
+
+<h2>Usage</h2>
+
+<p>You will need a terminal program that can handle VT100 and ANSI color codes. Such programs that can do this are putty, SecureCRT, or any native Linux terminal.</p>
+
+<p>Start chromaterm using the following command: <code>./ct ct.cfg</code></p>
+
+<p>Once Chromaterm is running use the <code>#help</code> command to display help. Some useful help commands:</p>
+
+<p><code>#help highlight</code><br>
+<code>#help substitute</code><br>
+<code>#help colors</code><br>
+<code>#help colordemo</code></p>
+
+<p>To exit chromaterm type:<br>
+<code>#end</code></p>
+
+<p>You can then edit the ct.cfg file to your satisfaction to add more keyword highlighting or change colors. A sample ct.cfg file is included in the files which is what I use as my config.</p>
+
+<p>Now that it&rsquo;s running you can test it by telnetting or ssh'ing into a device and watch how highlighted keywords defined in the config file will become colorized.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to SSH like a Pro]]></title>
+    <link href="http://tunnelsup.github.io/how-to-ssh-like-a-pro/"/>
+    <updated>2013-06-15T17:06:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-ssh-like-a-pro</id>
+    <content type="html"><![CDATA[<p>A few tips and tricks about sshing.</p>
+
+<p>Whatever network I&rsquo;m working in I have found it&rsquo;s common to have a central linux server that I ssh into and then I can jump off of that to any of the devices in the network. The reason for this is that it makes securing the network a lot easier when your VTY ACL consists of one IP even though you have many admins. There&rsquo;s also a trail of who was logged into what when. But by far my favorite reason for having a central server to jump off of is because I can greatly improve my performance because I can use the power of linux to make my life easier.</p>
+
+<p>If you haven&rsquo;t guessed by now, this post is very linux centric keeping in mind accessing networking devices like Cisco routers.</p>
+
+<h3>Aliases in .bashrc</h3>
+
+<p>Open up your .bashrc file (use vi or pico or something). Here is an example of what mine looks like:</p>
+
+<p><code>bash
+alias s='ssh'
+alias sc='ssh -l cisco'
+</code></p>
+
+<p>I like to think smarter whenever I can. By making <code>s</code> the alias for ssh it cuts down the amount of characters typed by 66%! So now whenver I need to ssh into a device I simply use <code>s</code> like so:<br>
+<code>s 192.168.1.1</code></p>
+
+<p>Also often I am finding myself using the same username like <code>cisco</code> for many things. If I know the username is <code>cisco</code> before trying to ssh to the device I now have a shortcut for that. To ssh into a system using that username I simply do:<br>
+<code>sc 192.168.1.1</code></p>
+
+<h3>Editing your .ssh/config file</h3>
+
+<p>By default your ssh username will be whatever you logged into linux with. So how do you change the default ssh username? That&rsquo;s simple. It&rsquo;s in the <code>.ssh/config</code> file.</p>
+
+<p>Edit the file:<br>
+<code>vi .ssh/config</code><br>
+Add the lines:<br>
+<code>Host *</code><br>
+<code>User myname.acs</code><br>
+Now change permissions of the file:<br>
+<code>chmod 600 .ssh/config</code></p>
+
+<p>Now simply try to ssh into any device and you&rsquo;ll see the username has changed to <code>myname.acs</code> by default.</p>
+
+<h4>Changing the username for a specific device or subnet</h4>
+
+<p>Let&rsquo;s say you have a bunch of devices in the 192.168.5.x network that all authenticate to the same username &lsquo;bob.acs&rsquo;. It&rsquo;s possible to configure ssh to lookup the place you&rsquo;re trying to go and tack on a username before trying to ssh. Here&rsquo;s how.</p>
+
+<p>Go back into editing the file:<br>
+<code>vi .ssh/config</code><br>
+Add the following lines at the top of the file:<br>
+<code>Host 192.168.5.*</code><br>
+<code>User newusername</code><br></p>
+
+<p>Now you&rsquo;ve just changed the default username for just devices starting with 192.168.5.x. This can also work for hostnames too.</p>
+
+<h3>Use keys to login instead of a password</h3>
+
+<p>If you&rsquo;re trying to ssh from one linux machine to another it&rsquo;s possible to use keys for authentication instead of a password. Follow this guide to <a href="/ssh-without-password">ssh without password</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Sublime Text 2 - Cisco Syntax and Snippets]]></title>
+    <link href="http://tunnelsup.github.io/sublime-text-2-cisco-syntax-and-snippets/"/>
+    <updated>2013-03-29T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/sublime-text-2-cisco-syntax-and-snippets</id>
+    <content type="html"><![CDATA[<p>I am a bit of a geek when it comes to workflow and that means I have tried out many text editors. Notepad, Notepad++, TextMate, Crimson Editor and VIM were all favorites of mine at one point. Now there is one that truly stands out as being superior for me. That is Sublime Text 2. I won&rsquo;t go into how awesome this text editor is in this post, I will leave that for you to find out on your own. This text editor is geared towards programmers though. No matter how much I searched I could not find anyone who has integrated it with Cisco. Here are some links to my github account which includes Cisco Syntax Definitions and Cisco Snippets for Sublime Text 2.</p>
+
+<h2>Cisco Syntax Definitions for Sublime Text 2/3</h2>
+
+<p>What does this mean? Take a look at this screenshot from a recent script I was working on in Sublime Text 2:</p>
+
+<p><img src="/images/Sublime-Cisco-Syntax.png" alt="Syntax example - IMG" /></p>
+
+<p>The Cisco Syntax definitions looks for specific keywords in a .txt or .cfg file and highlights them. In the example above I am using the Eifel color scheme which goes well with it.</p>
+
+<p><a href="https://github.com/tunnelsup/sublime-cisco-syntax">Click here for the github repository for Cisco Syntax Definitions for Sublime Text 2.</a></p>
+
+<h2>Cisco Snippets for Sublime Text 2</h2>
+
+<p>Snippets are a super cool productivity enhancer for me when working with Cisco devices. With snippets I can type a short word like &lsquo;static&rsquo; and it expands into a multi line script which is essentially a framework for a static NAT config. Take a look at this example.</p>
+
+<p><img src="/images/static_1.gif" alt="Cisco Snippets - IMG" /></p>
+
+<p><a href="https://github.com/tunnelsup/sublime-cisco-snippets">Click here for the github repository of my Cisco Snippets for Sublime Text 2.</a></p>
+]]></content>
+  </entry>
+  
+</feed>

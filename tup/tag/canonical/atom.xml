@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: canonical | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/canonical/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Canonical and DNS settings for www, non-www, and https for Heroku and Cloudflare]]></title>
+    <link href="http://tunnelsup.github.io/canonical-settings-and-dns-for-www-and-non-www-urls/"/>
+    <updated>2014-12-27T23:29:00-08:00</updated>
+    <id>http://tunnelsup.github.io/canonical-settings-and-dns-for-www-and-non-www-urls</id>
+    <content type="html"><![CDATA[<p>When deploying a web application it&rsquo;s important that the URL responds to both www and non-www as well as both http and https. However it&rsquo;s also very important that only one of those is the absolute and correct one and the server forces users to only use one.</p>
+
+<p>I like to use cloudflare for my DNS configurations and Heroku for my web server. These techniques can be used on any programming language such as Ruby on Rails, PHP, Meteor.js, or Django. They can also be used on any web server such as Apache, nginx, node.js. It doesn&rsquo;t require any .htaccess rules either, only the clever use of Heroku, Cloudflare, and HTML.</p>
+
+<h2>Setting canonical</h2>
+
+<p>It&rsquo;s important to tell search engines and bots which version of your URL is the absolute and correct version. This way search engines will be pointing to the correct URL and browsers will understand which one to use too. This is important for SEO and analytics. For SEO, search engines will see both www and non-www sites as two separate sites and giving each it&rsquo;s own search rankings. You want to make sure that you are clumping all of your users into a single authoritative URL so the search engines can see just how popular your domain is. This authoritative URL is known as the canonical URL.</p>
+
+<p>To set the canonical URL simply add this HTML code in the head of every page on your site.</p>
+
+<p><code>
+&lt;head&gt;
+  &lt;link rel="canonical" href="https://example.com" /&gt;
+&lt;/head&gt;
+</code></p>
+
+<p>Of course every page has a unique canonical URL. If you have a webpage located at <code>https://example.com/about.html</code> then your canonical URL will have the <code>about.html</code> in it.</p>
+
+<h2>Responding to everything</h2>
+
+<p>You want your website to listen to and respond to all of the following versions of your URL.</p>
+
+<ul>
+<li><a href="http://example.com">http://example.com</a></li>
+<li><a href="http://www.example.com">http://www.example.com</a></li>
+<li><a href="https://example.com">https://example.com</a></li>
+<li><a href="https://www.example.com">https://www.example.com</a></li>
+</ul>
+
+
+<p>This is important because people will be trying every one of these combinations when going to your site. Whenever I hear or see a URL I never pay attention of whether it has www or no www before it. I simply type the name_of_url.com into my browser and go. Way too often the website hasn&rsquo;t set up DNS correctly and I get page not found and I just think the page doesn&rsquo;t exist anymore and go away. This is a grave error on the webmaster to simply ignore this problem.</p>
+
+<h3>Setting up Heroku</h3>
+
+<p>First let&rsquo;s set up Heroku.</p>
+
+<ol>
+<li>Go to the <code>settings</code> page on your application</li>
+<li>Go to the <code>domains</code> section and add the domain you wish to be your primary one. In our case we are choosing example.com</li>
+</ol>
+
+
+<h3>Setting up Cloudflare</h3>
+
+<h5>DNS Settings</h5>
+
+<p>For setting up Heroku and Cloudflare simply do the following DNS settings:</p>
+
+<p><code>
+CNAME - example.com - is an alias of example.herokuapp.com
+CNAME - * - is an alias of example.herokuapp.com
+CNAME - www - is an alias of example.herokuapp.com
+</code></p>
+
+<h4>Forwarding settings</h4>
+
+<p>Now we need to set a <a href="https://support.cloudflare.com/hc/en-us/articles/200172286-How-do-I-do-url-forwarding-with-CloudFlare-">forwarding rule in Cloudflare</a>.</p>
+
+<ol>
+<li>Go to the gear icon to open your <code>settings</code>.</li>
+<li>Go to the <code>Page Rule's</code> option</li>
+<li>Click <code>Forwarding</code> <code>ON</code>.</li>
+<li>In the <code>URL pattern</code> box, type <code>www.example.com/*</code></li>
+<li>In the <code>forwarding destination URL</code> box, type <code>https://example.com</code></li>
+<li>Choose <code>forwarding type</code> <code>301 - permanent</code></li>
+</ol>
+
+
+<p>If you don&rsquo;t wish to or can&rsquo;t use https then you can just choose http here instead.</p>
+
+<p>If you do wish to use https then I also recommending setting <code>always use https</code> in the page rules also.</p>
+
+<h2>Responding to HTTPS</h2>
+
+<p>There is a really cool trick to getting free https when using both free Cloudflare and free Heroku plans. Your Heroku app should already be responding to <a href="https://example.heroku.com.">https://example.heroku.com.</a> It has a it&rsquo;s own official HTTPS certificate that you can use if you use their domain name. Cloudflare has an option called Full SSL which is part of the free plan. This setting will allow HTTPS connections to Cloudflare, then do a HTTPS connection to the hosting domain. Essentially it&rsquo;s end to end HTTPS all for free.</p>
+
+<h4>Setting up Full SSL in Cloudflare</h4>
+
+<p>Access your Cloudflare account and do the following:</p>
+
+<ol>
+<li>Go to the gear and choose <code>Cloudflare settings</code>.</li>
+<li>Scroll down to <code>SSL</code> and choose <code>Full SSL</code>.</li>
+</ol>
+
+
+<p>Cloudflare is updated upon changing this setting.</p>
+
+<h2>Conclusion</h2>
+
+<p>Now your website should be responding to each of the following variations of your site:</p>
+
+<ul>
+<li><a href="http://www.example.com">http://www.example.com</a></li>
+<li><a href="http://example.com">http://example.com</a></li>
+<li><a href="https://www.example.com">https://www.example.com</a></li>
+<li><a href="https://example.com">https://example.com</a></li>
+</ul>
+
+
+<p>However, the first three variations should all be forwarding to <code>https://example.com</code>. This is done using the Cloudflare forwarding rules we set.</p>
+
+<p>Lastly, search engines and browsers will understand your canonical settings you have defined and only be using that version of your URL as the authoritative URL to use.</p>
+]]></content>
+  </entry>
+  
+</feed>

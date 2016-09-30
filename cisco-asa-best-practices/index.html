@@ -1,0 +1,556 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>Cisco ASA Best Practices - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="Here are a list of best practices that can be applied to a Cisco ASA. Keep it up to date Upgrade the ASA version to stay on the latest maintenance &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tunnelsup.github.io/cisco-asa-best-practices">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Cisco ASA Best Practices</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-11-15T20:45:00-08:00" pubdate data-updated="true">Nov 15<span>th</span>, 2015</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Here are a list of best practices that can be applied to a Cisco ASA.</p>
+
+<h2>Keep it up to date</h2>
+
+<p>Upgrade the ASA version to stay on the latest maintenance release of your code. This way you stay ahead of any security issues or bugs that have been fixed in newer versions.</p>
+
+<p>It&rsquo;s also a good idea to upgrade to stay ahead of any end of life code like version 8.2.</p>
+
+<p>Upgrade major feature trains only when you need new features, or after train has matured.</p>
+
+<h2>Enable unicast RPF</h2>
+
+<p>Unicast RPF guards against IP spoofing (a packet uses an incorrect source IP address to obscure its true source) by ensuring that all packets have a source IP address that matches the correct source interface according to the routing table.</p>
+
+<p>This is disabled by default. It&rsquo;s a good idea to enable it on every interface like this.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ip verify reverse-path interface INSIDE
+</span><span class='line'>ip verify reverse-path interface OUTSIDE
+</span><span class='line'>ip verify reverse-path interface DMZ
+</span><span class='line'>ip verify reverse-path interface EXTRANET</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Set embryonic limits</h2>
+
+<p>An embryonic connection is also known as a half open connection. It means a SYN is a received, a SYN-ACK was sent back to the source, and we are waiting for the ACK back from the source. A lot of these indicates a DOS, or misconfiguration or another type of attack. Take a baseline of what is the normal amount of half open connections (<code>show conn</code> and look for aB, A, or SaAB connection flags) then double or triple that and make that your connection limit.</p>
+
+<p>It&rsquo;s a good idea to set a limit for both incoming traffic to your servers, and outgoing traffic from your internal systems to the internet.</p>
+
+<p>Sample code to permit only 100 embryonic connections to 192.168.1.50 on port 80. Also, this will only allow 25 connections per client to that host. Setting per-client-max is optional.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>access-list ACL-MAX-CONNS extended permit tcp any host 192.168.1.50 eq www
+</span><span class='line'>!
+</span><span class='line'>class-map CLASS-PROTECT
+</span><span class='line'> description Protect web server from attacks
+</span><span class='line'> match access-list ACL-MAX-CONNS
+</span><span class='line'>!
+</span><span class='line'>policy-map POL-MAX-CONNS
+</span><span class='line'> class CLASS-PROTECT
+</span><span class='line'>  set connection embryonic-conn-max 100 per-client-max 25
+</span><span class='line'>!
+</span><span class='line'>service-policy POL-MAX-CONNS interface outside</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Set maximum allowed connections</h2>
+
+<p>If you have something like a NAT in your firewall that goes to an Apache web server to give that web server a public IP, set a limit to that web server so it matches what Apache can accept. If the configuration in the web server says there&rsquo;s only 25 connections allowed at once, set that on the ASA so the web server can&rsquo;t get DoS&rsquo;d.</p>
+
+<p>Sample code for that may look like this below.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>access-list ACL-MAX-CONNS extended permit tcp any host 192.168.1.50 eq www
+</span><span class='line'>!
+</span><span class='line'>class-map CLASS-PROTECT
+</span><span class='line'> description Protect web server from attacks
+</span><span class='line'> match access-list ACL-MAX-CONNS
+</span><span class='line'>!
+</span><span class='line'>policy-map POL-MAX-CONNS
+</span><span class='line'> class CLASS-PROTECT
+</span><span class='line'>  set connection conn-max 25
+</span><span class='line'>!
+</span><span class='line'>service-policy POL-MAX-CONNS interface outside</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Enable logging</h2>
+
+<p>By having logging enabled, it really assists on troubleshooting issues. It&rsquo;s one of the first things I will look at when troubleshooting.</p>
+
+<p>By having logging enabled to send to a remote syslog server helps a lot more because now logs will be stored there a lot longer than what the ASA can hold. Also, if the ASA reboots the logs it had before the reboot are gone. If there&rsquo;s an issue occurring you can look back in history of the logs to see how many times it&rsquo;s happened in the past.</p>
+
+<p>Also, all config changes will trigger a syslog message. Having that record is very helpful for finding problems.</p>
+
+<p>Sample code to enable logging to be seen by both the &lsquo;show logg&rsquo; command and also to send all logs to 192.168.55.55 for remote storage.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>logging enable
+</span><span class='line'>logging timestamp
+</span><span class='line'>logging buffer-size 128000
+</span><span class='line'>logging buffered notifications
+</span><span class='line'>logging trap notifications
+</span><span class='line'>logging host INSIDE 192.168.55.55</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the code above, only syslog level <code>notification</code> or above are being logged. But suppose you want get a certain log that&rsquo;s at <code>informational</code>. If you lower the log level to that, you&rsquo;ll get a lot more logs that may overwhelm your syslog server. Instead, find the syslog you want to raise the logging level and just adjust it to be at notification.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>logging message 302014 level notifications</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The config above will log traffic being permitted by the firewall.</p>
+
+<p>Splunk is a sample tool that can monitor syslogs.</p>
+
+<h2>Enable TACACS+ or RADIUS</h2>
+
+<p>If you use shared logins and you see a config change that wasn&rsquo;t authorized, it may be really hard to find out who made the change. Also, what happens when someone with that login leaves the company.</p>
+
+<p>A better alternative is to use AAA commands to enable a RADIUS or TACACS+ servers for authentication. This will ultimately result in better user control of who can access the firewall and have better visibility into what people are doing on the firewall.</p>
+
+<p>Here is some sample code.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>aaa-server TACACS+ protocol tacacs+
+</span><span class='line'> reactivation-mode depletion deadtime 30
+</span><span class='line'>aaa-server TACACS+ (INSIDE) host 192.168.66.66
+</span><span class='line'> timeout 3
+</span><span class='line'> key s3kr3tk3y
+</span><span class='line'>
+</span><span class='line'>aaa authentication http console TACACS+ LOCAL
+</span><span class='line'>aaa authentication ssh console TACACS+ LOCAL
+</span><span class='line'>aaa authentication enable console TACACS+ LOCAL</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With the code above, all authentication will go to the TACACS+ server first. If that is unavailable then the local accounts are used for authentication as a fall back.</p>
+
+<p>It&rsquo;s also a good idea to audit the local accounts regularly to make sure there aren&rsquo;t an unexpected accounts created. Also, rotate the passwords on these fallback accounts regularly too.</p>
+
+<h2>Understand what is normal traffic</h2>
+
+<p>Get to know what traffic is normal for your firewall. Do this so when there is an incident occurring or testing needs to be done, you have something to compare against.</p>
+
+<p>Look at these areas to document what is normal traffic.</p>
+
+<ul>
+<li>Number of VPN connections and types of VPNs</li>
+<li>Number of TCP/UDP connections</li>
+<li>Number of active xlates</li>
+<li>Interface usage</li>
+<li>CPU and memory load</li>
+</ul>
+
+
+<h2>Conduct SNMP monitoring</h2>
+
+<p>Have a server that you send SNMP traps to and have it also SNMP poll the ASA frequently. By monitoring this, you&rsquo;ll have a good understanding of when something is going wrong. Things that show up in SNMP logs are:</p>
+
+<ul>
+<li>Reboots</li>
+<li>Failovers</li>
+<li>High CPU</li>
+<li>High Memory</li>
+<li>Interface down</li>
+<li>or any syslog can be converted to an SNMP trap</li>
+</ul>
+
+
+<p>Here is some sample code to enable SNMP:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>snmp-server host INSIDE 172.16.1.18 poll community s3kr3tkee version 2c
+</span><span class='line'>snmp-server host INSIDE 172.16.1.18 trap community s3kr3tkee version 2c
+</span><span class='line'>snmp-server community s3kr3tkee
+</span><span class='line'>snmp-server enable traps snmp authentication linkup linkdown coldstart warmstart
+</span><span class='line'>snmp-server enable traps entity config-change fru-insert fru-remove
+</span><span class='line'>snmp-server enable traps memory-threshold
+</span><span class='line'>snmp-server enable traps interface-threshold
+</span><span class='line'>snmp-server enable traps connection-limit-reached
+</span><span class='line'>snmp-server enable traps cpu threshold rising
+</span><span class='line'>snmp-server enable traps nat packet-discard</span></code></pre></td></tr></table></div></figure>
+
+
+<p>MRTG is an example of a tool that can monitor this type of activity.</p>
+
+<h2>Create a login banner</h2>
+
+<p>There is a cyberlegend that talks about a case where a hacker gained access to a router and because the banner said &ldquo;Welcome to the system&rdquo; the judge dismissed the case. While this is not a true story, there is still a good lesson here. Create a banner that states unauthorized access is not allowed.</p>
+
+<p>Example banner:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>banner motd *******************************************************************
+</span><span class='line'>banner motd THIS SYSTEM ACCESSES PROPRIETARY INFORMATION.  ACCESS IS RESTRICTED
+</span><span class='line'>banner motd TO AUTHORIZED USERS ONLY FOR LEGITIMATE BUSINESS PURPOSES.
+</span><span class='line'>banner motd UNAUTHORIZED ACCESS IS A VIOLATION OF STATE AND FEDERAL, CIVIL AND
+</span><span class='line'>banner motd CRIMINAL LAWS. ALL ACTIONS ARE BEING RECORDED.
+</span><span class='line'>banner motd PLEASE LOG OFF.
+</span><span class='line'>banner motd *******************************************************************</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Turn telnet off</h2>
+
+<p>Telnet is an insecure protocol. When you login to a device using telnet, your password goes over the wire in clear text for anyone to listen in on it. Use ssh instead. Never use telnet.</p>
+
+<p>Conduct <code>show run telnet</code> and verify there are no subnets listed.</p>
+
+<h2>Verify ssh and http subnets</h2>
+
+<p>In the ASA do a <code>show run ssh</code> and <code>show run http</code>. Look at the subnets that are listed. Verify those are what you wish to allow.</p>
+
+<p>You would never want to see this on a firewall:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ssh 0.0.0.0 0.0.0.0 OUTSIDE</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It essentially means anyone on any IP on the outside can ssh to this firewall. Lock down the firewall to only permit subnets that firewall admins are on.</p>
+
+<h2>Permit as little as possible</h2>
+
+<p>One of the fundamental differences between a router and a firewall is that one wants to permit as much as possible and the other wants to deny as much as possible.</p>
+
+<p>If you only have 5 valid subnets on the inside of your network, only permit those 5 subnets to pass through the firewall to the internet. This saves you from incidents where spoofed IPs inside the network cannot leave.</p>
+
+<p>Restrict inbound connections to only the IPs that need inbound connections and only on the ports that are open. An example of this is a web server. Permit only inbound 80 and 443 for http and https. You don&rsquo;t want to permit ssh or telnet to that host or it will constantly be hit from the internet. Only permit what is needed and stop there.</p>
+
+<h2>Remove unused configs</h2>
+
+<p>Review the firewall config each quarter and remove any configs that are no longer valid on your network. For instance if you decommissioned a subnet in your network, remove that subnet from the firewall. You only want to permit the traffic through your firewall that you know is valid.</p>
+
+<p>Try the <a href="/config-cleanup/">Cisco ASA config cleanup tool</a> here on TunnelsUp.</p>
+
+<p>Each quarter, review the following configs to verify they are still valid</p>
+
+<ul>
+<li>ACLs</li>
+<li>NATs</li>
+<li>VPNs</li>
+<li>Objects/Object-groups</li>
+</ul>
+
+
+<h2>Add an explicit deny any to all interface ACLs</h2>
+
+<p>At the end of an ACL is an implicit deny any any. So why explicitly add it?</p>
+
+<ul>
+<li>Lets you know how many hits are hitting it</li>
+<li>Avoids any vulnerabilities that might let someone bypass it</li>
+<li>Makes the ACL easier to read</li>
+</ul>
+
+
+<h2>Reference</h2>
+
+<p>Here is a PDF of more best practices suggested by the NSA.</p>
+
+<p><a href="https://www.iad.gov/iad/customcf/openAttachment.cfm?FilePath=/iad/library/ia-guidance/security-configuration/networks/assets/public/upload/Cisco-ASA-Out-of-the-Box-Security-Configuration-Guide.pdf">https://www.iad.gov/iad/customcf/openAttachment.cfm?FilePath=/iad/library/ia-guidance/security-configuration/networks/assets/public/upload/Cisco-ASA-Out-of-the-Box-Security-Configuration-Guide.pdf</a></p>
+
+<br><br>
+
+
+<p>Cisco Validated Design</p>
+
+<p><a href="https://cisco.com/go/cvd">https://cisco.com/go/cvd</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-11-15T20:45:00-08:00" pubdate data-updated="true">Nov 15<span>th</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/asa/'>asa</a>, <a class='category' href='/tup/tag/cisco/'>cisco</a>, <a class='category' href='/tup/tag/scripts/'>scripts</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tunnelsup.github.io/cisco-asa-best-practices/" data-via="tunnelsup" data-counturl="http://tunnelsup.github.io/cisco-asa-best-practices/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tunnelsup.github.io/cisco-asa-best-practices/';
+        var disqus_url = 'http://tunnelsup.github.io/cisco-asa-best-practices/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>

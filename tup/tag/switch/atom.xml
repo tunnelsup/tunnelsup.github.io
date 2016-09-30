@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: switch | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/switch/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Encrypt Passwords on Cisco Router]]></title>
+    <link href="http://tunnelsup.github.io/encrypt-passwords-on-cisco-router/"/>
+    <updated>2013-06-17T22:26:00-07:00</updated>
+    <id>http://tunnelsup.github.io/encrypt-passwords-on-cisco-router</id>
+    <content type="html"><![CDATA[<p>By default, when adding a username and password to a Cisco router or switch, the password will show up as clear text. So the question then becomes:</p>
+
+<h3>How do you encrypt the password on a Cisco Router?</h3>
+
+<p>You should avoid creating a username like this:<br>
+<code>username TESTUSER password TESTPASS</code></p>
+
+<p>This will result in a clear text password in the configuration. To encrypt all of the passwords after that has been done you can do the following command:</p>
+
+<p><code>service password-encryption</code></p>
+
+<p>However that only does a very weak encryption. It only does a type 7 encryption which is incredibly easy to decipher. A quick google search and you&rsquo;ll find many password decrypting tools to break those types of passwords.</p>
+
+<p>A more secure password encryption is to use the <code>secret</code> command as in the following:<br>
+<code>username TESTUSER secret TESTPASS</code></p>
+
+<p>This will create level 5 encryption by default and doesn&rsquo;t even require you to use the &lsquo;service password-encryption&rsquo; command.</p>
+]]></content>
+  </entry>
+  
+</feed>

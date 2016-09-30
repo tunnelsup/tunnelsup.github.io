@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ubuntu | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/ubuntu/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Securing an Ubuntu Linux Server]]></title>
+    <link href="http://tunnelsup.github.io/securing-an-ubuntu-linux-server/"/>
+    <updated>2015-02-14T10:56:00-08:00</updated>
+    <id>http://tunnelsup.github.io/securing-an-ubuntu-linux-server</id>
+    <content type="html"><![CDATA[<p>Some great aritcles on how to secure an Ubuntu Linux Server.</p>
+
+<p><a href="http://feross.org/how-to-setup-your-linode/">http://feross.org/how-to-setup-your-linode/</a></p>
+
+<p><a href="http://plusbryan.com/my-first-5-minutes-on-a-server-or-essential-security-for-linux-servers">http://plusbryan.com/my-first-5-minutes-on-a-server-or-essential-security-for-linux-servers</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[VPN tunnel between an Ubuntu Linux machine and a Cisco ASA firewall]]></title>
+    <link href="http://tunnelsup.github.io/vpn-tunnel-between-an-ubuntu-linux-machine-and-a-cisco-asa-firewall/"/>
+    <updated>2012-05-25T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/vpn-tunnel-between-an-ubuntu-linux-machine-and-a-cisco-asa-firewall</id>
+    <content type="html"><![CDATA[<h3>Config on the Cisco ASA (running 8.4) side. This config is identical to a normal remote access VPN:</h3>
+
+<p>```
+! Create the general crypto statements
+crypto ipsec ikev1 transform-set ESP-AES128-SHA esp-aes esp-sha-hmac
+crypto dynamic-map MAP-DYNAMIC 200 set ikev1 transform-set ESP-AES128-SHA
+crypto map MAP-VPN 300 ipsec-isakmp dynamic MAP-DYNAMIC
+crypto map MAP-VPN interface OUTSIDE
+crypto ikev1 enable OUTSIDE
+crypto ikev1 policy 5
+ authentication pre-share
+ encryption aes
+ hash sha
+ group 2
+ lifetime 86400</p>
+
+<p>! Define where the remote user can get to.
+access-list ACL-RA-SPLIT standard permit host 172.16.200.200</p>
+
+<p>! Create the group policy
+group-policy GRP-MYVPN internal
+group-policy GRP-MYVPN attributes
+ vpn-tunnel-protocol ikev1
+ split-tunnel-policy tunnelspecified
+ split-tunnel-network-list value ACL-RA-SPLIT</p>
+
+<p>! Create the tunnel group
+tunnel-group TG-MYVPN type remote-access
+tunnel-group TG-MYVPN general-attributes
+ address-pool POOL-RA-SPLIT
+ default-group-policy GRP-MYVPN
+tunnel-group TG-KRONOLOGY ipsec-attributes
+ ikev1 pre-shared-key suPerSeKret</p>
+
+<p>! Create a username
+username myUser password passw0rd privilege 1
+```</p>
+
+<h3>Config setup on the Ubuntu Linux side:</h3>
+
+<ol>
+<li>Download the Cisco VPN client</li>
+</ol>
+
+
+<p><code>sudo apt-get install vpnc</code></p>
+
+<ol>
+<li>Configure the VPN settings</li>
+</ol>
+
+
+<p><code>sudo vi /etc/vpnc/my-vpn.conf</code></p>
+
+<p><code>
+IPSec gateway 20.20.20.20
+IPSec ID TG-MYVPN
+IPSec secret suPerSeKret
+Xauth username myUser
+Xauth password passw0rd
+</code></p>
+
+<p>starting vpn: <code>sudo vpnc-connect my-vpn</code></p>
+
+<p>stopping vpn: <code>sudo vpnc-disconnect</code></p>
+
+<p>This VPN configuration will time out every now and then and won&rsquo;t kick on again until you issue the above command to start it up again. In order to make this an always on VPN use a cron job. This example will check every 10 mins to see if tun0 exists if not, start connection):</p>
+
+<p><code>
+sudo contab -e
+*/10 * * * * [[ -d /sys/devices/virtual/net/tun0 ]] || /usr/sbin/vpnc /etc/vpnc/my-vpn.conf
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

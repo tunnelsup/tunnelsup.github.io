@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: windows 7 | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/windows-7/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to move a window that is off the screen into view in Windows 7]]></title>
+    <link href="http://tunnelsup.github.io/how-to-move-a-window-that-is-off-the-screen-into-view-in-windows-7/"/>
+    <updated>2013-04-08T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-move-a-window-that-is-off-the-screen-into-view-in-windows-7</id>
+    <content type="html"><![CDATA[<p>Sometimes when you are using a laptop with multiple displays and then unplug from those displays there will be windows that are outside the viewing area of your laptop. Sometimes these windows can be pesky and not want to come back to the screen. If you are using Windows 7, try this:</p>
+
+<ol>
+<li>Select the program from the task bar</li>
+<li>Alt + Space + M</li>
+<li>Tap arrow key</li>
+<li>Reposition window with mouse</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>

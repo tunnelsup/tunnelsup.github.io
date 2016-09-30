@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ping | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/ping/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[What is ping?]]></title>
+    <link href="http://tunnelsup.github.io/what-is-ping/"/>
+    <updated>2014-12-30T22:15:00-08:00</updated>
+    <id>http://tunnelsup.github.io/what-is-ping</id>
+    <content type="html"><![CDATA[<p>A &ldquo;ping&rdquo; is a way for one computer to check if it can reach another computer using the networking IP protocol. The source computer can do a ping command to check if a destination computer is reachable, replies to pings, and the time it took to get there and back. The result will be the round-trip time it took for an IP packet to make it to the destination and back. The name comes from sonar terminology which would send a pulse and wait for the echo response.</p>
+
+<p><img src="/images/ping-icmp.gif"></p>
+
+<p>Personal computers come equipped with the ping tool installed by default. Simply open a cmd or terminal window and type <code>ping example.com</code>. The result will look something like this:</p>
+
+<p>```
+ping example.com
+PING example.com (93.184.216.34): 56 data bytes
+64 bytes from 93.184.216.34: icmp_seq=0 ttl=57 time=16.764 ms
+64 bytes from 93.184.216.34: icmp_seq=1 ttl=57 time=16.836 ms
+64 bytes from 93.184.216.34: icmp_seq=2 ttl=57 time=13.934 ms
+64 bytes from 93.184.216.34: icmp_seq=3 ttl=57 time=14.446 ms
+64 bytes from 93.184.216.34: icmp_seq=4 ttl=57 time=14.236 ms</p>
+
+<p>&mdash;&ndash; example.com ping statistics &mdash;&ndash;
+5 packets transmitted, 5 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 13.934/15.243/16.836/1.282 ms
+```</p>
+
+<p>The output above shows that 5 pings were sent to example.com and round trip time it took for the ping packet to make it there and back was 15ms or 0.015 seconds.</p>
+
+<p>The <code>ttl</code> in the response above indicates &ldquo;time to live&rdquo;. This is the hop limit that limits the life of the packet. By default the TTL of a ping is 255. This decrements by 1 for every router or hop the packets goes through in order to get to its destination. This mechanism is put in place to avoid packet storms and routing loops. If a packet didn&rsquo;t have a TTL and couldn&rsquo;t reach its destination it could keep bouncing around the network forever.</p>
+
+<p>The technology used to make ping work is Internet Control Message Protocol (ICMP). A ping works by sending an ICMP echo request packet to the destination. When the destination receives it, it will respond with an ICMP echo reply. Often the word ping and ICMP are used interchangeably.</p>
+
+<h3>Using Ping to Troubleshoot Network Connectivity Issues</h3>
+
+<p>The ping command is a simple yet powerful tool to test basic connectivity between two computers. Not all computers will reply to a echo request packet. By default, Windows computers block incoming pings using the Windows Firewall.</p>
+
+<p>If a system administrator or user is having a problem getting a computer on the network they may try the following tests:</p>
+
+<ol>
+<li>Ping the IP of the computer itself.</li>
+<li>Ping the IP of the default gateway.</li>
+<li>Ping the IP of the destination system.</li>
+</ol>
+
+
+<p>By running these three tests, we can determine where the network problem exists. If test 1 fails we know there is a problem with the interface of the computer itself and it should be checked. If test 2 fails we know there&rsquo;s an issue between this computer and the very next hop the computer is connected to. If test 3 fails it may mean a number of things are wrong such as a firewall blocking outbound connections over ICMP, the destination device is blocking ICMP, there isn&rsquo;t a route to that system, or that system may be down.</p>
+
+<h3>ICMP types and codes</h3>
+
+<p>Ping or ICMP packets have a specific &lsquo;type&rsquo; flag set on them to determine what type of ping this is. For instance the type could be echo request or echo reply. Here is a table with <a href="http://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtml#icmp-parameters-codes-8">common ICMP types</a>.</p>
+
+<table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Name</th>
+          <th>Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0</td>
+          <td>Echo Reply</td>
+          <td>0 - no code</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Destination Unreachable</td>
+          <td>0 - net unreachable<br>1 - host unreachable<br>3 - port unreachable<br>5 - source route failed<br>6 - dest network unknown<br>7 - dest host unkonwn</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Redirect</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>Echo Request</td>
+          <td>0 - no code</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>Router Advertisement</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>Router Solicitation</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>Time Exceeded</td>
+          <td>0 - ttl exceeded in transit<br>1 - fragment reassembly time exceeded</td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td>Timestamp</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td>Timestamp Reply</td>
+          <td></td>
+        </tr>
+      </tbody>
+</table>
+
+
+<h3>Unique Characteristics of ICMP</h3>
+
+<p>An ICMP packet is identified as having <a href="http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml">protocol 1</a>. This makes it different than TCP or UDP which use different protocols.</p>
+
+<p>When a packet is sent using TCP or UDP it uses a source port and destination port. When the destination system replies it switches the source and destination ports to let all of the devices in the network path know this is a return packet. ICMP works different by completely tearing down the original echo request and creating a fresh new echo reply packet. Because of this ICMP is not a stateful protocol and often needs to be handled separately by networking devices to be permitted through.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to do a Continuous Ping]]></title>
+    <link href="http://tunnelsup.github.io/continuous-ping/"/>
+    <updated>2013-06-06T23:29:00-07:00</updated>
+    <id>http://tunnelsup.github.io/continuous-ping</id>
+    <content type="html"><![CDATA[<p>Below are methods to create a continuous ping in different environments.</p>
+
+<p>To learn more about pings see the blog post <a href="http://www.tunnelsup.com/what-is-ping/">What is ping?</a></p>
+
+<h3>Windows (CMD Prompt)</h3>
+
+<p>This works in Win95, Win98, WinXP, Win7, Win8 etc. Go to start, then run, type in cmd to open a command prompt.</p>
+
+<p><code>ping 192.168.1.1 -t</code></p>
+
+<br><br>
+
+
+<h3>Unix/Linux Shell</h3>
+
+<p>In *nix it is continuous by default.</p>
+
+<p><code>ping 192.168.1.1</code></p>
+
+<p>You can also indicate a high count which will ping for a very long time. This example will ping something 9,999,999 times.</p>
+
+<p><code>ping 192.168.1.1 -c 9999999</code></p>
+
+<p>If you are in linux and it is not doing a continuous ping by default there is probably an alias for the ping command which is changing the way you envoke ping. Find where the ping command is using <code>which ping</code> then call the program from there and it should be continuous.</p>
+
+<p><code>/bin/ping 192.168.1.1</code></p>
+
+<br><br>
+
+
+<h3>Mac and OSX</h3>
+
+<p>In OSX it is continuous by default.</p>
+
+<p><code>ping 192.168.1.1</code></p>
+
+<p>If that doesn&rsquo;t work you can get it to be continuous by doing this command instead:</p>
+
+<p><code>/sbin/ping 192.168.1.1</code></p>
+
+<br>
+
+
+<h3>Cisco Router/Firewall/Switch</h3>
+
+<p>You cannot do a continuous ping from a Cisco router, firewall or switch. This includes ASA and IOS operating systems. You can however do a ping for a VERY long time by indicating a lot of pings.</p>
+
+<p><code>ping 192.168.1.1 repeat 9999999</code></p>
+
+<p>Or if the repeat command is unavailable use the extended ping by simply issuing the <code>ping</code> command by itself and follow the prompts after.</p>
+
+<p>If that still isn&rsquo;t good enough, you can set up an <a href="/cisco-asa-and-sla-monitoring/">SLA monitor</a> to actually ping forever.</p>
+
+<br>
+
+
+<h3>Juniper JunOS</h3>
+
+<p>In JunOS it is continuous by default.</p>
+
+<p><code>ping 192.168.1.1</code></p>
+
+<br><br>
+
+
+<h2>Stopping a ping</h2>
+
+<p>On any of the systems above you can halt the ping.</p>
+
+<p>To stop the continuous ping press <code>CONTROL</code>+<code>c</code>.</p>
+
+<br>
+
+
+<hr>
+
+
+<p>Keywords: constant ping, continual ping, infinate ping, pertpetual ping, persistent ping</p>
+]]></content>
+  </entry>
+  
+</feed>

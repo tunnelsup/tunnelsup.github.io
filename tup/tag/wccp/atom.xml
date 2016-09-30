@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: wccp | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/wccp/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Initial configuration of a Cisco ASA and Ironport WSA using WCCP]]></title>
+    <link href="http://tunnelsup.github.io/initial-configuration-of-a-cisco-asa-and-ironport-wsa-using-wccp/"/>
+    <updated>2013-04-30T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/initial-configuration-of-a-cisco-asa-and-ironport-wsa-using-wccp</id>
+    <content type="html"><![CDATA[<p>Today we are going to set up a Cisco ASA firewall to send WCCP (port 80) web inspection traffic to a Cisco Ironport WSA (Web Security Appliance).</p>
+
+<p>Suppose the following:</p>
+
+<p>Ironport WSA IP address: 192.168.5.55</p>
+
+<p>Inside IP of ASA firewall: 192.168.5.1</p>
+
+<p>Inside IP address range: 192.168.0.0/16</p>
+
+<h3>Cisco ASA firewall configuration</h3>
+
+<p>```
+! Define the Ironport IP Address in an ACL
+access-list ACL-IRONPORT-WSA extended permit ip host 192.168.5.55 any</p>
+
+<p>! Define what traffic should be inspected
+access-list ACL-WEBPROXY-TRAFFIC extended permit tcp 192.168.0.0 255.255.0.0 any eq www</p>
+
+<p>! Apply the WCCP configuration
+wccp web-cache redirect-list ACL-WEBPROXY-TRAFFIC group-list ACL-IRONPORT-WSA
+wccp interface INSIDE web-cache redirect in
+```</p>
+
+<h3>Ironport Configuration</h3>
+
+<p>Navigate to <code>Network</code> &ndash;> <code>Transparent Redirection</code></p>
+
+<p>Make the type WCCP v2 Router</p>
+
+<p>Add a service with a name of <code>WEB_CACHE</code>, a router IP of <code>192.168.5.1</code> (ASA Inside IP) and port <code>80</code> (Standard).</p>
+
+<p>At this point you can do a &lsquo;show wccp&rsquo; on the ASA and you should see &ldquo;Total Packets Redirected&rdquo; rising. From within the Ironport go to <code>Reporting</code> &ndash;> <code>Overview</code> and you should see statistics of what traffic is now flowing through the Ironport.</p>
+
+<h3>Troubleshooting techniques:</h3>
+
+<ul>
+    <li>Verify basic connectivity. Check interface IP addresses. Verify network access between both ASA and Ironport.</li>
+    <li>Show commands on ASA: show wccp</li>
+    <li>Debug commands on firewall: debug wccp packet, debug wccp events</li>
+    <li>Verify the ports caught in the traffic ACL are the same as the ports used for WCCP and there's a listener (service) on Ironport to interpret them.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

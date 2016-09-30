@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: win7 | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/win7/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Using the Windows Command line like a pro]]></title>
+    <link href="http://tunnelsup.github.io/using-the-windows-command-line-like-a-pro/"/>
+    <updated>2013-06-18T19:17:00-07:00</updated>
+    <id>http://tunnelsup.github.io/using-the-windows-command-line-like-a-pro</id>
+    <content type="html"><![CDATA[<p>In this post I will be answering such question as: What is the &lsquo;cat&rsquo; equivalent in Windows? What is the &lsquo;grep&rsquo; equivalent in Windows? Yes that&rsquo;s right, we are visiting the Windows CLI today. The old DOS shell.</p>
+
+<p>These commands all work in Windows 7 and Server 2008; most of them also work in Windows XP.</p>
+
+<h2>Using the Type+Find+Sort combo</h2>
+
+<p>The windows command <code>type</code> is similar to the <code>cat</code> command in linux. Then you can pipe it to <code>find</code> which is like <code>grep</code>. Then you can <code>sort</code> it to your liking. This command combination can be a very powerful tool for productivity.</p>
+
+<h4>To display all of the lines in hosts.txt file that contain the text &ldquo;dmz&rdquo; in any combination of upper or lower case (<code>/i</code> is to &ldquo;ignore case&rdquo;):</h4>
+
+<p>S:\network> <code>type hosts.txt | find /i "dmz"</code></p>
+
+<h4>Look at all of the lines in hosts.txt file that have &ldquo;mex&rdquo; in them, sorted on the 20th character</h4>
+
+<p>S:\network> <code>type hosts.txt | find /i "mex" | sort /+20</code></p>
+
+<h4>Get all of the lines that have the term &ldquo;mex&rdquo; in it and ignore the case.</h4>
+
+<p>S:\network> <code>type hosts.txt | find /i "mex"</code><br>
+25.25.25.251        MEXSR01            # Exchange server<br>
+192.168.1.21        MEXPS01            # Power Supply<br>
+192.168.1.22        MEXSW02            # Network Switch<br>
+25.25.25.250        MEXRT02            # Router on second floor<br></p>
+
+<h4>Gets all of the lines with &ldquo;mex&rdquo; in it, but eliminate the lines mentioning &ldquo;PS&rdquo;:</h4>
+
+<p>S:\network> <code>type hosts.txt | find /i "mex" | find /i /v "ps"</code><br>
+25.25.25.251        MEXSR01            # Exchange server<br>
+192.168.1.22        MEXSW02            # Network Switch<br>
+25.25.25.250        MEXRT02            # Router on second floor<br></p>
+
+<h4>Gets all lines with &ldquo;192.168&rdquo; and &ldquo;mex&rdquo;.</h4>
+
+<p>S:\network> <code>type hosts.txt | find /i "192.168" | find /i "mex"</code><br>
+192.168.1.21        MEXPS01            # Power Supply<br>
+192.168.1.22        MEXSW02            # Network Switch<br></p>
+
+<h4>Run through all of the text files in the current directory, and gets lines containing notconnect.</h4>
+
+<p>T:\configs> <code>type *.txt | find /i "notconnect"</code><br>
+tokyo.txt<br>
+Gi1/9        unused-july18      notconnect   1            auto   auto 10/100/1000BaseT</p>
+
+<p>moskow.txt<br>
+Gi1/9        unused-july18      notconnect   1            auto   auto 10/100/1000BaseT</p>
+
+<h2>Starting Programs</h2>
+
+<h3>Using the start command</h3>
+
+<h4>Open Windows Explorer in the current directory</h4>
+
+<p>T:\configs> <code>start .</code></p>
+
+<h4>Open Firefox to Google search page with Google Instant disabled:</h4>
+
+<p>d:\> <code>start firefox http://google.com/webhp?complete=0</code></p>
+
+<h4>To open a specific .doc file, you can just use &ldquo;start&rdquo; this way, from a command line (Window will use the default program associated with .doc files):</h4>
+
+<p>C:\> <code>start t:\configs\daily-update.doc</code></p>
+
+<h3>Useful shortcuts for frequently used programs</h3>
+
+<h4>Open the Remote Desktop console connection to server 192.168.1.1</h4>
+
+<p>d:\> <code>mstsc /console /v:192.168.1.1</code></p>
+
+<h4>Create a Windows Firewall rule that allows a server to reply to ping requests</h4>
+
+<p>D:\> <code>netsh advfirewall firewall add rule name="allow-ping-replies" protocol=icmpv4:8,any dir=in action=allow
+Ok.</code></p>
+
+<h4>Open directly to Device Manager</h4>
+
+<p>d:\> <code>devmgmt.msc</code></p>
+
+<h4>Open directly to the Windows Firewall with Advanced Security console</h4>
+
+<p>d:\> <code>wf.msc</code></p>
+
+<h4>Open directly to Disk Management</h4>
+
+<p>d:\> <code>diskmgmt.msc</code></p>
+
+<h4>Open directly to the System Properties applet</h4>
+
+<p>d:\> <code>sysdm.cpl</code></p>
+
+<h4>Open the services</h4>
+
+<p>c:\> <code>services.msc</code></p>
+
+<h4>Open the boot and system config</h4>
+
+<p>c:\> <code>msconfig</code></p>
+
+<h2>Networking commands</h2>
+
+<h4>Display the IP addresses of each NIC</h4>
+
+<p>d:\> <code>ipconfig</code></p>
+
+<h4>Show the MAC addresses of each NIC</h4>
+
+<p>d:\> <code>getmac</code></p>
+
+<h4>Show the routing table</h4>
+
+<p>d:\> <code>route print</code></p>
+
+<h4>List TCP/IP stats and information</h4>
+
+<p>d:\> <code>netstat</code></p>
+
+<h4>Open the Network Connections configurator (network control panel applet)</h4>
+
+<p>d:\> <code>ncpa.cpl</code></p>
+
+<h4></h4>
+
+<h2>Other useful commands</h2>
+
+<h4>Initiates an immediate, forced reboot (-r is &ldquo;restart&rdquo;, -f is force, -t 0 is in 0 seconds) with a comment (-c) to be recorded in the Event Viewer</h4>
+
+<p>d:\> <code>shutdown -r -f -t 0 c Services are hung; rebooting system</code></p>
+
+<h4>To map the letter T: to a Windows share on a file server:</h4>
+
+<p>d:\> <code>net use t: \\example.com\common\is\euc</code></p>
+
+<h4>Run the systeminfo command, and displays only the line referring to system boot time:</h4>
+
+<p>d:\> <code>systeminfo | find /i "boot time"</code><br>
+System Boot Time:          6/4/2013, 12:53:27 PM</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to move a window that is off the screen into view in Windows 7]]></title>
+    <link href="http://tunnelsup.github.io/how-to-move-a-window-that-is-off-the-screen-into-view-in-windows-7/"/>
+    <updated>2013-04-08T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-move-a-window-that-is-off-the-screen-into-view-in-windows-7</id>
+    <content type="html"><![CDATA[<p>Sometimes when you are using a laptop with multiple displays and then unplug from those displays there will be windows that are outside the viewing area of your laptop. Sometimes these windows can be pesky and not want to come back to the screen. If you are using Windows 7, try this:</p>
+
+<ol>
+<li>Select the program from the task bar</li>
+<li>Alt + Space + M</li>
+<li>Tap arrow key</li>
+<li>Reposition window with mouse</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>

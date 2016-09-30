@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: intrusion prevention | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/intrusion-prevention/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Restarting the AnalysisEngine on a Cisco IPS]]></title>
+    <link href="http://tunnelsup.github.io/restarting-the-analysisengine-on-a-cisco-ips/"/>
+    <updated>2013-06-11T19:55:00-07:00</updated>
+    <id>http://tunnelsup.github.io/restarting-the-analysisengine-on-a-cisco-ips</id>
+    <content type="html"><![CDATA[<p>Sometimes the analysis engine goes down on a Cisco IPS (Intrusion Prevention System) or IDS (Intrusion Detection System). In that case the analysis engine can be restarted from the service account by following these steps.</p>
+
+<p><strong>Caution: If you restart the Analysis Engine in an IPS Module which is in a firewall which is acting as the active firewall, this will cause a firewall failover to occur.</strong></p>
+
+<h3>What&rsquo;s wrong?</h3>
+
+<p>To determine if the analysis engine is stopped, type <code>show version</code>.</p>
+
+<p>```
+charlotte-ipsm# sh ver
+Application Partition:
+Cisco Intrusion Prevention System, Version 7.1(7)E4
+Host:</p>
+
+<pre><code>Realm Keys          key1.0                        
+</code></pre>
+
+<p>Signature Definition:</p>
+
+<pre><code>Signature Update    S722.0            2013-06-05  
+</code></pre>
+
+<p>OS Version:             2.6.29.1                    <br/>
+Platform:               ASA-SSM-10                  <br/>
+Serial Number:          JJJJJJJJJB                 <br/>
+Licensed, expires:      01-Aug-2013 UTC             <br/>
+Sensor up-time is 91 days.
+Using 666M out of 974M bytes of available memory (68% usage)
+system is using 29.0M out of 160.0M bytes of available disk space (18% usage)
+application-data is using 65.1M out of 169.5M bytes of available disk space (40% usage)
+boot is using 54.7M out of 69.7M bytes of available disk space (83% usage)
+application-log is using 123.5M out of 513.0M bytes of available disk space (24% usage)</p>
+
+<p>MainApp            S-2013_FEB_05_05_37_7_1_6_65   (Release)   2013-02-05T05:40:22-0600   Running<br/>
+AnalysisEngine     S-2013_FEB_05_05_37_7_1_6_65   (Release)   2013-02-05T05:40:22-0600   NotRunning<br/>
+CollaborationApp   S-2013_FEB_05_05_37_7_1_6_65   (Release)   2013-02-05T05:40:22-0600   Running<br/>
+CLI                S-2013_FEB_05_05_37_7_1_6_65   (Release)   2013-02-05T05:40:22-0600          <br/>
+<code>``
+Notice the</code>NotRunning` status? When this is not running it won&rsquo;t do inspection of the IPSM. Restarting this is important to having a working IPS.</p>
+
+<p>If this happens to a IPS Module in a firewall it will not cause a failover to occur. However, restarting the service will.</p>
+
+<h3>Login using a <code>service</code> account</h3>
+
+<p>A service account is different than a admin account. With this type of account you will be able to navigate around the Linux OS.</p>
+
+<p>```
+charlotte-ipsm# show users all</p>
+
+<pre><code>CLI ID   User      Privilege      
+</code></pre>
+
+<ul>
+<li>26711    cisco     administrator<br/>
+         service   service
+```</li>
+</ul>
+
+
+<p>SSH into the IPSM using the service account:</p>
+
+<p><code>ssh service@charlotte-ipsm</code></p>
+
+<h3>Restarting the CIDS service</h3>
+
+<p>Once you are ssh&rsquo;d in, switch your user to root.</p>
+
+<p><code>su</code></p>
+
+<p>Use the same password you used to get in with your service account. Now stop the cids service.</p>
+
+<p><code>cd /etc/init.d</code></p>
+
+<p><code>./cids stop</code></p>
+
+<p>The &lsquo;cids&rsquo; service is the Cisco IDS service. Once the service stopped you can confirm it has stopped by issuing the following command:</p>
+
+<p><code>ps -ef | grep cids</code></p>
+
+<p>You may see your own grep for &lsquo;cids&rsquo; but as long as there aren&rsquo;t more than 2 or so results it should be stopped.</p>
+
+<p>Now restart the service.</p>
+
+<p><code>./cids start</code></p>
+
+<p>Exit out of the service ssh session.</p>
+
+<h3>Verifying it&rsquo;s Working</h3>
+
+<p>Log back in as a normal admin user again. Issue your show version again (note this may take a few minutes for the engine to start all the way up).</p>
+
+<p>```
+charlotte-ipsm# sh ver
+Application Partition:
+Cisco Intrusion Prevention System, Version 7.1(7)E4
+Host:</p>
+
+<pre><code>Realm Keys          key1.0                        
+</code></pre>
+
+<p>Signature Definition:</p>
+
+<pre><code>Signature Update    S722.0            2013-06-05  
+</code></pre>
+
+<p>OS Version:             2.6.29.1                    <br/>
+Platform:               ASA-SSM-10                  <br/>
+Serial Number:          JJJJJJJJJB                 <br/>
+Licensed, expires:      01-Aug-2013 UTC             <br/>
+Sensor up-time is 91 days.
+Using 666M out of 974M bytes of available memory (68% usage)
+system is using 29.0M out of 160.0M bytes of available disk space (18% usage)
+application-data is using 65.1M out of 169.5M bytes of available disk space (40% usage)
+boot is using 54.7M out of 69.7M bytes of available disk space (83% usage)
+application-log is using 123.5M out of 513.0M bytes of available disk space (24% usage)</p>
+
+<p>MainApp            S-2013_FEB_05_05_37_7_1_6_65   (Release)   2013-02-05T05:40:22-0600   Running<br/>
+AnalysisEngine     S-2013_FEB_05_05_37_7_1_6_65   (Release)   2013-02-05T05:40:22-0600   Running<br/>
+CollaborationApp   S-2013_FEB_05_05_37_7_1_6_65   (Release)   2013-02-05T05:40:22-0600   Running<br/>
+CLI                S-2013_FEB_05_05_37_7_1_6_65   (Release)   2013-02-05T05:40:22-0600          <br/>
+```
+You can also monitor for real time IPS events from the command line by watching the output from this command:</p>
+
+<p><code>show event alert</code></p>
+
+<p>If you are seeing alerts from this output the system is back up and running as expected. It&rsquo;s possible that no alerts are being triggered due to the nature of the traffic. In that case you can verify the system is good by doing <code>show statistics analysis-engine</code> and watching the packets processed number to make sure it is going up.</p>
+]]></content>
+  </entry>
+  
+</feed>

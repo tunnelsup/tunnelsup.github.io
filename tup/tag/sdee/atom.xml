@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: sdee | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/sdee/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to Release Subscriptions on a Cisco IPS]]></title>
+    <link href="http://tunnelsup.github.io/how-to-release-subscriptions-on-a-cisco-ips/"/>
+    <updated>2013-06-11T19:53:00-07:00</updated>
+    <id>http://tunnelsup.github.io/how-to-release-subscriptions-on-a-cisco-ips</id>
+    <content type="html"><![CDATA[<p>The Cisco IPS (Intrusion Prevension System) can handle up to 5 SDEE connections and sometimes holds on to old ones or gets stuck. It is possible to clear these connections out.</p>
+
+<h3>Find the Subscription ID</h3>
+
+<p>SSH into the IPS with admin role. Issue the following command to determine the subscription ID and status.</p>
+
+<p>```
+IPS-Sensor# show stat sdee-server
+General</p>
+
+<pre><code> Open Subscriptions = 1
+ Blocked Subscriptions = 0
+ Maximum Available Subscriptions = 5
+ Maximum Events Per Retrieval = 500
+</code></pre>
+
+<p>Subscriptions</p>
+
+<pre><code> sub-58-270c3ecd
+      State = Open
+</code></pre>
+
+<p>```</p>
+
+<h3>Clear the Session</h3>
+
+<p>In order to release the session you will need a web browser that can get to the IPS device.</p>
+
+<p>Go to:<br>
+<code>https://&lt;IP Address&gt;/cgi-bin/sdee-server?action=close&amp;subscriptionId=&lt;Session ID&gt;</code></p>
+
+<p>For Example from above:<br>
+<code>https://10.10.10.10/cgi-bin/sdee-server?action=close&amp;subscriptionId=sub-58-270c3ecd</code></p>
+
+<p>You will be asked to login to the device. You will not receive a valid website. You will be presented with:</p>
+
+<p>```
+   &lt;?xml version=&ldquo;1.0&rdquo; encoding=&ldquo;UTF-8&rdquo; ?>
+&ndash; &lt;env:Envelope xmlns=&ldquo;<a href="http://www.cisco.com/cids/2003/09/cidee">http://www.cisco.com/cids/2003/09/cidee</a>&rdquo; xmlns:env=&ldquo;<a href="http://www.w3.org/2003/05/soap-envelope">http://www.w3.org/2003/05/soap-envelope</a>&rdquo; xmlns:sd=&ldquo;<a href="http://example.org/2003/08/sdee">http://example.org/2003/08/sdee</a>&rdquo; xmlns:cid=&ldquo;<a href="http://www.cisco.com/cids/2003/09/cidee">http://www.cisco.com/cids/2003/09/cidee</a>&rdquo;></p>
+
+<pre><code> - &lt;env:Header&gt;
+      - &lt;sd:oobInfo&gt;
+           &lt;sd:sessionId&gt;15c8dde7c627b79997ab446fd71ef2d6&lt;/sd:sessionId&gt;
+        &lt;/sd:oobInfo&gt;
+   &lt;/env:Header&gt;
+   &lt;env:Body /&gt;
+</code></pre>
+
+<p>   &lt;/env:Envelope>
+```</p>
+
+<h3>Verify Session is Closed</h3>
+
+<p>Verify session has been closed by SSH into the IPS and issuing the command:</p>
+
+<p>```
+IPS-Sensor# show stat sdee-server
+General</p>
+
+<pre><code> Open Subscriptions = 0
+ Blocked Subscriptions = 0
+ Maximum Available Subscriptions = 5
+ Maximum Events Per Retrieval = 500
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+</feed>

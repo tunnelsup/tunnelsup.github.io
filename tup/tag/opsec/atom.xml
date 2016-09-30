@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: opsec | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/opsec/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Six Ways to Protect Your Corporate Network Against Phishing Scams]]></title>
+    <link href="http://tunnelsup.github.io/six-ways-to-protect-your-corporate-network-against-phishing-scams/"/>
+    <updated>2016-04-16T16:04:00-07:00</updated>
+    <id>http://tunnelsup.github.io/six-ways-to-protect-your-corporate-network-against-phishing-scams</id>
+    <content type="html"><![CDATA[<p>It has been said that a company is one email away from a huge breach disaster. In today&rsquo;s landscape, people can serve as the greatest vulnerability to the network. How can we improve this?</p>
+
+<h3>What kind of damage is possible?</h3>
+
+<p>In the last few years there have been a rash of phishing scams where the scammer claims to be the CEO of the company and asks for a large amount of money be wired to a bank account. This type of phishing is sometimes known as whaling. The scammers will go to great lengths to watch the emails the CEO sends and gets familiar with how they talk and who has the ability to send such large amounts of money.</p>
+
+<p>Even if a company has cyber insurance, this isn&rsquo;t covered by insurance. <a href="http://krebsonsecurity.com/2016/01/firm-sues-cyber-insurer-over-480k-loss/">Ameriforge lost $480,000 in this scam</a> but was denied an insurance claim. <a href="http://www.networkworld.com/article/2984989/security/cyber-insurance-rejects-claim-after-bitpay-lost-1-8-million-in-phishing-attack.html">BitPay lost $1.8Million to this scam</a> and also was denied an insurance claim.</p>
+
+<p>W-2 phishing is another major concern. This year, <a href="http://krebsonsecurity.com/2016/03/seagate-phish-exposes-all-employee-w-2s/">Seagate</a>, <a href="http://money.cnn.com/2016/02/29/technology/snapchat-phishing-scam/index.html">Snapchat</a> and <a href="http://www.ktva.com/more-than-2500-gci-employees-w-2-information-stolen-in-phishing-scam-524/">GCI</a> all reported that hackers have stolen thousands of W-2 from their employees. Learn more about how <a href="/actors-behind-the-w2-tax-phishing-scams/">who is behind the W2 scams</a>.</p>
+
+<p>Using a combination of <a href="https://www.trustedsec.com/social-engineer-toolkit/">SET</a> and social engineering, a hacker could call a user within a company, get them to go to a malicious URL which infects their machine, and then take over their machine. Now that the hacker is inside the company, it could possibly have full access to the entire network, depending on who&rsquo;s machine they infected and how the network is deployed. This could have devastating effects. Anything from, destruction of data, to leaking all the company secrets, to stealing any bitcoin/pre-paid credit cards/money, to stealing all the employee&rsquo;s HR records.</p>
+
+<h3>How can we protect against this?</h3>
+
+<p>There are a number of ways to protect against such attacks. Here are 6 suggestions that could save the company millions of dollars.</p>
+
+<h4>1. Segmentation of the Network</h4>
+
+<p>This is becoming one of the most important strategies for securing a network. Think of your network like a massive ship. Modern ships are designed to with stand a few punctures to the hull without sinking. It can withstand this damage because of compartmentalizing areas of the hull so that if water gets in one area, it doesn&rsquo;t spread the to the entire hull. Your network should have the same resilience. If one system is hacked, it should not have full uncontrolled access to the entire network.</p>
+
+<p>There should be a firewall barrier that separates all of the following segments:</p>
+
+<ul>
+<li>The public internet</li>
+<li>LAN Users (possibly segment by department)</li>
+<li>VPN Users</li>
+<li>Wireless Users</li>
+<li>Internet facing servers</li>
+<li>Internal facing servers</li>
+<li>Highly critical servers</li>
+<li>Partner/Vendor/B2B networks</li>
+<li>Dev/Lab servers</li>
+<li>Customer networks</li>
+<li>Remote offices</li>
+</ul>
+
+
+<p>The goal here is to only permit the traffic which has a business need to traverse each segment. Of course, if you don&rsquo;t know what servers you have or what applications are in your network, that would be something to figure out also. You don&rsquo;t want your users having the ability to exploit servers on your network that were misconfigured or unpatched. By placing a firewall in between these segments, allows you to only permit the port that user needs to access that server, like http.</p>
+
+<h4>2. Antivirus on User&rsquo;s Computers</h4>
+
+<p>Users are often clicking links they shouldn&rsquo;t or going to places on the internet that are dangerous to their computer. If your user clicks on a bad link, this will likely attempt to execute something it shouldn&rsquo;t on the user&rsquo;s machine. These known exploits are often detected and blocked by Antivirus or Endpoint protection software. Having these technologies present on the user&rsquo;s machine could save the user and company from a major disaster.</p>
+
+<h4>3. Patching</h4>
+
+<p>The majority of the attacks and exploits out there are old and well known that don&rsquo;t work on patched computers. It should be standard practice today that all systems in the network have a patch cycle and any unused software is uninstalled. Sometimes, you may patch the OS but forget to patch all the applications that&rsquo;s also installed. To save time and headaches, uninstall any applications that aren&rsquo;t used. The more applications running on a computer, the more likely it is to become vulnerable to attacks.</p>
+
+<h4>4. Security Awareness Training</h4>
+
+<p>Because the user is one of the weakest links in the network security architecture, it&rsquo;s crucial to conduct security awareness training. If you think security awareness training is not very effective, check out these <a href="/effective-security-awareness-training/">unique ways of improving it</a>.</p>
+
+<p>Along these lines, it&rsquo;s good to set up an internal way to report potential scams or security problems your employee&rsquo;s have seen. If they see something and don&rsquo;t know who to tell, there is a problem with your security program.</p>
+
+<h4>5. Domain management</h4>
+
+<p>A lot of these phishing scams use look-alike domain. If you worked at example.com could you recognize the problem in this email header?</p>
+
+<blockquote><p>From: <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#67;&#x45;&#79;&#x40;&#x65;&#x78;&#x61;&#x6d;&#112;&#49;&#101;&#46;&#x63;&#x6f;&#x6d;">&#67;&#69;&#79;&#x40;&#x65;&#120;&#x61;&#x6d;&#x70;&#49;&#x65;&#x2e;&#x63;&#111;&#x6d;</a></p></blockquote>
+
+<p>The &ldquo;L&rdquo; was switched with a &ldquo;ONE&rdquo;. This can be incredibly difficult to catch and so look-alike domains have been very effective at tricking people for decades. Here&rsquo;s some tips for combating this.</p>
+
+<ul>
+<li><p>Make sure your DKIM and SPF DNS records are set correctly. Without these settings configured correctly, anyone can spoof mail from your company. With these records present, when someone gets an email, if they are following RFC practices, they will check the settings to see if where they got the mail from matches where it&rsquo;s supposed to come from, thus catching a spoofed email.</p></li>
+<li><p>Look for advances in the <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein algorithm</a>. This is a algorithm that compares two strings to see how similar they are. In the case of <code>example.com</code> vs <code>examp1e.com</code>, this would have a Levenshtein distance of 1, since it&rsquo;s one character different. Products like MS Exchange are looking into ways to use this algorithm to block incoming mail that has a very low distance, which could effectively block look-alike domains from entering your network and confusing your employees.</p></li>
+</ul>
+
+
+<h4>6. Monitor Password Breach Dumps</h4>
+
+<p>Consider this scenario. Bill works for your company. He uses his company email to sign up for some ecard web service. That ecard web service then gets breached, and Bill&rsquo;s email address, username, and password are stolen from the ecard website. Bill is now at a higher risk for being spear phished. Hackers could now know the following details about Bill:</p>
+
+<ul>
+<li>What his email address is</li>
+<li>What he likes to use as a password</li>
+<li>Where he works</li>
+<li>What his interests are (he likes ecards!)</li>
+</ul>
+
+
+<p>If the hackers got more information they may even be able to see who he sent ecards to or what his secret fallback question is. From here the hackers could then try to go to your company&rsquo;s web mail and see if that username and password works there. With some additional research, hackers could get a lot of information about Bill.</p>
+
+<p>Bill is now at high risk of being spear phished. With all this information, a hacker could call him, claiming they know him or try to blackmail him into doing something. By monitoring these password dumps, you could then do additional awareness training with Bill, force him to reset his credentials, and possibly add him to a special group.</p>
+
+<p>Check out the websites <a href="https://haveibeenpwned.com/">HaveIBeenPwned.com</a> or <a href="https://threatminer.org">ThreatMiner.org</a> to get started looking for leaked emails.</p>
+
+<h3>Final thoughts</h3>
+
+<p>Do you have other more effective ways of stopping phishing attacks? If so, let us know in the comments. One thing I wish I could get better visibility on is the ability to know how effective each of these strategies are. There isn&rsquo;t a way I know of to review metrics for this.</p>
+]]></content>
+  </entry>
+  
+</feed>

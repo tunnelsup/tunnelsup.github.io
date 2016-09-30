@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: git | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/git/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Git Remote Branches]]></title>
+    <link href="http://tunnelsup.github.io/git-remote-branches/"/>
+    <updated>2014-03-29T11:05:00-07:00</updated>
+    <id>http://tunnelsup.github.io/git-remote-branches</id>
+    <content type="html"><![CDATA[<p>Git is a powerful document repository and version control system. This page will show you how to handle git remote branches. This page assumes you know the basics of git and you&rsquo;re ready for a slightly more advanced topic. An excellent page to get started with git is <a href="http://rogerdudler.github.io/git-guide/">git &ndash; the simple guide</a>.</p>
+
+<h2>What is a branch?</h2>
+
+<p>The best case for using a git branch is when making a new feature on a project you&rsquo;re working on. You may not want to disturb the master branch until your new feature is complete. This way you can still push bug fixes or smaller features to the master branch without worrying about your new developmental code getting pushed. Then when you&rsquo;re new feature is ready to be merged into the master branch you can merge it all together and delete that branch.</p>
+
+<h2>Creating a New Local Branch</h2>
+
+<p>To create a local branch. Simply do this:</p>
+
+<p><code>
+git checkout -b newfeature
+</code></p>
+
+<p>The -b creates the branch and then moves you to that branch.</p>
+
+<p>Now take a look at your branches:
+<code>
+$ git branch
+  master
+* newfeature
+</code>
+The &lsquo;*&rsquo; means that&rsquo;s the branch you&rsquo;re currently working on. When you&rsquo;re on that branch you can make changes, do <code>git add</code>, <code>git commit</code> etc.</p>
+
+<p>To switch back to the master branch do this:
+<code>
+git checkout master
+</code>
+It is important to make sure that if you&rsquo;ve done changes on the branch to add and commit them before switching to another branch. Otherwise your changes may be added to the wrong branch.</p>
+
+<h2>Push the local branch to the repository</h2>
+
+<p>Pushing local branches to the repo is almost the same as pushing the master branch to the repo. Simply change master to the branch name. The command would look like this:</p>
+
+<p><code>
+git push origin newfeature
+</code></p>
+
+<h2>Getting a Remote Branch and Making Changes to it</h2>
+
+<p>Now lets say someone else wants to get that branch and make changes to it also. They can begin tracking it by doing this from the master branch:</p>
+
+<p><code>
+git pull
+</code></p>
+
+<p>Sometimes, for me at least, <code>git pull</code> gives me an error like &lsquo;fatal: No remote repository specified.&rsquo; If this happens to you first do <code>git pull -u origin master</code> then do <code>git pull</code>.</p>
+
+<p>Once they do that, they should now be tracking that remote branch. Use this command to confirm.
+<code>
+$ git branch -a
+* master
+  remotes/origin/master
+  remotes/origin/newfeature
+</code></p>
+
+<p>At this point they aren&rsquo;t ready to use or modify that branch. It&rsquo;s still a remote branch. In order to do work on the remote branch they need to create a pointer between a new local branch and that remote branch. To do that they would do this:
+<code>
+git checkout -b newfeature origin/newfeature
+</code></p>
+
+<p>What that command does is create the local &ldquo;newfeature&rdquo; branch, and moves them to that branch. But it uses the remote origin/newfeature branch as the reference for the local branch they just made. The reference is important because if they do ‘git push’ later it will know to push any reference branches too.</p>
+
+<p>Now they should be on their local newfeature branch (<code>git branch -a</code> to confirm). From here they can do changes and commit. When ready and they want to push it back to the repo they can do this from the newfeature branch:</p>
+
+<p><code>
+git add .
+git commit -m ‘changes’
+git push origin newfeature
+</code></p>
+
+<h2>Merging Remote Branch to Local Branch</h2>
+
+<p>Now let’s say you made more changes to the newfeature branch and your collaborator wants to pull those changes into their local branch. Or another example would be your collaborator has made changes and pushed them to the repo and you want to pull them into your local branch.</p>
+
+<p>First switch to the master branch then pull.
+<code>
+git checkout master  
+git pull
+</code>
+Sometimes, for me at least, <code>git pull</code> will ask me where do I want to fetch from today. In that case I first do <code>get pull -u origin master</code> then <code>git pull</code>.</p>
+
+<p>You should see something about the newfeature branch being unpacked which means you&rsquo;ve tracked the changes done to that remote branch.</p>
+
+<p>You aren’t done yet. All that’s happened is that your repo is now aware the remote branch is updated. So switch over to the branch and merge it with your local branch.</p>
+
+<p><code>
+git checkout newfeature
+git merge origin/newfeature
+</code></p>
+
+<p>This command will now merge the remote branch to your local branch.</p>
+
+<h2>Merging to Master</h2>
+
+<p>When we are done with the branch and want to merge it into the master we simply do this:
+<code>
+git checkout master
+git merge newfeature
+</code>
+This command will merge what you specify into the branch you’re in</p>
+
+<h2>Deleting Branches</h2>
+
+<p>Then if we are done with the newfeature branch we should delete it.</p>
+
+<p>Delete the local newfeature branch by doing</p>
+
+<p><code>
+git branch -d newfeature
+</code></p>
+
+<p>Delete the remote newfeature branch by doing
+<code>
+git push origin :newfeature
+</code>
+The &lsquo;:&rsquo;&lsquo; indicates the remote branch should be deleted.</p>
+
+<h3>Additional Reading</h3>
+
+<p> <a href="http://www.git-scm.com/book/ch3-5.html">Git Branching &ndash; Remote Branches</a></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: capture | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/capture/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Packet Captures on Cisco ASA]]></title>
+    <link href="http://tunnelsup.github.io/packet-captures-on-cisco-asa/"/>
+    <updated>2013-06-06T14:23:00-07:00</updated>
+    <id>http://tunnelsup.github.io/packet-captures-on-cisco-asa</id>
+    <content type="html"><![CDATA[<p>One of my favorite troubleshooting tools on the Cisco ASA firewall is doing a packet capture. An incoming packet will hit the capture before any ACL or NAT or other processing. An outgoing packet will hit a capture last before being put on the wire.</p>
+
+<h2>Starting the Capture</h2>
+
+<p>To start a packet capture from the CLI execute the following command:</p>
+
+<p><code>
+capture &lt;Capture Name&gt; interface &lt;Interface&gt; match tcp host &lt;Source IP&gt; host &lt;Destination IP&gt; eq &lt;Port&gt;
+</code>
+An example capture may look like this:</p>
+
+<p><code>
+capture CAP1 int INSIDE match ip host 1.1.1.1 host 2.2.2.2
+</code>
+That will capture any traffic coming from 1.1.1.1 going to 2.2.2.2 as a destination on any port. Also, it will capture the opposite too. Traffic coming from 2.2.2.2 going to 1.1.1.1 will be captured.</p>
+
+<h2>Viewing the Capture</h2>
+
+<p>There are two ways to view what you have captured.</p>
+
+<h3>Getting the pcap file</h3>
+
+<p>You can download the pcap file to examine it in wireshark. There are two ways to get the pcap file off the ASA.</p>
+
+<h4>Download pcap file from ASDM</h4>
+
+<p>Use a web browser and go to to your firewall&rsquo;s IP with a specific URL:<br>
+<code>https://192.168.1.1/admin/capture/CAP1/pcap</code></p>
+
+<h4>Download pcap from CLI</h4>
+
+<p>It is also possible to move a file from the ASA to a FTP server using this command:<br></p>
+
+<p><code>copy /pcap capture:CAP1 ftp://user:pass@192.168.1.1/CAP1.pcap</code></p>
+
+<h3>Viewing the output at the CLI</h3>
+
+<p>To see what has been captures issue the following command from the CLI:<br>
+<code>show capture CAP1</code></p>
+
+<p>The capture output for a TCP flow follows this template:</p>
+
+<p><code>HH:MM:SS.ms [ether-hdr] src-addr.src-port dest-addr.dst-port: tcp-flags [header-check] [checksum-info] sequence-number ack-number tcp-window urgent-info tcp-options</code></p>
+
+<p>Let&rsquo;s look more closely into what the &lsquo;tcp-flags&rsquo; can show us.</p>
+
+<p>Here is an example TCP capture broken down.</p>
+
+<p>User 1.1.1.1 is accessing the website located at 2.2.2.2.</p>
+
+<p><code>1: 15:01:45.052762 1.1.1.1.12869 > 2.2.2.2.80: <font color="red"><strong>S</strong></font> 3624439037:3624439037(0) win 8192 <mss 1260,nop,wscale 8,nop,nop,sackOK></code><br>
+The <font color="red"><strong>S</strong></font> here indicates this is a SYN.</p>
+
+<p><code>2: 15:01:45.053403 2.2.2.2.80 > 1.1.1.1.12869: <font color="red"><strong>S</strong></font> 285283040:285283040(0) <font color="red"><strong>ack</strong></font> 3624439038 win 8192 <mss 1380,nop,wscale 8,nop,nop,sackOK></code><br>
+This packet has both a <font color="red"><strong>S</strong></font> (syn) and an <font color="red"><strong>ack</strong></font>. Notice here the source of this packet is the webserver 2.2.2.2. To really tell who initiated this flow originally look at the ports. You see that the source IP is coming from port 80 and its going to port 12869. This tells us this is return traffic and the original request was really TO port 80.</p>
+
+<p><code>3: 15:01:45.054501 1.1.1.1.12869 > 2.2.2.2.80: . <font color="red"><strong>ack</strong></font> 285283041 win 260</code><br>
+Here is the <font color="red"><strong>ack</strong></font>. This signifies the completion of the 3 way handshake. If you see this in the capture you know that communication is taking place properly.</p>
+
+<p><code>4: 15:01:45.054852 1.1.1.1.12869 > 2.2.2.2.80: <font color="red"><strong>P</strong></font> 3624439038:3624439328(290) ack 285283041 win 260</code><br>
+Now the requester is sending a <font color="red"><strong>P</strong></font>ush. This means  show me the data!</p>
+
+<p><code>5: 15:01:45.244463 2.2.2.2.80 > 1.1.1.1.12869: . <font color="red"><strong>ack</strong></font> 3624439328 win 260</code><br>
+The next packet is another <font color="red"><strong>ack</strong></font>. The webserver says ok, I got your push.</p>
+
+<p><code>6: 15:01:46.344296 2.2.2.2.80 > 1.1.1.1.12869: <font color="red"><strong>.</strong></font> 285283041:285284301(1260) ack 3624439328 win 260</code><br>
+<code>7: 15:01:46.344418 2.2.2.2.80 > 1.1.1.1.12869: <font color="red"><strong>.</strong></font> 285284301:285285561(1260) ack 3624439328 win 260</code><br>
+Look carefully here. The header check here is simply <font color="red"><strong>.</strong></font> which indicates data being sent. And it makes sense that data is being sent from the webserver to the user.</p>
+
+<h2>Clearing/Removing Captures</h2>
+
+<p>&ldquo;Clearing&rdquo; the capture refers to getting rid of the data in the capture. To do this, issue the following command:<br>
+<code>clear capture CAP1</code></p>
+
+<p>&ldquo;Removing&rdquo; a capture means to delete its contents and the listener from the ASA. To do this, issue this command:<br>
+<code>no capture CAP1</code></p>
+]]></content>
+  </entry>
+  
+</feed>

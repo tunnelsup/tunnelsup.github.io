@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: premium | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/premium/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Understanding Cisco ASA AnyConnect Licensing]]></title>
+    <link href="http://tunnelsup.github.io/understanding-cisco-asa-anyconnect-licensing/"/>
+    <updated>2012-08-08T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/understanding-cisco-asa-anyconnect-licensing</id>
+    <content type="html"><![CDATA[<p>This post will try to help understand the differences between anyconnect premium and anyconnect essentials licenses.</p>
+
+<p>For a more complete understanding of all of the licensing on the Cisco ASA <a href="/tup/2013/07/01/cisco-asa-licensing-quick-reference-guide">see this post</a>.</p>
+
+<p><strong>Note: You cannot have both Essentials and Premium running at once.</strong></p>
+
+<p><strong>Note: Cisco ASA 8.3+ no longer requires both the Active and Standby unit to each have a license. The active license is shared between the failover units. This should not be </strong><strong>confused with the &lsquo;shared premium license&rsquo;.</strong></p>
+
+<p><strong>Note: Cisco Secure Desktop is now deprecated. Cisco has stopped development for it.</strong></p>
+
+<p><img src="/images/anyconnect-licensing.png" alt="Anyconnect Outline - IMG" /></p>
+
+<p>Source of this image: Cisco&rsquo;s Partner Education center &ndash; ASA Licensing Webex.</p>
+
+<h3>To enable AnyConnect essentials:</h3>
+
+<p>Purchase the license (L-ASA-AC-E-55xx= it costs $100-$500).</p>
+
+<p>Apply the license to the ASA using the <code>activation-key</code> command. This does not require a reboot.</p>
+
+<p>Apply the config:</p>
+
+<p><code>
+webvpn
+  anyconnect-essentials
+</code></p>
+
+<p>Now your firewall will be licensed to have up to however many connections that are on the &ldquo;Total VPN Connections&rdquo;. For instance if your show version says this:</p>
+
+<p><code>
+AnyConnect Premium Peers          : 2              perpetual
+AnyConnect Essentials             : Enabled        perpetual
+Other VPN Peers                   : 250            perpetual
+Total VPN Peers                   : 250            perpetual
+</code></p>
+
+<p>You will now be licensed to accommodate 250 anyconnect connectionns.</p>
+
+<h3>To enable AnyConnect Premium</h3>
+
+<p>Buy the license. You must purchase a license for a specific number of users (L-ASA-SSL-10= costs around $800).</p>
+
+<p>Apply the license to the ASA using the <code>activation-key</code> command. This does not require a reboot.</p>
+
+<p>Configure the ASA:</p>
+
+<p><code>
+webvnp
+  no anyconnect-essentials
+</code></p>
+
+<p>If you&rsquo;ve already licensed this ASA for Essentials in the past then it will still show as an enabled license.</p>
+
+<p>Once this is complete your ASA will be licensed to accept however many Anyconnect connections as you have Premium Licenses for. So if your <code>show version</code> looks like this:</p>
+
+<p><code>
+AnyConnect Premium Peers          : 10             perpetual
+AnyConnect Essentials             : Disabled       perpetual
+Other VPN Peers                   : 250            perpetual
+Total VPN Peers                   : 250            perpetual
+</code></p>
+
+<p>Then your ASA can have 10 Anyconnect or webvpn users at once.</p>
+
+<p>Note: The name &ldquo;Anyconnect Premium&rdquo; has changed a lot in different versions. Here are the different naming schemes.</p>
+
+<ul>
+<li>7.1(1) known as &ldquo;ssl vpn&rdquo;</li>
+<li>8.2(1) name changed to &ldquo;anyconnect premium ssl vpn edition&rdquo;</li>
+<li>8.3(1) name changed to &ldquo;anyconnect premium ssl vpn&rdquo;</li>
+<li>8.4(1) name changed to &ldquo;anyconnect premium&rdquo;</li>
+</ul>
+
+
+<h3>AnyConnect for Mobile</h3>
+
+<p>This license allows AnyConnect connections from mobile devices. There is current support for iPhone, iPad, Android version 4.0 and up, rooted Androids and Samsung Galaxy&rsquo;s.</p>
+
+<p>The mobile license is on or off and not tied to a number of users. It costs between $100-$500.</p>
+
+<p>This license is applied by simply using the <code>activation-key</code> command. A reboot is not needed. There is no further configuration needed after that.</p>
+
+<h3>Advanced Endpoint Assessment</h3>
+
+<p>Advanced Endpoint Assessment includes all of the Endpoint Assessment features, and lets you configure an attempt to update noncompliant computers to meet version requirements.</p>
+
+<p>This license is applied by simply using the <code>activation-key</code> command. A reboot is not needed.</p>
+
+<h3>Shared Premium License</h3>
+
+<p>New to ASA 8.3+ code is the ability to share licensing. This is only for Anyconnect Premium. It allows for one ASA to have a shared license which other ASAs can use.</p>
+
+<p>This configuration requires two extra licenses. A license is needed for the shared server which indicates how many shared licenses there are and there also is a need for any participating ASAs.</p>
+
+<p>After buying a shared <strong>participant</strong> license and applying it with the <code>activation-key</code> command, configure it with a command similar to this:</p>
+
+<p><code>license-server address 10.15.0.15 secret SeKreTkey</code></p>
+
+<p>The <code>show version</code> on the participant ASA will show this:</p>
+
+<p><code>
+AnyConnect Premium Peers          : 2              perpetual
+AnyConnect Essentials             : Disabled       perpetual
+Other VPN Peers                   : 5000           perpetual
+Total VPN Peers                   : 5000           perpetual
+Shared License                    : Enabled        perpetual
+</code></p>
+
+<p>Now buy the shared premium license for the server for the amount of users you wish to have.</p>
+
+<p>Apply the license using the <code>activation-key</code> command. Then apply the following config:</p>
+
+<p><code>
+license-server secret SeKreTkey
+ license-server enable inside
+</code></p>
+
+<p>The <code>show version</code> at this point looks like this:</p>
+
+<p><code>
+AnyConnect Premium Peers          : 2              perpetual
+AnyConnect Essentials             : Disabled       perpetual
+Other VPN Peers                   : 5000           perpetual
+Total VPN Peers                   : 5000           perpetual
+Shared License                    : Enabled        perpetual
+</code></p>
+
+<p>Also you can see the <code>show shared license</code> output:</p>
+
+<p>```
+Shared license utilization:
+  AnyConnect Premium:
+    Total for network :     5000
+    Available         :     4900
+    Utilized          :      100
+  This device:
+    Platform limit    :     5000
+    Current usage     :       50
+    High usage        :      100
+  Messages Tx/Rx/Error:
+    Registration    : 441798 / 441789 / 9
+    Get             : 28 / 28 / 0
+    Release         : 27 / 27 / 0
+    Transfer        : 0 / 0 / 0</p>
+
+<p>  Client ID           Usage   Hostname
+  JMX1111             50      vpn-asa-01
+```</p>
+
+<p>If the license count isn&rsquo;t going up when joining a shared pool here are a couple of other settings that may help you:</p>
+
+<p><code>
+vpn-sessiondb max-other-vpn-limit 5000
+vpn-sessiondb max-anyconnect-premium-or-essentials-limit 500
+</code>
+These two settings will limit how many sessions this host or the other hosts can use. This may be set already and limiting what is usable.</p>
+]]></content>
+  </entry>
+  
+</feed>

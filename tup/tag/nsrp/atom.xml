@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: nsrp | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/nsrp/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Juniper Netscreen troubleshooting NSRP and HA]]></title>
+    <link href="http://tunnelsup.github.io/juniper-netscreen-troubleshooting-nsrp-and-ha/"/>
+    <updated>2014-08-26T15:47:00-07:00</updated>
+    <id>http://tunnelsup.github.io/juniper-netscreen-troubleshooting-nsrp-and-ha</id>
+    <content type="html"><![CDATA[<p>Some basic commands to help troubleshoot NSRP (failover/high availability) with Juniper Netscreen SSG devices.</p>
+
+<h3>Review the NSRP configuration</h3>
+
+<p>Here is a config pull from a working HA firewall config.</p>
+
+<p><code>
+netscreen:netscreen-cluster-pri(M)-&gt; get config | i nsrp
+set nsrp cluster id 1
+set nsrp cluster name netscreen-cluster
+set nsrp rto-mirror sync
+set nsrp rto-mirror route
+set nsrp vsd-group id 0 priority 1
+set nsrp vsd-group id 0 preempt
+set nsrp vsd-group id 0 preempt hold-down 20
+set nsrp secondary-path ethernet0/1
+set nsrp monitor interface ethernet0/0
+set nsrp monitor interface ethernet0/1
+set nsrp monitor interface ethernet2/6
+set nsrp monitor interface ethernet2/5
+set nsrp monitor interface ethernet2/4
+set nsrp monitor interface ethernet2/0
+set nsrp monitor interface ethernet2/1
+</code></p>
+
+<h3>Examine the current NSRP state</h3>
+
+<p>Some commands to examine the state of the situation</p>
+
+<p>```
+netscreen:netscreen-pri(M)&ndash;> get nsrp vsd-group all</p>
+
+<p>VSD group info:
+init hold time: 8
+heartbeat lost threshold: 3
+heartbeat interval: 1000(ms)
+master always exist: disabled
+group priority preempt holddown inelig   master       PB other members</p>
+
+<pre><code>0        1 yes           20 no       myself 13691648
+</code></pre>
+
+<p>total number of vsd groups: 1
+Total iteration=16523170,time=603985353,max=119017,min=2779,average=36</p>
+
+<p>vsd group id: 0, member count: 2, master: 13690368</p>
+
+<h2>member information:</h2>
+
+<h2>group  unit_id  state          prio flag rto_peer   hb miss holddown</h2>
+
+<pre><code>0 13691648  primary backup  100    0        0    1    0        3
+0 13690368  master            1    2        0    0    0       20
+</code></pre>
+
+<p>```</p>
+
+<p>Some interesting things to get out of this command:</p>
+
+<p><code>master = myself</code> This is good to know who the current active or master firewall is.</p>
+
+<p><code>member count = 2</code> If this is 2 it means there is another firewall joined to this VSD group.</p>
+
+<p>Another command is simply <code>get nsrp</code>. This will show the <em>which is the HA interface</em>, as well as other information.</p>
+
+<h3>Determine the last time a failover occurred</h3>
+
+<p>The only way to do this is to check the logs.</p>
+
+<p><code>
+netscreen:netscreen-pri(M)-&gt; get event | incl nsrp
+2014-08-25 14:03:39 system crit  00015 NSRP: HA control channel change to
+2014-08-25 14:03:27 system crit  00015 NSRP: HA control channel change to
+2014-08-25 14:01:44 system crit  00015 NSRP: HA control channel change to
+2014-08-25 14:00:53 system crit  00015 NSRP: HA control channel change to
+</code></p>
+
+<p>This only tells half the story. From here we can see that the syslog type is 00015. Let&rsquo;s take a look at the logs filtering on that log type only:</p>
+
+<p>```
+netscreen:netscreen-pri(M)&ndash;> get event type 00015
+get event type 00015
+Date       Time     Module Level  Type Description
+2014-08-25 14:03:39 system crit  00015 NSRP: HA control channel change to</p>
+
+<pre><code>                                   ethernet2.
+</code></pre>
+
+<p>2014-08-25 14:03:27 system crit  00015 NSRP: HA control channel change to</p>
+
+<pre><code>                                   NULL.(disconnected).
+</code></pre>
+
+<p>2014-08-25 14:01:44 system crit  00015 NSRP: HA control channel change to</p>
+
+<pre><code>                                   ethernet2.
+</code></pre>
+
+<p>2014-08-25 14:00:53 system crit  00015 NSRP: HA control channel change to</p>
+
+<pre><code>                                   NULL.(disconnected).
+</code></pre>
+
+<p>2014-08-25 14:00:49 system crit  00015 NSRP: HA control channel change to</p>
+
+<pre><code>                                   ethernet2.
+</code></pre>
+
+<p>2014-08-25 14:00:41 system crit  00015 NSRP: HA control channel change to</p>
+
+<pre><code>                                   NULL.(disconnected).
+</code></pre>
+
+<p>```</p>
+
+<h3>Initiate a manual failover</h3>
+
+<p>Here is the command to conduct a failover. Execute this from the primary firewall:</p>
+
+<p><code>exec nsrp vsd-group 0 mode backup</code></p>
+
+<h3>Additional problems</h3>
+
+<p>From the primary firewall there is not a way to see what the IP is of the backup firewall. The primary firewall will utilize the IP addresses in the config. The one exception to this is the management IP. This is configured seperately on each firewall in the cluster.</p>
+
+<p>There is not a way to view the logs in the backup device from the primary.</p>
+]]></content>
+  </entry>
+  
+</feed>

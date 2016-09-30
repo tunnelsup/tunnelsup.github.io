@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: arp | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/arp/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[ARPing for non-connected subnets on a Cisco ASA]]></title>
+    <link href="http://tunnelsup.github.io/arping-for-non-connected-subnets-on-a-cisco-asa/"/>
+    <updated>2013-05-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/arping-for-non-connected-subnets-on-a-cisco-asa</id>
+    <content type="html"><![CDATA[<p>Consider the following network.</p>
+
+<p><img src="/images/arpnonconnected.png" alt="ARP diagram - IMG" /></p>
+
+<p>Things to notice:</p>
+
+<p>Subnets 22.22.22.0/24 and 33.33.33.0/24 are being routed to the outside of the ASA.</p>
+
+<p>There is a static NAT statement in the ASA to translate the real IP <span style="color: #ff0000;">192.168.5.22</span> to <span style="color: #ff0000;">22.22.22.22</span></p>
+
+<p>There is a static NAT statement in the ASA to translate the real IP<span style="color: #ff0000;"> 192.168.5.33</span> to <span style="color: #ff0000;">33.33.33.33</span></p>
+
+<h2>So how do you get this to work properly?</h2>
+
+
+<p>In ASA pre-8.3 code the ASA would ARP for the static NATs it would have regardless if it&rsquo;s connected or not.</p>
+
+<p>In ASA 8.3-8.4(4), THIS IS IMPOSSIBLE</p>
+
+<p>In ASA 8.4(5)+ Cisco realized their major mistake and implemented the command:</p>
+
+<p><code>arp permit-nonconnected</code></p>
+
+<h2>When else can I use this?</h2>
+
+
+<p>Another scenario to use this is when you have a router with multiple IPs on its interface that is connected to an ASA with a single IP. The ASA won&rsquo;t accept any packets for the other subnets that the router thinks is connected. By applying this command it will accept packets for the other subnets.</p>
+
+<h2>What's the risk?</h2>
+
+
+<p>By enabling this feature it could facilitate denial of service (DoS) attack against the ASA; a user on any interface could send out many ARP replies and overload the ASA ARP table with false entries. If you enable it be careful of what is physically plugging into the ASA since it can cause this problem.</p>
+]]></content>
+  </entry>
+  
+</feed>

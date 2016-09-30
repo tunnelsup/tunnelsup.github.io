@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: postgres | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/postgres/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Setting up PostgreSQL on Mac OSX]]></title>
+    <link href="http://tunnelsup.github.io/setting-up-postgres-on-mac-osx/"/>
+    <updated>2014-11-13T22:03:00-08:00</updated>
+    <id>http://tunnelsup.github.io/setting-up-postgres-on-mac-osx</id>
+    <content type="html"><![CDATA[<p>Here are the steps I used to set up Postgres in Mac OSX. Most of what is written here was learned from <a href="http://blog.willj.net/2011/05/31/setting-up-postgresql-for-ruby-on-rails-development-on-os-x/">this blog post</a>. I am saving my notes here in case that site gets removed.</p>
+
+<h3>Install Postgress using brew</h3>
+
+<p>If you don&rsquo;t have <a href="http://brew.sh/">homebrew</a>, install it first. Then simply run the command:</p>
+
+<p><code>brew install postgres</code></p>
+
+<h3>Initialize Postgres</h3>
+
+<p>This command initializes the database.</p>
+
+<p><code>initdb /usr/local/var/postgres</code></p>
+
+<h3>Set up Postgres to run at startup</h3>
+
+<p>Check if the directory <code>~/Library/LaunchAgents</code> exists. Create it if it doesn&rsquo;t exist.</p>
+
+<p>Find the plist file that came with the postgres install. I found mine at <code>/usr/local/Cellar/postgresql/9.3.4/homebrew.mxcl.postgresql.plist</code>.</p>
+
+<p>Copy the plist file to the LaunchAgents directory.</p>
+
+<p><code>cp /usr/local/Cellar/postgresql/9.3.4/homebrew.mxcl.postgresql.plist ~/Library/LaunchAgents/</code></p>
+
+<p>Now use launchctl to load the file using this command:</p>
+
+<p><code>launchctl load -w homebrew.mxcl.postgresql.plist</code></p>
+
+<p>Now when the computer reboots, postgres will automatically startup.</p>
+
+<h2>Additional Postgres Commands</h2>
+
+<h3>Create a user</h3>
+
+<p>Postgres has a shell command called <code>createuser</code> which will create a user for Postgres. Use it right from the OSX terminal command line like this:</p>
+
+<p><code>createuser --pwprompt tunnelsup</code></p>
+
+<p>If it asks you questions about the user you can say &lsquo;n&rsquo; for all of the questions.</p>
+
+<p>If you wish to create a user without a password just take the <code>--pwprompt</code> off the command.</p>
+
+<h3>Create a database</h3>
+
+<p>Here is the command:</p>
+
+<p><code>createdb -Otunnelsup -Eutf8 mysite_development</code></p>
+
+<p>The <code>-O</code> indicates the user that will become the owner of the database.</p>
+
+<h3>Access the Database</h3>
+
+<p>The following command can be used to log into the database.</p>
+
+<p><code>psql -U tunnelsup -W mysite_development</code></p>
+
+<p>The -U means to login using that username and the -W means to prompt for a password.</p>
+
+<p>To exit the shell hit <code>Ctrl</code>+<code>d</code></p>
+
+<h2>Starting a new Rails project</h2>
+
+<p>In case you&rsquo;re using this guide to get started using rails here&rsquo;s how I would start the new rails app.</p>
+
+<p>```</p>
+
+<h1>Create the rails project</h1>
+
+<p>rails new projectname &mdash;database=postgresql
+cd projectname</p>
+
+<h1>Create the Postgres user</h1>
+
+<p>createuser projectname</p>
+
+<h1>Create the databases</h1>
+
+<p>createdb -Oprojectname -Eutf8 projectname_development
+createdb -Oprojectname -Eutf8 projectname_test</p>
+
+<h1>Create some models/controllers etc</h1>
+
+<p>rails generate controller site
+rails generate model</p>
+
+<h1>Run migrations</h1>
+
+<p>rake db:migrate</p>
+
+<h1>Start the server</h1>
+
+<p>rails server
+```</p>
+
+<p>In dev I may not use a password for the database user. This makes it easier for me to get started and I don&rsquo;t even have to edit the database.yml file.</p>
+]]></content>
+  </entry>
+  
+</feed>

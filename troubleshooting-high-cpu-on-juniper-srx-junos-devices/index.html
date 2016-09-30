@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>Troubleshooting high CPU on Juniper SRX Junos devices - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="Occasionally a Juniper SRX device running Junos will have a high CPU. Here are some tips for troubleshooting these incidents. Validate Check the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tunnelsup.github.io/troubleshooting-high-cpu-on-juniper-srx-junos-devices">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Troubleshooting High CPU on Juniper SRX Junos Devices</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-09-30T19:20:00-07:00" pubdate data-updated="true">Sep 30<span>th</span>, 2015</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Occasionally a Juniper SRX device running Junos will have a high CPU. Here are some tips for troubleshooting these incidents.</p>
+
+<h2>Validate</h2>
+
+<p>Check the routing engine (control plane). Check the CPU status by doing <code>show chassis routing-engine</code>.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>user@USPHIFW1&gt; show chassis routing-engine
+</span><span class='line'>Routing Engine status:
+</span><span class='line'>    Temperature                 40 degrees C / 104 degrees F
+</span><span class='line'>    CPU temperature             38 degrees C / 100 degrees F
+</span><span class='line'>    Total memory              1024 MB Max   758 MB used ( 74 percent)
+</span><span class='line'>      Control plane memory     560 MB Max   442 MB used ( 79 percent)
+</span><span class='line'>      Data plane memory        464 MB Max   316 MB used ( 68 percent)
+</span><span class='line'>    CPU utilization:
+</span><span class='line'>      User                      90 percent
+</span><span class='line'>      Background                 0 percent
+</span><span class='line'>      Kernel                     6 percent
+</span><span class='line'>      Interrupt                  0 percent
+</span><span class='line'>      Idle                       4 percent
+</span><span class='line'>    Model                          RE-SRX240H
+</span><span class='line'>    Serial ID                      AAEM9236
+</span><span class='line'>    Start time                     2014-02-23 10:25:39 CST
+</span><span class='line'>    Uptime                         584 days, 7 hours, 58 minutes, 37 seconds
+</span><span class='line'>    Last reboot reason             0x1:power cycle/failure
+</span><span class='line'>    Load averages:                 1 minute   5 minute  15 minute
+</span><span class='line'>                                       0.46       0.48       0.49</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Above you can see that the CPUs are 4% idle which means it&rsquo;s 96% utilized. I would say anything over 90% is considered bad. Once the CPU gets gets to 100% utilization it will start dropping packets and possibly overheating.</p>
+
+<p>Next you want to look further and see what processes are running high. Do this with the command <code>show system processes extensive</code>.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>user@USPHIFW1&gt; show system processes extensive
+</span><span class='line'>last pid: 15924;  load averages:  0.50,  0.50,  0.50  up 584+08:03:00    19:28:16
+</span><span class='line'>149 processes: 19 running, 115 sleeping, 3 zombie, 12 waiting
+</span><span class='line'>
+</span><span class='line'>Mem: 172M Active, 140M Inact, 539M Wired, 73M Cache, 112M Buf, 46M Free Swap:
+</span><span class='line'>
+</span><span class='line'>  PID USERNAME       THR PRI NICE   SIZE    RES STATE  C   TIME   WCPU COMMAND
+</span><span class='line'> 1306 nobody           2 139    0  8996K  3440K RUN    0  20.5H 7518.75% httpd
+</span><span class='line'> 1377 root             7  76    0   499M 52316K select 0    ??? 281.15% flowd_octeon_hm
+</span><span class='line'> 1106 root             1  87    0 13692K  3200K RUN    0 1712.2 22.51% eventd
+</span><span class='line'>15922 root             1   4    0  7732K  2968K sbwait 0   0:00  2.25% sshd</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Usually even under good conditions, there will be processes that are running at well over 100% utilization. The Junos does a terrible job at adding in this case, something to do with multi core processors confusing the output. You can do <code>start shell</code> then <code>top -H</code> to see the actual utilization per core.</p>
+
+<h2>Analyze the processes</h2>
+
+<p>Now that you know what processes are running high, we can look into why it&rsquo;s causing it.</p>
+
+<h3>Process: httpd</h3>
+
+<p>If you see the process <code>httpd</code> as one of the <strong>first three</strong> processes with the highest CPU, chances are the web UI is having issues and needs to be restarted. Restarting this process only impacts any user that are currently in the web UI of this SRX.</p>
+
+<p>To restart the httpd process run the following command:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>restart web-management</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will immediately restart the process without confirmation. After doing so, look at <code>show chassis routing-engine</code> over and over to see if the percent idle has gone up over 30%. If so, that has fixed your problem.</p>
+
+<p>I very frequently see this process get stuck at a high percent. I&rsquo;m not sure what causes it, but the fix is quick and easy so that&rsquo;s nice.</p>
+
+<h3>Process: eventd</h3>
+
+<p>If the process <code>eventd</code> is running high (over 20%) then this is probably something worth looking into. This process handles the events on the Juniper device itself which includes:</p>
+
+<ul>
+<li>Storing internal syslog messages</li>
+<li>Sending syslog messages to another system</li>
+<li>Sending/responding to SNMP traps/polls</li>
+<li>Sampling handling</li>
+<li>Traceoptions handling</li>
+</ul>
+
+
+<p>If this is running high check if any of the above are turned on a little too high. Perhaps too many traceoptions are on, or too much sampling is turned on. Try turning these off and see if the CPU goes back to normal.</p>
+
+<p>There are two modes for syslogs, event and stream. Perhaps changing it to stream will reduce the CPU utilization.</p>
+
+<h3>Process: flowd_octeon</h3>
+
+<p>The process <code>flowd_octeon</code> seems to always run over 200%. This is normal. Usually this isn&rsquo;t the problem and try looking at the next highest CPU hog as the culprit.</p>
+
+<p>This processes is responsible for packet handling, data processing, or flow processing. The flow processing is all done on the data plane.</p>
+
+<h5>Check the packet forwarding engine (data plane)</h5>
+
+<p>The following two commands shows us what&rsquo;s happening on the data plane.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>user@USPHIFW1&gt; show chassis forwarding
+</span><span class='line'>FWDD status:
+</span><span class='line'>  State                                 Online
+</span><span class='line'>  Microkernel CPU utilization         5 percent
+</span><span class='line'>  Real-time threads CPU utilization   0 percent
+</span><span class='line'>  Heap utilization                   68 percent
+</span><span class='line'>  Buffer utilization                  1 percent
+</span><span class='line'>  Uptime:                               584 days, 8 hours, 43 minutes, 30 seconds</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>user@USPHIFW1&gt; show security monitoring fpc 0
+</span><span class='line'>FPC 0
+</span><span class='line'>  PIC 0
+</span><span class='line'>    CPU utilization      :    2 %
+</span><span class='line'>    Memory utilization   :   68 %
+</span><span class='line'>    Current flow session :  929
+</span><span class='line'>    Max flow session     : 131072
+</span><span class='line'>Session Creation Per Second (for last 96 seconds on average):    0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If the CPU utilization here is low, then you don&rsquo;t have a problem with the data plane.</p>
+
+<p><a href="http://www.juniper.net/documentation/en_US/junos12.1/topics/concept/chassis-cluster-data-plane-understanding.html">The data plane (aka forwarding plane)</a> is where the SRX decides what to do with the packet. This is where the SRX looks at the forwarding table and routing table to determine where to send the packet. If your CPU here is high, then it&rsquo;s possible you are reaching the capacity of this device. Start looking at things like how many packets and bytes each interface is receiving and comparing it with the model specifications.</p>
+
+<p>To examine the throughput of each interface use the following command:</p>
+
+<p><code>show interfaces detail | match "link is Up| bps| pps" | except "0 bps|0 pps"</code></p>
+
+<p>To examine the number of sessions use the following command:</p>
+
+<p><code>show security flow statistics</code></p>
+
+<p>Check the model for limitations here:</p>
+
+<p><a href="http://www.juniper.net/us/en/products-services/security/srx-series/compare/#a=SRX100,SRX110,SRX210,SRX220,SRX240,SRX300,SRX550,SRX650,SRX1400,SRX1500,SRX3400,SRX3600,SRX5400,SRX5600,SRX5800">http://www.juniper.net/us/en/products-services/security/srx-series/compare/#a=SRX100,SRX110,SRX210,SRX220,SRX240,SRX300,SRX550,SRX650,SRX1400,SRX1500,SRX3400,SRX3600,SRX5400,SRX5600,SRX5800</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-09-30T19:20:00-07:00" pubdate data-updated="true">Sep 30<span>th</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/cpu/'>cpu</a>, <a class='category' href='/tup/tag/juniper/'>juniper</a>, <a class='category' href='/tup/tag/junos/'>junos</a>, <a class='category' href='/tup/tag/srx/'>srx</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tunnelsup.github.io/troubleshooting-high-cpu-on-juniper-srx-junos-devices/" data-via="tunnelsup" data-counturl="http://tunnelsup.github.io/troubleshooting-high-cpu-on-juniper-srx-junos-devices/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tunnelsup.github.io/troubleshooting-high-cpu-on-juniper-srx-junos-devices/';
+        var disqus_url = 'http://tunnelsup.github.io/troubleshooting-high-cpu-on-juniper-srx-junos-devices/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>

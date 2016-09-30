@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mm_wait_msg2 | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/mm-wait-msg2/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[ISAKMP (IKE Phase 1) status messages MM_WAIT_MSG#]]></title>
+    <link href="http://tunnelsup.github.io/isakmp-ike-phase-1-status-messages/"/>
+    <updated>2010-05-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/isakmp-ike-phase-1-status-messages</id>
+    <content type="html"><![CDATA[<h2>ISAKMP (IKE Phase 1) Negotiations States</h2>
+
+<p>The MM_WAIT_MSG state can be an excellent clue into why a tunnel is not forming. If your firewall is hanging at a specific state review this graph below to find where along the path the VPN is failing.</p>
+
+<h2>ASA ISAKMP STATES</h2>
+
+<p><img src="/images/IKE_Phase1_MSGs.png" alt="IKE Phase Messages - IMG" /></p>
+
+<p style="text-align: center;">Graph source: tunnelsup.com</p>
+
+
+<p>These are the possible ISAKMP negotiation states on an ASA firewall. ISAKMP stands for: The Internet Security Association and Key Management Protocol</p>
+
+<ul>
+    <li>MM_WAIT_MSG2 Initiator<span style="color: #008000;">
+Initial DH public key sent to responder. Awaiting initial contact reply from other side.</span>
+Initiator sends encr/hash/dh ike policy details to create initial contact. Initiator will wait at MM_WAIT_MSG2 until it hears back from its peer. If stuck here it usually means the other end is not responding. This could be due to no route to the far end or the far end does not have ISAKMP enabled on the outside or the far end is down.</li>
+</ul>
+
+
+<ul>
+    <li>MM_WAIT_MSG3 Receiver<span style="color: #008000;">
+Receiver is sending back its IKE policy to the initiator.</span><span style="color: #008000;"><span style="color: #000000;">
+Initiator sends encr/hash/dh ike policy details to create initial contact. Initiator will wait at MM_WAIT_MSG2 until it hears back from its peer. Hang ups here may also be due to mismatch device vendors, a router with a firewall in the way, or even ASA version mismatches.</span></span></li>
+</ul>
+
+
+<ul>
+    <li>MM_WAIT_MSG4<span style="color: #008000;"><span style="color: #000000;"> Initiator
+<span style="color: #008000;">Initiator is sending the Pre-Shared-Key hash to its peer.</span>
+Initiator sends a hash of its PSK. Initiator will stay at MSG4 until it gets a PSK back from its peer. If the receiver is missing a tunnel group or PSK the initiator will stay at MM_WAIT_MSG4
+</span></span></li>
+</ul>
+
+
+<ul>
+    <li>MM_WAIT_MSG5 Receiver
+<span style="color: #008000;">Receiver is sending its PSK hash to its peer.</span><span style="color: #008000;"><span style="color: #000000;">
+Receiver does not yet check if PSK hashes match. If receiver has a tunnel-group and PSK configured for this peer it will send the PSK hash to the peer. If PSKs dont match, receiver will stay at MM_WAIT_MSG5. I have also seen the tunnel stop here when NAT-T was on when it needed to be turned off.
+</span></span></li>
+</ul>
+
+
+<ul>
+    <li>MM_WAIT_MSG6 Initiator
+<span style="color: #008000;">Initiator checks if PSK hashes match.</span>
+If PSK keys match, Initiator becomes MM_ACTIVE and lets receiver know of match. If PSK doesnt match, initiator stays at MM_WAIT_MSG6. I have also seen the tunnel stop here when NAT-T was on when it needed to be turned off.
+However, if the state goes to MSG6 then the ISAKMP gets reset that means phase 1 finished but phase 2 failed. Check that IPSEC settings match in phase 2 to get the tunnel to stay at MM_ACTIVE.</li>
+</ul>
+
+
+<ul>
+    <li>AM_ACTIVE / MM_ACTIVE<span style="color: #008000;">
+The ISAKMP negotiations are complete. Phase 1 has successfully completed.</span></li>
+</ul>
+
+
+<h2>PIX ISAKMP STATES</h2>
+
+<ul>
+<ul>
+    <li>MM_NO_STATE</li>
+</ul>
+</ul>
+
+
+<p><span style="color: #008000;">ISAKMP SA has been created but nothing else has happened yet.</span></p>
+
+<ul>
+<ul>
+    <li>MM_SA_SETUP</li>
+</ul>
+</ul>
+
+
+<p><span style="color: #008000;">The peers have agreed on parameters for the ISAKMP SA.</span></p>
+
+<ul>
+<ul>
+    <li>MM_KEY_EXCH</li>
+</ul>
+</ul>
+
+
+<p><span style="color: #008000;">The peers have exchanged Diffie-Hellman public keys and have generated a shared secret. The I SAKMP SA remains unauthenticated.</span></p>
+
+<ul>
+<ul>
+    <li>MM_KEY_AUTH</li>
+</ul>
+</ul>
+
+
+<p><span style="color: #008000;">The ISAKMP SA has been authenticated. If the router initiated this exchange, this state trans itions immediately to QM_IDLE and a Quick mode exchange begins.</span></p>
+
+<ul>
+<ul>
+    <li>AG_NO_STATE</li>
+</ul>
+</ul>
+
+
+<p><span style="color: #008000;">The ISAKMP SA has been created but nothing else has happened yet.</span></p>
+
+<ul>
+<ul>
+    <li>AG_INIT_EXCH</li>
+</ul>
+</ul>
+
+
+<p><span style="color: #008000;">The peers have done the first exchange in Aggressive mode but the SA is not authenticated.</span></p>
+
+<ul>
+<ul>
+    <li>AG_AUTH</li>
+</ul>
+</ul>
+
+
+<p><span style="color: #008000;">The ISAKMP SA has been authenticated. If the router initiated this exchange, this state transitions immediately to QM_IDLE and a Quick mode exchange begins.</span></p>
+
+<ul>
+<ul>
+    <li>QM_IDLE</li>
+</ul>
+</ul>
+
+
+<p><span style="color: #008000;">The ISAKMP negotiations are complete. Phase 1 successfully completed. It remains authenticated with its peer and may be used for subsequent Quick mode exchanges.</span></p>
+
+<h2>What is the difference between MM and AM?</h2>
+
+<p>Main mode vs Aggressive mode. Here is a image taken from <a href="https://supportforums.cisco.com/docs/DOC-8125">Cisco&rsquo;s website</a> to show the difference.</p>
+
+<p><img src="/images/ws22.gif" alt="MM AM - IMG" /></p>
+
+<p>As you can see the Main mode is the same as the flowchart at the top of the page. Aggressive mode only uses 4 steps to establish the tunnel.</p>
+
+<h2>Troubleshooting ISAKMP Or Phase 1 VPN connections</h2>
+
+<p>When troubleshooting VPNs, a very common problem is phase 1 not establishing correctly. Here&rsquo;s a quick checksheet to make sure you have the configuration correct.</p>
+
+<ul>
+    <li>Verify ISAKMP parameters match exactly.</li>
+    <li>Verify pre-shared-keys match exactly.</li>
+    <li>Check that each side has a route to the peer address that you are trying to form a tunnel with.</li>
+    <li>Verify ISAKMP is enabled on the outside interfaces.</li>
+    <li>Is ESP traffic permitted in through the outside interface?</li>
+    <li>Is UDP port 500 open on the outside ACL?</li>
+    <li>Some situations require that UDP port 4500 is open for the outside.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Debug messages from successful L2L tunnel ASA]]></title>
+    <link href="http://tunnelsup.github.io/debug-messages-from-successful-l2l-tunnel/"/>
+    <updated>2010-05-01T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/debug-messages-from-successful-l2l-tunnel</id>
+    <content type="html"><![CDATA[<p>This post is what a SUCCESSFUL debug output looks like during a site to site VPN connection on a Cisco ASA.</p>
+
+<p>INITIATOR:</p>
+
+<pre></code>
+<span style="color: #008000;">! Begin state: MM_WAIT_MSG1 (initialize connection)
+</span>May 23 2010 13:15:25: %ASA-7-715077: Pitcher: received a key acquire message, spi 0x0
+May 23 2010 13:15:25: %ASA-5-713041: IP = 22.22.22.22, IKE Initiator: <span style="color: #0000ff;">New Phase 1</span>, Intf INSIDE, IKE Peer 22.22.22.22  local Proxy Address 172.16.200.0, remote Proxy Address 192.168.1.0,  Crypto map (MAP-VPN)
+May 23 2010 13:15:25: %ASA-7-715046: IP = 22.22.22.22, constructing ISAKMP SA payload
+May 23 2010 13:15:25: %ASA-7-715046: IP = 22.22.22.22, constructing NAT-Traversal VID ver 02 payload
+May 23 2010 13:15:25: %ASA-7-715046: IP = 22.22.22.22, constructing NAT-Traversal VID ver 03 payload
+May 23 2010 13:15:25: %ASA-7-715046: IP = 22.22.22.22, constructing NAT-Traversal VID ver RFC payload
+May 23 2010 13:15:25: %ASA-7-715046: IP = 22.22.22.22, constructing Fragmentation VID + extended capabilities payload
+<span style="color: #008000;">! Begin state: MM_WAIT_MSG2 (send hash/encrypt/dh info and agree upon them)
+</span> May 23 2010 13:15:25: %ASA-7-713236: IP = 22.22.22.22, IKE_DECODE SENDING Message (msgid=0) with payloads : HDR + SA (1) + VENDOR (13) + VENDOR (13) + VENDOR (13) + VENDOR (13) + NONE (0) total length : 172
+May 23 2010 13:15:25: %ASA-7-713236: IP = 22.22.22.22, IKE_DECODE RECEIVED Message (msgid=0) with payloads : HDR + SA (1) + NONE (0) total length : 88
+May 23 2010 13:15:25: %ASA-7-715047: IP = 22.22.22.22, processing SA payload
+May 23 2010 13:15:25: %ASA-7-713906: IP = 22.22.22.22, Oakley proposal is acceptable<span style="color: #008000;">
+</span> May 23 2010 13:15:25: %ASA-7-715046: IP = 22.22.22.22, constructing ke payload
+May 23 2010 13:15:25: %ASA-7-715046: IP = 22.22.22.22, constructing nonce payload
+May 23 2010 13:15:25: %ASA-7-715046: IP = 22.22.22.22, constructing Cisco Unity VID payload
+May 23 2010 13:15:25: %ASA-7-715046: IP = 22.22.22.22, constructing xauth V6 VID payload
+<span style="color: #008000;">! Begin state: MM_WAIT_MSG3 (find compatible vendors)
+</span> May 23 2010 13:15:25: %ASA-7-715048: IP = 22.22.22.22, Send IOS VID
+May 23 2010 13:15:25: %ASA-7-715038: IP = 22.22.22.22, Constructing ASA spoofing IOS Vendor ID payload (version: 1.0.0, capabilities: 20000001)
+May 23 2010 13:15:25: %ASA-7-715046: IP = 22.22.22.22, constructing VID payload
+May 23 2010 13:15:25: %ASA-7-715048: IP = 22.22.22.22, Send Altiga/Cisco VPN3000/Cisco ASA GW VID
+May 23 2010 13:15:25: %ASA-7-713236: IP = 22.22.22.22, IKE_DECODE SENDING Message (msgid=0) with payloads : HDR + KE (4) + NONCE (10) + VENDOR (13) + VENDOR (13) + VENDOR (13) + VENDOR (13) + NONE (0) total length : 256
+May 23 2010 13:15:26: %ASA-7-713236: IP = 22.22.22.22, IKE_DECODE RECEIVED Message (msgid=0) with payloads : HDR + KE (4) + NONCE (10) + VENDOR (13) + VENDOR (13) + VENDOR (13) + VENDOR (13) + NONE (0) total length : 256
+May 23 2010 13:15:26: %ASA-7-715047: IP = 22.22.22.22, processing ke payload
+May 23 2010 13:15:26: %ASA-7-715047: IP = 22.22.22.22, processing ISA_KE payload
+May 23 2010 13:15:26: %ASA-7-715047: IP = 22.22.22.22, processing nonce payload
+May 23 2010 13:15:26: %ASA-7-715047: IP = 22.22.22.22, processing VID payload
+May 23 2010 13:15:26: %ASA-7-715049: IP = 22.22.22.22, Received xauth V6 VID
+May 23 2010 13:15:26: %ASA-7-715047: IP = 22.22.22.22, processing VID payload
+May 23 2010 13:15:26: %ASA-7-715049: IP = 22.22.22.22, Received DPD VID
+May 23 2010 13:15:26: %ASA-7-715047: IP = 22.22.22.22, processing VID payload
+May 23 2010 13:15:26: %ASA-7-715049: IP = 22.22.22.22, Received Cisco Unity client VID
+May 23 2010 13:15:26: %ASA-7-715047: IP = 22.22.22.22, processing VID payload
+May 23 2010 13:15:26: %ASA-7-715038: IP = 22.22.22.22, Processing IOS/PIX Vendor ID payload (version: 1.0.0, capabilities: 00000025)
+<span style="color: #008000;">! Begin state: MM_WAIT_MSG4 (exchanges PSK's)
+</span> May 23 2010 13:15:26: %ASA-7-713906: IP = 22.22.22.22, Connection landed on tunnel_group 22.22.22.22
+May 23 2010 13:15:26: %ASA-7-713906: Group = 22.22.22.22, IP = 22.22.22.22, Generating keys for Initiator...
+May 23 2010 13:15:26: %ASA-7-715046: Group = 22.22.22.22, IP = 22.22.22.22, constructing ID payload
+May 23 2010 13:15:26: %ASA-7-715046: Group = 22.22.22.22, IP = 22.22.22.22, constructing hash payload
+May 23 2010 13:15:26: %ASA-7-715076: Group = 22.22.22.22, IP = 22.22.22.22, Computing hash for ISAKMP
+May 23 2010 13:15:26: %ASA-7-715034: IP = 22.22.22.22, Constructing IOS keep alive payload: proposal=32767/32767 sec.
+May 23 2010 13:15:26: %ASA-7-715046: Group = 22.22.22.22, IP = 22.22.22.22, constructing dpd vid payload
+May 23 2010 13:15:26: %ASA-7-713236: IP = 22.22.22.22, IKE_DECODE SENDING Message (msgid=0) with payloads : HDR + ID (5) + HASH (8) + IOS KEEPALIVE (128) + VENDOR (13) + NONE (0) total length : 96
+May 23 2010 13:15:26: %ASA-7-713236: IP = 22.22.22.22, IKE_DECODE RECEIVED Message (msgid=0) with payloads : HDR + ID (5) + HASH (8) + NONE (0) total length : 84
+May 23 2010 13:15:26: %ASA-7-715047: Group = 22.22.22.22, IP = 22.22.22.22, processing ID payload
+May 23 2010 13:15:26: %ASA-7-713906: Group = 22.22.22.22, IP = 22.22.22.22, ID_FQDN ID received, len 24
+<span style="color: #008000;">! Begin state: MM_WAIT_MSG5  (checks that both hashs for the PSK match)
+</span>May 23 2010 13:15:26: %ASA-7-715047: Group = 22.22.22.22, IP = 22.22.22.22, processing hash payload
+May 23 2010 13:15:26: %ASA-7-715076: Group = 22.22.22.22, IP = 22.22.22.22, Computing hash for ISAKMP
+May 23 2010 13:15:26: %ASA-7-713906: IP = 22.22.22.22, Connection landed on tunnel_group 22.22.22.22
+May 23 2010 13:15:26: %ASA-6-113009: AAA retrieved default group policy (DfltGrpPolicy) for user = 22.22.22.22
+May 23 2010 13:15:26: %ASA-7-713906: Group = 22.22.22.22, IP = 22.22.22.22, Oakley begin quick mode
+<span style="color: #008000;">! Begin state: MM_WAIT_MSG6
+</span> May 23 2010 13:15:26: %ASA-7-714002: Group = 22.22.22.22, IP = 22.22.22.22, IKE Initiator starting QM: msg id = 6abd3691
+May 23 2010 13:15:26: %ASA-5-713119: Group = 22.22.22.22, IP = 22.22.22.22, <span style="color: #0000ff;">PHASE 1 COMPLETED</span>
+May 23 2010 13:15:26: %ASA-7-713121: IP = 22.22.22.22, Keep-alive type for this connection: DPD
+May 23 2010 13:15:26: %ASA-7-715080: Group = 22.22.22.22, IP = 22.22.22.22, Starting P1 rekey timer: 82080 seconds.
+
+<span style="color: #008000;">!^^^^ PHASE 2 BEGINS ^^^^!</span>
+
+May 23 2010 13:15:26: %ASA-7-713236: IP = 22.22.22.22, IKE_DECODE RECEIVED Message (msgid=c99e184c) with payloads : HDR + HASH (8) + NOTIFY (11) + NONE (0) total length : 80
+May 23 2010 13:15:26: %ASA-7-715047: Group = 22.22.22.22, IP = 22.22.22.22, processing hash payload
+May 23 2010 13:15:26: %ASA-7-715047: Group = 22.22.22.22, IP = 22.22.22.22, processing notify payload
+May 23 2010 13:15:26: %ASA-7-715006: Group = 22.22.22.22, IP = 22.22.22.22, IKE got SPI from key engine: SPI = 0x850a79e0
+May 23 2010 13:15:26: %ASA-7-713906: Group = 22.22.22.22, IP = 22.22.22.22, oakley constucting quick mode
+May 23 2010 13:15:26: %ASA-7-715046: Group = 22.22.22.22, IP = 22.22.22.22, constructing blank hash payload
+May 23 2010 13:15:26: %ASA-7-715046: Group = 22.22.22.22, IP = 22.22.22.22, constructing IPSec SA payload
+May 23 2010 13:15:26: %ASA-7-715046: Group = 22.22.22.22, IP = 22.22.22.22, constructing IPSec nonce payload
+May 23 2010 13:15:26: %ASA-7-715001: Group = 22.22.22.22, IP = 22.22.22.22, constructing proxy ID
+May 23 2010 13:15:26: %ASA-7-713906: Group = 22.22.22.22, IP = 22.22.22.22, Transmitting Proxy Id:
+Local subnet:  172.16.200.0  mask 255.255.255.0 Protocol 0  Port 0
+Remote subnet: 192.168.1.0  Mask 255.255.255.0 Protocol 0  Port 0
+May 23 2010 13:15:26: %ASA-7-714007: Group = 22.22.22.22, IP = 22.22.22.22, IKE Initiator sending Initial Contact
+May 23 2010 13:15:26: %ASA-7-715046: Group = 22.22.22.22, IP = 22.22.22.22, constructing qm hash payload
+May 23 2010 13:15:26: %ASA-7-714004: Group = 22.22.22.22, IP = 22.22.22.22, IKE Initiator sending 1st QM pkt: msg id = 6abd3691
+May 23 2010 13:15:26: %ASA-7-713236: IP = 22.22.22.22, IKE_DECODE SENDING Message (msgid=6abd3691) with payloads : HDR + HASH (8) + SA (1) + NONCE (10) + ID (5) + ID (5) + NOTIFY (11) + NONE (0) total length : 200
+May 23 2010 13:15:26: %ASA-7-713236: IP = 22.22.22.22, IKE_DECODE RECEIVED Message (msgid=6abd3691) with payloads : HDR + HASH (8) + SA (1) + NONCE (10) + ID (5) + ID (5) + NONE (0) total length : 172
+May 23 2010 13:15:26: %ASA-7-715047: Group = 22.22.22.22, IP = 22.22.22.22, processing hash payload
+May 23 2010 13:15:26: %ASA-7-715047: Group = 22.22.22.22, IP = 22.22.22.22, processing SA payload
+May 23 2010 13:15:26: %ASA-7-715047: Group = 22.22.22.22, IP = 22.22.22.22, processing nonce payload
+May 23 2010 13:15:26: %ASA-7-715047: Group = 22.22.22.22, IP = 22.22.22.22, processing ID payload
+May 23 2010 13:15:26: %ASA-7-714011: Group = 22.22.22.22, IP = 22.22.22.22, ID_IPV4_ADDR_SUBNET ID received--172.16.200.0--255.255.255.0
+May 23 2010 13:15:26: %ASA-7-715047: Group = 22.22.22.22, IP = 22.22.22.22, processing ID payload
+May 23 2010 13:15:26: %ASA-7-714011: Group = 22.22.22.22, IP = 22.22.22.22, ID_IPV4_ADDR_SUBNET ID received--192.168.1.0--255.255.255.0
+May 23 2010 13:15:26: %ASA-7-713906: Group = 22.22.22.22, IP = 22.22.22.22, loading all IPSEC SAs
+May 23 2010 13:15:26: %ASA-7-715001: Group = 22.22.22.22, IP = 22.22.22.22, Generating Quick Mode Key!
+May 23 2010 13:15:26: %ASA-7-715001: Group = 22.22.22.22, IP = 22.22.22.22, Generating Quick Mode Key!
+May 23 2010 13:15:26: %ASA-5-713049: Group = 22.22.22.22, IP = 22.22.22.22, Security negotiation complete for LAN-to-LAN Group (22.22.22.22)  Initiator, Inbound SPI = 0x850a79e0, Outbound SPI = 0x2cc7158d
+May 23 2010 13:15:26: %ASA-7-713906: Group = 22.22.22.22, IP = 22.22.22.22, oakley constructing final quick mode
+May 23 2010 13:15:26: %ASA-7-714006: Group = 22.22.22.22, IP = 22.22.22.22, IKE Initiator sending 3rd QM pkt: msg id = 6abd3691
+May 23 2010 13:15:26: %ASA-7-713236: IP = 22.22.22.22, IKE_DECODE SENDING Message (msgid=6abd3691) with payloads : HDR + HASH (8) + NONE (0) total length : 76
+May 23 2010 13:15:26: %ASA-6-602303: IPSEC: An outbound LAN-to-LAN SA (SPI= 0x2CC7158D) between 24.251.95.213 and 22.22.22.22 (user= 22.22.22.22) has been created.
+May 23 2010 13:15:26: %ASA-7-715007: Group = 22.22.22.22, IP = 22.22.22.22, IKE got a KEY_ADD msg for SA: SPI = 0x2cc7158d
+May 23 2010 13:15:26: %ASA-6-602303: IPSEC: An inbound LAN-to-LAN SA (SPI= 0x850A79E0) between 24.251.95.213 and 22.22.22.22 (user= 22.22.22.22) has been created.
+May 23 2010 13:15:26: %ASA-7-715077: Group = 22.22.22.22, IP = 22.22.22.22, Pitcher: received KEY_UPDATE, spi 0x850a79e0
+May 23 2010 13:15:26: %ASA-7-715080: Group = 22.22.22.22, IP = 22.22.22.22, Starting P2 rekey timer: 24480 seconds.
+May 23 2010 13:15:26: %ASA-5-713120: Group = 22.22.22.22, IP = 22.22.22.22, <span style="color: #0000ff;">PHASE 2 COMPLETED</span> (msgid=6abd3691)
+</code>
+</pre>
+
+]]></content>
+  </entry>
+  
+</feed>

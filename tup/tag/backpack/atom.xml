@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: backpack | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/backpack/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Contents of a Physical Pen Tester's Backpack]]></title>
+    <link href="http://tunnelsup.github.io/contents-of-a-physical-pen-testers-backpack/"/>
+    <updated>2016-04-26T21:15:00-07:00</updated>
+    <id>http://tunnelsup.github.io/contents-of-a-physical-pen-testers-backpack</id>
+    <content type="html"><![CDATA[<p>Some companies pay for a security assessment to see if their physical building and office are secure. When they secure a building they want to test it to make sure it&rsquo;s off limits to people who shouldn&rsquo;t be able to get there, such as a datacenter. Sometimes these assessments are to test employees to see if they would let people in areas that they shouldn&rsquo;t have access to, such as a random person walking behind a bank teller.</p>
+
+<p>What do these type of pen testers bring to this type of security assessment? Here&rsquo;s a few different people talking about what they bring.</p>
+
+<h2>Vest of Doom</h2>
+
+<p><a href="https://twitter.com/jaysonstreet?ref_src=twsrc%5Etfw">Jayson Street</a> has talked about his Vest of Doom a few times.</p>
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">About to load my new <a href="https://twitter.com/hashtag/VestofD00M?src=hash">#VestofD00M</a> v.7.0 :-) for my engagement in France after I speak at <a href="https://twitter.com/hackinparis">@hackinparis</a> &amp; <a href="https://twitter.com/NuitDuHack">@NuitDuHack</a> <a href="http://t.co/aSGUoOnWZ2">pic.twitter.com/aSGUoOnWZ2</a></p>&mdash; Jayson E. Street (@jaysonstreet) <a href="https://twitter.com/jaysonstreet/status/480780151291383808">June 22, 2014</a></blockquote>
+
+
+<script async src="http://tunnelsup.github.io//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p>He talks about the contents in his <a href="https://youtu.be/EzGwO5L9oq4?t=38m3s">DefCon 18 talk</a> and again in his <a href="https://youtu.be/4-qnYaw7VGo?t=30m20s">DefCon 19 talk</a>. Both talks are great to watch in their entirety to get a sense of how Jayson gains access to anything.</p>
+
+<h3>Contents</h3>
+
+<ul>
+<li>A USB drive which when plugged into a computer will grab all password hashes</li>
+<li>A USB drive you leave for a user to see if they plug it in (potentially causing persistence)</li>
+<li><a  href="http://www.amazon.com/gp/product/B004TUBOKW/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B004TUBOKW&linkCode=as2&tag=tunn01-20&linkId=F3SFZ64MFDOGAL5M">USB KeyLogger</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=tunn01-20&l=as2&o=1&a=B004TUBOKW" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></li>
+<li>External hard drive (to grab large amounts of data)</li>
+<li>External hard drive (with rainbow tables and malware)</li>
+<li>USB Wireless Bridge</li>
+<li>Voice Recorder</li>
+<li>Ethernet Cables</li>
+<li>Various USB cables (A, B, mini, micro, OTG, etc)</li>
+<li>Small Computer &ndash; Something to fit in a pocket but can be used to connect to networks</li>
+<li>Tablet with metasploit</li>
+<li>SD cards &ndash; presumably filled with malware or for grabbing data</li>
+<li>Fake engagement letter &ndash; Jayson loves presenting this when asked to test people further</li>
+<li>Real engagement letter &ndash; If you don&rsquo;t have permission to do this, don&rsquo;t try it!</li>
+<li>Lockpicks</li>
+<li>Screwdrivers</li>
+<li>Camera watch or glasses</li>
+<li><a href="https://www.pwnieexpress.com/product/pwn-plug-elite/">Pwnie plug</a></li>
+<li>More cameras</li>
+<li><a  href="http://www.amazon.com/gp/product/1494295504/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1494295504&linkCode=as2&tag=tunn01-20&linkId=PRMYD4RTK3KJKUZN">Rtfm: Red Team Field Manual</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=tunn01-20&l=as2&o=1&a=1494295504" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></li>
+<li>PSP &ndash; for times when you might hide out in a closet for 4 hours waiting for everyone to go home.</li>
+<li>Fake badges that may get you into doors or past people</li>
+</ul>
+
+
+<h2>Pen Test Backpack</h2>
+
+<p><img class="right" src="/images/gobag.png" width="200" height="200"></p>
+
+<p><a href="https://twitter.com/c0ncealed">c0ncealed</a> gives a great breakdown of all his pack&rsquo;s contents in his <a href="https://www.youtube.com/watch?v=KRx1NmG7h2I">Physical Pen Test Talk</a>. He goes into what each of these items are used for. A great watch!</p>
+
+<p>Image on the right is a demonstration of how easy it is to swing the pack to the front, pull out a laptop, put the laptop on the pack, and begin doing work. The sling pack being used as a mobile table is really handy because it allows your hands to be free to do other things.</p>
+
+<ul>
+<li>Backpack: <a  href="http://www.amazon.com/gp/product/B00IUW2I4G/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B00IUW2I4G&linkCode=as2&tag=tunn01-20&linkId=PMYMEFP26QRJJSSC">Yukon Overwatch Sling Pack</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=tunn01-20&l=as2&o=1&a=B00IUW2I4G" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></li>
+<li>Small Laptop with hacking tools such as <a href="https://www.kali.org/">Kali linux</a> + Power supply</li>
+<li><a href="http://www.tunnelsup.com/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/">Raspberry Pis that phone home</a>, reverse proxy out to establish persistence.</li>
+<li>Nexus 7 with <a href="https://www.kali.org/kali-linux-nethunter/">Kali nethunter</a>. Add OTG cable with wireless adapter which lets you do packet injection and wifi hacks</li>
+<li><a  href="http://www.amazon.com/gp/product/1494295504/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1494295504&linkCode=as2&tag=tunn01-20&linkId=PRMYD4RTK3KJKUZN">Rtfm: Red Team Field Manual</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=tunn01-20&l=as2&o=1&a=1494295504" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></li>
+<li>Letter opener &ndash; used as shim to open doors</li>
+<li>Plastic shims made from dollar store plastic folder &ndash; used to open doors</li>
+<li><a href="https://proxmark3.com/">Proxmark 3</a> used to clone RFID badges</li>
+<li><a  href="http://www.amazon.com/gp/product/B000WXSO76/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B000WXSO76&linkCode=as2&tag=tunn01-20&linkId=FZEP6JNRAQO3NZYG">Alfa Network Wi-Fi USB Antenna</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=tunn01-20&l=as2&o=1&a=B000WXSO76" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> used to sniff packets</li>
+<li><a href="http://www.tp-link.com/en/products/details/TL-WN722N.html">USB wireless antenna</a> with atheros chipset, used for packet injection</li>
+<li>bump keys, lockpicks</li>
+<li>2x leatherman multitools</li>
+<li>multi head screwdriver</li>
+<li>pens + paper</li>
+<li>low lumen small flashlight to put in mouth or on hat</li>
+<li>USB cable</li>
+<li>Ethernet cables</li>
+<li><a  href="http://www.amazon.com/gp/product/B00I5SW8MC/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B00I5SW8MC&linkCode=as2&tag=tunn01-20&linkId=6XNR4E7LBBXPFJT7">Mini Wireless Keyboard with Mouse Touchpad</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=tunn01-20&l=as2&o=1&a=B00I5SW8MC" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></li>
+<li><a href="http://hakshop.myshopify.com/collections/usb-rubber-ducky/products/usb-rubber-ducky">Hak5 USB Rubber Ducky</a></li>
+<li><a href="http://hakshop.myshopify.com/collections/accessory/products/throwing-star-lan-tap">Hak5 LAN Tap</a></li>
+<li>SD cards</li>
+<li>USB drives</li>
+<li>OTG USB cable</li>
+<li><a href="http://theglitch.sourceforge.net/">The Glitch</a></li>
+<li>USB drive with a program that downloads an executable, runs it in memory, grabs an lsass memory dump, uploads that memory dump somewhere</li>
+<li>USB keylogger</li>
+<li>PS2 keylogger</li>
+<li><a href="http://ubertooth.sourceforge.net/">Ubertooth</a></li>
+<li>USB drive with <a href="https://sourceforge.net/projects/katana-usb/">Katana</a></li>
+<li><a href="https://hak5.org/usb-switchblade">USB switchblade</a></li>
+<li><a href="http://hakshop.myshopify.com/collections/wifi-pineapple-kits/products/wifi-pineapple?variant=81044992">WiFi Pineapple</a></li>
+<li>A network hub used to bypass NAC</li>
+<li>Wireless router &ndash; plug it into port, turn it on, and leave. Then try to get to it from the parking lot.</li>
+<li>Extra battery packs for phone/laptop</li>
+<li>A second flashlight</li>
+<li>Paracord</li>
+<li>GoPro &ndash; to watch key locations from his phone</li>
+<li>Cellphone for pictures and other things</li>
+<li>Headset if talking to a team</li>
+<li><a href="http://www.lapolicegear.com/">Cargo pants</a></li>
+<li>A hat to hide from cameras and connect flashlight to</li>
+<li>DSLR camer for really good shots of keys, badges, and recon</li>
+<li><a href="https://www.youtube.com/watch?v=WAkJRpKeyYg">Under the door tool</a></li>
+<li>Written documents giving you permission to conduct the test. Multiple copies of.</li>
+</ul>
+
+
+<h2>Extra things not mentioned</h2>
+
+<ul>
+<li>Binoculars for recon</li>
+<li>Blue Painters Tape &ndash; cover cameras, peep holes, cover lights, hold items in place etc</li>
+<li><a  href="http://www.amazon.com/gp/product/B00DPLM5YU/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B00DPLM5YU&linkCode=as2&tag=tunn01-20&linkId=L5QLGCE3SZXJA5AP">Ball Bungee</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=tunn01-20&l=as2&o=1&a=B00DPLM5YU" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> &ndash; has many purposes</li>
+<li>Carabiner for pack to hang stuff on</li>
+</ul>
+
+
+<p>What is missing from the list? Let us know in the comments!</p>
+
+<p>Bonus Video: <a href="https://www.youtube.com/watch?v=oHf1vD5_b5I">DefCon 22 Video on Elevator Hacking</a></p>
+]]></content>
+  </entry>
+  
+</feed>

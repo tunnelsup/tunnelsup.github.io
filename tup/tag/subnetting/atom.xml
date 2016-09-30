@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: subnetting | TunnelsUP]]></title>
+  <link href="http://tunnelsup.github.io/tup/tag/subnetting/atom.xml" rel="self"/>
+  <link href="http://tunnelsup.github.io/"/>
+  <updated>2016-09-29T22:17:21-07:00</updated>
+  <id>http://tunnelsup.github.io/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Subnet Calculator - IPv4/IPv6]]></title>
+    <link href="http://tunnelsup.github.io/subnet-calculator/"/>
+    <updated>2013-09-02T00:00:00-07:00</updated>
+    <id>http://tunnelsup.github.io/subnet-calculator</id>
+    <content type="html"><![CDATA[<p>Page has been moved. Please go to <a href="http://www.tunnelsup.com/subnet-calculator"><a href="http://www.tunnelsup.com/subnet-calculator">http://www.tunnelsup.com/subnet-calculator</a></a></p>
+
+<!-- This page exists only so it shows up in the 'all articles' page. Actual page found in source/subnet-calculator/index.html -->
+
+]]></content>
+  </entry>
+  
+</feed>
