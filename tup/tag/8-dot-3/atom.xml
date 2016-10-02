@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: 8.3 | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/8-dot-3/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/8-dot-3/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[NAT for Cisco ASA's version 8.3+]]></title>
-    <link href="http://tunnelsup.github.io/nat-for-cisco-asas-version-8-3/"/>
+    <link href="https://www.tunnelsup.com/nat-for-cisco-asas-version-8-3/"/>
     <updated>2011-06-24T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/nat-for-cisco-asas-version-8-3</id>
+    <id>https://www.tunnelsup.com/nat-for-cisco-asas-version-8-3</id>
     <content type="html"><![CDATA[<p>There are two major kinds of NAT in 8.3+ Auto NAT and Manual NAT. Auto is done inside the object and cannot take into consideration the destination of the traffic. Manual is done in global configuration and can NAT either the source IPs and destination IPs.</p>
 
 <h3>Auto NAT</h3>

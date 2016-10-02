@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: javascript | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/javascript/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/javascript/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to do a Javascript Redirect]]></title>
-    <link href="http://tunnelsup.github.io/how-to-do-a-javascript-redirect/"/>
+    <link href="https://www.tunnelsup.com/how-to-do-a-javascript-redirect/"/>
     <updated>2015-07-23T22:33:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-do-a-javascript-redirect</id>
+    <id>https://www.tunnelsup.com/how-to-do-a-javascript-redirect</id>
     <content type="html"><![CDATA[<p>The best way to do a Javascript redirect is with the following code:</p>
 
 <p>```javascript</p>
@@ -70,13 +70,13 @@ Javascript Redirect Example
   
   <entry>
     <title type="html"><![CDATA[jQuery Checkbox Checked - Reading and Setting]]></title>
-    <link href="http://tunnelsup.github.io/jquery-checkbox-checked-reading-and-setting/"/>
+    <link href="https://www.tunnelsup.com/jquery-checkbox-checked-reading-and-setting/"/>
     <updated>2015-01-16T09:45:00-08:00</updated>
-    <id>http://tunnelsup.github.io/jquery-checkbox-checked-reading-and-setting</id>
+    <id>https://www.tunnelsup.com/jquery-checkbox-checked-reading-and-setting</id>
     <content type="html"><![CDATA[<p>If you have a checkbox in a form you can use jQuery to read and set the data in the checkbox. Here is the HTML we&rsquo;ll use an example for our checkbox:</p>
 
 <p><code>html
-&lt;input type="checkbox" id="checkboxid" /&gt;
+&lt;input type="checkbox" id="checkboxid"&gt;
 </code></p>
 
 <h2>Reading a Checkbox</h2>

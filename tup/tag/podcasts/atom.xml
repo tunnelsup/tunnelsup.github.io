@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: podcasts | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/podcasts/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/podcasts/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[7 Security Podcasts You Should be Listening to]]></title>
-    <link href="http://tunnelsup.github.io/7-security-podcasts-you-should-be-listening-to/"/>
+    <link href="https://www.tunnelsup.com/7-security-podcasts-you-should-be-listening-to/"/>
     <updated>2014-12-13T17:29:00-08:00</updated>
-    <id>http://tunnelsup.github.io/7-security-podcasts-you-should-be-listening-to</id>
+    <id>https://www.tunnelsup.com/7-security-podcasts-you-should-be-listening-to</id>
     <content type="html"><![CDATA[<p>Here&rsquo;s a list of the 7 best security podcasts on network security and hacking.</p>
 
 <h2>Daily Podcasts</h2>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: aws | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/aws/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/aws/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Troubleshooting VPN between Cisco ASA and Amazon AWS]]></title>
-    <link href="http://tunnelsup.github.io/troubleshooting-vpn-between-cisco-asa-and-amazon-aws/"/>
+    <link href="https://www.tunnelsup.com/troubleshooting-vpn-between-cisco-asa-and-amazon-aws/"/>
     <updated>2014-12-04T13:28:00-08:00</updated>
-    <id>http://tunnelsup.github.io/troubleshooting-vpn-between-cisco-asa-and-amazon-aws</id>
+    <id>https://www.tunnelsup.com/troubleshooting-vpn-between-cisco-asa-and-amazon-aws</id>
     <content type="html"><![CDATA[<p>Recently I had to create a VPN tunnel from a Cisco ASA running 9.2.2 code to an Amazon AWS instance.</p>
 
 <p>I was able to build the tunnel and get it established but it would only work if traffic originated from the ASA side towards AWS. If AWS tried to initiated the tunnel it would not come up. Specifically I saw these errors in the logs:</p>

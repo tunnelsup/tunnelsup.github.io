@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: arduino | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/arduino/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/arduino/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[XBee S2 Quick Reference Guide/Cheat Sheet and Video Tutorials to Getting Started]]></title>
-    <link href="http://tunnelsup.github.io/xbee-guide/"/>
+    <link href="https://www.tunnelsup.com/xbee-guide/"/>
     <updated>2012-11-30T00:00:00-08:00</updated>
-    <id>http://tunnelsup.github.io/xbee-guide</id>
+    <id>https://www.tunnelsup.com/xbee-guide</id>
     <content type="html"><![CDATA[<p>When I first got started with XBee I had a hard time getting the right information to help me on the projects I was working on. I put my project on hold and spent a few months simply trying to understand XBee specifically using it with arduino. Below is a cheat sheet or quick reference guide that I use now to reference whenever I&rsquo;m working on a project. It has pretty much all of the information I need to effectively use the XBee in whatever project I&rsquo;m working on.</p>
 
 <p><img class="center" src="/images/xbee.png">
@@ -42,9 +42,9 @@ Download: <a href="/images/xbee.png">[PNG Image]</a> - <a href="/images/XBee-Qu
   
   <entry>
     <title type="html"><![CDATA[Arduino Power Usage Project]]></title>
-    <link href="http://tunnelsup.github.io/arduino-power-usage-project/"/>
+    <link href="https://www.tunnelsup.com/arduino-power-usage-project/"/>
     <updated>2011-09-19T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/arduino-power-usage-project</id>
+    <id>https://www.tunnelsup.com/arduino-power-usage-project</id>
     <content type="html"><![CDATA[<p>I wanted to see how much power I am consuming in my home at any given moment, so I created this project using arduino.  It features a simple display of LEDs: red representing high energy usage, yellow moderate usage, and green low usage.</p>
 
 <iframe src="http://www.youtube.com/embed/ZAjG0oVoZ-4" frameborder="0" width="420" height="315"></iframe>
@@ -75,7 +75,7 @@ Download: <a href="/images/xbee.png">[PNG Image]</a> - <a href="/images/XBee-Qu
 
 <h5>STEP 1 &ndash; TED</h5>
 
-<p><img class="alignnone size-medium wp-image-194" style="float: right;" title="ted-footprints" src="http://tunnelsup.github.io/images/ted-footprints-200x300.jpg" alt="" width="200" height="300" />Get <a href="http://www.theenergydetective.com/">TED (The Energy Detective) </a>working at your house. This is a nifty little unit that has a device called an MTU that sits in your electrical panel to monitor your mains and how much electricity they use. Then it sends that data through the electrical wiring in your house to the gateway. The gateway then has an ethernet cable connected to to it and plugs into your home network.</p>
+<p><img class="alignnone size-medium wp-image-194" style="float: right;" title="ted-footprints" src="https://www.tunnelsup.com/images/ted-footprints-200x300.jpg" alt="" width="200" height="300" />Get <a href="http://www.theenergydetective.com/">TED (The Energy Detective) </a>working at your house. This is a nifty little unit that has a device called an MTU that sits in your electrical panel to monitor your mains and how much electricity they use. Then it sends that data through the electrical wiring in your house to the gateway. The gateway then has an ethernet cable connected to to it and plugs into your home network.</p>
 
 <p>The TED gateway makes a call every 5 seconds to get a reading from the MTU which is the device sitting in the main electrical panel. In my case, the TED gateway has an IP address of 172.16.200.216. Upon going to that website it has nice graphical display of real time power usage. The picture on the right is what the live kw usage shows on the TED software.</p>
 

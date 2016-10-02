@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: vmware | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/vmware/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/vmware/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Networking commands for the VMWare ESXi host command line]]></title>
-    <link href="http://tunnelsup.github.io/networking-commands-for-the-vmware-esxi-host-command-line/"/>
+    <link href="https://www.tunnelsup.com/networking-commands-for-the-vmware-esxi-host-command-line/"/>
     <updated>2014-12-26T20:17:00-08:00</updated>
-    <id>http://tunnelsup.github.io/networking-commands-for-the-vmware-esxi-host-command-line</id>
+    <id>https://www.tunnelsup.com/networking-commands-for-the-vmware-esxi-host-command-line</id>
     <content type="html"><![CDATA[<p>If you have ssh access to a VMWare ESXi server these commands can help you navigate the different networking settings on the server.</p>
 
 <p>You can use the <code>esxcli network ip</code> command to do a number of different things include listing and editing the interfaces, routes and dns servers.</p>

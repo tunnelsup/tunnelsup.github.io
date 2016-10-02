@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: isakmp | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/isakmp/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/isakmp/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Video: Zen of VPN - Concepts on how VPN's work]]></title>
-    <link href="http://tunnelsup.github.io/video-zen-of-vpn-concepts-on-how-vpns-work/"/>
+    <link href="https://www.tunnelsup.com/video-zen-of-vpn-concepts-on-how-vpns-work/"/>
     <updated>2010-05-24T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/video-zen-of-vpn-concepts-on-how-vpns-work</id>
+    <id>https://www.tunnelsup.com/video-zen-of-vpn-concepts-on-how-vpns-work</id>
     <content type="html"><![CDATA[<p>This video explains the concepts behind how and why Cisco VPN&rsquo;s work.</p>
 
 <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="480" height="385" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="allowFullScreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="src" value="http://www.youtube.com/v/IwJajHtegZI&amp;hl=en_US&amp;fs=1&amp;" /><param name="allowfullscreen" value="true" /><embed type="application/x-shockwave-flash" width="480" height="385" src="http://www.youtube.com/v/IwJajHtegZI&amp;hl=en_US&amp;fs=1&amp;" allowscriptaccess="always" allowfullscreen="true"></embed></object>
@@ -27,9 +27,9 @@
   
   <entry>
     <title type="html"><![CDATA[ISAKMP (IKE Phase 1) status messages MM_WAIT_MSG#]]></title>
-    <link href="http://tunnelsup.github.io/isakmp-ike-phase-1-status-messages/"/>
+    <link href="https://www.tunnelsup.com/isakmp-ike-phase-1-status-messages/"/>
     <updated>2010-05-02T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/isakmp-ike-phase-1-status-messages</id>
+    <id>https://www.tunnelsup.com/isakmp-ike-phase-1-status-messages</id>
     <content type="html"><![CDATA[<h2>ISAKMP (IKE Phase 1) Negotiations States</h2>
 
 <p>The MM_WAIT_MSG state can be an excellent clue into why a tunnel is not forming. If your firewall is hanging at a specific state review this graph below to find where along the path the VPN is failing.</p>

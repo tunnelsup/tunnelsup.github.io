@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: firewall | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/firewall/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/firewall/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[What is a Firewall?]]></title>
-    <link href="http://tunnelsup.github.io/what-is-a-firewall/"/>
+    <link href="https://www.tunnelsup.com/what-is-a-firewall/"/>
     <updated>2014-11-09T10:29:00-08:00</updated>
-    <id>http://tunnelsup.github.io/what-is-a-firewall</id>
+    <id>https://www.tunnelsup.com/what-is-a-firewall</id>
     <content type="html"><![CDATA[<p>A firewall is a physical device or software that provides a layer of security into a network or computer. Its primary task is to only permit traffic that is required to pass through and block all other traffic.</p>
 
 <p><img src="/images/firewall1.png"></p>
@@ -42,9 +42,9 @@
   
   <entry>
     <title type="html"><![CDATA[How an ASA determines what interface to send a packet out of]]></title>
-    <link href="http://tunnelsup.github.io/how-an-asa-determines-what-interface-to-send-a-packet-out-of/"/>
+    <link href="https://www.tunnelsup.com/how-an-asa-determines-what-interface-to-send-a-packet-out-of/"/>
     <updated>2013-06-18T18:16:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-an-asa-determines-what-interface-to-send-a-packet-out-of</id>
+    <id>https://www.tunnelsup.com/how-an-asa-determines-what-interface-to-send-a-packet-out-of</id>
     <content type="html"><![CDATA[<p>Sometimes I see the question &ldquo;Why is NAT choosing what interface to send the packet out of on a Cisco ASA?&rdquo; or &ldquo;Since when do NAT rules make routing decisions?&rdquo; or &ldquo;What is the <code>route-lookup</code> keyword in the NAT configuration for?&rdquo; or &ldquo;Why is the firewall saying no route to host but there&rsquo;s a route in the routing table?&rdquo;</p>
 
 <p>This is a tricky question but I believe it&rsquo;s best understood in a two step process. It all comes down to the order of operation of a firewall and how the firewall processes packets. Most importantly the NAT rules and route lookups.</p>
@@ -65,9 +65,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to do a password recovery on a Cisco ASA firewall]]></title>
-    <link href="http://tunnelsup.github.io/how-to-do-a-password-recovery-on-a-cisco-asa-firewall/"/>
+    <link href="https://www.tunnelsup.com/how-to-do-a-password-recovery-on-a-cisco-asa-firewall/"/>
     <updated>2013-06-17T22:52:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-do-a-password-recovery-on-a-cisco-asa-firewall</id>
+    <id>https://www.tunnelsup.com/how-to-do-a-password-recovery-on-a-cisco-asa-firewall</id>
     <content type="html"><![CDATA[<p>Perhaps you&rsquo;ve forgotten the password to your firewall? This post will answer the question: How do I restore the password on a Cisco ASA?</p>
 
 <h2>Password Recovery</h2>
@@ -129,9 +129,9 @@ rommon #2> <code>boot</code></p></li>
   
   <entry>
     <title type="html"><![CDATA[Cisco ASA Identity Firewall]]></title>
-    <link href="http://tunnelsup.github.io/cisco-asa-identity-firewall/"/>
+    <link href="https://www.tunnelsup.com/cisco-asa-identity-firewall/"/>
     <updated>2013-06-15T16:01:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-asa-identity-firewall</id>
+    <id>https://www.tunnelsup.com/cisco-asa-identity-firewall</id>
     <content type="html"><![CDATA[<p>The Cisco ASA software 8.4.2 introduced something called Identity Firewall. The IDFW gives a new level of control to ACLs.</p>
 
 <h2>Permit/Deny flows using a user name or user group</h2>
@@ -235,9 +235,9 @@ access-list ACL-INSIDE line 1 extended deny ip any host 74.125.224.166 (google.c
   
   <entry>
     <title type="html"><![CDATA[Site to Site VPN Tunnel Between Cisco ASA and Juniper SRX JunOS]]></title>
-    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos/"/>
+    <link href="https://www.tunnelsup.com/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos/"/>
     <updated>2013-01-16T00:00:00-08:00</updated>
-    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos</id>
+    <id>https://www.tunnelsup.com/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos</id>
     <content type="html"><![CDATA[<p><img src="/images/asasitetosite.jpg" alt="ASA Site to site diagram - IMG" /></p>
 
 <p>Blue firewall: Juniper SRX 210 (JunOS 10.0R1.8)</p>

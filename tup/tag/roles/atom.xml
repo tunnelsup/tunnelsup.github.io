@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: roles | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/roles/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/roles/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Who Makes up a Computer Security Incident Response Team]]></title>
-    <link href="http://tunnelsup.github.io/who-makes-up-an-computer-security-incident-response-team/"/>
+    <link href="https://www.tunnelsup.com/who-makes-up-an-computer-security-incident-response-team/"/>
     <updated>2016-05-25T10:50:00-07:00</updated>
-    <id>http://tunnelsup.github.io/who-makes-up-an-computer-security-incident-response-team</id>
+    <id>https://www.tunnelsup.com/who-makes-up-an-computer-security-incident-response-team</id>
     <content type="html"><![CDATA[<p>The incident response team is who is engaged when an network security incident has occurred in your network. There are two types of IR teams, SWAT style and dedicated.</p>
 
 <p><a href="https://twitter.com/hacks4pancakes">Lesley Carhart</a> defines an IR team goal as:</p>

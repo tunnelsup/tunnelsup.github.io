@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: sublime text | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/sublime-text/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/sublime-text/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to open Sublime Text from the command line using Mac OSX]]></title>
-    <link href="http://tunnelsup.github.io/how-to-open-sublime-text-from-the-command-line-using-mac-osx/"/>
+    <link href="https://www.tunnelsup.com/how-to-open-sublime-text-from-the-command-line-using-mac-osx/"/>
     <updated>2014-11-08T19:32:00-08:00</updated>
-    <id>http://tunnelsup.github.io/how-to-open-sublime-text-from-the-command-line-using-mac-osx</id>
+    <id>https://www.tunnelsup.com/how-to-open-sublime-text-from-the-command-line-using-mac-osx</id>
     <content type="html"><![CDATA[<p>To open Sublime Text from a command line or terminal in Mac OSX requires a small configuration change but is possible.</p>
 
 <h3>Identify the executable</h3>

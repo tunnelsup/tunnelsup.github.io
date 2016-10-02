@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: copy | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/copy/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/copy/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Providing a username and password in one line when copying a FTP file to a Cisco ASA firewall]]></title>
-    <link href="http://tunnelsup.github.io/providing-a-username-and-password-in-one-line-when-copying-a-ftp-file-to-a-cisco-asa-firewall/"/>
+    <link href="https://www.tunnelsup.com/providing-a-username-and-password-in-one-line-when-copying-a-ftp-file-to-a-cisco-asa-firewall/"/>
     <updated>2013-05-02T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/providing-a-username-and-password-in-one-line-when-copying-a-ftp-file-to-a-cisco-asa-firewall</id>
+    <id>https://www.tunnelsup.com/providing-a-username-and-password-in-one-line-when-copying-a-ftp-file-to-a-cisco-asa-firewall</id>
     <content type="html"><![CDATA[<p>To copy a file from an FTP server to the flash of a ASA you could do the following:</p>
 
 <p><code>

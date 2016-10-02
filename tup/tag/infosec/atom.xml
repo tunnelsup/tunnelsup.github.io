@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: infosec | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/infosec/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/infosec/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Getting Started Cracking Password Hashes with John the Ripper]]></title>
-    <link href="http://tunnelsup.github.io/getting-started-cracking-password-hashes/"/>
+    <link href="https://www.tunnelsup.com/getting-started-cracking-password-hashes/"/>
     <updated>2016-09-08T21:23:00-07:00</updated>
-    <id>http://tunnelsup.github.io/getting-started-cracking-password-hashes</id>
+    <id>https://www.tunnelsup.com/getting-started-cracking-password-hashes</id>
     <content type="html"><![CDATA[<p>Want to get started with password cracking and not sure where to begin? In this post we&rsquo;ll explore how to get started with it.</p>
 
 <p>Most systems don&rsquo;t store passwords on them. Instead they store hashes of passwords and when authentication takes place, the password is hashes and if the hashes match authentication is successful. Different systems store password hashes in different ways depending on the encryption used.</p>
@@ -201,9 +201,9 @@ john --format:descrypt --wordlist=crackstation-human-only.txt --rules hashes-3.d
   
   <entry>
     <title type="html"><![CDATA[Tips For Attending a Security Conference]]></title>
-    <link href="http://tunnelsup.github.io/tips-for-attending-a-security-conference/"/>
+    <link href="https://www.tunnelsup.com/tips-for-attending-a-security-conference/"/>
     <updated>2016-05-27T11:32:00-07:00</updated>
-    <id>http://tunnelsup.github.io/tips-for-attending-a-security-conference</id>
+    <id>https://www.tunnelsup.com/tips-for-attending-a-security-conference</id>
     <content type="html"><![CDATA[<p>If you&rsquo;re in the InfoSec industry and haven&rsquo;t attended a security conference, you simply aren&rsquo;t taking your career seriously. Attending one will inspire you and motivate you to learn new things, meet new people, and find new solutions to your problems. There are so many conferences now that there is about 2-5 every month! A realistic goal could be to attend one security conference a year.</p>
 
 <h2>Types of Conferences</h2>
@@ -221,7 +221,7 @@ john --format:descrypt --wordlist=crackstation-human-only.txt --rules hashes-3.d
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">One of the biggest reasons I go to security conferences and meetups. <a href="https://twitter.com/hashtag/infosec?src=hash">#infosec</a> <a href="https://t.co/Y0HB9dtchO">pic.twitter.com/Y0HB9dtchO</a></p>&mdash; Jack Rhysider (@TunnelsUp) <a href="https://twitter.com/TunnelsUp/status/730938951696060416">May 13, 2016</a></blockquote>
 
 
-<script async src="http://tunnelsup.github.io//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async src="https://www.tunnelsup.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 <p>Meeting people who have the same problems or passions than I do is the most important thing on my agenda when attending these conferences. Finding new people to share ideas with, solve your problems, or teach you how to improve is a resource you can use for years. Having a secret weapon of someone you can ask tough questions to outside of work will make you look like an endless fountain of information.</p>
@@ -281,9 +281,9 @@ john --format:descrypt --wordlist=crackstation-human-only.txt --rules hashes-3.d
   
   <entry>
     <title type="html"><![CDATA[Who Makes up a Computer Security Incident Response Team]]></title>
-    <link href="http://tunnelsup.github.io/who-makes-up-an-computer-security-incident-response-team/"/>
+    <link href="https://www.tunnelsup.com/who-makes-up-an-computer-security-incident-response-team/"/>
     <updated>2016-05-25T10:50:00-07:00</updated>
-    <id>http://tunnelsup.github.io/who-makes-up-an-computer-security-incident-response-team</id>
+    <id>https://www.tunnelsup.com/who-makes-up-an-computer-security-incident-response-team</id>
     <content type="html"><![CDATA[<p>The incident response team is who is engaged when an network security incident has occurred in your network. There are two types of IR teams, SWAT style and dedicated.</p>
 
 <p><a href="https://twitter.com/hacks4pancakes">Lesley Carhart</a> defines an IR team goal as:</p>
@@ -351,9 +351,9 @@ john --format:descrypt --wordlist=crackstation-human-only.txt --rules hashes-3.d
   
   <entry>
     <title type="html"><![CDATA[Things You Can Do to Make Security Worse]]></title>
-    <link href="http://tunnelsup.github.io/things-you-can-do-to-make-security-worse/"/>
+    <link href="https://www.tunnelsup.com/things-you-can-do-to-make-security-worse/"/>
     <updated>2016-05-19T17:58:00-07:00</updated>
-    <id>http://tunnelsup.github.io/things-you-can-do-to-make-security-worse</id>
+    <id>https://www.tunnelsup.com/things-you-can-do-to-make-security-worse</id>
     <content type="html"><![CDATA[<p>Organizations go out of their way to make security worse in their network. Are you one of these organizations? Watch the video to find out.</p>
 
 <iframe width="770" height="460" src="https://www.youtube.com/embed/9EAi_O4JKZk" frameborder="0" allowfullscreen></iframe>
@@ -365,9 +365,9 @@ john --format:descrypt --wordlist=crackstation-human-only.txt --rules hashes-3.d
   
   <entry>
     <title type="html"><![CDATA[Free Security Awareness Training Posters]]></title>
-    <link href="http://tunnelsup.github.io/free-security-awareness-training-posters/"/>
+    <link href="https://www.tunnelsup.com/free-security-awareness-training-posters/"/>
     <updated>2016-05-10T07:53:00-07:00</updated>
-    <id>http://tunnelsup.github.io/free-security-awareness-training-posters</id>
+    <id>https://www.tunnelsup.com/free-security-awareness-training-posters</id>
     <content type="html"><![CDATA[<p>Something that is helpful for ongoing security awareness training programs is to print out security awareness posters and put them in areas where people hang out around the office. The goal is to keep security awareness training fresh, fun, and relevant.</p>
 
 <p>Here are some free posters you can find online to download and print for your own organization.</p>

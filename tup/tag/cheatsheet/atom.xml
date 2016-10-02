@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: cheatsheet | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/cheatsheet/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/cheatsheet/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Metasploit Cheat Sheet]]></title>
-    <link href="http://tunnelsup.github.io/metasploit-cheat-sheet/"/>
+    <link href="https://www.tunnelsup.com/metasploit-cheat-sheet/"/>
     <updated>2016-09-28T10:41:00-07:00</updated>
-    <id>http://tunnelsup.github.io/metasploit-cheat-sheet</id>
+    <id>https://www.tunnelsup.com/metasploit-cheat-sheet</id>
     <content type="html"><![CDATA[<p>Need a quick handy reference guide for Metasploit? I&rsquo;ve put together a bunch of the most common commands in a cheat sheet style for quick reference.</p>
 
 <p><img class="center" src="/images/Metasploit.png">
@@ -29,9 +29,9 @@ Download: <a href="/images/Metasploit.png">[PNG Image]</a> - <a href="/images/M
   
   <entry>
     <title type="html"><![CDATA[Cisco ASA Licensing Quick Reference Guide]]></title>
-    <link href="http://tunnelsup.github.io/cisco-asa-licensing-quick-reference-guide/"/>
+    <link href="https://www.tunnelsup.com/cisco-asa-licensing-quick-reference-guide/"/>
     <updated>2013-07-01T11:26:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-asa-licensing-quick-reference-guide</id>
+    <id>https://www.tunnelsup.com/cisco-asa-licensing-quick-reference-guide</id>
     <content type="html"><![CDATA[<p>One of the most confusing things about Cisco ASA&rsquo;s is the licensing structure. While it is very nice to have a single train of OS files to deal with, it is incredibly hard to keep track of all of the licensing details regarding the ASA. Here is a handy guide that may help you wade through the piles of documentation around it.</p>
 
 <h2>Quick Reference Guide</h2>
@@ -150,9 +150,9 @@ On the 5505 each interface is assigned a VLAN. This is stating only 3 VLANs can 
   
   <entry>
     <title type="html"><![CDATA[XBee S2 Quick Reference Guide/Cheat Sheet and Video Tutorials to Getting Started]]></title>
-    <link href="http://tunnelsup.github.io/xbee-guide/"/>
+    <link href="https://www.tunnelsup.com/xbee-guide/"/>
     <updated>2012-11-30T00:00:00-08:00</updated>
-    <id>http://tunnelsup.github.io/xbee-guide</id>
+    <id>https://www.tunnelsup.com/xbee-guide</id>
     <content type="html"><![CDATA[<p>When I first got started with XBee I had a hard time getting the right information to help me on the projects I was working on. I put my project on hold and spent a few months simply trying to understand XBee specifically using it with arduino. Below is a cheat sheet or quick reference guide that I use now to reference whenever I&rsquo;m working on a project. It has pretty much all of the information I need to effectively use the XBee in whatever project I&rsquo;m working on.</p>
 
 <p><img class="center" src="/images/xbee.png">

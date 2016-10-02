@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: tcpdump | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/tcpdump/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/tcpdump/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[TCPDump port, host, and interface]]></title>
-    <link href="http://tunnelsup.github.io/tcpdump-specify-interface-host-and-port/"/>
+    <link href="https://www.tunnelsup.com/tcpdump-specify-interface-host-and-port/"/>
     <updated>2013-01-11T00:00:00-08:00</updated>
-    <id>http://tunnelsup.github.io/tcpdump-specify-interface-host-and-port</id>
+    <id>https://www.tunnelsup.com/tcpdump-specify-interface-host-and-port</id>
     <content type="html"><![CDATA[<p>TCPDump is an extremely handy tool for verifying if packets are getting to the linux box or not. Here are the commands I use most often:</p>
 
 <p>To specify which interface to listen on:</p>

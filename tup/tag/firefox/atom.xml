@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: firefox | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/firefox/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/firefox/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Firefox - Secure Connection Failed - ssl_error_weak_server_ephemeral_dh_key]]></title>
-    <link href="http://tunnelsup.github.io/firefox-secure-connection-failed-ssl-error-weak-server-ephemeral-dh-key/"/>
+    <link href="https://www.tunnelsup.com/firefox-secure-connection-failed-ssl-error-weak-server-ephemeral-dh-key/"/>
     <updated>2015-07-26T11:27:00-07:00</updated>
-    <id>http://tunnelsup.github.io/firefox-secure-connection-failed-ssl-error-weak-server-ephemeral-dh-key</id>
+    <id>https://www.tunnelsup.com/firefox-secure-connection-failed-ssl-error-weak-server-ephemeral-dh-key</id>
     <content type="html"><![CDATA[<p>Have you seen the following error?</p>
 
 <blockquote><p><strong>Secure Connection Failed</strong></p>
@@ -48,9 +48,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to use Firefox to check if a website uses SSLv3]]></title>
-    <link href="http://tunnelsup.github.io/how-to-use-firefox-to-check-if-a-website-uses-sslv3/"/>
+    <link href="https://www.tunnelsup.com/how-to-use-firefox-to-check-if-a-website-uses-sslv3/"/>
     <updated>2015-07-26T10:57:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-use-firefox-to-check-if-a-website-uses-sslv3</id>
+    <id>https://www.tunnelsup.com/how-to-use-firefox-to-check-if-a-website-uses-sslv3</id>
     <content type="html"><![CDATA[<p>We should all know by now that <a href="https://isc.sans.edu/forums/diary/SSLv3+POODLE+Vulnerability+Official+Release/18827/">SSLv3 is a broken security protocol due to the POODLE vulnerability</a>. Firefox tries to connect to a website using the strongest security that the web server provides. It is possible to change the settings in Firefox to force a less secure connection which can tell us whether SSLv3 is on or not.</p>
 
 <h3>Change the settings</h3>

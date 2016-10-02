@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: hacking | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/hacking/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/hacking/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Hacker Challenges]]></title>
-    <link href="http://tunnelsup.github.io/hacker-challenges/"/>
+    <link href="https://www.tunnelsup.com/hacker-challenges/"/>
     <updated>2016-04-01T13:33:00-07:00</updated>
-    <id>http://tunnelsup.github.io/hacker-challenges</id>
+    <id>https://www.tunnelsup.com/hacker-challenges</id>
     <content type="html"><![CDATA[<p>Want to get started hacking things but don&rsquo;t want to do anything illegal? Here are some challenges others have made to help you practice some hacking skills. By participating in the challenges you could learn the following skills:</p>
 
 <ul>

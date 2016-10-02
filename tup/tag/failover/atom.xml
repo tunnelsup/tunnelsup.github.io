@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: failover | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/failover/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/failover/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Cisco ASA Troubleshooting failover when failover is off]]></title>
-    <link href="http://tunnelsup.github.io/cisco-asa-troubleshooting-failover-when-failover-is-off/"/>
+    <link href="https://www.tunnelsup.com/cisco-asa-troubleshooting-failover-when-failover-is-off/"/>
     <updated>2014-09-18T22:01:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-asa-troubleshooting-failover-when-failover-is-off</id>
+    <id>https://www.tunnelsup.com/cisco-asa-troubleshooting-failover-when-failover-is-off</id>
     <content type="html"><![CDATA[<p>Sometimes two firewalls will be in failover pair but for some reason one or both will turn failover off. What happens to the firewalls in this situation? Do both go active? Does one stay in standby? Great questions!</p>
 
 <h2>Reasons for failover to turn off on its own</h2>
@@ -133,9 +133,9 @@ interface GigabitEthernet0/3
   
   <entry>
     <title type="html"><![CDATA[Conducting Failover for Cisco NAC appliances]]></title>
-    <link href="http://tunnelsup.github.io/conducting-failover-for-cisco-nac-appliances/"/>
+    <link href="https://www.tunnelsup.com/conducting-failover-for-cisco-nac-appliances/"/>
     <updated>2014-05-18T18:43:00-07:00</updated>
-    <id>http://tunnelsup.github.io/conducting-failover-for-cisco-nac-appliances</id>
+    <id>https://www.tunnelsup.com/conducting-failover-for-cisco-nac-appliances</id>
     <content type="html"><![CDATA[<p>When conducting a failover of a Cisco NAC cluster, first determine the status of the node you’re currently on:</p>
 
 <p><code>
@@ -157,9 +157,9 @@ My node is active, peer node is standby
   
   <entry>
     <title type="html"><![CDATA[Configuring HA on Juniper SRX through JunOS]]></title>
-    <link href="http://tunnelsup.github.io/configuring-ha-on-juniper-srx-through-junos/"/>
+    <link href="https://www.tunnelsup.com/configuring-ha-on-juniper-srx-through-junos/"/>
     <updated>2013-07-01T11:21:00-07:00</updated>
-    <id>http://tunnelsup.github.io/configuring-ha-on-juniper-srx-through-junos</id>
+    <id>https://www.tunnelsup.com/configuring-ha-on-juniper-srx-through-junos</id>
     <content type="html"><![CDATA[<p>This post will cover how to conduct HA (high availability) failover configurations for the Juniper SRX. This post will only cover a simple active/passive configuration. It will not cover more advanced deployments like layer 2 HA or active/active HA.</p>
 
 <h2>Requirements</h2>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ips | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/ips/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/ips/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Restarting the AnalysisEngine on a Cisco IPS]]></title>
-    <link href="http://tunnelsup.github.io/restarting-the-analysisengine-on-a-cisco-ips/"/>
+    <link href="https://www.tunnelsup.com/restarting-the-analysisengine-on-a-cisco-ips/"/>
     <updated>2013-06-11T19:55:00-07:00</updated>
-    <id>http://tunnelsup.github.io/restarting-the-analysisengine-on-a-cisco-ips</id>
+    <id>https://www.tunnelsup.com/restarting-the-analysisengine-on-a-cisco-ips</id>
     <content type="html"><![CDATA[<p>Sometimes the analysis engine goes down on a Cisco IPS (Intrusion Prevention System) or IDS (Intrusion Detection System). In that case the analysis engine can be restarted from the service account by following these steps.</p>
 
 <p><strong>Caution: If you restart the Analysis Engine in an IPS Module which is in a firewall which is acting as the active firewall, this will cause a firewall failover to occur.</strong></p>
@@ -149,9 +149,9 @@ You can also monitor for real time IPS events from the command line by watching 
   
   <entry>
     <title type="html"><![CDATA[How to Release Subscriptions on a Cisco IPS]]></title>
-    <link href="http://tunnelsup.github.io/how-to-release-subscriptions-on-a-cisco-ips/"/>
+    <link href="https://www.tunnelsup.com/how-to-release-subscriptions-on-a-cisco-ips/"/>
     <updated>2013-06-11T19:53:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-release-subscriptions-on-a-cisco-ips</id>
+    <id>https://www.tunnelsup.com/how-to-release-subscriptions-on-a-cisco-ips</id>
     <content type="html"><![CDATA[<p>The Cisco IPS (Intrusion Prevension System) can handle up to 5 SDEE connections and sometimes holds on to old ones or gets stuck. It is possible to clear these connections out.</p>
 
 <h3>Find the Subscription ID</h3>
@@ -223,9 +223,9 @@ General</p>
   
   <entry>
     <title type="html"><![CDATA[Cisco IPS - Turning off ssh version 1]]></title>
-    <link href="http://tunnelsup.github.io/cisco-ips-turning-off-ssh-version-1/"/>
+    <link href="https://www.tunnelsup.com/cisco-ips-turning-off-ssh-version-1/"/>
     <updated>2013-04-01T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-ips-turning-off-ssh-version-1</id>
+    <id>https://www.tunnelsup.com/cisco-ips-turning-off-ssh-version-1</id>
     <content type="html"><![CDATA[<p>Vulnerability scanners are reporting that ssh version 1 is on by default for Cisco IPS units. It is fairly simple to turn this off on the IPS if you have service level privilege.</p>
 
 <p>First get into the service level account. This is essentially the linux shell under the IPS.</p>

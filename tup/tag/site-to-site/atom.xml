@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: site to site | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/site-to-site/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/site-to-site/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Site to Site VPN Tunnel Between Cisco ASA and Juniper SRX JunOS]]></title>
-    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos/"/>
+    <link href="https://www.tunnelsup.com/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos/"/>
     <updated>2013-01-16T00:00:00-08:00</updated>
-    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos</id>
+    <id>https://www.tunnelsup.com/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos</id>
     <content type="html"><![CDATA[<p><img src="/images/asasitetosite.jpg" alt="ASA Site to site diagram - IMG" /></p>
 
 <p>Blue firewall: Juniper SRX 210 (JunOS 10.0R1.8)</p>
@@ -143,9 +143,9 @@ nat (INSIDE,OUTSIDE) source static OBJ-172.16.22.0 OBJ-172.16.22.0 destination s
   
   <entry>
     <title type="html"><![CDATA[Site to Site VPN tunnel config between a Cisco ASA and a Juniper SSG ScreenOS]]></title>
-    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos/"/>
+    <link href="https://www.tunnelsup.com/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos/"/>
     <updated>2012-07-06T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos</id>
+    <id>https://www.tunnelsup.com/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos</id>
     <content type="html"><![CDATA[<p>Below is a config to create a VPN tunnel between a Cisco ASA (Blue side) to a Juniper SSG ScreenOS (Red Side).</p>
 
 <p>Juniper Settings:</p>
@@ -267,9 +267,9 @@ debug flow basic</p>
   
   <entry>
     <title type="html"><![CDATA[Site to site VPN between two ASAs]]></title>
-    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-using-two-asas/"/>
+    <link href="https://www.tunnelsup.com/site-to-site-vpn-tunnel-using-two-asas/"/>
     <updated>2010-05-02T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-using-two-asas</id>
+    <id>https://www.tunnelsup.com/site-to-site-vpn-tunnel-using-two-asas</id>
     <content type="html"><![CDATA[<p><img src="/images/asasitetosite.jpg" alt="ASA site to site diagram - IMG" /></p>
 
 <p>The classic site to site VPN tunnel between two ASAs. This configuration script is for ASA versions 8.2.5 and below. The new version has next gen encryption and has different keywords.</p>
@@ -354,9 +354,9 @@ nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
   
   <entry>
     <title type="html"><![CDATA[Site to site VPN tunnel between ASA and Router]]></title>
-    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-asa-and-cisco-router/"/>
+    <link href="https://www.tunnelsup.com/site-to-site-vpn-tunnel-between-asa-and-cisco-router/"/>
     <updated>2010-05-02T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-asa-and-cisco-router</id>
+    <id>https://www.tunnelsup.com/site-to-site-vpn-tunnel-between-asa-and-cisco-router</id>
     <content type="html"><![CDATA[<p><img src="/images/asa-isr.jpg" alt="ASR ISR network diagram- IMG" /></p>
 
 <p>Using the above network diagram, the scripts below can be applied to both ASA&rsquo;s to build a site to site VPN tunnel. The firewall on the left is a Cisco ASA and device on the right is a Cisco Router. The router needs to have an IOS that supports VPN&rsquo;s. You can test this by typing &lsquo;crypto ?&rsquo; and see if it has the commands available to make the tunnel. Usually a router with a K9 image on it is good enough. If not then it&rsquo;ll require the security image to have IPSec capabilities.</p>
@@ -449,9 +449,9 @@ ip nat inside source list ACL-NAT interface Fa0/0 overload</p>
   
   <entry>
     <title type="html"><![CDATA[Remote access VPN connection using Cisco Router]]></title>
-    <link href="http://tunnelsup.github.io/remote-access-vpn-connection-using-a-cisco-router/"/>
+    <link href="https://www.tunnelsup.com/remote-access-vpn-connection-using-a-cisco-router/"/>
     <updated>2010-05-02T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/remote-access-vpn-connection-using-a-cisco-router</id>
+    <id>https://www.tunnelsup.com/remote-access-vpn-connection-using-a-cisco-router</id>
     <content type="html"><![CDATA[<p><img src="/images/ra-isr.jpg" alt="Network Diagram - IMG" /></p>
 
 <p>The blue router on the left is a Cisco router with VPN capabilities and the red computer on the right is any computer that is running the Cisco VPN Client.</p>

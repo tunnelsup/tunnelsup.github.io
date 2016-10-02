@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: window | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/window/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/window/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to move a window that is off the screen into view in Windows 7]]></title>
-    <link href="http://tunnelsup.github.io/how-to-move-a-window-that-is-off-the-screen-into-view-in-windows-7/"/>
+    <link href="https://www.tunnelsup.com/how-to-move-a-window-that-is-off-the-screen-into-view-in-windows-7/"/>
     <updated>2013-04-08T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-move-a-window-that-is-off-the-screen-into-view-in-windows-7</id>
+    <id>https://www.tunnelsup.com/how-to-move-a-window-that-is-off-the-screen-into-view-in-windows-7</id>
     <content type="html"><![CDATA[<p>Sometimes when you are using a laptop with multiple displays and then unplug from those displays there will be windows that are outside the viewing area of your laptop. Sometimes these windows can be pesky and not want to come back to the screen. If you are using Windows 7, try this:</p>
 
 <ol>

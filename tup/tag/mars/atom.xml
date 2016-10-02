@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: mars | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/mars/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/mars/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Cisco MARS how to get logs off it]]></title>
-    <link href="http://tunnelsup.github.io/cisco-mars-how-to-get-logs-off-it/"/>
+    <link href="https://www.tunnelsup.com/cisco-mars-how-to-get-logs-off-it/"/>
     <updated>2015-10-18T16:31:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-mars-how-to-get-logs-off-it</id>
+    <id>https://www.tunnelsup.com/cisco-mars-how-to-get-logs-off-it</id>
     <content type="html"><![CDATA[<p>Below is the procedure below explains how to get logs off Mars Box from <a href="/cisco-mars-siem-expert-password">expert mode</a> using FTP.</p>
 
 <p>If you have an scp server you can use the <code>pnlog scpto</code> command. But if all you have is an FTP server, then this is more complicated. First we do the <code>pnlog scpto</code> command, but we do that only so the system packages up the logs pretty for us.</p>
@@ -70,9 +70,9 @@ ftp&gt; bye
   
   <entry>
     <title type="html"><![CDATA[Cisco MARS SIEM expert password]]></title>
-    <link href="http://tunnelsup.github.io/cisco-mars-siem-expert-password/"/>
+    <link href="https://www.tunnelsup.com/cisco-mars-siem-expert-password/"/>
     <updated>2015-09-06T11:58:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-mars-siem-expert-password</id>
+    <id>https://www.tunnelsup.com/cisco-mars-siem-expert-password</id>
     <content type="html"><![CDATA[<p>The Cisco MARS SIEM devices are built on a linux OS. It&rsquo;s possible to get to that linux shell but Cisco tries to keep that method private. I&rsquo;ve learned over time that most MARS devices have theh same expert password which allows access to the root shell.</p>
 
 <p>Expert password: <code>x3*Gd=y/Dq98</code></p>
@@ -80,8 +80,8 @@ ftp&gt; bye
 <p>Here is an example on how to use the password.</p>
 
 <p>```
-[linuxbox ~]$  ssh <a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#111;&#58;&#x70;&#x6e;&#x61;&#100;&#x6d;&#105;&#x6e;&#x40;&#49;&#48;&#x2e;&#49;&#48;&#x2e;&#x31;&#x30;&#46;&#x31;&#x30;">&#112;&#110;&#x61;&#x64;&#x6d;&#x69;&#110;&#64;&#49;&#48;&#x2e;&#49;&#x30;&#46;&#x31;&#x30;&#x2e;&#49;&#x30;</a>
-<a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#x3a;&#112;&#110;&#x61;&#x64;&#x6d;&#x69;&#x6e;&#64;&#x31;&#48;&#x2e;&#x31;&#48;&#x2e;&#x31;&#x30;&#46;&#49;&#48;">&#x70;&#110;&#x61;&#x64;&#x6d;&#105;&#x6e;&#64;&#49;&#48;&#x2e;&#x31;&#48;&#x2e;&#49;&#x30;&#46;&#x31;&#48;</a>&rsquo;s password:
+[linuxbox ~]$  ssh <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#x70;&#110;&#97;&#100;&#109;&#x69;&#x6e;&#x40;&#49;&#48;&#46;&#x31;&#48;&#x2e;&#49;&#48;&#46;&#x31;&#48;">&#x70;&#110;&#97;&#x64;&#109;&#105;&#x6e;&#x40;&#x31;&#48;&#x2e;&#49;&#x30;&#46;&#49;&#x30;&#46;&#x31;&#x30;</a>
+<a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#x3a;&#112;&#x6e;&#x61;&#100;&#x6d;&#x69;&#110;&#x40;&#49;&#48;&#x2e;&#x31;&#48;&#x2e;&#49;&#x30;&#x2e;&#x31;&#x30;">&#112;&#x6e;&#97;&#x64;&#109;&#x69;&#x6e;&#x40;&#x31;&#x30;&#46;&#x31;&#48;&#46;&#49;&#48;&#x2e;&#x31;&#48;</a>&rsquo;s password:
 Last login: Sun Aug 30 10:28:03 2015 from 10.10.10.200</p>
 
 <p>  CS MARS &ndash; Mitigation and Response System</p>
@@ -100,9 +100,9 @@ Password: x3*Gd=y/Dq98
   
   <entry>
     <title type="html"><![CDATA[How to determine the current EPS for Cisco MARS]]></title>
-    <link href="http://tunnelsup.github.io/how-to-determine-the-current-eps-for-cisco-mars/"/>
+    <link href="https://www.tunnelsup.com/how-to-determine-the-current-eps-for-cisco-mars/"/>
     <updated>2015-09-04T11:08:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-determine-the-current-eps-for-cisco-mars</id>
+    <id>https://www.tunnelsup.com/how-to-determine-the-current-eps-for-cisco-mars</id>
     <content type="html"><![CDATA[<p>There are two ways to determine the events per second for a Cisco MARS SIEM system.</p>
 
 <h3>See the current EPS the system is processing</h3>
@@ -128,9 +128,9 @@ Source: ./pnparser
   
   <entry>
     <title type="html"><![CDATA[MARS hard drive issues]]></title>
-    <link href="http://tunnelsup.github.io/mars-hard-drive-issues/"/>
+    <link href="https://www.tunnelsup.com/mars-hard-drive-issues/"/>
     <updated>2013-06-06T10:52:00-07:00</updated>
-    <id>http://tunnelsup.github.io/mars-hard-drive-issues</id>
+    <id>https://www.tunnelsup.com/mars-hard-drive-issues</id>
     <content type="html"><![CDATA[<h3>Possible results from the <code>raidstatus</code> command for MARS 55, 110R, 110, 210, GC2R, and GC2</h3>
 
 <p>Use the <code>raidstatus</code> CLI command to view the status of the RAID array (virtual disk) and of the individual HDDs.</p>

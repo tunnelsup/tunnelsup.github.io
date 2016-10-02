@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ssh | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/ssh/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/ssh/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[ssh Remote Host Identification Has Changed]]></title>
-    <link href="http://tunnelsup.github.io/ssh-remote-host-identification-has-changed/"/>
+    <link href="https://www.tunnelsup.com/ssh-remote-host-identification-has-changed/"/>
     <updated>2015-02-28T20:41:00-08:00</updated>
-    <id>http://tunnelsup.github.io/ssh-remote-host-identification-has-changed</id>
+    <id>https://www.tunnelsup.com/ssh-remote-host-identification-has-changed</id>
     <content type="html"><![CDATA[<p>Sometimes when you are trying to do ssh from a linux machine you may see this message:</p>
 
 <p><code>
@@ -72,9 +72,9 @@ Host key verification failed.
   
   <entry>
     <title type="html"><![CDATA[SSH Without Password]]></title>
-    <link href="http://tunnelsup.github.io/ssh-without-password/"/>
+    <link href="https://www.tunnelsup.com/ssh-without-password/"/>
     <updated>2015-02-07T13:01:00-08:00</updated>
-    <id>http://tunnelsup.github.io/ssh-without-password</id>
+    <id>https://www.tunnelsup.com/ssh-without-password</id>
     <content type="html"><![CDATA[<p>It is possible to ssh from one Linux or Mac machine to another Linux server by using only cryptographic keys instead of using a password.</p>
 
 <h3>Create the private key on the source computer</h3>
@@ -126,9 +126,9 @@ alias s1='ssh darcy@192.168.200.1'
   
   <entry>
     <title type="html"><![CDATA[How to SSH like a Pro]]></title>
-    <link href="http://tunnelsup.github.io/how-to-ssh-like-a-pro/"/>
+    <link href="https://www.tunnelsup.com/how-to-ssh-like-a-pro/"/>
     <updated>2013-06-15T17:06:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-ssh-like-a-pro</id>
+    <id>https://www.tunnelsup.com/how-to-ssh-like-a-pro</id>
     <content type="html"><![CDATA[<p>A few tips and tricks about sshing.</p>
 
 <p>Whatever network I&rsquo;m working in I have found it&rsquo;s common to have a central linux server that I ssh into and then I can jump off of that to any of the devices in the network. The reason for this is that it makes securing the network a lot easier when your VTY ACL consists of one IP even though you have many admins. There&rsquo;s also a trail of who was logged into what when. But by far my favorite reason for having a central server to jump off of is because I can greatly improve my performance because I can use the power of linux to make my life easier.</p>
@@ -184,9 +184,9 @@ Add the following lines at the top of the file:<br>
   
   <entry>
     <title type="html"><![CDATA[Raspberry Pi: Phoning home using a reverse remote ssh tunnel]]></title>
-    <link href="http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/"/>
+    <link href="https://www.tunnelsup.com/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/"/>
     <updated>2013-05-08T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel</id>
+    <id>https://www.tunnelsup.com/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel</id>
     <content type="html"><![CDATA[<p><img src="/images/pi6.jpg" alt="Pi IMG" /><br>
 What&rsquo;s this? Just an ordinary powerbrick? Read on to find out why this is an incredibly dangerous thing to see in your office.</p>
 
@@ -252,7 +252,7 @@ ssh -l piUser -p 2222 localhost
 <h1>!/bin/bash</h1>
 
 <p>createTunnel() {
-  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x73;&#x65;&#114;&#118;&#x65;&#x72;&#85;&#115;&#x65;&#114;&#x40;&#x32;&#53;&#x2e;&#x32;&#x35;&#46;&#50;&#53;&#46;&#x32;&#x35;">&#x73;&#x65;&#114;&#x76;&#101;&#x72;&#85;&#x73;&#101;&#114;&#64;&#50;&#53;&#x2e;&#x32;&#x35;&#x2e;&#50;&#x35;&#46;&#50;&#53;</a>
+  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#x6d;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#x73;&#x65;&#114;&#x76;&#101;&#114;&#85;&#115;&#x65;&#114;&#64;&#50;&#x35;&#x2e;&#x32;&#53;&#46;&#50;&#x35;&#46;&#x32;&#53;">&#x73;&#101;&#x72;&#x76;&#x65;&#114;&#x55;&#115;&#x65;&#114;&#x40;&#x32;&#x35;&#x2e;&#x32;&#53;&#x2e;&#x32;&#53;&#46;&#x32;&#53;</a>
   if [[ $? -eq 0 ]]; then</p>
 
 <pre><code>echo Tunnel to jumpbox created successfully
@@ -325,9 +325,9 @@ To troubleshoot any problems in this you can view the tunnel.log file.</p>
   
   <entry>
     <title type="html"><![CDATA[Cisco IPS - Turning off ssh version 1]]></title>
-    <link href="http://tunnelsup.github.io/cisco-ips-turning-off-ssh-version-1/"/>
+    <link href="https://www.tunnelsup.com/cisco-ips-turning-off-ssh-version-1/"/>
     <updated>2013-04-01T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-ips-turning-off-ssh-version-1</id>
+    <id>https://www.tunnelsup.com/cisco-ips-turning-off-ssh-version-1</id>
     <content type="html"><![CDATA[<p>Vulnerability scanners are reporting that ssh version 1 is on by default for Cisco IPS units. It is fairly simple to turn this off on the IPS if you have service level privilege.</p>
 
 <p>First get into the service level account. This is essentially the linux shell under the IPS.</p>

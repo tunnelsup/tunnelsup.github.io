@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: 6.3 | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/6-dot-3/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/6-dot-3/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Site to Site VPN configuration script between PIX and ASA]]></title>
-    <link href="http://tunnelsup.github.io/site-to-site-vpn-configuration-script-between-pix-and-asa/"/>
+    <link href="https://www.tunnelsup.com/site-to-site-vpn-configuration-script-between-pix-and-asa/"/>
     <updated>2010-05-23T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/site-to-site-vpn-configuration-script-between-pix-and-asa</id>
+    <id>https://www.tunnelsup.com/site-to-site-vpn-configuration-script-between-pix-and-asa</id>
     <content type="html"><![CDATA[<p>This script can be used to get you started on a site to site vpn using the older Cisco PIX code.</p>
 
 <h3>PIX running 6.3</h3>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: hostscan | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/hostscan/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/hostscan/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[AnyConnect Hostscan results exceed default limit]]></title>
-    <link href="http://tunnelsup.github.io/anyconnect-hostscan-results-exceed-default-limit/"/>
+    <link href="https://www.tunnelsup.com/anyconnect-hostscan-results-exceed-default-limit/"/>
     <updated>2014-07-03T20:09:00-07:00</updated>
-    <id>http://tunnelsup.github.io/anyconnect-hostscan-results-exceed-default-limit</id>
+    <id>https://www.tunnelsup.com/anyconnect-hostscan-results-exceed-default-limit</id>
     <content type="html"><![CDATA[<p>I have a user who is unable to login using AnyConnect. Their screen hangs at the AnyConnect message: “Hostscan is waiting for the next scan”.</p>
 
 <p>Looking at the logs on the ASA I saw the following log:</p>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: conference | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/conference/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/conference/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Tips For Attending a Security Conference]]></title>
-    <link href="http://tunnelsup.github.io/tips-for-attending-a-security-conference/"/>
+    <link href="https://www.tunnelsup.com/tips-for-attending-a-security-conference/"/>
     <updated>2016-05-27T11:32:00-07:00</updated>
-    <id>http://tunnelsup.github.io/tips-for-attending-a-security-conference</id>
+    <id>https://www.tunnelsup.com/tips-for-attending-a-security-conference</id>
     <content type="html"><![CDATA[<p>If you&rsquo;re in the InfoSec industry and haven&rsquo;t attended a security conference, you simply aren&rsquo;t taking your career seriously. Attending one will inspire you and motivate you to learn new things, meet new people, and find new solutions to your problems. There are so many conferences now that there is about 2-5 every month! A realistic goal could be to attend one security conference a year.</p>
 
 <h2>Types of Conferences</h2>
@@ -35,7 +35,7 @@
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">One of the biggest reasons I go to security conferences and meetups. <a href="https://twitter.com/hashtag/infosec?src=hash">#infosec</a> <a href="https://t.co/Y0HB9dtchO">pic.twitter.com/Y0HB9dtchO</a></p>&mdash; Jack Rhysider (@TunnelsUp) <a href="https://twitter.com/TunnelsUp/status/730938951696060416">May 13, 2016</a></blockquote>
 
 
-<script async src="http://tunnelsup.github.io//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async src="https://www.tunnelsup.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 <p>Meeting people who have the same problems or passions than I do is the most important thing on my agenda when attending these conferences. Finding new people to share ideas with, solve your problems, or teach you how to improve is a resource you can use for years. Having a secret weapon of someone you can ask tough questions to outside of work will make you look like an endless fountain of information.</p>
@@ -95,9 +95,9 @@
   
   <entry>
     <title type="html"><![CDATA[Online Security Conferences]]></title>
-    <link href="http://tunnelsup.github.io/online-security-conferences/"/>
+    <link href="https://www.tunnelsup.com/online-security-conferences/"/>
     <updated>2016-01-10T08:36:00-08:00</updated>
-    <id>http://tunnelsup.github.io/online-security-conferences</id>
+    <id>https://www.tunnelsup.com/online-security-conferences</id>
     <content type="html"><![CDATA[<p>Every month there are numerous cyber security conferences somewhere in the world. Many of them post their talks on YouTube after the conference. Below is a list of talks from security conferences. It&rsquo;s like attending a free virtual security conference!</p>
 
 <table class="table">

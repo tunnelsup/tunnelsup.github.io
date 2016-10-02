@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: phishing | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/phishing/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/phishing/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Six Ways to Protect Your Corporate Network Against Phishing Scams]]></title>
-    <link href="http://tunnelsup.github.io/six-ways-to-protect-your-corporate-network-against-phishing-scams/"/>
+    <link href="https://www.tunnelsup.com/six-ways-to-protect-your-corporate-network-against-phishing-scams/"/>
     <updated>2016-04-16T16:04:00-07:00</updated>
-    <id>http://tunnelsup.github.io/six-ways-to-protect-your-corporate-network-against-phishing-scams</id>
+    <id>https://www.tunnelsup.com/six-ways-to-protect-your-corporate-network-against-phishing-scams</id>
     <content type="html"><![CDATA[<p>It has been said that a company is one email away from a huge breach disaster. In today&rsquo;s landscape, people can serve as the greatest vulnerability to the network. How can we improve this?</p>
 
 <h3>What kind of damage is possible?</h3>
@@ -75,7 +75,7 @@
 
 <p>A lot of these phishing scams use look-alike domain. If you worked at example.com could you recognize the problem in this email header?</p>
 
-<blockquote><p>From: <a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#67;&#x45;&#x4f;&#64;&#101;&#120;&#x61;&#109;&#112;&#x31;&#x65;&#x2e;&#x63;&#111;&#x6d;">&#x43;&#x45;&#79;&#64;&#x65;&#120;&#97;&#109;&#112;&#49;&#x65;&#x2e;&#x63;&#111;&#x6d;</a></p></blockquote>
+<blockquote><p>From: <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#111;&#x3a;&#x43;&#x45;&#x4f;&#64;&#101;&#120;&#97;&#109;&#x70;&#x31;&#101;&#x2e;&#99;&#x6f;&#x6d;">&#67;&#69;&#79;&#64;&#101;&#x78;&#97;&#109;&#112;&#x31;&#101;&#46;&#x63;&#x6f;&#109;</a></p></blockquote>
 
 <p>The &ldquo;L&rdquo; was switched with a &ldquo;ONE&rdquo;. This can be incredibly difficult to catch and so look-alike domains have been very effective at tricking people for decades. Here&rsquo;s some tips for combating this.</p>
 
@@ -111,9 +111,9 @@
   
   <entry>
     <title type="html"><![CDATA[Actors Behind the W2 Tax Phishing Scams]]></title>
-    <link href="http://tunnelsup.github.io/actors-behind-the-w2-tax-phishing-scams/"/>
+    <link href="https://www.tunnelsup.com/actors-behind-the-w2-tax-phishing-scams/"/>
     <updated>2016-04-05T11:47:00-07:00</updated>
-    <id>http://tunnelsup.github.io/actors-behind-the-w2-tax-phishing-scams</id>
+    <id>https://www.tunnelsup.com/actors-behind-the-w2-tax-phishing-scams</id>
     <content type="html"><![CDATA[<p>This year, <a href="http://krebsonsecurity.com/2016/03/seagate-phish-exposes-all-employee-w-2s/">Seagate</a>, <a href="http://money.cnn.com/2016/02/29/technology/snapchat-phishing-scam/index.html">Snapchat</a> and <a href="http://www.ktva.com/more-than-2500-gci-employees-w-2-information-stolen-in-phishing-scam-524/">GCI</a> all reported that hackers have stolen thousands of W-2 from their employees.</p>
 
 <h3>What do hackers do with these W-2s?</h3>

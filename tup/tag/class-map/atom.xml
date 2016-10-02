@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: class-map | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/class-map/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/class-map/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Using just a Cisco ASA to block specific websites]]></title>
-    <link href="http://tunnelsup.github.io/using-just-a-cisco-asa-to-block-specific-websites/"/>
+    <link href="https://www.tunnelsup.com/using-just-a-cisco-asa-to-block-specific-websites/"/>
     <updated>2011-11-26T00:00:00-08:00</updated>
-    <id>http://tunnelsup.github.io/using-just-a-cisco-asa-to-block-specific-websites</id>
+    <id>https://www.tunnelsup.com/using-just-a-cisco-asa-to-block-specific-websites</id>
     <content type="html"><![CDATA[<p>When doing web traffic monitoring, policing and blocking it is best to use a web proxy like Ironport WSA, BlueCoat, WebSense or something that is good at doing it. However if you are in a pinch and don&rsquo;t have that you can use the firewall to block particular URLs. There are two ways to do this: using <strong>fqdn objects</strong> and <strong>regex&rsquo;s</strong>.</p>
 
 <h2>Block URLs using FQDN objects</h2>

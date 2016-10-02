@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: awareness | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/awareness/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/awareness/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Free Security Awareness Training Posters]]></title>
-    <link href="http://tunnelsup.github.io/free-security-awareness-training-posters/"/>
+    <link href="https://www.tunnelsup.com/free-security-awareness-training-posters/"/>
     <updated>2016-05-10T07:53:00-07:00</updated>
-    <id>http://tunnelsup.github.io/free-security-awareness-training-posters</id>
+    <id>https://www.tunnelsup.com/free-security-awareness-training-posters</id>
     <content type="html"><![CDATA[<p>Something that is helpful for ongoing security awareness training programs is to print out security awareness posters and put them in areas where people hang out around the office. The goal is to keep security awareness training fresh, fun, and relevant.</p>
 
 <p>Here are some free posters you can find online to download and print for your own organization.</p>

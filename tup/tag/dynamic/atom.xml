@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: dynamic | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/dynamic/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/dynamic/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Dynamic/DHCP VPN tunnel between two Cisco ASA's]]></title>
-    <link href="http://tunnelsup.github.io/dynamicdhcp-vpn-tunnel-between-two-asas/"/>
+    <link href="https://www.tunnelsup.com/dynamicdhcp-vpn-tunnel-between-two-asas/"/>
     <updated>2010-05-10T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/dynamicdhcp-vpn-tunnel-between-two-asas</id>
+    <id>https://www.tunnelsup.com/dynamicdhcp-vpn-tunnel-between-two-asas</id>
     <content type="html"><![CDATA[<p>This script will create a vpn tunnel between one Cisco ASA that has a statically assigned IP and one Cisco ASA that has DHCP assigned IP which will change.</p>
 
 <p>The caveat here is that the LAN with the DHCP side ASA needs to be the one that initiates the tunnel by sending interesting traffic. The Static side will not know which IP to peer with and therefor cannot bring this tunnel up, however, once the tunnel is up the static side can go across the tunnel because the peer is established.</p>

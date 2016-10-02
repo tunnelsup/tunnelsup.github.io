@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: script | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/script/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/script/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Site to Site VPN configuration script between PIX and ASA]]></title>
-    <link href="http://tunnelsup.github.io/site-to-site-vpn-configuration-script-between-pix-and-asa/"/>
+    <link href="https://www.tunnelsup.com/site-to-site-vpn-configuration-script-between-pix-and-asa/"/>
     <updated>2010-05-23T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/site-to-site-vpn-configuration-script-between-pix-and-asa</id>
+    <id>https://www.tunnelsup.com/site-to-site-vpn-configuration-script-between-pix-and-asa</id>
     <content type="html"><![CDATA[<p>This script can be used to get you started on a site to site vpn using the older Cisco PIX code.</p>
 
 <h3>PIX running 6.3</h3>
@@ -78,9 +78,9 @@ nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
   
   <entry>
     <title type="html"><![CDATA[Dynamic/DHCP VPN tunnel between two Cisco ASA's]]></title>
-    <link href="http://tunnelsup.github.io/dynamicdhcp-vpn-tunnel-between-two-asas/"/>
+    <link href="https://www.tunnelsup.com/dynamicdhcp-vpn-tunnel-between-two-asas/"/>
     <updated>2010-05-10T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/dynamicdhcp-vpn-tunnel-between-two-asas</id>
+    <id>https://www.tunnelsup.com/dynamicdhcp-vpn-tunnel-between-two-asas</id>
     <content type="html"><![CDATA[<p>This script will create a vpn tunnel between one Cisco ASA that has a statically assigned IP and one Cisco ASA that has DHCP assigned IP which will change.</p>
 
 <p>The caveat here is that the LAN with the DHCP side ASA needs to be the one that initiates the tunnel by sending interesting traffic. The Static side will not know which IP to peer with and therefor cannot bring this tunnel up, however, once the tunnel is up the static side can go across the tunnel because the peer is established.</p>
@@ -149,9 +149,9 @@ nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
   
   <entry>
     <title type="html"><![CDATA[WebVPN or SSL VPN on an ASA]]></title>
-    <link href="http://tunnelsup.github.io/webvpn-or-ssl-vpn-on-an-asa/"/>
+    <link href="https://www.tunnelsup.com/webvpn-or-ssl-vpn-on-an-asa/"/>
     <updated>2010-05-02T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/webvpn-or-ssl-vpn-on-an-asa</id>
+    <id>https://www.tunnelsup.com/webvpn-or-ssl-vpn-on-an-asa</id>
     <content type="html"><![CDATA[<p><img src="/images/webvpn.jpg" alt="WebVPN diagram - IMG" /></p>
 
 <p>WebVPN (or often called SSL VPN) (or sometimes called clientless VPN) is used when someone needs to access a web based application that is on the private network. A web browser is used for all the encryption and authentication.</p>
@@ -194,9 +194,9 @@ Once the Group Policy and Tunnel Group are created go into ASDM to control the l
   
   <entry>
     <title type="html"><![CDATA[Site to site VPN between two ASAs]]></title>
-    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-using-two-asas/"/>
+    <link href="https://www.tunnelsup.com/site-to-site-vpn-tunnel-using-two-asas/"/>
     <updated>2010-05-02T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-using-two-asas</id>
+    <id>https://www.tunnelsup.com/site-to-site-vpn-tunnel-using-two-asas</id>
     <content type="html"><![CDATA[<p><img src="/images/asasitetosite.jpg" alt="ASA site to site diagram - IMG" /></p>
 
 <p>The classic site to site VPN tunnel between two ASAs. This configuration script is for ASA versions 8.2.5 and below. The new version has next gen encryption and has different keywords.</p>
@@ -281,9 +281,9 @@ nat (INSIDE) 0 access-list ACL-INSIDE-NONAT
   
   <entry>
     <title type="html"><![CDATA[Site to site VPN tunnel between ASA and Router]]></title>
-    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-asa-and-cisco-router/"/>
+    <link href="https://www.tunnelsup.com/site-to-site-vpn-tunnel-between-asa-and-cisco-router/"/>
     <updated>2010-05-02T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-asa-and-cisco-router</id>
+    <id>https://www.tunnelsup.com/site-to-site-vpn-tunnel-between-asa-and-cisco-router</id>
     <content type="html"><![CDATA[<p><img src="/images/asa-isr.jpg" alt="ASR ISR network diagram- IMG" /></p>
 
 <p>Using the above network diagram, the scripts below can be applied to both ASA&rsquo;s to build a site to site VPN tunnel. The firewall on the left is a Cisco ASA and device on the right is a Cisco Router. The router needs to have an IOS that supports VPN&rsquo;s. You can test this by typing &lsquo;crypto ?&rsquo; and see if it has the commands available to make the tunnel. Usually a router with a K9 image on it is good enough. If not then it&rsquo;ll require the security image to have IPSec capabilities.</p>

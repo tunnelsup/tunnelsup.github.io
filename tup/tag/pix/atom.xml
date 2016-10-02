@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: pix | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/pix/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/pix/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Default Password Cisco Firewall]]></title>
-    <link href="http://tunnelsup.github.io/default-password-cisco-firewall/"/>
+    <link href="https://www.tunnelsup.com/default-password-cisco-firewall/"/>
     <updated>2013-06-06T23:49:00-07:00</updated>
-    <id>http://tunnelsup.github.io/default-password-cisco-firewall</id>
+    <id>https://www.tunnelsup.com/default-password-cisco-firewall</id>
     <content type="html"><![CDATA[<h2>Question: What is the default username and password for Cisco ASA firewall?</h2>
 
 <p>Cisco ASA firewalls ship with a default user and password. This includes all of the following models: 5505, 5510, 5512-X, 5515X, 5515-X, 5520, 5525X, 5525-X, 5540, 5545-X, 5550, 5555-X, 5585-X</p>
@@ -44,9 +44,9 @@
   
   <entry>
     <title type="html"><![CDATA[Upgrade a Cisco PIX 506E to run 7.1 PIX code]]></title>
-    <link href="http://tunnelsup.github.io/upgrade-a-cisco-pix-506e-to-run-7-1-pix-code/"/>
+    <link href="https://www.tunnelsup.com/upgrade-a-cisco-pix-506e-to-run-7-1-pix-code/"/>
     <updated>2012-08-04T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/upgrade-a-cisco-pix-506e-to-run-7-1-pix-code</id>
+    <id>https://www.tunnelsup.com/upgrade-a-cisco-pix-506e-to-run-7-1-pix-code</id>
     <content type="html"><![CDATA[<p>The Cisco PIX 506E is only supposed to run code up to 6.3.5. It is however possible to go higher. In order to do this you need to have your PIX 506E have 64MB of RAM. In order for me to do this I had to double up my current RAM. The PIX 506E had only 28MB of RAM however the 506E has two memory slots and can easily upgrade to 64MB if you have another stick (or PIX you aren&rsquo;t using).</p>
 
 <p>Version 7.1.2 is chosen as the best code because it fits on the system which has 8MB of flash. This means there will be no room left for an ASDM. At some point in the 7.x versions, Cisco put instructions in the firmware to prevent 8.0 code to run if the model is PIX506e. This can actually be overcome by rewriting the .bin file (using lzma) to change any CRC check to PIX506E instead of PIX515E. There are a total of 6 CRC checks that need to be switched to conduct this. This post does not cover how to upgrade above 7.1.2.</p>
@@ -704,9 +704,9 @@ pixfirewall#
   
   <entry>
     <title type="html"><![CDATA[Site to Site VPN configuration script between PIX and ASA]]></title>
-    <link href="http://tunnelsup.github.io/site-to-site-vpn-configuration-script-between-pix-and-asa/"/>
+    <link href="https://www.tunnelsup.com/site-to-site-vpn-configuration-script-between-pix-and-asa/"/>
     <updated>2010-05-23T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/site-to-site-vpn-configuration-script-between-pix-and-asa</id>
+    <id>https://www.tunnelsup.com/site-to-site-vpn-configuration-script-between-pix-and-asa</id>
     <content type="html"><![CDATA[<p>This script can be used to get you started on a site to site vpn using the older Cisco PIX code.</p>
 
 <h3>PIX running 6.3</h3>

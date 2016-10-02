@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ntp | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/ntp/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/ntp/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to test an NTP server using ntpdate]]></title>
-    <link href="http://tunnelsup.github.io/how-to-test-an-ntp-server-using-ntpdate/"/>
+    <link href="https://www.tunnelsup.com/how-to-test-an-ntp-server-using-ntpdate/"/>
     <updated>2016-04-19T21:29:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-test-an-ntp-server-using-ntpdate</id>
+    <id>https://www.tunnelsup.com/how-to-test-an-ntp-server-using-ntpdate</id>
     <content type="html"><![CDATA[<p>Do you want to check if an NTP server is alive and responding to NTP queries? Do you need to manually check an NTP server to see if the clock is correct? Try using <code>ntpdate</code> from a linux CLI to query the NTP server.</p>
 
 <p><code>

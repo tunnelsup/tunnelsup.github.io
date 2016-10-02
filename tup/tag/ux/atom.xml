@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ux | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/ux/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/ux/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Customer Service on the web]]></title>
-    <link href="http://tunnelsup.github.io/customer-service-on-the-web/"/>
+    <link href="https://www.tunnelsup.com/customer-service-on-the-web/"/>
     <updated>2014-12-20T21:31:00-08:00</updated>
-    <id>http://tunnelsup.github.io/customer-service-on-the-web</id>
+    <id>https://www.tunnelsup.com/customer-service-on-the-web</id>
     <content type="html"><![CDATA[<p>Is it possible for a website to have good customer service? How can that be defined? I recently attended a lecture that attempted to define what good customer service is. It wasn&rsquo;t intended for the web but more of a face to face experience like in a restaurant. Upon listening to the lecture I started connecting it to how it relates to the web.</p>
 
 <p>The lecture explained that there are 5 dimensions to customer service. I will go over each of them and what that means for for a face to face interaction like in a restaurant and what I think it means on a webpage.</p>

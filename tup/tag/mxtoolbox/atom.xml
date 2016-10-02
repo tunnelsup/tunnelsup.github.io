@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: mxtoolbox | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/mxtoolbox/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/mxtoolbox/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[MX Record problem: Reverse DNS does not match SMTP Banner]]></title>
-    <link href="http://tunnelsup.github.io/mx-record-problem-reverse-dns-does-not-match-smtp-banner/"/>
+    <link href="https://www.tunnelsup.com/mx-record-problem-reverse-dns-does-not-match-smtp-banner/"/>
     <updated>2012-11-30T00:00:00-08:00</updated>
-    <id>http://tunnelsup.github.io/mx-record-problem-reverse-dns-does-not-match-smtp-banner</id>
+    <id>https://www.tunnelsup.com/mx-record-problem-reverse-dns-does-not-match-smtp-banner</id>
     <content type="html"><![CDATA[<p>Today I was given a problem that our Cisco Ironport was not accepting email from outside people sending mail to inside people (backstory: this occurred right after we moved our Ironport to a different location). I looked in Ironport and spotted a lot of messages failing to be delivered. Specifically the error in Ironport was:
 <code>Message 1006902 aborted: Receiving aborted</code></p>
 

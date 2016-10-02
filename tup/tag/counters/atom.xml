@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: counters | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/counters/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/counters/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[View Interface Statistics on ScreenOS]]></title>
-    <link href="http://tunnelsup.github.io/view-interface-statistics-on-screenos/"/>
+    <link href="https://www.tunnelsup.com/view-interface-statistics-on-screenos/"/>
     <updated>2013-09-06T11:11:00-07:00</updated>
-    <id>http://tunnelsup.github.io/view-interface-statistics-on-screenos</id>
+    <id>https://www.tunnelsup.com/view-interface-statistics-on-screenos</id>
     <content type="html"><![CDATA[<h2>Get command to see interface statistics on a SSG/ScreenOS</h2>
 
 <p><code>get counter statistics interface &lt;interface&gt;</code></p>
@@ -157,9 +157,9 @@ udp sweep              0 | tcp check drop         0 |
   
   <entry>
     <title type="html"><![CDATA[Understanding Cisco ASA interface counters and statistics]]></title>
-    <link href="http://tunnelsup.github.io/understanding-cisco-asa-interface-counters-and-statistics/"/>
+    <link href="https://www.tunnelsup.com/understanding-cisco-asa-interface-counters-and-statistics/"/>
     <updated>2013-07-29T13:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/understanding-cisco-asa-interface-counters-and-statistics</id>
+    <id>https://www.tunnelsup.com/understanding-cisco-asa-interface-counters-and-statistics</id>
     <content type="html"><![CDATA[<p>Upon doing a show interface command a lot of valuable information is displayed regarding the packets and errors on that interface.</p>
 
 <p>```

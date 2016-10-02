@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: remote | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/remote/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/remote/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Raspberry Pi: Phoning home using a reverse remote ssh tunnel]]></title>
-    <link href="http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/"/>
+    <link href="https://www.tunnelsup.com/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/"/>
     <updated>2013-05-08T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel</id>
+    <id>https://www.tunnelsup.com/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel</id>
     <content type="html"><![CDATA[<p><img src="/images/pi6.jpg" alt="Pi IMG" /><br>
 What&rsquo;s this? Just an ordinary powerbrick? Read on to find out why this is an incredibly dangerous thing to see in your office.</p>
 
@@ -83,7 +83,7 @@ ssh -l piUser -p 2222 localhost
 <h1>!/bin/bash</h1>
 
 <p>createTunnel() {
-  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#109;&#97;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#x73;&#x65;&#x72;&#x76;&#101;&#114;&#x55;&#115;&#101;&#x72;&#x40;&#50;&#53;&#x2e;&#x32;&#53;&#x2e;&#x32;&#53;&#46;&#x32;&#53;">&#x73;&#x65;&#114;&#x76;&#101;&#114;&#x55;&#x73;&#x65;&#114;&#64;&#x32;&#x35;&#46;&#x32;&#x35;&#46;&#50;&#53;&#46;&#50;&#53;</a>
+  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#x6d;&#97;&#105;&#108;&#116;&#x6f;&#58;&#115;&#101;&#x72;&#118;&#101;&#x72;&#85;&#x73;&#101;&#114;&#x40;&#50;&#53;&#x2e;&#x32;&#53;&#46;&#50;&#53;&#x2e;&#50;&#x35;">&#115;&#101;&#114;&#x76;&#101;&#114;&#x55;&#x73;&#101;&#x72;&#x40;&#50;&#x35;&#46;&#x32;&#x35;&#x2e;&#x32;&#53;&#46;&#50;&#53;</a>
   if [[ $? -eq 0 ]]; then</p>
 
 <pre><code>echo Tunnel to jumpbox created successfully

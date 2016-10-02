@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ca | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/ca/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/ca/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Adding an SSL certificate on an ASA]]></title>
-    <link href="http://tunnelsup.github.io/adding-an-ssl-certificate-on-an-asa/"/>
+    <link href="https://www.tunnelsup.com/adding-an-ssl-certificate-on-an-asa/"/>
     <updated>2012-08-16T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/adding-an-ssl-certificate-on-an-asa</id>
+    <id>https://www.tunnelsup.com/adding-an-ssl-certificate-on-an-asa</id>
     <content type="html"><![CDATA[<p>This tutorial is to show you how to install a HTTPS/SSL certificate on an ASA. This is often used when WebVPN or AnyConnect is configured which uses SSL. Without a certificate installed the users is given warnings and errors about a missing or invalid certificate.</p>
 
 <p>This has nothing to do with authentication. It&rsquo;s simply the https certificate which is needed for a secure communication to be set up.</p>

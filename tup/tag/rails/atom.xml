@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: rails | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/rails/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/rails/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Using salted SHA hashes with Dovecot authentication]]></title>
-    <link href="http://tunnelsup.github.io/using-salted-sha-hashes-with-dovecot-authentication/"/>
+    <link href="https://www.tunnelsup.com/using-salted-sha-hashes-with-dovecot-authentication/"/>
     <updated>2015-02-08T13:25:00-08:00</updated>
-    <id>http://tunnelsup.github.io/using-salted-sha-hashes-with-dovecot-authentication</id>
+    <id>https://www.tunnelsup.com/using-salted-sha-hashes-with-dovecot-authentication</id>
     <content type="html"><![CDATA[<p>I&rsquo;ve finally figured out how to do this. The <a href="http://wiki2.dovecot.org/Authentication/PasswordSchemes">Dovecot documentation</a> is absolutely horrible which is sad because it should be encouraged to always salt your password hashes yet they make it very difficult to figure out.</p>
 
 <p>Dovecot is a IMAP and POP3 plugin for Postfix. Postfix doesn&rsquo;t do authentication on its own so it&rsquo;s often found that SASL authentication gets passed to Dovecot for both IMAP mail checking and creating dynamic relay lists.</p>
@@ -184,9 +184,9 @@ auth-worker(27083): Debug: sql(testuser,1.1.1.1): SSHA512.HEX(test) != '3b98564e
   
   <entry>
     <title type="html"><![CDATA[Rails ActiveRecord Console Commands]]></title>
-    <link href="http://tunnelsup.github.io/rails-activerecord-console-commands/"/>
+    <link href="https://www.tunnelsup.com/rails-activerecord-console-commands/"/>
     <updated>2015-02-03T20:34:00-08:00</updated>
-    <id>http://tunnelsup.github.io/rails-activerecord-console-commands</id>
+    <id>https://www.tunnelsup.com/rails-activerecord-console-commands</id>
     <content type="html"><![CDATA[<p>It is possible to interact with the database of a Ruby on Rails project from the console. To enter the console execute this command from the command line within your project:</p>
 
 <p><code>rails console</code></p>
@@ -327,9 +327,9 @@ Using the <strong>create</strong> method:</p>
   
   <entry>
     <title type="html"><![CDATA[Getting Postfix to send incoming mail to Rails]]></title>
-    <link href="http://tunnelsup.github.io/getting-postfix-to-send-incoming-mail-to-rails/"/>
+    <link href="https://www.tunnelsup.com/getting-postfix-to-send-incoming-mail-to-rails/"/>
     <updated>2014-04-07T18:48:00-07:00</updated>
-    <id>http://tunnelsup.github.io/getting-postfix-to-send-incoming-mail-to-rails</id>
+    <id>https://www.tunnelsup.com/getting-postfix-to-send-incoming-mail-to-rails</id>
     <content type="html"><![CDATA[<p>Goal: Let&rsquo;s build a ruby on rails email web app that interfaces with postfix to send and receive email.</p>
 
 <p>This is a lot harder than it sounds. I gave this a try at two different times in my life and spent hours and hours troubleshooting to finally come up with a working solution. This is probably too big of a topic for one blog post but I&rsquo;m going to try to do it anyways!</p>
@@ -511,21 +511,21 @@ rake resque:work QUEUE='*'
 <p>Take a quick sample email and put it into a file like sample.email. Something that looks like this:</p>
 
 <p>```
-From <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#111;&#58;&#97;&#108;&#x69;&#x63;&#101;&#64;&#121;&#111;&#x75;&#114;&#100;&#111;&#109;&#x61;&#x69;&#x6e;&#46;&#99;&#x6f;&#x6d;">&#97;&#x6c;&#105;&#99;&#101;&#x40;&#x79;&#x6f;&#x75;&#114;&#x64;&#x6f;&#109;&#x61;&#x69;&#x6e;&#x2e;&#x63;&#x6f;&#x6d;</a>  Sun Apr  6 18:18:26 2014
-Return-Path: <a href="&#109;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x61;&#x6c;&#105;&#x63;&#x65;&#x40;&#x79;&#x6f;&#117;&#114;&#x64;&#x6f;&#109;&#x61;&#105;&#x6e;&#x2e;&#x63;&#111;&#109;">&#x61;&#108;&#105;&#99;&#101;&#64;&#x79;&#111;&#x75;&#114;&#x64;&#x6f;&#x6d;&#x61;&#105;&#110;&#46;&#x63;&#111;&#109;</a>
-X-Original-To: <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#111;&#x3a;&#x62;&#x6f;&#x62;&#64;&#121;&#x6f;&#117;&#114;&#x64;&#111;&#109;&#x61;&#x69;&#110;&#46;&#99;&#111;&#x6d;">&#98;&#111;&#98;&#x40;&#121;&#111;&#x75;&#x72;&#100;&#111;&#x6d;&#97;&#x69;&#x6e;&#x2e;&#x63;&#x6f;&#109;</a>
-Delivered-To: <a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#x3a;&#98;&#x6f;&#98;&#x40;&#x79;&#x6f;&#x75;&#x72;&#x64;&#x6f;&#109;&#97;&#105;&#x6e;&#46;&#99;&#x6f;&#109;">&#98;&#111;&#x62;&#x40;&#x79;&#x6f;&#x75;&#114;&#100;&#x6f;&#x6d;&#97;&#x69;&#x6e;&#x2e;&#x63;&#111;&#109;</a>
+From <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#97;&#x6c;&#105;&#99;&#101;&#64;&#121;&#x6f;&#x75;&#114;&#x64;&#111;&#x6d;&#97;&#105;&#x6e;&#x2e;&#x63;&#x6f;&#x6d;">&#x61;&#x6c;&#x69;&#x63;&#x65;&#64;&#x79;&#x6f;&#x75;&#x72;&#x64;&#x6f;&#109;&#x61;&#x69;&#x6e;&#x2e;&#99;&#111;&#109;</a>  Sun Apr  6 18:18:26 2014
+Return-Path: <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#58;&#x61;&#108;&#105;&#99;&#x65;&#x40;&#x79;&#111;&#117;&#x72;&#100;&#x6f;&#109;&#x61;&#105;&#110;&#x2e;&#x63;&#x6f;&#109;">&#97;&#x6c;&#105;&#99;&#x65;&#64;&#121;&#x6f;&#x75;&#x72;&#x64;&#111;&#x6d;&#x61;&#105;&#110;&#46;&#99;&#x6f;&#109;</a>
+X-Original-To: <a href="&#x6d;&#x61;&#105;&#108;&#116;&#111;&#58;&#x62;&#111;&#x62;&#64;&#121;&#x6f;&#117;&#x72;&#100;&#111;&#x6d;&#x61;&#105;&#110;&#x2e;&#99;&#x6f;&#109;">&#x62;&#111;&#x62;&#x40;&#x79;&#x6f;&#117;&#114;&#x64;&#111;&#109;&#97;&#105;&#x6e;&#46;&#99;&#x6f;&#109;</a>
+Delivered-To: <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#98;&#x6f;&#98;&#x40;&#x79;&#111;&#117;&#x72;&#x64;&#x6f;&#109;&#x61;&#x69;&#110;&#46;&#99;&#111;&#109;">&#98;&#x6f;&#98;&#64;&#x79;&#x6f;&#x75;&#x72;&#100;&#x6f;&#x6d;&#x61;&#105;&#110;&#x2e;&#99;&#x6f;&#109;</a>
 Received: by smtp.yourdomain.com (Postfix, from userid 1000)</p>
 
 <pre><code>    id A3D17282CF9; Sun,  6 Apr 2014 18:18:26 -0700 (PDT)
 </code></pre>
 
 <p>Subject: testing the ruby scripts
-To: <a href="&#109;&#97;&#105;&#108;&#x74;&#111;&#58;&#x62;&#x6f;&#98;&#x40;&#121;&#111;&#x75;&#114;&#x64;&#111;&#x6d;&#x61;&#105;&#x6e;&#x2e;&#x63;&#111;&#x6d;">&#98;&#111;&#x62;&#x40;&#121;&#x6f;&#117;&#114;&#x64;&#111;&#x6d;&#x61;&#105;&#110;&#x2e;&#99;&#111;&#x6d;</a>
+To: <a href="&#109;&#x61;&#x69;&#108;&#116;&#x6f;&#x3a;&#x62;&#x6f;&#x62;&#x40;&#x79;&#111;&#117;&#114;&#100;&#111;&#x6d;&#x61;&#105;&#110;&#46;&#x63;&#111;&#x6d;">&#x62;&#111;&#98;&#x40;&#x79;&#111;&#x75;&#114;&#x64;&#x6f;&#109;&#97;&#105;&#x6e;&#x2e;&#99;&#x6f;&#109;</a>
 X-Mailer: mail (GNU Mailutils 2.2)
-Message-Id: <a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#50;&#x30;&#x31;&#x34;&#x30;&#x34;&#48;&#x37;&#48;&#x31;&#49;&#x38;&#x32;&#54;&#x2e;&#x41;&#51;&#68;&#x31;&#55;&#x32;&#x38;&#50;&#x43;&#x46;&#57;&#x40;&#x73;&#109;&#116;&#x70;&#46;&#x79;&#x6f;&#x75;&#x72;&#100;&#x6f;&#109;&#97;&#x69;&#110;&#x2e;&#99;&#x6f;&#109;">&#50;&#x30;&#x31;&#x34;&#x30;&#52;&#x30;&#55;&#x30;&#49;&#49;&#56;&#x32;&#54;&#x2e;&#x41;&#51;&#68;&#49;&#x37;&#x32;&#56;&#x32;&#67;&#70;&#57;&#64;&#x73;&#109;&#x74;&#112;&#46;&#121;&#x6f;&#117;&#114;&#x64;&#x6f;&#109;&#x61;&#x69;&#110;&#x2e;&#x63;&#111;&#109;</a>
+Message-Id: <a href="&#109;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#x32;&#x30;&#49;&#52;&#x30;&#x34;&#x30;&#x37;&#48;&#49;&#49;&#56;&#50;&#54;&#46;&#x41;&#51;&#68;&#49;&#x37;&#50;&#56;&#50;&#67;&#70;&#x39;&#x40;&#115;&#x6d;&#116;&#112;&#46;&#x79;&#111;&#x75;&#114;&#100;&#111;&#x6d;&#97;&#x69;&#x6e;&#46;&#x63;&#x6f;&#109;">&#50;&#x30;&#x31;&#52;&#48;&#x34;&#48;&#x37;&#x30;&#49;&#49;&#x38;&#x32;&#x36;&#x2e;&#x41;&#51;&#68;&#49;&#x37;&#50;&#56;&#x32;&#x43;&#70;&#57;&#64;&#115;&#x6d;&#x74;&#x70;&#46;&#121;&#111;&#117;&#114;&#x64;&#x6f;&#x6d;&#97;&#x69;&#110;&#x2e;&#99;&#x6f;&#109;</a>
 Date: Sun,  6 Apr 2014 18:18:26 -0700 (PDT)
-From: <a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#58;&#97;&#108;&#105;&#99;&#x65;&#x40;&#x79;&#111;&#x75;&#x72;&#x64;&#111;&#x6d;&#x61;&#105;&#110;&#x2e;&#x63;&#111;&#x6d;">&#97;&#x6c;&#x69;&#x63;&#x65;&#x40;&#121;&#x6f;&#117;&#114;&#x64;&#x6f;&#x6d;&#x61;&#x69;&#110;&#46;&#99;&#111;&#109;</a> (alice)</p>
+From: <a href="&#109;&#x61;&#105;&#108;&#116;&#111;&#58;&#97;&#x6c;&#105;&#99;&#x65;&#64;&#121;&#111;&#x75;&#114;&#100;&#x6f;&#109;&#x61;&#105;&#x6e;&#46;&#x63;&#x6f;&#109;">&#97;&#x6c;&#105;&#x63;&#x65;&#x40;&#x79;&#x6f;&#117;&#114;&#x64;&#111;&#x6d;&#x61;&#105;&#x6e;&#46;&#99;&#x6f;&#x6d;</a> (alice)</p>
 
 <p>Hello, this is the body of the email.</p>
 
@@ -642,7 +642,7 @@ sudo useradd -c "Virtual Mail User" -g155 -u155 -s/bin/false vmail
 
 <p>Restart postfix by doing <code>sudo /etc/init.d/postfix restart</code>.</p>
 
-<p>If you&rsquo;ve created a user in your rails app and given them an email <a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x62;&#x6f;&#98;&#64;&#121;&#x6f;&#x75;&#x72;&#100;&#111;&#x6d;&#x61;&#x69;&#x6e;&#46;&#99;&#111;&#x6d;">&#x62;&#111;&#x62;&#64;&#x79;&#x6f;&#117;&#114;&#100;&#x6f;&#x6d;&#97;&#x69;&#110;&#46;&#x63;&#x6f;&#109;</a> then we can test that mail is being accepted for them. Try sending a test mail to that address with this command:</p>
+<p>If you&rsquo;ve created a user in your rails app and given them an email <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x62;&#111;&#x62;&#64;&#x79;&#x6f;&#117;&#114;&#100;&#x6f;&#x6d;&#97;&#x69;&#x6e;&#x2e;&#x63;&#x6f;&#x6d;">&#98;&#111;&#x62;&#64;&#x79;&#111;&#x75;&#x72;&#x64;&#111;&#109;&#x61;&#105;&#110;&#x2e;&#99;&#111;&#109;</a> then we can test that mail is being accepted for them. Try sending a test mail to that address with this command:</p>
 
 <p><code>
 date | mail -s test bob@yourdomain.com

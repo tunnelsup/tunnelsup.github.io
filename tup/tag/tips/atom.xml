@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: tips | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/tips/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/tips/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Understanding Cisco ASA interface counters and statistics]]></title>
-    <link href="http://tunnelsup.github.io/understanding-cisco-asa-interface-counters-and-statistics/"/>
+    <link href="https://www.tunnelsup.com/understanding-cisco-asa-interface-counters-and-statistics/"/>
     <updated>2013-07-29T13:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/understanding-cisco-asa-interface-counters-and-statistics</id>
+    <id>https://www.tunnelsup.com/understanding-cisco-asa-interface-counters-and-statistics</id>
     <content type="html"><![CDATA[<p>Upon doing a show interface command a lot of valuable information is displayed regarding the packets and errors on that interface.</p>
 
 <p>```
@@ -184,9 +184,9 @@ Various interface bandwidth statistics.</p>
   
   <entry>
     <title type="html"><![CDATA[Locating the Cisco AnyConnect profiles]]></title>
-    <link href="http://tunnelsup.github.io/locating-the-cisco-anyconnect-profiles/"/>
+    <link href="https://www.tunnelsup.com/locating-the-cisco-anyconnect-profiles/"/>
     <updated>2013-07-19T19:25:00-07:00</updated>
-    <id>http://tunnelsup.github.io/locating-the-cisco-anyconnect-profiles</id>
+    <id>https://www.tunnelsup.com/locating-the-cisco-anyconnect-profiles</id>
     <content type="html"><![CDATA[<h2>Local AnyConnect Profiles</h2>
 
 <p>XML and profile files are stored locally to the users machine. The location varies based on OS.</p>
@@ -216,9 +216,9 @@ Cisco AnyConnect Secure Mobility Client\Profile</p>
   
   <entry>
     <title type="html"><![CDATA[Cisco ASA Licensing Quick Reference Guide]]></title>
-    <link href="http://tunnelsup.github.io/cisco-asa-licensing-quick-reference-guide/"/>
+    <link href="https://www.tunnelsup.com/cisco-asa-licensing-quick-reference-guide/"/>
     <updated>2013-07-01T11:26:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-asa-licensing-quick-reference-guide</id>
+    <id>https://www.tunnelsup.com/cisco-asa-licensing-quick-reference-guide</id>
     <content type="html"><![CDATA[<p>One of the most confusing things about Cisco ASA&rsquo;s is the licensing structure. While it is very nice to have a single train of OS files to deal with, it is incredibly hard to keep track of all of the licensing details regarding the ASA. Here is a handy guide that may help you wade through the piles of documentation around it.</p>
 
 <h2>Quick Reference Guide</h2>
@@ -337,9 +337,9 @@ On the 5505 each interface is assigned a VLAN. This is stating only 3 VLANs can 
   
   <entry>
     <title type="html"><![CDATA[Using the Windows Command line like a pro]]></title>
-    <link href="http://tunnelsup.github.io/using-the-windows-command-line-like-a-pro/"/>
+    <link href="https://www.tunnelsup.com/using-the-windows-command-line-like-a-pro/"/>
     <updated>2013-06-18T19:17:00-07:00</updated>
-    <id>http://tunnelsup.github.io/using-the-windows-command-line-like-a-pro</id>
+    <id>https://www.tunnelsup.com/using-the-windows-command-line-like-a-pro</id>
     <content type="html"><![CDATA[<p>In this post I will be answering such question as: What is the &lsquo;cat&rsquo; equivalent in Windows? What is the &lsquo;grep&rsquo; equivalent in Windows? Yes that&rsquo;s right, we are visiting the Windows CLI today. The old DOS shell.</p>
 
 <p>These commands all work in Windows 7 and Server 2008; most of them also work in Windows XP.</p>
@@ -480,9 +480,9 @@ System Boot Time:          6/4/2013, 12:53:27 PM</p>
   
   <entry>
     <title type="html"><![CDATA[Chromaterm]]></title>
-    <link href="http://tunnelsup.github.io/chromaterm/"/>
+    <link href="https://www.tunnelsup.com/chromaterm/"/>
     <updated>2013-06-16T22:31:00-07:00</updated>
-    <id>http://tunnelsup.github.io/chromaterm</id>
+    <id>https://www.tunnelsup.com/chromaterm</id>
     <content type="html"><![CDATA[<h2>About</h2>
 
 <p>Chromaterm is a terminal colorization tool that runs on linux and is produced by TunnelsUp.com. It essentially acts as a wrapper for the linux shell. Once it starts it then starts a new shell. Any activity within that new shell will be ran through Chromaterm. Chromaterm listens for keywords, that are user defined, and will highlight them with user defined colors.</p>

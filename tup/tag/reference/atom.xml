@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: reference | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/reference/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/reference/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Default Router Passwords]]></title>
-    <link href="http://tunnelsup.github.io/default-router-passwords/"/>
+    <link href="https://www.tunnelsup.com/default-router-passwords/"/>
     <updated>2014-07-25T22:37:00-07:00</updated>
-    <id>http://tunnelsup.github.io/default-router-passwords</id>
+    <id>https://www.tunnelsup.com/default-router-passwords</id>
     <content type="html"><![CDATA[<div>
   <style>
      table.ztab1 {
@@ -157,9 +157,9 @@
   
   <entry>
     <title type="html"><![CDATA[Cisco ASA to Juniper ScreenOS to Juniper JunOS Command Reference Cheat Sheet]]></title>
-    <link href="http://tunnelsup.github.io/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet/"/>
+    <link href="https://www.tunnelsup.com/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet/"/>
     <updated>2012-07-06T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet</id>
+    <id>https://www.tunnelsup.com/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet</id>
     <content type="html"><![CDATA[<div>
   <style>
      table.ztab1 {

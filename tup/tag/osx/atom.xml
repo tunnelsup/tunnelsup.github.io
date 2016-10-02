@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: osx | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/osx/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/osx/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Mac OSX How to Lock the Screen]]></title>
-    <link href="http://tunnelsup.github.io/mac-osx-how-to-lock-the-screen/"/>
+    <link href="https://www.tunnelsup.com/mac-osx-how-to-lock-the-screen/"/>
     <updated>2016-09-23T18:18:00-07:00</updated>
-    <id>http://tunnelsup.github.io/mac-osx-how-to-lock-the-screen</id>
+    <id>https://www.tunnelsup.com/mac-osx-how-to-lock-the-screen</id>
     <content type="html"><![CDATA[<p>To lock the screen of a Macbook or Mac running OSX use the following key combination:</p>
 
 <p><code>&lt;CONTROL&gt;</code> + <code>&lt;SHIFT&gt;</code> + <code>&lt;POWER&gt;</code></p>
@@ -42,9 +42,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to set a static IP on Mac OSX]]></title>
-    <link href="http://tunnelsup.github.io/how-to-set-a-static-ip-on-mac-osx/"/>
+    <link href="https://www.tunnelsup.com/how-to-set-a-static-ip-on-mac-osx/"/>
     <updated>2016-09-22T21:28:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-set-a-static-ip-on-mac-osx</id>
+    <id>https://www.tunnelsup.com/how-to-set-a-static-ip-on-mac-osx</id>
     <content type="html"><![CDATA[<p>Are you using a Macbook Pro or Macbook Air and want to know how to show the change the interface to use a static IP? Follow the steps below to complete this.</p>
 
 <h2>1. Go to Preferences</h2>
@@ -72,9 +72,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to see the routing table on Mac OSX]]></title>
-    <link href="http://tunnelsup.github.io/how-to-see-the-routing-table-on-mac-osx/"/>
+    <link href="https://www.tunnelsup.com/how-to-see-the-routing-table-on-mac-osx/"/>
     <updated>2016-09-20T20:39:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-see-the-routing-table-on-mac-osx</id>
+    <id>https://www.tunnelsup.com/how-to-see-the-routing-table-on-mac-osx</id>
     <content type="html"><![CDATA[<p>Do you have a Macbook Pro or Macbook Air and want to know how to show the routes it has in the routing table? Are you looking for the Windows command <strong>route print</strong> equivalent in OSX? This post is for you.</p>
 
 <h2>Show Routes</h2>
@@ -110,9 +110,9 @@ default            192.168.20.1       UGSc           39        0     en0
   
   <entry>
     <title type="html"><![CDATA[The best free screen recording software for Mac OSX]]></title>
-    <link href="http://tunnelsup.github.io/the-best-free-screen-recording-software-for-mac-osx/"/>
+    <link href="https://www.tunnelsup.com/the-best-free-screen-recording-software-for-mac-osx/"/>
     <updated>2014-09-18T23:49:00-07:00</updated>
-    <id>http://tunnelsup.github.io/the-best-free-screen-recording-software-for-mac-osx</id>
+    <id>https://www.tunnelsup.com/the-best-free-screen-recording-software-for-mac-osx</id>
     <content type="html"><![CDATA[<p>The QuickTime video player that comes installed in OSX by default can also do screen recording. It does a decent job at screen recording and since it&rsquo;s free and already on the system it is the best free software for doing screen recording on Mac OSX.</p>
 
 <h3>Features of the QuickTime screen recording software</h3>
@@ -155,9 +155,9 @@ default            192.168.20.1       UGSc           39        0     en0
   
   <entry>
     <title type="html"><![CDATA[How to take a screenshot on Mac OSX]]></title>
-    <link href="http://tunnelsup.github.io/how-to-take-a-screenshot-on-mac-osx/"/>
+    <link href="https://www.tunnelsup.com/how-to-take-a-screenshot-on-mac-osx/"/>
     <updated>2014-09-18T23:35:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-take-a-screenshot-on-mac-osx</id>
+    <id>https://www.tunnelsup.com/how-to-take-a-screenshot-on-mac-osx</id>
     <content type="html"><![CDATA[<p>Mac OSX has multiple ways to take a screenshot depending on what you need to capture.</p>
 
 <table class="table">

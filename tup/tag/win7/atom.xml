@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: win7 | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/win7/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/win7/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Using the Windows Command line like a pro]]></title>
-    <link href="http://tunnelsup.github.io/using-the-windows-command-line-like-a-pro/"/>
+    <link href="https://www.tunnelsup.com/using-the-windows-command-line-like-a-pro/"/>
     <updated>2013-06-18T19:17:00-07:00</updated>
-    <id>http://tunnelsup.github.io/using-the-windows-command-line-like-a-pro</id>
+    <id>https://www.tunnelsup.com/using-the-windows-command-line-like-a-pro</id>
     <content type="html"><![CDATA[<p>In this post I will be answering such question as: What is the &lsquo;cat&rsquo; equivalent in Windows? What is the &lsquo;grep&rsquo; equivalent in Windows? Yes that&rsquo;s right, we are visiting the Windows CLI today. The old DOS shell.</p>
 
 <p>These commands all work in Windows 7 and Server 2008; most of them also work in Windows XP.</p>
@@ -158,9 +158,9 @@ System Boot Time:          6/4/2013, 12:53:27 PM</p>
   
   <entry>
     <title type="html"><![CDATA[How to move a window that is off the screen into view in Windows 7]]></title>
-    <link href="http://tunnelsup.github.io/how-to-move-a-window-that-is-off-the-screen-into-view-in-windows-7/"/>
+    <link href="https://www.tunnelsup.com/how-to-move-a-window-that-is-off-the-screen-into-view-in-windows-7/"/>
     <updated>2013-04-08T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-move-a-window-that-is-off-the-screen-into-view-in-windows-7</id>
+    <id>https://www.tunnelsup.com/how-to-move-a-window-that-is-off-the-screen-into-view-in-windows-7</id>
     <content type="html"><![CDATA[<p>Sometimes when you are using a laptop with multiple displays and then unplug from those displays there will be windows that are outside the viewing area of your laptop. Sometimes these windows can be pesky and not want to come back to the screen. If you are using Windows 7, try this:</p>
 
 <ol>

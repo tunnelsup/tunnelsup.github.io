@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ping | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/ping/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/ping/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[What is ping?]]></title>
-    <link href="http://tunnelsup.github.io/what-is-ping/"/>
+    <link href="https://www.tunnelsup.com/what-is-ping/"/>
     <updated>2014-12-30T22:15:00-08:00</updated>
-    <id>http://tunnelsup.github.io/what-is-ping</id>
+    <id>https://www.tunnelsup.com/what-is-ping</id>
     <content type="html"><![CDATA[<p>A &ldquo;ping&rdquo; is a way for one computer to check if it can reach another computer using the networking IP protocol. The source computer can do a ping command to check if a destination computer is reachable, replies to pings, and the time it took to get there and back. The result will be the round-trip time it took for an IP packet to make it to the destination and back. The name comes from sonar terminology which would send a pulse and wait for the echo response.</p>
 
 <p><img src="/images/ping-icmp.gif"></p>
@@ -131,9 +131,9 @@ round-trip min/avg/max/stddev = 13.934/15.243/16.836/1.282 ms
   
   <entry>
     <title type="html"><![CDATA[How to do a Continuous Ping]]></title>
-    <link href="http://tunnelsup.github.io/continuous-ping/"/>
+    <link href="https://www.tunnelsup.com/continuous-ping/"/>
     <updated>2013-06-06T23:29:00-07:00</updated>
-    <id>http://tunnelsup.github.io/continuous-ping</id>
+    <id>https://www.tunnelsup.com/continuous-ping</id>
     <content type="html"><![CDATA[<p>Below are methods to create a continuous ping in different environments.</p>
 
 <p>To learn more about pings see the blog post <a href="http://www.tunnelsup.com/what-is-ping/">What is ping?</a></p>

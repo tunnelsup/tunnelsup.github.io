@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: attacks | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/attacks/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/attacks/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[8 Ways to Defend Against Denial of Service Attacks]]></title>
-    <link href="http://tunnelsup.github.io/8-ways-to-defend-against-denial-of-service-attacks/"/>
+    <link href="https://www.tunnelsup.com/8-ways-to-defend-against-denial-of-service-attacks/"/>
     <updated>2016-05-02T15:48:00-07:00</updated>
-    <id>http://tunnelsup.github.io/8-ways-to-defend-against-denial-of-service-attacks</id>
+    <id>https://www.tunnelsup.com/8-ways-to-defend-against-denial-of-service-attacks</id>
     <content type="html"><![CDATA[<p>Protecting against Denial of Service attacks is difficult and takes numerous steps to protect the network. Unfortunately, even with all these steps it&rsquo;s still possibly to have a DoS scenario in the network. A large DoS attack is not that hard technically or economically to conduct.</p>
 
 <p>First get to know the <a href="/different-types-of-dos-attacks/">different types of DoS attacks</a>.</p>
@@ -100,9 +100,9 @@
   
   <entry>
     <title type="html"><![CDATA[Different Types of DoS Attacks]]></title>
-    <link href="http://tunnelsup.github.io/different-types-of-dos-attacks/"/>
+    <link href="https://www.tunnelsup.com/different-types-of-dos-attacks/"/>
     <updated>2016-05-01T11:06:00-07:00</updated>
-    <id>http://tunnelsup.github.io/different-types-of-dos-attacks</id>
+    <id>https://www.tunnelsup.com/different-types-of-dos-attacks</id>
     <content type="html"><![CDATA[<p>A Denial of Service attack or DoS attack is where the adversary disrupts the target&rsquo;s cyber application. This could be taking down their server, overwhelming a network, or causing a system to break. There a few different ways this can be achieved.</p>
 
 <p>To protect against a DoS you must first understand the multiple types of DoS style attacks.</p>

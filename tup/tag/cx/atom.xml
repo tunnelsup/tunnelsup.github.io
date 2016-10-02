@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: cx | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/cx/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/cx/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Installing Cisco CX ASA]]></title>
-    <link href="http://tunnelsup.github.io/installing-cisco-cx-asa/"/>
+    <link href="https://www.tunnelsup.com/installing-cisco-cx-asa/"/>
     <updated>2013-07-13T10:39:00-07:00</updated>
-    <id>http://tunnelsup.github.io/installing-cisco-cx-asa</id>
+    <id>https://www.tunnelsup.com/installing-cisco-cx-asa</id>
     <content type="html"><![CDATA[<p>The Cisco ASA 5500-X series firewalls can utilize the new CX features that will enable it to be a &ldquo;next gen firewall&rdquo; or &ldquo;context aware&rdquo;.</p>
 
 <p>Installing CX requires a few unique commands.</p>

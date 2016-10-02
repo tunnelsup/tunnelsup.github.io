@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: architecture | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/architecture/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/architecture/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Who should decide what policies are applied to the firewall?]]></title>
-    <link href="http://tunnelsup.github.io/who-should-decide-what-policies-are-applied-to-the-firewall/"/>
+    <link href="https://www.tunnelsup.com/who-should-decide-what-policies-are-applied-to-the-firewall/"/>
     <updated>2016-03-29T23:30:00-07:00</updated>
-    <id>http://tunnelsup.github.io/who-should-decide-what-policies-are-applied-to-the-firewall</id>
+    <id>https://www.tunnelsup.com/who-should-decide-what-policies-are-applied-to-the-firewall</id>
     <content type="html"><![CDATA[<p>Firewall rules determine what IPs and ports are allowed through the firewall. We can also consider NAT rules which determine what IPs get translated as they go through the firewall.</p>
 
 <p>So here&rsquo;s a not so simple question. Should the firewall admins/engineers decide what rules should be in the firewall? Or should someone else make that decision?</p>

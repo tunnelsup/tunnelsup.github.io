@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: mac | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/mac/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/mac/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Mac OSX How to Lock the Screen]]></title>
-    <link href="http://tunnelsup.github.io/mac-osx-how-to-lock-the-screen/"/>
+    <link href="https://www.tunnelsup.com/mac-osx-how-to-lock-the-screen/"/>
     <updated>2016-09-23T18:18:00-07:00</updated>
-    <id>http://tunnelsup.github.io/mac-osx-how-to-lock-the-screen</id>
+    <id>https://www.tunnelsup.com/mac-osx-how-to-lock-the-screen</id>
     <content type="html"><![CDATA[<p>To lock the screen of a Macbook or Mac running OSX use the following key combination:</p>
 
 <p><code>&lt;CONTROL&gt;</code> + <code>&lt;SHIFT&gt;</code> + <code>&lt;POWER&gt;</code></p>
@@ -42,9 +42,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to set a static IP on Mac OSX]]></title>
-    <link href="http://tunnelsup.github.io/how-to-set-a-static-ip-on-mac-osx/"/>
+    <link href="https://www.tunnelsup.com/how-to-set-a-static-ip-on-mac-osx/"/>
     <updated>2016-09-22T21:28:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-set-a-static-ip-on-mac-osx</id>
+    <id>https://www.tunnelsup.com/how-to-set-a-static-ip-on-mac-osx</id>
     <content type="html"><![CDATA[<p>Are you using a Macbook Pro or Macbook Air and want to know how to show the change the interface to use a static IP? Follow the steps below to complete this.</p>
 
 <h2>1. Go to Preferences</h2>
@@ -72,9 +72,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to see the routing table on Mac OSX]]></title>
-    <link href="http://tunnelsup.github.io/how-to-see-the-routing-table-on-mac-osx/"/>
+    <link href="https://www.tunnelsup.com/how-to-see-the-routing-table-on-mac-osx/"/>
     <updated>2016-09-20T20:39:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-see-the-routing-table-on-mac-osx</id>
+    <id>https://www.tunnelsup.com/how-to-see-the-routing-table-on-mac-osx</id>
     <content type="html"><![CDATA[<p>Do you have a Macbook Pro or Macbook Air and want to know how to show the routes it has in the routing table? Are you looking for the Windows command <strong>route print</strong> equivalent in OSX? This post is for you.</p>
 
 <h2>Show Routes</h2>
@@ -110,9 +110,9 @@ default            192.168.20.1       UGSc           39        0     en0
   
   <entry>
     <title type="html"><![CDATA[hosts file]]></title>
-    <link href="http://tunnelsup.github.io/hosts-file/"/>
+    <link href="https://www.tunnelsup.com/hosts-file/"/>
     <updated>2015-01-22T20:47:00-08:00</updated>
-    <id>http://tunnelsup.github.io/hosts-file</id>
+    <id>https://www.tunnelsup.com/hosts-file</id>
     <content type="html"><![CDATA[<p>The &lsquo;hosts&rsquo; file is a hostname to IP address map used for local DNS resolution. When a computer needs to talk to another computer it needs to first know the IP address of the second computer. This is where DNS converts a hostname to an IP address.</p>
 
 <h2>DNS Order of Operations</h2>
@@ -174,9 +174,9 @@ default            192.168.20.1       UGSc           39        0     en0
   
   <entry>
     <title type="html"><![CDATA[Setting up PostgreSQL on Mac OSX]]></title>
-    <link href="http://tunnelsup.github.io/setting-up-postgres-on-mac-osx/"/>
+    <link href="https://www.tunnelsup.com/setting-up-postgres-on-mac-osx/"/>
     <updated>2014-11-13T22:03:00-08:00</updated>
-    <id>http://tunnelsup.github.io/setting-up-postgres-on-mac-osx</id>
+    <id>https://www.tunnelsup.com/setting-up-postgres-on-mac-osx</id>
     <content type="html"><![CDATA[<p>Here are the steps I used to set up Postgres in Mac OSX. Most of what is written here was learned from <a href="http://blog.willj.net/2011/05/31/setting-up-postgresql-for-ruby-on-rails-development-on-os-x/">this blog post</a>. I am saving my notes here in case that site gets removed.</p>
 
 <h3>Install Postgress using brew</h3>

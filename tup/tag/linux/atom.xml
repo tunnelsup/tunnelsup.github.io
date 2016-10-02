@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: linux | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/linux/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/linux/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to set a static IP in linux]]></title>
-    <link href="http://tunnelsup.github.io/how-to-set-a-static-ip-in-linux/"/>
+    <link href="https://www.tunnelsup.com/how-to-set-a-static-ip-in-linux/"/>
     <updated>2016-09-12T16:32:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-set-a-static-ip-in-linux</id>
+    <id>https://www.tunnelsup.com/how-to-set-a-static-ip-in-linux</id>
     <content type="html"><![CDATA[<p>The following will work for any debian base linux distro. That includes <strong>Ubuntu</strong>, <strong>Kali</strong>, <strong>Raspberry Pi (Raspian Jessie)</strong>, <strong>TAILS</strong>, and many more.</p>
 
 <h2>Edit Interface Settings</h2>
@@ -115,9 +115,9 @@ eth0      Link encap:Ethernet  HWaddr d8:eb:97:bd:53:4e</p>
   
   <entry>
     <title type="html"><![CDATA[Using the Linux Watch Command]]></title>
-    <link href="http://tunnelsup.github.io/using-the-linux-watch-command/"/>
+    <link href="https://www.tunnelsup.com/using-the-linux-watch-command/"/>
     <updated>2016-05-05T08:50:00-07:00</updated>
-    <id>http://tunnelsup.github.io/using-the-linux-watch-command</id>
+    <id>https://www.tunnelsup.com/using-the-linux-watch-command</id>
     <content type="html"><![CDATA[<p>A somewhat lesser known linux command is <code>watch</code>. It will display the output of a regular command and update the screen if that output changes. Here are some helpful use cases.</p>
 
 <h2>Watch for directory contents changing</h2>
@@ -146,9 +146,9 @@ eth0      Link encap:Ethernet  HWaddr d8:eb:97:bd:53:4e</p>
   
   <entry>
     <title type="html"><![CDATA[ssh Remote Host Identification Has Changed]]></title>
-    <link href="http://tunnelsup.github.io/ssh-remote-host-identification-has-changed/"/>
+    <link href="https://www.tunnelsup.com/ssh-remote-host-identification-has-changed/"/>
     <updated>2015-02-28T20:41:00-08:00</updated>
-    <id>http://tunnelsup.github.io/ssh-remote-host-identification-has-changed</id>
+    <id>https://www.tunnelsup.com/ssh-remote-host-identification-has-changed</id>
     <content type="html"><![CDATA[<p>Sometimes when you are trying to do ssh from a linux machine you may see this message:</p>
 
 <p><code>
@@ -203,9 +203,9 @@ Host key verification failed.
   
   <entry>
     <title type="html"><![CDATA[How to change the output color when using ls in bash]]></title>
-    <link href="http://tunnelsup.github.io/how-to-change-the-output-color-when-using-ls-in-bash/"/>
+    <link href="https://www.tunnelsup.com/how-to-change-the-output-color-when-using-ls-in-bash/"/>
     <updated>2015-02-14T16:34:00-08:00</updated>
-    <id>http://tunnelsup.github.io/how-to-change-the-output-color-when-using-ls-in-bash</id>
+    <id>https://www.tunnelsup.com/how-to-change-the-output-color-when-using-ls-in-bash</id>
     <content type="html"><![CDATA[<p>Sometimes when using Linux in bash or zsh you may have a hard time seeing directories. If you have ANSI colors turned on and your terminal background color is black seeing the directories is hard. That is because the directory color is dark blue by default. The fix to this is to change the dircolors which uses an environmental variable <code>$LS_COLORS</code>.</p>
 
 <h3>Change the dir color</h3>
@@ -243,9 +243,9 @@ LS_COLORS="$LS_COLORS:di=01;33"
   
   <entry>
     <title type="html"><![CDATA[Securing an Ubuntu Linux Server]]></title>
-    <link href="http://tunnelsup.github.io/securing-an-ubuntu-linux-server/"/>
+    <link href="https://www.tunnelsup.com/securing-an-ubuntu-linux-server/"/>
     <updated>2015-02-14T10:56:00-08:00</updated>
-    <id>http://tunnelsup.github.io/securing-an-ubuntu-linux-server</id>
+    <id>https://www.tunnelsup.com/securing-an-ubuntu-linux-server</id>
     <content type="html"><![CDATA[<p>Some great aritcles on how to secure an Ubuntu Linux Server.</p>
 
 <p><a href="http://feross.org/how-to-setup-your-linode/">http://feross.org/how-to-setup-your-linode/</a></p>

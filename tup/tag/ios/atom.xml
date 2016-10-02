@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ios | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/ios/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/ios/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Packet capture for Cisco IOS Router]]></title>
-    <link href="http://tunnelsup.github.io/packet-capture-for-cisco-ios-router/"/>
+    <link href="https://www.tunnelsup.com/packet-capture-for-cisco-ios-router/"/>
     <updated>2015-11-11T23:05:00-08:00</updated>
-    <id>http://tunnelsup.github.io/packet-capture-for-cisco-ios-router</id>
+    <id>https://www.tunnelsup.com/packet-capture-for-cisco-ios-router</id>
     <content type="html"><![CDATA[<p>Having the ability to conduct packet captures is a valuable tool for troubleshooting connectivity issues within a network. IOS routers 12.4(20)T and up has the Embedded Packet Capture (EPC) built in to it.</p>
 
 <p><a href="/packet-captures-on-cisco-asa/">How to do packet captures on a Cisco ASA</a></p>
@@ -80,9 +80,9 @@ monitor buffer export CAPBUF tftp://192.168.1.21/myrouter.pcap
   
   <entry>
     <title type="html"><![CDATA[Cisco Nexus Packet Captures with Ethanalyzer]]></title>
-    <link href="http://tunnelsup.github.io/cisco-ios-packet-captures-with-ethanalyzer/"/>
+    <link href="https://www.tunnelsup.com/cisco-ios-packet-captures-with-ethanalyzer/"/>
     <updated>2015-11-11T22:46:00-08:00</updated>
-    <id>http://tunnelsup.github.io/cisco-ios-packet-captures-with-ethanalyzer</id>
+    <id>https://www.tunnelsup.com/cisco-ios-packet-captures-with-ethanalyzer</id>
     <content type="html"><![CDATA[<p>There is a lesser known built in packet capture tool in Nexus OS called Ethanalyzer.</p>
 
 <p>Valid for Nexus models
@@ -143,9 +143,9 @@ ethanalyzer local interface inband write MYCAPTURE.pcap display-filter ip.src==1
   
   <entry>
     <title type="html"><![CDATA[Cisco IOS VPN error: peer does not do paranoid keepalives]]></title>
-    <link href="http://tunnelsup.github.io/cisco-ios-vpn-error-peer-does-not-do-paranoid-keepalives/"/>
+    <link href="https://www.tunnelsup.com/cisco-ios-vpn-error-peer-does-not-do-paranoid-keepalives/"/>
     <updated>2013-07-13T10:37:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-ios-vpn-error-peer-does-not-do-paranoid-keepalives</id>
+    <id>https://www.tunnelsup.com/cisco-ios-vpn-error-peer-does-not-do-paranoid-keepalives</id>
     <content type="html"><![CDATA[<p>Recently I was troubleshooting a VPN tunnel and the tunnel appeared to be at MM_NO_STATE whenever I&rsquo;d try to bring the tunnel up. I turned on <code>debug crypto isakmp</code> and saw the following output:</p>
 
 <p>```
@@ -338,9 +338,9 @@ ISAKMP (0:0): received packet from 77.77.77.77 dport 500 sport 500 Global (I) MM
   
   <entry>
     <title type="html"><![CDATA[Encrypt Passwords on Cisco Router]]></title>
-    <link href="http://tunnelsup.github.io/encrypt-passwords-on-cisco-router/"/>
+    <link href="https://www.tunnelsup.com/encrypt-passwords-on-cisco-router/"/>
     <updated>2013-06-17T22:26:00-07:00</updated>
-    <id>http://tunnelsup.github.io/encrypt-passwords-on-cisco-router</id>
+    <id>https://www.tunnelsup.com/encrypt-passwords-on-cisco-router</id>
     <content type="html"><![CDATA[<p>By default, when adding a username and password to a Cisco router or switch, the password will show up as clear text. So the question then becomes:</p>
 
 <h3>How do you encrypt the password on a Cisco Router?</h3>

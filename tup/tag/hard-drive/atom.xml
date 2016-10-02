@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: hard drive | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/hard-drive/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/hard-drive/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[MARS hard drive issues]]></title>
-    <link href="http://tunnelsup.github.io/mars-hard-drive-issues/"/>
+    <link href="https://www.tunnelsup.com/mars-hard-drive-issues/"/>
     <updated>2013-06-06T10:52:00-07:00</updated>
-    <id>http://tunnelsup.github.io/mars-hard-drive-issues</id>
+    <id>https://www.tunnelsup.com/mars-hard-drive-issues</id>
     <content type="html"><![CDATA[<h3>Possible results from the <code>raidstatus</code> command for MARS 55, 110R, 110, 210, GC2R, and GC2</h3>
 
 <p>Use the <code>raidstatus</code> CLI command to view the status of the RAID array (virtual disk) and of the individual HDDs.</p>

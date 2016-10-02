@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: juniper | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/juniper/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/juniper/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Sample Juniper JunOS Config for SRX210]]></title>
-    <link href="http://tunnelsup.github.io/sample-juniper-junos-config-for-srx210/"/>
+    <link href="https://www.tunnelsup.com/sample-juniper-junos-config-for-srx210/"/>
     <updated>2016-04-16T23:23:00-07:00</updated>
-    <id>http://tunnelsup.github.io/sample-juniper-junos-config-for-srx210</id>
+    <id>https://www.tunnelsup.com/sample-juniper-junos-config-for-srx210</id>
     <content type="html"><![CDATA[<p>Need a quick template to get you started deploying a Juniper SRX 210? These are usually firewalls that go into a small office or home office. In our configuration below, it is plugging into a cable modem, and has no DMZ or static NATs.</p>
 
 <p>```
@@ -106,9 +106,9 @@ set applications application-set MGT-SERVICES application junos-ssh
   
   <entry>
     <title type="html"><![CDATA[Troubleshooting high CPU on Juniper SRX Junos devices]]></title>
-    <link href="http://tunnelsup.github.io/troubleshooting-high-cpu-on-juniper-srx-junos-devices/"/>
+    <link href="https://www.tunnelsup.com/troubleshooting-high-cpu-on-juniper-srx-junos-devices/"/>
     <updated>2015-09-30T19:20:00-07:00</updated>
-    <id>http://tunnelsup.github.io/troubleshooting-high-cpu-on-juniper-srx-junos-devices</id>
+    <id>https://www.tunnelsup.com/troubleshooting-high-cpu-on-juniper-srx-junos-devices</id>
     <content type="html"><![CDATA[<p>Occasionally a Juniper SRX device running Junos will have a high CPU. Here are some tips for troubleshooting these incidents.</p>
 
 <h2>Validate</h2>
@@ -251,9 +251,9 @@ Max flow session     : 131072
   
   <entry>
     <title type="html"><![CDATA[Useful Juniper SRX Troubleshooting Commands]]></title>
-    <link href="http://tunnelsup.github.io/useful-juniper-srx-troubleshooting-commands/"/>
+    <link href="https://www.tunnelsup.com/useful-juniper-srx-troubleshooting-commands/"/>
     <updated>2015-09-06T13:04:00-07:00</updated>
-    <id>http://tunnelsup.github.io/useful-juniper-srx-troubleshooting-commands</id>
+    <id>https://www.tunnelsup.com/useful-juniper-srx-troubleshooting-commands</id>
     <content type="html"><![CDATA[<p>Here&rsquo;s a list of my favorite Juniper SRX Junos commands I use for troubleshooting.</p>
 
 <h3>Show config as single lines instead of stanzas</h3>
@@ -338,9 +338,9 @@ show chassis craft-interface
   
   <entry>
     <title type="html"><![CDATA[Juniper Netscreen troubleshooting NSRP and HA]]></title>
-    <link href="http://tunnelsup.github.io/juniper-netscreen-troubleshooting-nsrp-and-ha/"/>
+    <link href="https://www.tunnelsup.com/juniper-netscreen-troubleshooting-nsrp-and-ha/"/>
     <updated>2014-08-26T15:47:00-07:00</updated>
-    <id>http://tunnelsup.github.io/juniper-netscreen-troubleshooting-nsrp-and-ha</id>
+    <id>https://www.tunnelsup.com/juniper-netscreen-troubleshooting-nsrp-and-ha</id>
     <content type="html"><![CDATA[<p>Some basic commands to help troubleshoot NSRP (failover/high availability) with Juniper Netscreen SSG devices.</p>
 
 <h3>Review the NSRP configuration</h3>
@@ -472,9 +472,9 @@ Date       Time     Module Level  Type Description
   
   <entry>
     <title type="html"><![CDATA[Juniper SRX troubleshooting SNMP polling]]></title>
-    <link href="http://tunnelsup.github.io/juniper-srx-troubleshooting-snmp-polling/"/>
+    <link href="https://www.tunnelsup.com/juniper-srx-troubleshooting-snmp-polling/"/>
     <updated>2014-08-26T15:46:00-07:00</updated>
-    <id>http://tunnelsup.github.io/juniper-srx-troubleshooting-snmp-polling</id>
+    <id>https://www.tunnelsup.com/juniper-srx-troubleshooting-snmp-polling</id>
     <content type="html"><![CDATA[<p>Having trouble doing an SNMP walk on a Juniper SRX? Here are some troubleshooting tips to help solve the problem.</p>
 
 <h2>Configure the SRX for SNMP</h2>

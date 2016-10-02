@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: asp | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/asp/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/asp/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Learning about ASP tables, SPI and VPN contexts]]></title>
-    <link href="http://tunnelsup.github.io/learning-about-asp-tables-spi-and-vpn-contexts/"/>
+    <link href="https://www.tunnelsup.com/learning-about-asp-tables-spi-and-vpn-contexts/"/>
     <updated>2011-10-19T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/learning-about-asp-tables-spi-and-vpn-contexts</id>
+    <id>https://www.tunnelsup.com/learning-about-asp-tables-spi-and-vpn-contexts</id>
     <content type="html"><![CDATA[<p>After a lengthy phone call with Cisco TAC I learned an interesting link between a few commands on an ASA for analyzing tunnels.</p>
 
 <p>Suppose we are REALLY having trouble getting a tunnel up. You are sure the traffic is hitting the firewall that should be encrypted but the tunnel is just not even attempting phase one. These show commands may help identify a problem.</p>

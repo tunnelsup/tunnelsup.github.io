@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: octopress | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/octopress/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/octopress/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Adding Swiftype to Octopress]]></title>
-    <link href="http://tunnelsup.github.io/adding-swiftype-to-octopress/"/>
+    <link href="https://www.tunnelsup.com/adding-swiftype-to-octopress/"/>
     <updated>2015-01-24T20:36:00-08:00</updated>
-    <id>http://tunnelsup.github.io/adding-swiftype-to-octopress</id>
+    <id>https://www.tunnelsup.com/adding-swiftype-to-octopress</id>
     <content type="html"><![CDATA[<p>You may have seen Doug&rsquo;s post on <a href="http://canadian-fury.com/2012/05/19/presenting-swiftype-integration-and-an-explanation-of-how-to-do-it/">how to add Swiftype to Octopress</a>. I originally followed it to get things working too. But I wanted a slightly different experience and here are my notes for that.</p>
 
 <p>I was on the mission to speed up this site. So I was really scrutinizing the page load times and found that Swiftype javascript was loading for each page. My Swiftype weekly report was showing that almost none of my users were actually using the typeahead search feature. So I decided I don&rsquo;t need that portion on this website. Instead I&rsquo;ll just have Swiftype installed on the search results page only.</p>
@@ -120,9 +120,9 @@
   
   <entry>
     <title type="html"><![CDATA[Creating a custom 404 page in Heroku and Octopress]]></title>
-    <link href="http://tunnelsup.github.io/creating-a-custom-404-page-in-heroku-and-octopress/"/>
+    <link href="https://www.tunnelsup.com/creating-a-custom-404-page-in-heroku-and-octopress/"/>
     <updated>2015-01-22T21:26:00-08:00</updated>
-    <id>http://tunnelsup.github.io/creating-a-custom-404-page-in-heroku-and-octopress</id>
+    <id>https://www.tunnelsup.com/creating-a-custom-404-page-in-heroku-and-octopress</id>
     <content type="html"><![CDATA[<p>A 404 page not found error occurs when the webserver cannot find the webpage or URL the user requested. Here are some benefits to having an error 404 not found page on your website:</p>
 
 <ul>

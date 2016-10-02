@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: cracking | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/cracking/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/cracking/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Getting Started Cracking Password Hashes with John the Ripper]]></title>
-    <link href="http://tunnelsup.github.io/getting-started-cracking-password-hashes/"/>
+    <link href="https://www.tunnelsup.com/getting-started-cracking-password-hashes/"/>
     <updated>2016-09-08T21:23:00-07:00</updated>
-    <id>http://tunnelsup.github.io/getting-started-cracking-password-hashes</id>
+    <id>https://www.tunnelsup.com/getting-started-cracking-password-hashes</id>
     <content type="html"><![CDATA[<p>Want to get started with password cracking and not sure where to begin? In this post we&rsquo;ll explore how to get started with it.</p>
 
 <p>Most systems don&rsquo;t store passwords on them. Instead they store hashes of passwords and when authentication takes place, the password is hashes and if the hashes match authentication is successful. Different systems store password hashes in different ways depending on the encryption used.</p>

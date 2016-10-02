@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: checkpoint | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/checkpoint/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/checkpoint/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to SCP transfer a file off of a Checkpoint Firewall]]></title>
-    <link href="http://tunnelsup.github.io/how-to-scp-transfer-a-file-off-of-a-checkpoint-firewall/"/>
+    <link href="https://www.tunnelsup.com/how-to-scp-transfer-a-file-off-of-a-checkpoint-firewall/"/>
     <updated>2015-07-26T10:52:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-scp-transfer-a-file-off-of-a-checkpoint-firewall</id>
+    <id>https://www.tunnelsup.com/how-to-scp-transfer-a-file-off-of-a-checkpoint-firewall</id>
     <content type="html"><![CDATA[<p>Sometimes there is a need to move a file off a Checkpoint firewall. Often what I try first is to go into expert mode on the Checkpoint CLI and see if there&rsquo;s a FTP server that I can connect to and transfer the file that way. If that doesn&rsquo;t work then I try SCP.</p>
 
 <h3>Setting up the Checkpoint</h3>
@@ -56,9 +56,9 @@ Shell changed.
   
   <entry>
     <title type="html"><![CDATA[Checkpoint Packet Capture Creator]]></title>
-    <link href="http://tunnelsup.github.io/checkpoint-packet-capture-creator/"/>
+    <link href="https://www.tunnelsup.com/checkpoint-packet-capture-creator/"/>
     <updated>2014-03-29T17:28:00-07:00</updated>
-    <id>http://tunnelsup.github.io/checkpoint-packet-capture-creator</id>
+    <id>https://www.tunnelsup.com/checkpoint-packet-capture-creator</id>
     <content type="html"><![CDATA[
 
 

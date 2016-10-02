@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: html | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/html/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/html/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[HTML Entities and URL Escape Codes]]></title>
-    <link href="http://tunnelsup.github.io/html-escape-codes/"/>
+    <link href="https://www.tunnelsup.com/html-escape-codes/"/>
     <updated>2015-02-01T11:29:00-08:00</updated>
-    <id>http://tunnelsup.github.io/html-escape-codes</id>
+    <id>https://www.tunnelsup.com/html-escape-codes</id>
     <content type="html"><![CDATA[<p>HTML escape codes are used in place of a normal character to avoid using illegal characters, ambiguity, or when you want to express the literal character.</p>
 
 <h5>HTML entities</h5>

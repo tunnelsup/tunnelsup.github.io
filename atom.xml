@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -14,10 +14,36 @@
 
   
   <entry>
+    <title type="html"><![CDATA[How to remove meta data from a PDF document]]></title>
+    <link href="https://www.tunnelsup.com/how-to-remove-meta-data-from-a-pdf-document/"/>
+    <updated>2016-09-29T23:02:00-07:00</updated>
+    <id>https://www.tunnelsup.com/how-to-remove-meta-data-from-a-pdf-document</id>
+    <content type="html"><![CDATA[<p>Some PDF documents contain meta data which may contain the user&rsquo;s name that made it, the company they work for, their address, and more. This is sort of like exif data on an image. It&rsquo;s a good idea to sanitize any PDF before posting it to the Internet. To remove this personal data from a PDF do the following.</p>
+
+<ol>
+<li><p>Open Document in Adobe Acrobat
+You&rsquo;ll need Acrobat and not simply Acrobat Reader. This tutorial used Adobe Acrobat XI.</p></li>
+<li><p>Click the Tools Button
+On the top right corner of the PDF click the Tools button.<br>
+<img src="https://www.tunnelsup.com/images/pdf-meta1.PNG"></p></li>
+<li><p>Click Sanitize
+At the bottom of the tools is a Protection menu, expand it, and find the sanitize option.<br>
+<img src="https://www.tunnelsup.com/images/pdf-meta2.PNG"></p></li>
+<li><p>Confirm Sanitization
+A popup box shows up and lets you verify what will be sanitized. <br>
+<img src="https://www.tunnelsup.com/images/pdf-meta3.PNG"></p></li>
+</ol>
+
+
+<p>You&rsquo;ll then be prompted to save the sanitized document.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Cisco ASA command to show listening ports]]></title>
-    <link href="http://tunnelsup.github.io/cisco-asa-command-to-show-listening-ports/"/>
+    <link href="https://www.tunnelsup.com/cisco-asa-command-to-show-listening-ports/"/>
     <updated>2016-09-29T15:05:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-asa-command-to-show-listening-ports</id>
+    <id>https://www.tunnelsup.com/cisco-asa-command-to-show-listening-ports</id>
     <content type="html"><![CDATA[<p>Do you wish there was a <code>netstat</code> command for a Cisco ASA? Are you looking to see what ports the ASA has open and is listening on? Try this command:</p>
 
 <figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ASA5506# sh asp table socket
@@ -43,13 +69,13 @@
   
   <entry>
     <title type="html"><![CDATA[Metasploit Cheat Sheet]]></title>
-    <link href="http://tunnelsup.github.io/metasploit-cheat-sheet/"/>
+    <link href="https://www.tunnelsup.com/metasploit-cheat-sheet/"/>
     <updated>2016-09-28T10:41:00-07:00</updated>
-    <id>http://tunnelsup.github.io/metasploit-cheat-sheet</id>
+    <id>https://www.tunnelsup.com/metasploit-cheat-sheet</id>
     <content type="html"><![CDATA[<p>Need a quick handy reference guide for Metasploit? I&rsquo;ve put together a bunch of the most common commands in a cheat sheet style for quick reference.</p>
 
-<p><img class="center" src="http://tunnelsup.github.io/images/Metasploit.png">
-Download: <a href="http://tunnelsup.github.io/images/Metasploit.png">[PNG Image]</a> - <a href="http://tunnelsup.github.io/images/Metasploit-CheatSheet.pdf">[PDF File]</a></p>
+<p><img class="center" src="https://www.tunnelsup.com/images/Metasploit.png">
+Download: <a href="https://www.tunnelsup.com/images/Metasploit.png">[PNG Image]</a> - <a href="https://www.tunnelsup.com/images/Metasploit-CheatSheet.pdf">[PDF File]</a></p>
 
 <p>If you find any problems with this please leave a comment below and I will update the guide periodically.</p>
 ]]></content>
@@ -57,9 +83,9 @@ Download: <a href="http://tunnelsup.github.io/images/Metasploit.png">[PNG Image]
   
   <entry>
     <title type="html"><![CDATA[Mac OSX How to Lock the Screen]]></title>
-    <link href="http://tunnelsup.github.io/mac-osx-how-to-lock-the-screen/"/>
+    <link href="https://www.tunnelsup.com/mac-osx-how-to-lock-the-screen/"/>
     <updated>2016-09-23T18:18:00-07:00</updated>
-    <id>http://tunnelsup.github.io/mac-osx-how-to-lock-the-screen</id>
+    <id>https://www.tunnelsup.com/mac-osx-how-to-lock-the-screen</id>
     <content type="html"><![CDATA[<p>To lock the screen of a Macbook or Mac running OSX use the following key combination:</p>
 
 <p><code>&lt;CONTROL&gt;</code> + <code>&lt;SHIFT&gt;</code> + <code>&lt;POWER&gt;</code></p>
@@ -68,15 +94,15 @@ Download: <a href="http://tunnelsup.github.io/images/Metasploit.png">[PNG Image]
 
 <h3>1. Go to System Preferences</h3>
 
-<p><img src="http://tunnelsup.github.io/images/mac-set-ip1.png" alt="Lock Screen Mac OSX" /><br></p>
+<p><img src="https://www.tunnelsup.com/images/mac-set-ip1.png" alt="Lock Screen Mac OSX" /><br></p>
 
 <h3>2. Go to Security and Privacy</h3>
 
-<p><img src="http://tunnelsup.github.io/images/lock1.png" alt="Lock Screen Mac OSX" /><br></p>
+<p><img src="https://www.tunnelsup.com/images/lock1.png" alt="Lock Screen Mac OSX" /><br></p>
 
 <h3>3. Check Require Password Immediately After Sleep</h3>
 
-<p><img src="http://tunnelsup.github.io/images/lock2.png" alt="Lock Screen Mac OSX" /><br></p>
+<p><img src="https://www.tunnelsup.com/images/lock2.png" alt="Lock Screen Mac OSX" /><br></p>
 
 <p>Now when you lock the screen it will ask for a password to unlock it.</p>
 ]]></content>
@@ -84,27 +110,27 @@ Download: <a href="http://tunnelsup.github.io/images/Metasploit.png">[PNG Image]
   
   <entry>
     <title type="html"><![CDATA[How to set a static IP on Mac OSX]]></title>
-    <link href="http://tunnelsup.github.io/how-to-set-a-static-ip-on-mac-osx/"/>
+    <link href="https://www.tunnelsup.com/how-to-set-a-static-ip-on-mac-osx/"/>
     <updated>2016-09-22T21:28:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-set-a-static-ip-on-mac-osx</id>
+    <id>https://www.tunnelsup.com/how-to-set-a-static-ip-on-mac-osx</id>
     <content type="html"><![CDATA[<p>Are you using a Macbook Pro or Macbook Air and want to know how to show the change the interface to use a static IP? Follow the steps below to complete this.</p>
 
 <h2>1. Go to Preferences</h2>
 
 <p>Click the Apple icon in the top left corner and click System Preferences.</p>
 
-<p><img src="http://tunnelsup.github.io/images/mac-set-ip1.png" alt="Static IP" /><br></p>
+<p><img src="https://www.tunnelsup.com/images/mac-set-ip1.png" alt="Static IP" /><br></p>
 
 <h2>2. Go to Network Settings</h2>
 
 <p>Now find the <code>Network</code> icon and click it.</p>
 
-<p><img src="http://tunnelsup.github.io/images/mac-set-ip2.png" alt="Static IP" /><br></p>
+<p><img src="https://www.tunnelsup.com/images/mac-set-ip2.png" alt="Static IP" /><br></p>
 
 <h2>3. Change the Settings</h2>
 
 <p>Find the interface you want to change the settings on and click it. Then select the interface settings you want to us. To set a static IP select the options <code>Manually</code> and fill in the fields. You can also set it to be DHCP where you&rsquo;ll be assigned an address automatically by a router.
-<img src="http://tunnelsup.github.io/images/mac-set-ip3.png" alt="Static IP" /><br></p>
+<img src="https://www.tunnelsup.com/images/mac-set-ip3.png" alt="Static IP" /><br></p>
 
 <p>If you need to change the DNS settings, click <code>advanced</code>.</p>
 
@@ -114,9 +140,9 @@ Download: <a href="http://tunnelsup.github.io/images/Metasploit.png">[PNG Image]
   
   <entry>
     <title type="html"><![CDATA[How to see the routing table on Mac OSX]]></title>
-    <link href="http://tunnelsup.github.io/how-to-see-the-routing-table-on-mac-osx/"/>
+    <link href="https://www.tunnelsup.com/how-to-see-the-routing-table-on-mac-osx/"/>
     <updated>2016-09-20T20:39:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-see-the-routing-table-on-mac-osx</id>
+    <id>https://www.tunnelsup.com/how-to-see-the-routing-table-on-mac-osx</id>
     <content type="html"><![CDATA[<p>Do you have a Macbook Pro or Macbook Air and want to know how to show the routes it has in the routing table? Are you looking for the Windows command <strong>route print</strong> equivalent in OSX? This post is for you.</p>
 
 <h2>Show Routes</h2>
@@ -150,9 +176,9 @@ Download: <a href="http://tunnelsup.github.io/images/Metasploit.png">[PNG Image]
   
   <entry>
     <title type="html"><![CDATA[Using For and While Loops in Python]]></title>
-    <link href="http://tunnelsup.github.io/using-for-and-while-loops-in-python/"/>
+    <link href="https://www.tunnelsup.com/using-for-and-while-loops-in-python/"/>
     <updated>2016-09-20T17:48:00-07:00</updated>
-    <id>http://tunnelsup.github.io/using-for-and-while-loops-in-python</id>
+    <id>https://www.tunnelsup.com/using-for-and-while-loops-in-python</id>
     <content type="html"><![CDATA[<p>Here are some tools to use to do loops in the Python language.</p>
 
 <h2>The While Loop</h2>
@@ -254,9 +280,9 @@ Download: <a href="http://tunnelsup.github.io/images/Metasploit.png">[PNG Image]
   
   <entry>
     <title type="html"><![CDATA[Using Regular Expressions in Python]]></title>
-    <link href="http://tunnelsup.github.io/using-regular-expressions-in-python/"/>
+    <link href="https://www.tunnelsup.com/using-regular-expressions-in-python/"/>
     <updated>2016-09-14T21:44:00-07:00</updated>
-    <id>http://tunnelsup.github.io/using-regular-expressions-in-python</id>
+    <id>https://www.tunnelsup.com/using-regular-expressions-in-python</id>
     <content type="html"><![CDATA[<p>If you need to do pattern matching on a string within Python, using a regular expression will be the best way to do it. Here are some basic examples to help you with this.</p>
 
 <h2>Import Library</h2>
@@ -396,9 +422,9 @@ Download: <a href="http://tunnelsup.github.io/images/Metasploit.png">[PNG Image]
   
   <entry>
     <title type="html"><![CDATA[Raspberry Pi Zero: Blink an LED using GPIO pins]]></title>
-    <link href="http://tunnelsup.github.io/raspberry-pi-zero-blink-an-led-using-gpio-pins/"/>
+    <link href="https://www.tunnelsup.com/raspberry-pi-zero-blink-an-led-using-gpio-pins/"/>
     <updated>2016-09-14T12:19:00-07:00</updated>
-    <id>http://tunnelsup.github.io/raspberry-pi-zero-blink-an-led-using-gpio-pins</id>
+    <id>https://www.tunnelsup.com/raspberry-pi-zero-blink-an-led-using-gpio-pins</id>
     <content type="html"><![CDATA[<p>Want to use the GPIO pins to blink an LED using a Raspberry Pi Zero? Here&rsquo;s a quick guide to get you started.</p>
 
 <h2>Build the circuit</h2>
@@ -461,9 +487,9 @@ Download: <a href="http://tunnelsup.github.io/images/Metasploit.png">[PNG Image]
   
   <entry>
     <title type="html"><![CDATA[How to set a static IP in linux]]></title>
-    <link href="http://tunnelsup.github.io/how-to-set-a-static-ip-in-linux/"/>
+    <link href="https://www.tunnelsup.com/how-to-set-a-static-ip-in-linux/"/>
     <updated>2016-09-12T16:32:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-set-a-static-ip-in-linux</id>
+    <id>https://www.tunnelsup.com/how-to-set-a-static-ip-in-linux</id>
     <content type="html"><![CDATA[<p>The following will work for any debian base linux distro. That includes <strong>Ubuntu</strong>, <strong>Kali</strong>, <strong>Raspberry Pi (Raspian Jessie)</strong>, <strong>TAILS</strong>, and many more.</p>
 
 <h2>Edit Interface Settings</h2>
@@ -546,9 +572,9 @@ Download: <a href="http://tunnelsup.github.io/images/Metasploit.png">[PNG Image]
   
   <entry>
     <title type="html"><![CDATA[Getting Started Cracking Password Hashes with John the Ripper]]></title>
-    <link href="http://tunnelsup.github.io/getting-started-cracking-password-hashes/"/>
+    <link href="https://www.tunnelsup.com/getting-started-cracking-password-hashes/"/>
     <updated>2016-09-08T21:23:00-07:00</updated>
-    <id>http://tunnelsup.github.io/getting-started-cracking-password-hashes</id>
+    <id>https://www.tunnelsup.com/getting-started-cracking-password-hashes</id>
     <content type="html"><![CDATA[<p>Want to get started with password cracking and not sure where to begin? In this post we&rsquo;ll explore how to get started with it.</p>
 
 <p>Most systems don&rsquo;t store passwords on them. Instead they store hashes of passwords and when authentication takes place, the password is hashes and if the hashes match authentication is successful. Different systems store password hashes in different ways depending on the encryption used.</p>
@@ -566,7 +592,7 @@ Download: <a href="http://tunnelsup.github.io/images/Metasploit.png">[PNG Image]
 <p>A group called KoreLogic used to hold DEFCON competitions to see how well people could crack password hashes. Their contest files are still posted on their site and it offers a great sample set of hashes to begin with.</p>
 
 <p>Download the <a href="http://contest-2012.korelogic.com/">password hash file bundle</a> from the KoreLogic 2012 DEFCON challenge.
-Or use this <a href="http://tunnelsup.github.io/images/cmiyc_2012_password_hash_files.tar.bz2">mirror</a>.</p>
+Or use this <a href="https://www.tunnelsup.com/images/cmiyc_2012_password_hash_files.tar.bz2">mirror</a>.</p>
 
 <p>Extract the file using this linux command:</p>
 
@@ -724,9 +750,9 @@ jacks0n <br></p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[How to do an SNMP walk]]></title>
-    <link href="http://tunnelsup.github.io/how-to-do-an-snmp-walk/"/>
+    <link href="https://www.tunnelsup.com/how-to-do-an-snmp-walk/"/>
     <updated>2016-08-24T15:53:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-do-an-snmp-walk</id>
+    <id>https://www.tunnelsup.com/how-to-do-an-snmp-walk</id>
     <content type="html"><![CDATA[<p>Sometimes you need to manually SNMP poll a device. Here is how to do that.</p>
 
 <h2>Do an entire pull</h2>
@@ -758,9 +784,9 @@ jacks0n <br></p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[How to show and clear user sessions on a Cisco ASA]]></title>
-    <link href="http://tunnelsup.github.io/how-to-show-and-clear-user-sessions-on-a-cisco-asa/"/>
+    <link href="https://www.tunnelsup.com/how-to-show-and-clear-user-sessions-on-a-cisco-asa/"/>
     <updated>2016-06-18T16:36:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-show-and-clear-user-sessions-on-a-cisco-asa</id>
+    <id>https://www.tunnelsup.com/how-to-show-and-clear-user-sessions-on-a-cisco-asa</id>
     <content type="html"><![CDATA[<p>Sometimes you need to disconnect someone&rsquo;s ssh session to a Cisco ASA. This may be needed because users haven&rsquo;t logged out properly and have taken up all the sessions allowed.</p>
 
 <h2>Check Usage Limits</h2>
@@ -802,9 +828,9 @@ jacks0n <br></p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[Tips For Attending a Security Conference]]></title>
-    <link href="http://tunnelsup.github.io/tips-for-attending-a-security-conference/"/>
+    <link href="https://www.tunnelsup.com/tips-for-attending-a-security-conference/"/>
     <updated>2016-05-27T11:32:00-07:00</updated>
-    <id>http://tunnelsup.github.io/tips-for-attending-a-security-conference</id>
+    <id>https://www.tunnelsup.com/tips-for-attending-a-security-conference</id>
     <content type="html"><![CDATA[<p>If you&rsquo;re in the InfoSec industry and haven&rsquo;t attended a security conference, you simply aren&rsquo;t taking your career seriously. Attending one will inspire you and motivate you to learn new things, meet new people, and find new solutions to your problems. There are so many conferences now that there is about 2-5 every month! A realistic goal could be to attend one security conference a year.</p>
 
 <h2>Types of Conferences</h2>
@@ -822,7 +848,7 @@ jacks0n <br></p></blockquote>
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">One of the biggest reasons I go to security conferences and meetups. <a href="https://twitter.com/hashtag/infosec?src=hash">#infosec</a> <a href="https://t.co/Y0HB9dtchO">pic.twitter.com/Y0HB9dtchO</a></p>&mdash; Jack Rhysider (@TunnelsUp) <a href="https://twitter.com/TunnelsUp/status/730938951696060416">May 13, 2016</a></blockquote>
 
 
-<script async src="http://tunnelsup.github.io//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async src="https://www.tunnelsup.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 <p>Meeting people who have the same problems or passions than I do is the most important thing on my agenda when attending these conferences. Finding new people to share ideas with, solve your problems, or teach you how to improve is a resource you can use for years. Having a secret weapon of someone you can ask tough questions to outside of work will make you look like an endless fountain of information.</p>
@@ -848,7 +874,7 @@ jacks0n <br></p></blockquote>
 
 <p>Talks are the main event of any conference. Often there are multiple talks going on at once so it&rsquo;s a good idea to get the schedule before arriving so you can plan your day.</p>
 
-<p>But you don&rsquo;t have to attend the talks! In 2015 there were over <a href="http://tunnelsup.github.io/online-security-conferences/">50 security conferences</a> that recorded their talks and posted them free online. If your conference is recording them, feel free to skip the live ones and just watch them later.</p>
+<p>But you don&rsquo;t have to attend the talks! In 2015 there were over <a href="https://www.tunnelsup.com/online-security-conferences/">50 security conferences</a> that recorded their talks and posted them free online. If your conference is recording them, feel free to skip the live ones and just watch them later.</p>
 
 <p>If you watch a talk you enjoyed or agreed with, follow that speaker on Twitter. There is a huge Twitter community of InfoSec professionals and they&rsquo;d be happy to answer any follow up questions you have later.</p>
 
@@ -882,9 +908,9 @@ jacks0n <br></p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[Who Makes up a Computer Security Incident Response Team]]></title>
-    <link href="http://tunnelsup.github.io/who-makes-up-an-computer-security-incident-response-team/"/>
+    <link href="https://www.tunnelsup.com/who-makes-up-an-computer-security-incident-response-team/"/>
     <updated>2016-05-25T10:50:00-07:00</updated>
-    <id>http://tunnelsup.github.io/who-makes-up-an-computer-security-incident-response-team</id>
+    <id>https://www.tunnelsup.com/who-makes-up-an-computer-security-incident-response-team</id>
     <content type="html"><![CDATA[<p>The incident response team is who is engaged when an network security incident has occurred in your network. There are two types of IR teams, SWAT style and dedicated.</p>
 
 <p><a href="https://twitter.com/hacks4pancakes">Lesley Carhart</a> defines an IR team goal as:</p>
@@ -900,7 +926,7 @@ jacks0n <br></p></blockquote>
 <p>In a dedicated incident response team, the roles are more specifically defined. This team is also sometimes known as a Computer Incident Response Team (CIRT), or Computer Security Incident Response Team (CSIRT).</p>
 
 <p>Roles of a CSIRT:
-<img src="http://tunnelsup.github.io/images/dfirteam.png" alt="CIRT Team Roles" /></p>
+<img src="https://www.tunnelsup.com/images/dfirteam.png" alt="CIRT Team Roles" /></p>
 
 <h4>SOC Monitoring Team</h4>
 
@@ -952,9 +978,9 @@ jacks0n <br></p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[Things You Can Do to Make Security Worse]]></title>
-    <link href="http://tunnelsup.github.io/things-you-can-do-to-make-security-worse/"/>
+    <link href="https://www.tunnelsup.com/things-you-can-do-to-make-security-worse/"/>
     <updated>2016-05-19T17:58:00-07:00</updated>
-    <id>http://tunnelsup.github.io/things-you-can-do-to-make-security-worse</id>
+    <id>https://www.tunnelsup.com/things-you-can-do-to-make-security-worse</id>
     <content type="html"><![CDATA[<p>Organizations go out of their way to make security worse in their network. Are you one of these organizations? Watch the video to find out.</p>
 
 <iframe width="770" height="460" src="https://www.youtube.com/embed/9EAi_O4JKZk" frameborder="0" allowfullscreen></iframe>
@@ -966,9 +992,9 @@ jacks0n <br></p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[Free Security Awareness Training Posters]]></title>
-    <link href="http://tunnelsup.github.io/free-security-awareness-training-posters/"/>
+    <link href="https://www.tunnelsup.com/free-security-awareness-training-posters/"/>
     <updated>2016-05-10T07:53:00-07:00</updated>
-    <id>http://tunnelsup.github.io/free-security-awareness-training-posters</id>
+    <id>https://www.tunnelsup.com/free-security-awareness-training-posters</id>
     <content type="html"><![CDATA[<p>Something that is helpful for ongoing security awareness training programs is to print out security awareness posters and put them in areas where people hang out around the office. The goal is to keep security awareness training fresh, fun, and relevant.</p>
 
 <p>Here are some free posters you can find online to download and print for your own organization.</p>
@@ -1008,9 +1034,9 @@ jacks0n <br></p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[Using the Linux Watch Command]]></title>
-    <link href="http://tunnelsup.github.io/using-the-linux-watch-command/"/>
+    <link href="https://www.tunnelsup.com/using-the-linux-watch-command/"/>
     <updated>2016-05-05T08:50:00-07:00</updated>
-    <id>http://tunnelsup.github.io/using-the-linux-watch-command</id>
+    <id>https://www.tunnelsup.com/using-the-linux-watch-command</id>
     <content type="html"><![CDATA[<p>A somewhat lesser known linux command is <code>watch</code>. It will display the output of a regular command and update the screen if that output changes. Here are some helpful use cases.</p>
 
 <h2>Watch for directory contents changing</h2>
@@ -1039,12 +1065,12 @@ jacks0n <br></p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[8 Ways to Defend Against Denial of Service Attacks]]></title>
-    <link href="http://tunnelsup.github.io/8-ways-to-defend-against-denial-of-service-attacks/"/>
+    <link href="https://www.tunnelsup.com/8-ways-to-defend-against-denial-of-service-attacks/"/>
     <updated>2016-05-02T15:48:00-07:00</updated>
-    <id>http://tunnelsup.github.io/8-ways-to-defend-against-denial-of-service-attacks</id>
+    <id>https://www.tunnelsup.com/8-ways-to-defend-against-denial-of-service-attacks</id>
     <content type="html"><![CDATA[<p>Protecting against Denial of Service attacks is difficult and takes numerous steps to protect the network. Unfortunately, even with all these steps it&rsquo;s still possibly to have a DoS scenario in the network. A large DoS attack is not that hard technically or economically to conduct.</p>
 
-<p>First get to know the <a href="http://tunnelsup.github.io/different-types-of-dos-attacks/">different types of DoS attacks</a>.</p>
+<p>First get to know the <a href="https://www.tunnelsup.com/different-types-of-dos-attacks/">different types of DoS attacks</a>.</p>
 
 <h2>1. Be Nice</h2>
 
@@ -1066,7 +1092,7 @@ jacks0n <br></p></blockquote>
 
 <p>Whether you have a router or firewall on your edge (between your network and the internet), you should tune this to only permit the number of connections your web server or application can permit. The reason for this is because if you&rsquo;ve tuned your web server to only accept conns for the resources it has, sending it more than the max can knock over the server. A firewall is also more efficient and better at blocking traffic than a web server. Get these two devices working in tandem for extra efficiency.</p>
 
-<p>The goal in tuning a firewall is to permit only traffic needed and everything else is blocked. If you have a Cisco ASA on your edge check out this post on <a href="http://tunnelsup.github.io/cisco-asa-best-practices/">Cisco ASA best practices</a>.</p>
+<p>The goal in tuning a firewall is to permit only traffic needed and everything else is blocked. If you have a Cisco ASA on your edge check out this post on <a href="https://www.tunnelsup.com/cisco-asa-best-practices/">Cisco ASA best practices</a>.</p>
 
 <h2>5. Use a load balancer</h2>
 
@@ -1124,9 +1150,9 @@ jacks0n <br></p></blockquote>
   
   <entry>
     <title type="html"><![CDATA[Different Types of DoS Attacks]]></title>
-    <link href="http://tunnelsup.github.io/different-types-of-dos-attacks/"/>
+    <link href="https://www.tunnelsup.com/different-types-of-dos-attacks/"/>
     <updated>2016-05-01T11:06:00-07:00</updated>
-    <id>http://tunnelsup.github.io/different-types-of-dos-attacks</id>
+    <id>https://www.tunnelsup.com/different-types-of-dos-attacks</id>
     <content type="html"><![CDATA[<p>A Denial of Service attack or DoS attack is where the adversary disrupts the target&rsquo;s cyber application. This could be taking down their server, overwhelming a network, or causing a system to break. There a few different ways this can be achieved.</p>
 
 <p>To protect against a DoS you must first understand the multiple types of DoS style attacks.</p>
@@ -1144,127 +1170,6 @@ jacks0n <br></p></blockquote>
 <h2>Application Based DoS</h2>
 
 <p>Applications being served online aren&rsquo;t always bug free. Without proper implementation of security inside the application, an attacker could manipulate the code to cause the application to crash. Sometimes devices can occur a buffer overflow which could result in a reload or process hang or system crash. If an attacker can cause the targets systems to crash by sending a certain string or input or packet, this would be an application based DoS attack.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Contents of a Physical Pen Tester's Backpack]]></title>
-    <link href="http://tunnelsup.github.io/contents-of-a-physical-pen-testers-backpack/"/>
-    <updated>2016-04-26T21:15:00-07:00</updated>
-    <id>http://tunnelsup.github.io/contents-of-a-physical-pen-testers-backpack</id>
-    <content type="html"><![CDATA[<p>Some companies pay for a security assessment to see if their physical building and office are secure. When they secure a building they want to test it to make sure it&rsquo;s off limits to people who shouldn&rsquo;t be able to get there, such as a datacenter. Sometimes these assessments are to test employees to see if they would let people in areas that they shouldn&rsquo;t have access to, such as a random person walking behind a bank teller.</p>
-
-<p>What do these type of pen testers bring to this type of security assessment? Here&rsquo;s a few different people talking about what they bring.</p>
-
-<h2>Vest of Doom</h2>
-
-<p><a href="https://twitter.com/jaysonstreet?ref_src=twsrc%5Etfw">Jayson Street</a> has talked about his Vest of Doom a few times.</p>
-
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">About to load my new <a href="https://twitter.com/hashtag/VestofD00M?src=hash">#VestofD00M</a> v.7.0 :-) for my engagement in France after I speak at <a href="https://twitter.com/hackinparis">@hackinparis</a> &amp; <a href="https://twitter.com/NuitDuHack">@NuitDuHack</a> <a href="http://t.co/aSGUoOnWZ2">pic.twitter.com/aSGUoOnWZ2</a></p>&mdash; Jayson E. Street (@jaysonstreet) <a href="https://twitter.com/jaysonstreet/status/480780151291383808">June 22, 2014</a></blockquote>
-
-
-<script async src="http://tunnelsup.github.io//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<p>He talks about the contents in his <a href="https://youtu.be/EzGwO5L9oq4?t=38m3s">DefCon 18 talk</a> and again in his <a href="https://youtu.be/4-qnYaw7VGo?t=30m20s">DefCon 19 talk</a>. Both talks are great to watch in their entirety to get a sense of how Jayson gains access to anything.</p>
-
-<h3>Contents</h3>
-
-<ul>
-<li>A USB drive which when plugged into a computer will grab all password hashes</li>
-<li>A USB drive you leave for a user to see if they plug it in (potentially causing persistence)</li>
-<li><a  href="http://www.amazon.com/gp/product/B004TUBOKW/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B004TUBOKW&linkCode=as2&tag=tunn01-20&linkId=F3SFZ64MFDOGAL5M">USB KeyLogger</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=tunn01-20&l=as2&o=1&a=B004TUBOKW" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></li>
-<li>External hard drive (to grab large amounts of data)</li>
-<li>External hard drive (with rainbow tables and malware)</li>
-<li>USB Wireless Bridge</li>
-<li>Voice Recorder</li>
-<li>Ethernet Cables</li>
-<li>Various USB cables (A, B, mini, micro, OTG, etc)</li>
-<li>Small Computer &ndash; Something to fit in a pocket but can be used to connect to networks</li>
-<li>Tablet with metasploit</li>
-<li>SD cards &ndash; presumably filled with malware or for grabbing data</li>
-<li>Fake engagement letter &ndash; Jayson loves presenting this when asked to test people further</li>
-<li>Real engagement letter &ndash; If you don&rsquo;t have permission to do this, don&rsquo;t try it!</li>
-<li>Lockpicks</li>
-<li>Screwdrivers</li>
-<li>Camera watch or glasses</li>
-<li><a href="https://www.pwnieexpress.com/product/pwn-plug-elite/">Pwnie plug</a></li>
-<li>More cameras</li>
-<li><a  href="http://www.amazon.com/gp/product/1494295504/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1494295504&linkCode=as2&tag=tunn01-20&linkId=PRMYD4RTK3KJKUZN">Rtfm: Red Team Field Manual</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=tunn01-20&l=as2&o=1&a=1494295504" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></li>
-<li>PSP &ndash; for times when you might hide out in a closet for 4 hours waiting for everyone to go home.</li>
-<li>Fake badges that may get you into doors or past people</li>
-</ul>
-
-
-<h2>Pen Test Backpack</h2>
-
-<p><img class="right" src="http://tunnelsup.github.io/images/gobag.png" width="200" height="200"></p>
-
-<p><a href="https://twitter.com/c0ncealed">c0ncealed</a> gives a great breakdown of all his pack&rsquo;s contents in his <a href="https://www.youtube.com/watch?v=KRx1NmG7h2I">Physical Pen Test Talk</a>. He goes into what each of these items are used for. A great watch!</p>
-
-<p>Image on the right is a demonstration of how easy it is to swing the pack to the front, pull out a laptop, put the laptop on the pack, and begin doing work. The sling pack being used as a mobile table is really handy because it allows your hands to be free to do other things.</p>
-
-<ul>
-<li>Backpack: <a  href="http://www.amazon.com/gp/product/B00IUW2I4G/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B00IUW2I4G&linkCode=as2&tag=tunn01-20&linkId=PMYMEFP26QRJJSSC">Yukon Overwatch Sling Pack</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=tunn01-20&l=as2&o=1&a=B00IUW2I4G" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></li>
-<li>Small Laptop with hacking tools such as <a href="https://www.kali.org/">Kali linux</a> + Power supply</li>
-<li><a href="http://www.tunnelsup.com/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/">Raspberry Pis that phone home</a>, reverse proxy out to establish persistence.</li>
-<li>Nexus 7 with <a href="https://www.kali.org/kali-linux-nethunter/">Kali nethunter</a>. Add OTG cable with wireless adapter which lets you do packet injection and wifi hacks</li>
-<li><a  href="http://www.amazon.com/gp/product/1494295504/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1494295504&linkCode=as2&tag=tunn01-20&linkId=PRMYD4RTK3KJKUZN">Rtfm: Red Team Field Manual</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=tunn01-20&l=as2&o=1&a=1494295504" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></li>
-<li>Letter opener &ndash; used as shim to open doors</li>
-<li>Plastic shims made from dollar store plastic folder &ndash; used to open doors</li>
-<li><a href="https://proxmark3.com/">Proxmark 3</a> used to clone RFID badges</li>
-<li><a  href="http://www.amazon.com/gp/product/B000WXSO76/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B000WXSO76&linkCode=as2&tag=tunn01-20&linkId=FZEP6JNRAQO3NZYG">Alfa Network Wi-Fi USB Antenna</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=tunn01-20&l=as2&o=1&a=B000WXSO76" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> used to sniff packets</li>
-<li><a href="http://www.tp-link.com/en/products/details/TL-WN722N.html">USB wireless antenna</a> with atheros chipset, used for packet injection</li>
-<li>bump keys, lockpicks</li>
-<li>2x leatherman multitools</li>
-<li>multi head screwdriver</li>
-<li>pens + paper</li>
-<li>low lumen small flashlight to put in mouth or on hat</li>
-<li>USB cable</li>
-<li>Ethernet cables</li>
-<li><a  href="http://www.amazon.com/gp/product/B00I5SW8MC/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B00I5SW8MC&linkCode=as2&tag=tunn01-20&linkId=6XNR4E7LBBXPFJT7">Mini Wireless Keyboard with Mouse Touchpad</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=tunn01-20&l=as2&o=1&a=B00I5SW8MC" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></li>
-<li><a href="http://hakshop.myshopify.com/collections/usb-rubber-ducky/products/usb-rubber-ducky">Hak5 USB Rubber Ducky</a></li>
-<li><a href="http://hakshop.myshopify.com/collections/accessory/products/throwing-star-lan-tap">Hak5 LAN Tap</a></li>
-<li>SD cards</li>
-<li>USB drives</li>
-<li>OTG USB cable</li>
-<li><a href="http://theglitch.sourceforge.net/">The Glitch</a></li>
-<li>USB drive with a program that downloads an executable, runs it in memory, grabs an lsass memory dump, uploads that memory dump somewhere</li>
-<li>USB keylogger</li>
-<li>PS2 keylogger</li>
-<li><a href="http://ubertooth.sourceforge.net/">Ubertooth</a></li>
-<li>USB drive with <a href="https://sourceforge.net/projects/katana-usb/">Katana</a></li>
-<li><a href="https://hak5.org/usb-switchblade">USB switchblade</a></li>
-<li><a href="http://hakshop.myshopify.com/collections/wifi-pineapple-kits/products/wifi-pineapple?variant=81044992">WiFi Pineapple</a></li>
-<li>A network hub used to bypass NAC</li>
-<li>Wireless router &ndash; plug it into port, turn it on, and leave. Then try to get to it from the parking lot.</li>
-<li>Extra battery packs for phone/laptop</li>
-<li>A second flashlight</li>
-<li>Paracord</li>
-<li>GoPro &ndash; to watch key locations from his phone</li>
-<li>Cellphone for pictures and other things</li>
-<li>Headset if talking to a team</li>
-<li><a href="http://www.lapolicegear.com/">Cargo pants</a></li>
-<li>A hat to hide from cameras and connect flashlight to</li>
-<li>DSLR camer for really good shots of keys, badges, and recon</li>
-<li><a href="https://www.youtube.com/watch?v=WAkJRpKeyYg">Under the door tool</a></li>
-<li>Written documents giving you permission to conduct the test. Multiple copies of.</li>
-</ul>
-
-
-<h2>Extra things not mentioned</h2>
-
-<ul>
-<li>Binoculars for recon</li>
-<li>Blue Painters Tape &ndash; cover cameras, peep holes, cover lights, hold items in place etc</li>
-<li><a  href="http://www.amazon.com/gp/product/B00DPLM5YU/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B00DPLM5YU&linkCode=as2&tag=tunn01-20&linkId=L5QLGCE3SZXJA5AP">Ball Bungee</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=tunn01-20&l=as2&o=1&a=B00DPLM5YU" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> &ndash; has many purposes</li>
-<li>Carabiner for pack to hang stuff on</li>
-</ul>
-
-
-<p>What is missing from the list? Let us know in the comments!</p>
-
-<p>Bonus Video: <a href="https://www.youtube.com/watch?v=oHf1vD5_b5I">DefCon 22 Video on Elevator Hacking</a></p>
 ]]></content>
   </entry>
   

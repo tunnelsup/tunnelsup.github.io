@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: vim | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/vim/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/vim/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Remove ^M Newline Character using vim]]></title>
-    <link href="http://tunnelsup.github.io/remove-m-newline-character-using-vim/"/>
+    <link href="https://www.tunnelsup.com/remove-m-newline-character-using-vim/"/>
     <updated>2014-11-08T18:48:00-08:00</updated>
-    <id>http://tunnelsup.github.io/remove-m-newline-character-using-vim</id>
+    <id>https://www.tunnelsup.com/remove-m-newline-character-using-vim</id>
     <content type="html"><![CDATA[<p>Sometimes when opening a file in vim there are a lot of <code>^M</code> characters at the end of everyline. This is probably because the file was saved in Windows which uses a slightly different newline, linebreak, carriage return, and line feed characters. It may look something like this:</p>
 
 <pre><code>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<span style="color: #FF6666;">^M</span>

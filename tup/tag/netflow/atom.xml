@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: netflow | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/netflow/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/netflow/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Configuring Netflow on ASA's]]></title>
-    <link href="http://tunnelsup.github.io/configuring-netflow-with-cisco-asas/"/>
+    <link href="https://www.tunnelsup.com/configuring-netflow-with-cisco-asas/"/>
     <updated>2010-05-02T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/configuring-netflow-with-cisco-asas</id>
+    <id>https://www.tunnelsup.com/configuring-netflow-with-cisco-asas</id>
     <content type="html"><![CDATA[<p>Netflow is data that the ASA will send to a netflow collector which will then give details regarding bandwith used, top talkers, number of connections, etc. Unfortunately there aren&rsquo;t any show commands on the ASA to determine this. In other words no data is stored on the ASA regarding netflow. Instead it is sent real time to the collector.</p>
 
 <p>Netflow is supported on ASA version 8.1 and later. Note that v8.1 was for 5580&rsquo;s only. Version 8.2.x is available to any ASA. It uses netflow version 9.</p>

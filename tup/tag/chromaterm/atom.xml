@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: chromaterm | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/chromaterm/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/chromaterm/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Chromaterm]]></title>
-    <link href="http://tunnelsup.github.io/chromaterm/"/>
+    <link href="https://www.tunnelsup.com/chromaterm/"/>
     <updated>2013-06-16T22:31:00-07:00</updated>
-    <id>http://tunnelsup.github.io/chromaterm</id>
+    <id>https://www.tunnelsup.com/chromaterm</id>
     <content type="html"><![CDATA[<h2>About</h2>
 
 <p>Chromaterm is a terminal colorization tool that runs on linux and is produced by TunnelsUp.com. It essentially acts as a wrapper for the linux shell. Once it starts it then starts a new shell. Any activity within that new shell will be ran through Chromaterm. Chromaterm listens for keywords, that are user defined, and will highlight them with user defined colors.</p>

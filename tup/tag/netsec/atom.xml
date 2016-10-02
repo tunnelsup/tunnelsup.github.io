@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: netsec | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/netsec/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/netsec/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Effective Security Awareness Training]]></title>
-    <link href="http://tunnelsup.github.io/effective-security-awareness-training/"/>
+    <link href="https://www.tunnelsup.com/effective-security-awareness-training/"/>
     <updated>2016-03-30T19:18:00-07:00</updated>
-    <id>http://tunnelsup.github.io/effective-security-awareness-training</id>
+    <id>https://www.tunnelsup.com/effective-security-awareness-training</id>
     <content type="html"><![CDATA[<p>Because humans are sometimes the biggest security vulnerability in your network, it&rsquo;s important to implement a security awareness training program to help mitigate their weaknesses.</p>
 
 <h3>What doesn&rsquo;t work</h3>

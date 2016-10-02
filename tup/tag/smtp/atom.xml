@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: smtp | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/smtp/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/smtp/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[SMTP error 451]]></title>
-    <link href="http://tunnelsup.github.io/smtp-error-451/"/>
+    <link href="https://www.tunnelsup.com/smtp-error-451/"/>
     <updated>2015-02-21T17:11:00-08:00</updated>
-    <id>http://tunnelsup.github.io/smtp-error-451</id>
+    <id>https://www.tunnelsup.com/smtp-error-451</id>
     <content type="html"><![CDATA[<p>SMTP error 451 will occur on a mail server when there is a local error to the mail server that is processing the message. This error may also be referenced as 4.5.1. The error code can either be visible from the mail logs on the mail server or in response to a message that generated the error.</p>
 
 <p>See this page for a full list of <a href="/smtp-error-codes/">SMTP error codes</a>.</p>
@@ -60,9 +60,9 @@ The message that you sent has been delayed. The reason given for the delay : 451
   
   <entry>
     <title type="html"><![CDATA[SMTP error 550]]></title>
-    <link href="http://tunnelsup.github.io/smtp-error-550/"/>
+    <link href="https://www.tunnelsup.com/smtp-error-550/"/>
     <updated>2015-02-21T12:53:00-08:00</updated>
-    <id>http://tunnelsup.github.io/smtp-error-550</id>
+    <id>https://www.tunnelsup.com/smtp-error-550</id>
     <content type="html"><![CDATA[<p>When email is rejected due to SMTP error 550 (also known as SMTP error 5.5.0), this usually means the message could not be delivered because the mailbox is unavailable. This is almost always a problem with the receiving mail server and never a problem with the sending client.</p>
 
 <p>See this page for a full list of <a href="/smtp-error-codes/">SMTP error codes</a>.</p>
@@ -146,9 +146,9 @@ Response: 550 Cyberoam Anti Spam Engine has identified
   
   <entry>
     <title type="html"><![CDATA[SMTP Error Codes]]></title>
-    <link href="http://tunnelsup.github.io/smtp-error-codes/"/>
+    <link href="https://www.tunnelsup.com/smtp-error-codes/"/>
     <updated>2015-02-14T11:05:00-08:00</updated>
-    <id>http://tunnelsup.github.io/smtp-error-codes</id>
+    <id>https://www.tunnelsup.com/smtp-error-codes</id>
     <content type="html"><![CDATA[<p>The following table displays the SMTP error or response codes. This is sometimes written like &ldquo;512&rdquo; and sometimes written like &ldquo;5.1.2&rdquo;. These two ways of writing the code are synonymous.</p>
 
 <table class="table">
@@ -199,7 +199,7 @@ Response: 550 Cyberoam Anti Spam Engine has identified
         </tr>
         <tr>
             <td>451</td>
-            <td><a href="http://tunnelsup.github.io/smtp-error-451/">Requested mail action aborted: local error</a></td>
+            <td><a href="https://www.tunnelsup.com/smtp-error-451/">Requested mail action aborted: local error</a></td>
         </tr>
         <tr>
             <td>452</td>
@@ -256,7 +256,7 @@ Response: 550 Cyberoam Anti Spam Engine has identified
         </tr>
         <tr>
             <td>550</td>
-            <td><a href="http://tunnelsup.github.io/smtp-error-550/">Recipient mailbox unavailable</a></td>
+            <td><a href="https://www.tunnelsup.com/smtp-error-550/">Recipient mailbox unavailable</a></td>
         </tr>
         <tr>
             <td>551</td>
@@ -291,9 +291,9 @@ Response: 550 Cyberoam Anti Spam Engine has identified
   
   <entry>
     <title type="html"><![CDATA[MX Record problem: Reverse DNS does not match SMTP Banner]]></title>
-    <link href="http://tunnelsup.github.io/mx-record-problem-reverse-dns-does-not-match-smtp-banner/"/>
+    <link href="https://www.tunnelsup.com/mx-record-problem-reverse-dns-does-not-match-smtp-banner/"/>
     <updated>2012-11-30T00:00:00-08:00</updated>
-    <id>http://tunnelsup.github.io/mx-record-problem-reverse-dns-does-not-match-smtp-banner</id>
+    <id>https://www.tunnelsup.com/mx-record-problem-reverse-dns-does-not-match-smtp-banner</id>
     <content type="html"><![CDATA[<p>Today I was given a problem that our Cisco Ironport was not accepting email from outside people sending mail to inside people (backstory: this occurred right after we moved our Ironport to a different location). I looked in Ironport and spotted a lot of messages failing to be delivered. Specifically the error in Ironport was:
 <code>Message 1006902 aborted: Receiving aborted</code></p>
 

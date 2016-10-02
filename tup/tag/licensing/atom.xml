@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: licensing | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/licensing/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/licensing/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Cisco ASA Licensing Quick Reference Guide]]></title>
-    <link href="http://tunnelsup.github.io/cisco-asa-licensing-quick-reference-guide/"/>
+    <link href="https://www.tunnelsup.com/cisco-asa-licensing-quick-reference-guide/"/>
     <updated>2013-07-01T11:26:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-asa-licensing-quick-reference-guide</id>
+    <id>https://www.tunnelsup.com/cisco-asa-licensing-quick-reference-guide</id>
     <content type="html"><![CDATA[<p>One of the most confusing things about Cisco ASA&rsquo;s is the licensing structure. While it is very nice to have a single train of OS files to deal with, it is incredibly hard to keep track of all of the licensing details regarding the ASA. Here is a handy guide that may help you wade through the piles of documentation around it.</p>
 
 <h2>Quick Reference Guide</h2>
@@ -136,9 +136,9 @@ On the 5505 each interface is assigned a VLAN. This is stating only 3 VLANs can 
   
   <entry>
     <title type="html"><![CDATA[SSL VPN access is not allowed]]></title>
-    <link href="http://tunnelsup.github.io/ssl-vpn-access-is-not-allowed/"/>
+    <link href="https://www.tunnelsup.com/ssl-vpn-access-is-not-allowed/"/>
     <updated>2013-06-06T22:17:00-07:00</updated>
-    <id>http://tunnelsup.github.io/ssl-vpn-access-is-not-allowed</id>
+    <id>https://www.tunnelsup.com/ssl-vpn-access-is-not-allowed</id>
     <content type="html"><![CDATA[<p>Recently I tried installing WebVPN usability onto a Cisco ASA firewall. When trying to login I received the following error:<br>
 <img src="http://tunnelsup.com/images/sslvpnerror.png" alt="SSL VPN Error IMG" /></p>
 
@@ -198,9 +198,9 @@ Doh! It appears <code>anyconnect-essentials</code> is enabled! Here&rsquo;s the 
   
   <entry>
     <title type="html"><![CDATA[Cisco ASA Botnet License]]></title>
-    <link href="http://tunnelsup.github.io/cisco-asa-botnet-license/"/>
+    <link href="https://www.tunnelsup.com/cisco-asa-botnet-license/"/>
     <updated>2013-05-08T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-asa-botnet-license</id>
+    <id>https://www.tunnelsup.com/cisco-asa-botnet-license</id>
     <content type="html"><![CDATA[<p>Information regarding the Cisco ASA Botnet License.</p>
 
 <h2>What is it?</h2>

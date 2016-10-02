@@ -6,7 +6,9 @@ Disallow: /blog/
 Disallow: /404.html
 Disallow: /images/XBee-Quick-Reference-Guide.pdf
 Disallow: /images/ASALicensingCheatSheet.pdf
+Disallow: /images/Metasploit-CheatSheet.pdf
+Disallow: /images/YAESUFT60-CheatSheet.pdf
 
 
 
-Sitemap: http://tunnelsup.github.io/sitemap.xml 
+Sitemap: https://www.tunnelsup.com/sitemap.xml 

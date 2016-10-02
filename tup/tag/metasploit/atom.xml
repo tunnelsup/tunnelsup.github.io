@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: metasploit | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/metasploit/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/metasploit/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Metasploit Cheat Sheet]]></title>
-    <link href="http://tunnelsup.github.io/metasploit-cheat-sheet/"/>
+    <link href="https://www.tunnelsup.com/metasploit-cheat-sheet/"/>
     <updated>2016-09-28T10:41:00-07:00</updated>
-    <id>http://tunnelsup.github.io/metasploit-cheat-sheet</id>
+    <id>https://www.tunnelsup.com/metasploit-cheat-sheet</id>
     <content type="html"><![CDATA[<p>Need a quick handy reference guide for Metasploit? I&rsquo;ve put together a bunch of the most common commands in a cheat sheet style for quick reference.</p>
 
 <p><img class="center" src="/images/Metasploit.png">

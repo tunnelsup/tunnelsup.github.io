@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: screenos | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/screenos/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/screenos/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[View Interface Statistics on ScreenOS]]></title>
-    <link href="http://tunnelsup.github.io/view-interface-statistics-on-screenos/"/>
+    <link href="https://www.tunnelsup.com/view-interface-statistics-on-screenos/"/>
     <updated>2013-09-06T11:11:00-07:00</updated>
-    <id>http://tunnelsup.github.io/view-interface-statistics-on-screenos</id>
+    <id>https://www.tunnelsup.com/view-interface-statistics-on-screenos</id>
     <content type="html"><![CDATA[<h2>Get command to see interface statistics on a SSG/ScreenOS</h2>
 
 <p><code>get counter statistics interface &lt;interface&gt;</code></p>
@@ -157,9 +157,9 @@ udp sweep              0 | tcp check drop         0 |
   
   <entry>
     <title type="html"><![CDATA[Site to Site VPN tunnel config between a Cisco ASA and a Juniper SSG ScreenOS]]></title>
-    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos/"/>
+    <link href="https://www.tunnelsup.com/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos/"/>
     <updated>2012-07-06T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos</id>
+    <id>https://www.tunnelsup.com/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos</id>
     <content type="html"><![CDATA[<p>Below is a config to create a VPN tunnel between a Cisco ASA (Blue side) to a Juniper SSG ScreenOS (Red Side).</p>
 
 <p>Juniper Settings:</p>
@@ -281,9 +281,9 @@ debug flow basic</p>
   
   <entry>
     <title type="html"><![CDATA[Cisco ASA to Juniper ScreenOS to Juniper JunOS Command Reference Cheat Sheet]]></title>
-    <link href="http://tunnelsup.github.io/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet/"/>
+    <link href="https://www.tunnelsup.com/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet/"/>
     <updated>2012-07-06T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet</id>
+    <id>https://www.tunnelsup.com/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet</id>
     <content type="html"><![CDATA[<div>
   <style>
      table.ztab1 {

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: licencing | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/licencing/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/licencing/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Understanding Cisco ASA AnyConnect Licensing]]></title>
-    <link href="http://tunnelsup.github.io/understanding-cisco-asa-anyconnect-licensing/"/>
+    <link href="https://www.tunnelsup.com/understanding-cisco-asa-anyconnect-licensing/"/>
     <updated>2012-08-08T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/understanding-cisco-asa-anyconnect-licensing</id>
+    <id>https://www.tunnelsup.com/understanding-cisco-asa-anyconnect-licensing</id>
     <content type="html"><![CDATA[<p>This post will try to help understand the differences between anyconnect premium and anyconnect essentials licenses.</p>
 
 <p>For a more complete understanding of all of the licensing on the Cisco ASA <a href="/tup/2013/07/01/cisco-asa-licensing-quick-reference-guide">see this post</a>.</p>

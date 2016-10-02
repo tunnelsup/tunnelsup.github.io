@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: workflow | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/workflow/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/workflow/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Chromaterm]]></title>
-    <link href="http://tunnelsup.github.io/chromaterm/"/>
+    <link href="https://www.tunnelsup.com/chromaterm/"/>
     <updated>2013-06-16T22:31:00-07:00</updated>
-    <id>http://tunnelsup.github.io/chromaterm</id>
+    <id>https://www.tunnelsup.com/chromaterm</id>
     <content type="html"><![CDATA[<h2>About</h2>
 
 <p>Chromaterm is a terminal colorization tool that runs on linux and is produced by TunnelsUp.com. It essentially acts as a wrapper for the linux shell. Once it starts it then starts a new shell. Any activity within that new shell will be ran through Chromaterm. Chromaterm listens for keywords, that are user defined, and will highlight them with user defined colors.</p>
@@ -113,9 +113,9 @@ The</code>highlight` keyword will simply look for the text in the first argument
   
   <entry>
     <title type="html"><![CDATA[How to SSH like a Pro]]></title>
-    <link href="http://tunnelsup.github.io/how-to-ssh-like-a-pro/"/>
+    <link href="https://www.tunnelsup.com/how-to-ssh-like-a-pro/"/>
     <updated>2013-06-15T17:06:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-ssh-like-a-pro</id>
+    <id>https://www.tunnelsup.com/how-to-ssh-like-a-pro</id>
     <content type="html"><![CDATA[<p>A few tips and tricks about sshing.</p>
 
 <p>Whatever network I&rsquo;m working in I have found it&rsquo;s common to have a central linux server that I ssh into and then I can jump off of that to any of the devices in the network. The reason for this is that it makes securing the network a lot easier when your VTY ACL consists of one IP even though you have many admins. There&rsquo;s also a trail of who was logged into what when. But by far my favorite reason for having a central server to jump off of is because I can greatly improve my performance because I can use the power of linux to make my life easier.</p>
@@ -171,9 +171,9 @@ Add the following lines at the top of the file:<br>
   
   <entry>
     <title type="html"><![CDATA[Sublime Text 2 - Cisco Syntax and Snippets]]></title>
-    <link href="http://tunnelsup.github.io/sublime-text-2-cisco-syntax-and-snippets/"/>
+    <link href="https://www.tunnelsup.com/sublime-text-2-cisco-syntax-and-snippets/"/>
     <updated>2013-03-29T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/sublime-text-2-cisco-syntax-and-snippets</id>
+    <id>https://www.tunnelsup.com/sublime-text-2-cisco-syntax-and-snippets</id>
     <content type="html"><![CDATA[<p>I am a bit of a geek when it comes to workflow and that means I have tried out many text editors. Notepad, Notepad++, TextMate, Crimson Editor and VIM were all favorites of mine at one point. Now there is one that truly stands out as being superior for me. That is Sublime Text 2. I won&rsquo;t go into how awesome this text editor is in this post, I will leave that for you to find out on your own. This text editor is geared towards programmers though. No matter how much I searched I could not find anyone who has integrated it with Cisco. Here are some links to my github account which includes Cisco Syntax Definitions and Cisco Snippets for Sublime Text 2.</p>
 
 <h2>Cisco Syntax Definitions for Sublime Text 2/3</h2>

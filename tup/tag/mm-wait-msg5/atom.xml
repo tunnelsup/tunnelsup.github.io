@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: mm_wait_msg5 | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/mm-wait-msg5/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/mm-wait-msg5/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[ISAKMP (IKE Phase 1) status messages MM_WAIT_MSG#]]></title>
-    <link href="http://tunnelsup.github.io/isakmp-ike-phase-1-status-messages/"/>
+    <link href="https://www.tunnelsup.com/isakmp-ike-phase-1-status-messages/"/>
     <updated>2010-05-02T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/isakmp-ike-phase-1-status-messages</id>
+    <id>https://www.tunnelsup.com/isakmp-ike-phase-1-status-messages</id>
     <content type="html"><![CDATA[<h2>ISAKMP (IKE Phase 1) Negotiations States</h2>
 
 <p>The MM_WAIT_MSG state can be an excellent clue into why a tunnel is not forming. If your firewall is hanging at a specific state review this graph below to find where along the path the VPN is failing.</p>
@@ -176,9 +176,9 @@ The ISAKMP negotiations are complete. Phase 1 has successfully completed.</span>
   
   <entry>
     <title type="html"><![CDATA[Debug messages from successful L2L tunnel ASA]]></title>
-    <link href="http://tunnelsup.github.io/debug-messages-from-successful-l2l-tunnel/"/>
+    <link href="https://www.tunnelsup.com/debug-messages-from-successful-l2l-tunnel/"/>
     <updated>2010-05-01T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/debug-messages-from-successful-l2l-tunnel</id>
+    <id>https://www.tunnelsup.com/debug-messages-from-successful-l2l-tunnel</id>
     <content type="html"><![CDATA[<p>This post is what a SUCCESSFUL debug output looks like during a site to site VPN connection on a Cisco ASA.</p>
 
 <p>INITIATOR:</p>

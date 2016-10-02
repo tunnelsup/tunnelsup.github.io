@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ubuntu | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/ubuntu/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/ubuntu/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Securing an Ubuntu Linux Server]]></title>
-    <link href="http://tunnelsup.github.io/securing-an-ubuntu-linux-server/"/>
+    <link href="https://www.tunnelsup.com/securing-an-ubuntu-linux-server/"/>
     <updated>2015-02-14T10:56:00-08:00</updated>
-    <id>http://tunnelsup.github.io/securing-an-ubuntu-linux-server</id>
+    <id>https://www.tunnelsup.com/securing-an-ubuntu-linux-server</id>
     <content type="html"><![CDATA[<p>Some great aritcles on how to secure an Ubuntu Linux Server.</p>
 
 <p><a href="http://feross.org/how-to-setup-your-linode/">http://feross.org/how-to-setup-your-linode/</a></p>
@@ -28,9 +28,9 @@
   
   <entry>
     <title type="html"><![CDATA[VPN tunnel between an Ubuntu Linux machine and a Cisco ASA firewall]]></title>
-    <link href="http://tunnelsup.github.io/vpn-tunnel-between-an-ubuntu-linux-machine-and-a-cisco-asa-firewall/"/>
+    <link href="https://www.tunnelsup.com/vpn-tunnel-between-an-ubuntu-linux-machine-and-a-cisco-asa-firewall/"/>
     <updated>2012-05-25T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/vpn-tunnel-between-an-ubuntu-linux-machine-and-a-cisco-asa-firewall</id>
+    <id>https://www.tunnelsup.com/vpn-tunnel-between-an-ubuntu-linux-machine-and-a-cisco-asa-firewall</id>
     <content type="html"><![CDATA[<h3>Config on the Cisco ASA (running 8.4) side. This config is identical to a normal remote access VPN:</h3>
 
 <p>```

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: version 1 | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/version-1/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/version-1/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Cisco IPS - Turning off ssh version 1]]></title>
-    <link href="http://tunnelsup.github.io/cisco-ips-turning-off-ssh-version-1/"/>
+    <link href="https://www.tunnelsup.com/cisco-ips-turning-off-ssh-version-1/"/>
     <updated>2013-04-01T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-ips-turning-off-ssh-version-1</id>
+    <id>https://www.tunnelsup.com/cisco-ips-turning-off-ssh-version-1</id>
     <content type="html"><![CDATA[<p>Vulnerability scanners are reporting that ssh version 1 is on by default for Cisco IPS units. It is fairly simple to turn this off on the IPS if you have service level privilege.</p>
 
 <p>First get into the service level account. This is essentially the linux shell under the IPS.</p>

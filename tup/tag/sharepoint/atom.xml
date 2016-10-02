@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: sharepoint | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/sharepoint/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/sharepoint/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Using PHP and the Sharepoint 2013 Wiki API]]></title>
-    <link href="http://tunnelsup.github.io/using-the-sharepoint-2013-wiki-api/"/>
+    <link href="https://www.tunnelsup.com/using-the-sharepoint-2013-wiki-api/"/>
     <updated>2013-06-11T19:57:00-07:00</updated>
-    <id>http://tunnelsup.github.io/using-the-sharepoint-2013-wiki-api</id>
+    <id>https://www.tunnelsup.com/using-the-sharepoint-2013-wiki-api</id>
     <content type="html"><![CDATA[<p>Sharepoint has the ability to create a Wiki within it. It also has the ability for web developers to query these wiki pages and interact with them using the API. Here are some common usages for the Wiki API using PHP, curl, and hyperlinks.</p>
 
 <h2>Read Existing Article</h2>

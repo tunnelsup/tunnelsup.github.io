@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: connection | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/connection/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/connection/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Understanding Cisco ASA Connection Flags]]></title>
-    <link href="http://tunnelsup.github.io/understanding-cisco-asa-connection-flags/"/>
+    <link href="https://www.tunnelsup.com/understanding-cisco-asa-connection-flags/"/>
     <updated>2013-07-13T10:33:00-07:00</updated>
-    <id>http://tunnelsup.github.io/understanding-cisco-asa-connection-flags</id>
+    <id>https://www.tunnelsup.com/understanding-cisco-asa-connection-flags</id>
     <content type="html"><![CDATA[<p>Have you ever wondered what the flags meant when you issued the <code>show conn</code> or <code>show connections</code> command? This post will demystify that for you.</p>
 
 <h2>Viewing the Connections</h2>

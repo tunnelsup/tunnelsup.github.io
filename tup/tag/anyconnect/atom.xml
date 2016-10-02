@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: anyconnect | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/anyconnect/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/anyconnect/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Error: AnyConnect is not enabled on VPN server]]></title>
-    <link href="http://tunnelsup.github.io/error-anyconnect-is-not-enabled-on-vpn-server/"/>
+    <link href="https://www.tunnelsup.com/error-anyconnect-is-not-enabled-on-vpn-server/"/>
     <updated>2015-03-03T18:14:00-08:00</updated>
-    <id>http://tunnelsup.github.io/error-anyconnect-is-not-enabled-on-vpn-server</id>
+    <id>https://www.tunnelsup.com/error-anyconnect-is-not-enabled-on-vpn-server</id>
     <content type="html"><![CDATA[<p>Problem: When a user tries to connect to a Cisco ASA using the Cisco AnyConnect client the following error appears:</p>
 
 <p><strong>&ldquo;AnyConnect is not enabled on the VPN Server&rdquo;</strong></p>
@@ -52,9 +52,9 @@ group-policy GRPPOL-AC-FULL attributes
   
   <entry>
     <title type="html"><![CDATA[Troubleshooting AnyConnect and Eclipse IDE]]></title>
-    <link href="http://tunnelsup.github.io/troubleshooting-anyconnect-and-eclipse-ide/"/>
+    <link href="https://www.tunnelsup.com/troubleshooting-anyconnect-and-eclipse-ide/"/>
     <updated>2014-12-04T13:36:00-08:00</updated>
-    <id>http://tunnelsup.github.io/troubleshooting-anyconnect-and-eclipse-ide</id>
+    <id>https://www.tunnelsup.com/troubleshooting-anyconnect-and-eclipse-ide</id>
     <content type="html"><![CDATA[<p>Eclipse is an IDE used to build Android applications. One of our developers was trying to use the CVS connection within Eclipse to push their code to a server over the VPN. However this was failing.</p>
 
 <h2>Problem</h2>
@@ -94,9 +94,9 @@ openFile
   
   <entry>
     <title type="html"><![CDATA[AnyConnect Hostscan results exceed default limit]]></title>
-    <link href="http://tunnelsup.github.io/anyconnect-hostscan-results-exceed-default-limit/"/>
+    <link href="https://www.tunnelsup.com/anyconnect-hostscan-results-exceed-default-limit/"/>
     <updated>2014-07-03T20:09:00-07:00</updated>
-    <id>http://tunnelsup.github.io/anyconnect-hostscan-results-exceed-default-limit</id>
+    <id>https://www.tunnelsup.com/anyconnect-hostscan-results-exceed-default-limit</id>
     <content type="html"><![CDATA[<p>I have a user who is unable to login using AnyConnect. Their screen hangs at the AnyConnect message: “Hostscan is waiting for the next scan”.</p>
 
 <p>Looking at the logs on the ASA I saw the following log:</p>
@@ -127,9 +127,9 @@ ASA(config)# hostscan data-limit &lt;size-in-kilobytes&gt;
   
   <entry>
     <title type="html"><![CDATA[Locating the Cisco AnyConnect profiles]]></title>
-    <link href="http://tunnelsup.github.io/locating-the-cisco-anyconnect-profiles/"/>
+    <link href="https://www.tunnelsup.com/locating-the-cisco-anyconnect-profiles/"/>
     <updated>2013-07-19T19:25:00-07:00</updated>
-    <id>http://tunnelsup.github.io/locating-the-cisco-anyconnect-profiles</id>
+    <id>https://www.tunnelsup.com/locating-the-cisco-anyconnect-profiles</id>
     <content type="html"><![CDATA[<h2>Local AnyConnect Profiles</h2>
 
 <p>XML and profile files are stored locally to the users machine. The location varies based on OS.</p>
@@ -159,9 +159,9 @@ Cisco AnyConnect Secure Mobility Client\Profile</p>
   
   <entry>
     <title type="html"><![CDATA[SSL VPN access is not allowed]]></title>
-    <link href="http://tunnelsup.github.io/ssl-vpn-access-is-not-allowed/"/>
+    <link href="https://www.tunnelsup.com/ssl-vpn-access-is-not-allowed/"/>
     <updated>2013-06-06T22:17:00-07:00</updated>
-    <id>http://tunnelsup.github.io/ssl-vpn-access-is-not-allowed</id>
+    <id>https://www.tunnelsup.com/ssl-vpn-access-is-not-allowed</id>
     <content type="html"><![CDATA[<p>Recently I tried installing WebVPN usability onto a Cisco ASA firewall. When trying to login I received the following error:<br>
 <img src="http://tunnelsup.com/images/sslvpnerror.png" alt="SSL VPN Error IMG" /></p>
 

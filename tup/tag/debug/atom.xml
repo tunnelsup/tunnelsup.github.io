@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: debug | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/debug/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/debug/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[L2L Tunnel Failed at MM_WAIT_MSG4]]></title>
-    <link href="http://tunnelsup.github.io/l2l-tunnel-failed-at-mm_wait_msg4/"/>
+    <link href="https://www.tunnelsup.com/l2l-tunnel-failed-at-mm_wait_msg4/"/>
     <updated>2010-06-10T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/l2l-tunnel-failed-at-mm_wait_msg4</id>
+    <id>https://www.tunnelsup.com/l2l-tunnel-failed-at-mm_wait_msg4</id>
     <content type="html"><![CDATA[<p>First be sure to read <a href="http://www.tunnelsup.com/isakmp-ike-phase-1-status-messages/">this post on MM WAIT MSG numbers</a>. It goes over all of the ISAKMP states.</p>
 
 <p>MM_WAIT_MSG4 is the stage where the firewall that initiated the tunnel is sending its pre-shared key hash to the receiver. This is NOT the stage that actually checks to see if the pre-shared keys match, it only exchanges the hashes for them.</p>
@@ -77,9 +77,9 @@ Jun 10 17:36:13 [IKEv1]: IP = 233.22.22.233, Information Exchange processing fai
   
   <entry>
     <title type="html"><![CDATA[Debug messages from successful L2L tunnel ASA]]></title>
-    <link href="http://tunnelsup.github.io/debug-messages-from-successful-l2l-tunnel/"/>
+    <link href="https://www.tunnelsup.com/debug-messages-from-successful-l2l-tunnel/"/>
     <updated>2010-05-01T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/debug-messages-from-successful-l2l-tunnel</id>
+    <id>https://www.tunnelsup.com/debug-messages-from-successful-l2l-tunnel</id>
     <content type="html"><![CDATA[<p>This post is what a SUCCESSFUL debug output looks like during a site to site VPN connection on a Cisco ASA.</p>
 
 <p>INITIATOR:</p>

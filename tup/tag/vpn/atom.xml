@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: vpn | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/vpn/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/vpn/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[recv errors Cisco ASA VPN tunnel]]></title>
-    <link href="http://tunnelsup.github.io/recv-errors-cisco-asa-vpn-tunnel/"/>
+    <link href="https://www.tunnelsup.com/recv-errors-cisco-asa-vpn-tunnel/"/>
     <updated>2015-01-22T18:18:00-08:00</updated>
-    <id>http://tunnelsup.github.io/recv-errors-cisco-asa-vpn-tunnel</id>
+    <id>https://www.tunnelsup.com/recv-errors-cisco-asa-vpn-tunnel</id>
     <content type="html"><![CDATA[<p>When I was troubleshooting a VPN tunnel on a Cisco ASA, 100% of the packets coming over the tunnel were being counted as <code>#recv errors</code>. It turns out that these errors can go up if there are anti-replay failures, corrupted packets, or other decapsulation errors. Because 100% of my packets were being counted for this I assumed it wasn&rsquo;t a corrupted packet or decapsulation error and began looking into anti-replay problems.</p>
 
 <h3>Show the error count</h3>
@@ -76,9 +76,9 @@ access-list ACL-TKY-VPN extended permit ip host 10.10.10.11 host 192.168.60.60
   
   <entry>
     <title type="html"><![CDATA[What is VPN?]]></title>
-    <link href="http://tunnelsup.github.io/what-is-a-vpn/"/>
+    <link href="https://www.tunnelsup.com/what-is-a-vpn/"/>
     <updated>2014-11-08T19:53:00-08:00</updated>
-    <id>http://tunnelsup.github.io/what-is-a-vpn</id>
+    <id>https://www.tunnelsup.com/what-is-a-vpn</id>
     <content type="html"><![CDATA[<p>A Virtual Private Network is a technology used by computers to securely connect two networks together across an insecure network such as the internet. It is often used to connect two offices together or for a remote worker to connect to a private office network. A VPN tunnel relies on encryption and integrity to pass data through it. When the traffic is strongly encrypted, it is unreadable by anyone who intercepts it. Data integrity simply ensures that the data that went into the tunnel is the same as the data that comes out of the tunnel.</p>
 
 <p><img src="/images/vpn1.png"></p>
@@ -121,9 +121,9 @@ access-list ACL-TKY-VPN extended permit ip host 10.10.10.11 host 192.168.60.60
   
   <entry>
     <title type="html"><![CDATA[Cisco IOS VPN error: peer does not do paranoid keepalives]]></title>
-    <link href="http://tunnelsup.github.io/cisco-ios-vpn-error-peer-does-not-do-paranoid-keepalives/"/>
+    <link href="https://www.tunnelsup.com/cisco-ios-vpn-error-peer-does-not-do-paranoid-keepalives/"/>
     <updated>2013-07-13T10:37:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-ios-vpn-error-peer-does-not-do-paranoid-keepalives</id>
+    <id>https://www.tunnelsup.com/cisco-ios-vpn-error-peer-does-not-do-paranoid-keepalives</id>
     <content type="html"><![CDATA[<p>Recently I was troubleshooting a VPN tunnel and the tunnel appeared to be at MM_NO_STATE whenever I&rsquo;d try to bring the tunnel up. I turned on <code>debug crypto isakmp</code> and saw the following output:</p>
 
 <p>```
@@ -316,9 +316,9 @@ ISAKMP (0:0): received packet from 77.77.77.77 dport 500 sport 500 Global (I) MM
   
   <entry>
     <title type="html"><![CDATA[SSL VPN access is not allowed]]></title>
-    <link href="http://tunnelsup.github.io/ssl-vpn-access-is-not-allowed/"/>
+    <link href="https://www.tunnelsup.com/ssl-vpn-access-is-not-allowed/"/>
     <updated>2013-06-06T22:17:00-07:00</updated>
-    <id>http://tunnelsup.github.io/ssl-vpn-access-is-not-allowed</id>
+    <id>https://www.tunnelsup.com/ssl-vpn-access-is-not-allowed</id>
     <content type="html"><![CDATA[<p>Recently I tried installing WebVPN usability onto a Cisco ASA firewall. When trying to login I received the following error:<br>
 <img src="http://tunnelsup.com/images/sslvpnerror.png" alt="SSL VPN Error IMG" /></p>
 
@@ -378,9 +378,9 @@ Doh! It appears <code>anyconnect-essentials</code> is enabled! Here&rsquo;s the 
   
   <entry>
     <title type="html"><![CDATA[Cisco VPN troubleshooting - encaps but no decaps]]></title>
-    <link href="http://tunnelsup.github.io/cisco-vpn-troubleshooting-encaps-but-no-decaps/"/>
+    <link href="https://www.tunnelsup.com/cisco-vpn-troubleshooting-encaps-but-no-decaps/"/>
     <updated>2013-03-31T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-vpn-troubleshooting-encaps-but-no-decaps</id>
+    <id>https://www.tunnelsup.com/cisco-vpn-troubleshooting-encaps-but-no-decaps</id>
     <content type="html"><![CDATA[<p>Suppose you are trying to troubleshoot a site to site VPN tunnel that is designed like this:
 <img src="/images/asasitetosite.jpg" alt="ASA Site to site diagram - IMG" /></p>
 

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: routing | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/routing/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/routing/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Route Add Windows - A Guide to Windows Routing]]></title>
-    <link href="http://tunnelsup.github.io/route-add-windows-a-guide-to-windows-routing/"/>
+    <link href="https://www.tunnelsup.com/route-add-windows-a-guide-to-windows-routing/"/>
     <updated>2016-04-25T08:41:00-07:00</updated>
-    <id>http://tunnelsup.github.io/route-add-windows-a-guide-to-windows-routing</id>
+    <id>https://www.tunnelsup.com/route-add-windows-a-guide-to-windows-routing</id>
     <content type="html"><![CDATA[<p>Sometimes you need to manually add, change, or remove a route on a Windows machine. Here is quick guide to help you accomplish these tasks.</p>
 
 <p>First start by opening a CMD prompt by going to start then typing <code>cmd</code>.</p>

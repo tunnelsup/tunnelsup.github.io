@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: bash | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/bash/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/bash/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to change the output color when using ls in bash]]></title>
-    <link href="http://tunnelsup.github.io/how-to-change-the-output-color-when-using-ls-in-bash/"/>
+    <link href="https://www.tunnelsup.com/how-to-change-the-output-color-when-using-ls-in-bash/"/>
     <updated>2015-02-14T16:34:00-08:00</updated>
-    <id>http://tunnelsup.github.io/how-to-change-the-output-color-when-using-ls-in-bash</id>
+    <id>https://www.tunnelsup.com/how-to-change-the-output-color-when-using-ls-in-bash</id>
     <content type="html"><![CDATA[<p>Sometimes when using Linux in bash or zsh you may have a hard time seeing directories. If you have ANSI colors turned on and your terminal background color is black seeing the directories is hard. That is because the directory color is dark blue by default. The fix to this is to change the dircolors which uses an environmental variable <code>$LS_COLORS</code>.</p>
 
 <h3>Change the dir color</h3>

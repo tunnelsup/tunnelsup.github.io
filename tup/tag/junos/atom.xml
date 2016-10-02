@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: junos | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/junos/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/junos/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Troubleshooting high CPU on Juniper SRX Junos devices]]></title>
-    <link href="http://tunnelsup.github.io/troubleshooting-high-cpu-on-juniper-srx-junos-devices/"/>
+    <link href="https://www.tunnelsup.com/troubleshooting-high-cpu-on-juniper-srx-junos-devices/"/>
     <updated>2015-09-30T19:20:00-07:00</updated>
-    <id>http://tunnelsup.github.io/troubleshooting-high-cpu-on-juniper-srx-junos-devices</id>
+    <id>https://www.tunnelsup.com/troubleshooting-high-cpu-on-juniper-srx-junos-devices</id>
     <content type="html"><![CDATA[<p>Occasionally a Juniper SRX device running Junos will have a high CPU. Here are some tips for troubleshooting these incidents.</p>
 
 <h2>Validate</h2>
@@ -160,9 +160,9 @@ Max flow session     : 131072
   
   <entry>
     <title type="html"><![CDATA[Useful Juniper SRX Troubleshooting Commands]]></title>
-    <link href="http://tunnelsup.github.io/useful-juniper-srx-troubleshooting-commands/"/>
+    <link href="https://www.tunnelsup.com/useful-juniper-srx-troubleshooting-commands/"/>
     <updated>2015-09-06T13:04:00-07:00</updated>
-    <id>http://tunnelsup.github.io/useful-juniper-srx-troubleshooting-commands</id>
+    <id>https://www.tunnelsup.com/useful-juniper-srx-troubleshooting-commands</id>
     <content type="html"><![CDATA[<p>Here&rsquo;s a list of my favorite Juniper SRX Junos commands I use for troubleshooting.</p>
 
 <h3>Show config as single lines instead of stanzas</h3>
@@ -247,9 +247,9 @@ show chassis craft-interface
   
   <entry>
     <title type="html"><![CDATA[Site to Site VPN Tunnel Between Cisco ASA and Juniper SRX JunOS]]></title>
-    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos/"/>
+    <link href="https://www.tunnelsup.com/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos/"/>
     <updated>2013-01-16T00:00:00-08:00</updated>
-    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos</id>
+    <id>https://www.tunnelsup.com/site-to-site-vpn-tunnel-between-cisco-asa-and-juniper-srx-junos</id>
     <content type="html"><![CDATA[<p><img src="/images/asasitetosite.jpg" alt="ASA Site to site diagram - IMG" /></p>
 
 <p>Blue firewall: Juniper SRX 210 (JunOS 10.0R1.8)</p>

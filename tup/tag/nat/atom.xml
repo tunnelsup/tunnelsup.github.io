@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: nat | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/nat/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/nat/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Configuring NAT in Juniper SRX Platforms using JunOS]]></title>
-    <link href="http://tunnelsup.github.io/configuring-nat-in-juniper-srx-platforms-using-junos/"/>
+    <link href="https://www.tunnelsup.com/configuring-nat-in-juniper-srx-platforms-using-junos/"/>
     <updated>2013-07-01T11:13:00-07:00</updated>
-    <id>http://tunnelsup.github.io/configuring-nat-in-juniper-srx-platforms-using-junos</id>
+    <id>https://www.tunnelsup.com/configuring-nat-in-juniper-srx-platforms-using-junos</id>
     <content type="html"><![CDATA[<p>There are 3 kinds of NAT for the JunOS SRX devices. Source NAT, destination NAT, and static NAT. We will also cover Proxy ARP. This post will only cover the basic and most common concepts and usage of NAT in SRX. But with this knowledge you should be able to do NAT for almost any occasion.</p>
 
 <p>This post assumes you know the basic concept of NAT and what it is and why we use it and why we need it.</p>
@@ -180,9 +180,9 @@ Now the SRX will &lsquo;listen&rsquo; for any ARP requests for 99.99.99.88 and 9
   
   <entry>
     <title type="html"><![CDATA[Cisco ASA NAT Conversion Tool]]></title>
-    <link href="http://tunnelsup.github.io/nat-converter/"/>
+    <link href="https://www.tunnelsup.com/nat-converter/"/>
     <updated>2013-05-18T13:24:00-07:00</updated>
-    <id>http://tunnelsup.github.io/nat-converter</id>
+    <id>https://www.tunnelsup.com/nat-converter</id>
     <content type="html"><![CDATA[<p>Do you need to convert ASA 8.2 and under code to the new ASA 8.3+ code? The NAT statements are entirely different in the new code. During the upgrade the ASA will try to convert it automatically but this is worthless because it does a horrible job at it. Cisco recommends using auto NAT. This is also bad advice to use Auto NAT because it makes extremly ugly and hard to manage code. This conversion tool will convert your NAT statements to the easist to read and manage code.<br></p>
 
 <br>
@@ -269,9 +269,9 @@ static (INSIDE,DMZ) 10.10.10.0 172.16.10.0 netmask 255.255.255.0</p>
   
   <entry>
     <title type="html"><![CDATA[Cisco ASA Static NAT Creator]]></title>
-    <link href="http://tunnelsup.github.io/nat-creator/"/>
+    <link href="https://www.tunnelsup.com/nat-creator/"/>
     <updated>2013-05-18T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/nat-creator</id>
+    <id>https://www.tunnelsup.com/nat-creator</id>
     <content type="html"><![CDATA[<pre><code>      &lt;p&gt;This program will create a static 1 to 1 NAT for Cisco ASA 8.4.2+ code.&lt;/p&gt;
     &lt;p&gt;The format needed for the conversion to work is: &lt;br /&gt;
 </code></pre>
@@ -311,9 +311,9 @@ INSIDE OUTSIDE 192.168.1.4 55.55.55.4</p>
   
   <entry>
     <title type="html"><![CDATA[ARPing for non-connected subnets on a Cisco ASA]]></title>
-    <link href="http://tunnelsup.github.io/arping-for-non-connected-subnets-on-a-cisco-asa/"/>
+    <link href="https://www.tunnelsup.com/arping-for-non-connected-subnets-on-a-cisco-asa/"/>
     <updated>2013-05-02T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/arping-for-non-connected-subnets-on-a-cisco-asa</id>
+    <id>https://www.tunnelsup.com/arping-for-non-connected-subnets-on-a-cisco-asa</id>
     <content type="html"><![CDATA[<p>Consider the following network.</p>
 
 <p><img src="/images/arpnonconnected.png" alt="ARP diagram - IMG" /></p>
@@ -351,9 +351,9 @@ INSIDE OUTSIDE 192.168.1.4 55.55.55.4</p>
   
   <entry>
     <title type="html"><![CDATA[NAT for Cisco ASA's version 8.3+]]></title>
-    <link href="http://tunnelsup.github.io/nat-for-cisco-asas-version-8-3/"/>
+    <link href="https://www.tunnelsup.com/nat-for-cisco-asas-version-8-3/"/>
     <updated>2011-06-24T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/nat-for-cisco-asas-version-8-3</id>
+    <id>https://www.tunnelsup.com/nat-for-cisco-asas-version-8-3</id>
     <content type="html"><![CDATA[<p>There are two major kinds of NAT in 8.3+ Auto NAT and Manual NAT. Auto is done inside the object and cannot take into consideration the destination of the traffic. Manual is done in global configuration and can NAT either the source IPs and destination IPs.</p>
 
 <h3>Auto NAT</h3>

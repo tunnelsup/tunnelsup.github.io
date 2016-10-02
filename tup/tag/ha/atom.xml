@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ha | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/ha/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/ha/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Configuring HA on Juniper SRX through JunOS]]></title>
-    <link href="http://tunnelsup.github.io/configuring-ha-on-juniper-srx-through-junos/"/>
+    <link href="https://www.tunnelsup.com/configuring-ha-on-juniper-srx-through-junos/"/>
     <updated>2013-07-01T11:21:00-07:00</updated>
-    <id>http://tunnelsup.github.io/configuring-ha-on-juniper-srx-through-junos</id>
+    <id>https://www.tunnelsup.com/configuring-ha-on-juniper-srx-through-junos</id>
     <content type="html"><![CDATA[<p>This post will cover how to conduct HA (high availability) failover configurations for the Juniper SRX. This post will only cover a simple active/passive configuration. It will not cover more advanced deployments like layer 2 HA or active/active HA.</p>
 
 <h2>Requirements</h2>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: packet | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/packet/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/packet/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Packet Captures on Cisco ASA]]></title>
-    <link href="http://tunnelsup.github.io/packet-captures-on-cisco-asa/"/>
+    <link href="https://www.tunnelsup.com/packet-captures-on-cisco-asa/"/>
     <updated>2013-06-06T14:23:00-07:00</updated>
-    <id>http://tunnelsup.github.io/packet-captures-on-cisco-asa</id>
+    <id>https://www.tunnelsup.com/packet-captures-on-cisco-asa</id>
     <content type="html"><![CDATA[<p>One of my favorite troubleshooting tools on the Cisco ASA firewall is doing a packet capture. An incoming packet will hit the capture before any ACL or NAT or other processing. An outgoing packet will hit a capture last before being put on the wire.</p>
 
 <h2>Starting the Capture</h2>

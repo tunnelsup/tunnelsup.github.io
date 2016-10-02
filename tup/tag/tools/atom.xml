@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: tools | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/tools/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/tools/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Cisco ASA show connections analyzer]]></title>
-    <link href="http://tunnelsup.github.io/cisco-asa-show-connections-analyzer/"/>
+    <link href="https://www.tunnelsup.com/cisco-asa-show-connections-analyzer/"/>
     <updated>2015-09-04T11:37:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-asa-show-connections-analyzer</id>
+    <id>https://www.tunnelsup.com/cisco-asa-show-connections-analyzer</id>
     <content type="html"><![CDATA[<p>This tool will examine the output of <code>show conn</code> from a Cisco ASA firewall and display relevant information about the connections.</p>
 
 <br><br>
@@ -88,9 +88,9 @@
   
   <entry>
     <title type="html"><![CDATA[Checkpoint Packet Capture Creator]]></title>
-    <link href="http://tunnelsup.github.io/checkpoint-packet-capture-creator/"/>
+    <link href="https://www.tunnelsup.com/checkpoint-packet-capture-creator/"/>
     <updated>2014-03-29T17:28:00-07:00</updated>
-    <id>http://tunnelsup.github.io/checkpoint-packet-capture-creator</id>
+    <id>https://www.tunnelsup.com/checkpoint-packet-capture-creator</id>
     <content type="html"><![CDATA[
 
 
@@ -210,9 +210,9 @@ A NAT will take place in the outbound rules.
   
   <entry>
     <title type="html"><![CDATA[Subnet Calculator - IPv4/IPv6]]></title>
-    <link href="http://tunnelsup.github.io/subnet-calculator/"/>
+    <link href="https://www.tunnelsup.com/subnet-calculator/"/>
     <updated>2013-09-02T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/subnet-calculator</id>
+    <id>https://www.tunnelsup.com/subnet-calculator</id>
     <content type="html"><![CDATA[<p>Page has been moved. Please go to <a href="http://www.tunnelsup.com/subnet-calculator"><a href="http://www.tunnelsup.com/subnet-calculator">http://www.tunnelsup.com/subnet-calculator</a></a></p>
 
 <!-- This page exists only so it shows up in the 'all articles' page. Actual page found in source/subnet-calculator/index.html -->
@@ -222,9 +222,9 @@ A NAT will take place in the outbound rules.
   
   <entry>
     <title type="html"><![CDATA[Chromaterm]]></title>
-    <link href="http://tunnelsup.github.io/chromaterm/"/>
+    <link href="https://www.tunnelsup.com/chromaterm/"/>
     <updated>2013-06-16T22:31:00-07:00</updated>
-    <id>http://tunnelsup.github.io/chromaterm</id>
+    <id>https://www.tunnelsup.com/chromaterm</id>
     <content type="html"><![CDATA[<h2>About</h2>
 
 <p>Chromaterm is a terminal colorization tool that runs on linux and is produced by TunnelsUp.com. It essentially acts as a wrapper for the linux shell. Once it starts it then starts a new shell. Any activity within that new shell will be ran through Chromaterm. Chromaterm listens for keywords, that are user defined, and will highlight them with user defined colors.</p>
@@ -320,9 +320,9 @@ The</code>highlight` keyword will simply look for the text in the first argument
   
   <entry>
     <title type="html"><![CDATA[Cisco ASA NAT Conversion Tool]]></title>
-    <link href="http://tunnelsup.github.io/nat-converter/"/>
+    <link href="https://www.tunnelsup.com/nat-converter/"/>
     <updated>2013-05-18T13:24:00-07:00</updated>
-    <id>http://tunnelsup.github.io/nat-converter</id>
+    <id>https://www.tunnelsup.com/nat-converter</id>
     <content type="html"><![CDATA[<p>Do you need to convert ASA 8.2 and under code to the new ASA 8.3+ code? The NAT statements are entirely different in the new code. During the upgrade the ASA will try to convert it automatically but this is worthless because it does a horrible job at it. Cisco recommends using auto NAT. This is also bad advice to use Auto NAT because it makes extremly ugly and hard to manage code. This conversion tool will convert your NAT statements to the easist to read and manage code.<br></p>
 
 <br>

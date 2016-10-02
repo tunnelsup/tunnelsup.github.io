@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: break sequence | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/break-sequence/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/break-sequence/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Recovering the password when No Service Password-Recovery is enabled on a router]]></title>
-    <link href="http://tunnelsup.github.io/recovering-the-password-when-no-service-password-recovery-is-enabled-on-a-router/"/>
+    <link href="https://www.tunnelsup.com/recovering-the-password-when-no-service-password-recovery-is-enabled-on-a-router/"/>
     <updated>2013-01-04T00:00:00-08:00</updated>
-    <id>http://tunnelsup.github.io/recovering-the-password-when-no-service-password-recovery-is-enabled-on-a-router</id>
+    <id>https://www.tunnelsup.com/recovering-the-password-when-no-service-password-recovery-is-enabled-on-a-router</id>
     <content type="html"><![CDATA[<p>Goal: Get into an 1811 that has the No Service Password-Recovery feature enabled.</p>
 
 <p>Limitation: Because this feature is enabled it simply means when you do password recovery the entire config will be wiped.</p>

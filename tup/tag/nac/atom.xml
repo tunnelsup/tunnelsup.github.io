@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: nac | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/nac/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/nac/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Conducting Failover for Cisco NAC appliances]]></title>
-    <link href="http://tunnelsup.github.io/conducting-failover-for-cisco-nac-appliances/"/>
+    <link href="https://www.tunnelsup.com/conducting-failover-for-cisco-nac-appliances/"/>
     <updated>2014-05-18T18:43:00-07:00</updated>
-    <id>http://tunnelsup.github.io/conducting-failover-for-cisco-nac-appliances</id>
+    <id>https://www.tunnelsup.com/conducting-failover-for-cisco-nac-appliances</id>
     <content type="html"><![CDATA[<p>When conducting a failover of a Cisco NAC cluster, first determine the status of the node you’re currently on:</p>
 
 <p><code>

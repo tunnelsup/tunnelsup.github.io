@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: electronics | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/electronics/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/electronics/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Raspberry Pi Zero: Blink an LED using GPIO pins]]></title>
-    <link href="http://tunnelsup.github.io/raspberry-pi-zero-blink-an-led-using-gpio-pins/"/>
+    <link href="https://www.tunnelsup.com/raspberry-pi-zero-blink-an-led-using-gpio-pins/"/>
     <updated>2016-09-14T12:19:00-07:00</updated>
-    <id>http://tunnelsup.github.io/raspberry-pi-zero-blink-an-led-using-gpio-pins</id>
+    <id>https://www.tunnelsup.com/raspberry-pi-zero-blink-an-led-using-gpio-pins</id>
     <content type="html"><![CDATA[<p>Want to use the GPIO pins to blink an LED using a Raspberry Pi Zero? Here&rsquo;s a quick guide to get you started.</p>
 
 <h2>Build the circuit</h2>
@@ -84,9 +84,9 @@ python blink.py
   
   <entry>
     <title type="html"><![CDATA[Raspberry Pi boots into emergency kernel when loading raspian]]></title>
-    <link href="http://tunnelsup.github.io/raspberry-pi-boots-into-emergency-kernel-when-loading-raspian/"/>
+    <link href="https://www.tunnelsup.com/raspberry-pi-boots-into-emergency-kernel-when-loading-raspian/"/>
     <updated>2013-07-20T15:36:00-07:00</updated>
-    <id>http://tunnelsup.github.io/raspberry-pi-boots-into-emergency-kernel-when-loading-raspian</id>
+    <id>https://www.tunnelsup.com/raspberry-pi-boots-into-emergency-kernel-when-loading-raspian</id>
     <content type="html"><![CDATA[<p>Recently I tried updating my Raspian OS on my Pi. After writing the OS to the card and popping it into the Pi, the Pi would only boot into the emergency kernel mode. Basically it dumped me into a very basic shell without the need to login or anything. It gives very limited commands and doesn&rsquo;t really allow for any real operation. Something definitely isn&rsquo;t right.</p>
 
 <h2>The Fix</h2>
@@ -115,9 +115,9 @@ It looks like it&rsquo;s Rev 2, but that output actually is saying Rev 1.</p>
   
   <entry>
     <title type="html"><![CDATA[Raspberry Pi: Phoning home using a reverse remote ssh tunnel]]></title>
-    <link href="http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/"/>
+    <link href="https://www.tunnelsup.com/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/"/>
     <updated>2013-05-08T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel</id>
+    <id>https://www.tunnelsup.com/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel</id>
     <content type="html"><![CDATA[<p><img src="/images/pi6.jpg" alt="Pi IMG" /><br>
 What&rsquo;s this? Just an ordinary powerbrick? Read on to find out why this is an incredibly dangerous thing to see in your office.</p>
 
@@ -183,7 +183,7 @@ ssh -l piUser -p 2222 localhost
 <h1>!/bin/bash</h1>
 
 <p>createTunnel() {
-  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#58;&#115;&#101;&#x72;&#x76;&#101;&#x72;&#x55;&#115;&#x65;&#114;&#64;&#50;&#x35;&#46;&#50;&#x35;&#46;&#50;&#53;&#46;&#50;&#53;">&#115;&#x65;&#114;&#x76;&#101;&#x72;&#85;&#115;&#x65;&#114;&#64;&#50;&#x35;&#46;&#x32;&#x35;&#x2e;&#50;&#x35;&#x2e;&#50;&#53;</a>
+  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x73;&#x65;&#x72;&#x76;&#101;&#114;&#85;&#x73;&#101;&#114;&#64;&#50;&#x35;&#46;&#50;&#x35;&#x2e;&#x32;&#53;&#46;&#x32;&#53;">&#x73;&#101;&#x72;&#x76;&#x65;&#114;&#x55;&#115;&#101;&#x72;&#x40;&#x32;&#53;&#x2e;&#x32;&#x35;&#46;&#x32;&#x35;&#x2e;&#x32;&#x35;</a>
   if [[ $? -eq 0 ]]; then</p>
 
 <pre><code>echo Tunnel to jumpbox created successfully
@@ -256,9 +256,9 @@ To troubleshoot any problems in this you can view the tunnel.log file.</p>
   
   <entry>
     <title type="html"><![CDATA[Arduino Power Usage Project]]></title>
-    <link href="http://tunnelsup.github.io/arduino-power-usage-project/"/>
+    <link href="https://www.tunnelsup.com/arduino-power-usage-project/"/>
     <updated>2011-09-19T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/arduino-power-usage-project</id>
+    <id>https://www.tunnelsup.com/arduino-power-usage-project</id>
     <content type="html"><![CDATA[<p>I wanted to see how much power I am consuming in my home at any given moment, so I created this project using arduino.  It features a simple display of LEDs: red representing high energy usage, yellow moderate usage, and green low usage.</p>
 
 <iframe src="http://www.youtube.com/embed/ZAjG0oVoZ-4" frameborder="0" width="420" height="315"></iframe>
@@ -289,7 +289,7 @@ To troubleshoot any problems in this you can view the tunnel.log file.</p>
 
 <h5>STEP 1 &ndash; TED</h5>
 
-<p><img class="alignnone size-medium wp-image-194" style="float: right;" title="ted-footprints" src="http://tunnelsup.github.io/images/ted-footprints-200x300.jpg" alt="" width="200" height="300" />Get <a href="http://www.theenergydetective.com/">TED (The Energy Detective) </a>working at your house. This is a nifty little unit that has a device called an MTU that sits in your electrical panel to monitor your mains and how much electricity they use. Then it sends that data through the electrical wiring in your house to the gateway. The gateway then has an ethernet cable connected to to it and plugs into your home network.</p>
+<p><img class="alignnone size-medium wp-image-194" style="float: right;" title="ted-footprints" src="https://www.tunnelsup.com/images/ted-footprints-200x300.jpg" alt="" width="200" height="300" />Get <a href="http://www.theenergydetective.com/">TED (The Energy Detective) </a>working at your house. This is a nifty little unit that has a device called an MTU that sits in your electrical panel to monitor your mains and how much electricity they use. Then it sends that data through the electrical wiring in your house to the gateway. The gateway then has an ethernet cable connected to to it and plugs into your home network.</p>
 
 <p>The TED gateway makes a call every 5 seconds to get a reading from the MTU which is the device sitting in the main electrical panel. In my case, the TED gateway has an IP address of 172.16.200.216. Upon going to that website it has nice graphical display of real time power usage. The picture on the right is what the live kw usage shows on the TED software.</p>
 

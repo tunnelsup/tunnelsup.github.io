@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: quicktime | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/quicktime/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/quicktime/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[The best free screen recording software for Mac OSX]]></title>
-    <link href="http://tunnelsup.github.io/the-best-free-screen-recording-software-for-mac-osx/"/>
+    <link href="https://www.tunnelsup.com/the-best-free-screen-recording-software-for-mac-osx/"/>
     <updated>2014-09-18T23:49:00-07:00</updated>
-    <id>http://tunnelsup.github.io/the-best-free-screen-recording-software-for-mac-osx</id>
+    <id>https://www.tunnelsup.com/the-best-free-screen-recording-software-for-mac-osx</id>
     <content type="html"><![CDATA[<p>The QuickTime video player that comes installed in OSX by default can also do screen recording. It does a decent job at screen recording and since it&rsquo;s free and already on the system it is the best free software for doing screen recording on Mac OSX.</p>
 
 <h3>Features of the QuickTime screen recording software</h3>

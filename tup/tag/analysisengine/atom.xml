@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: analysisengine | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/analysisengine/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/analysisengine/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Restarting the AnalysisEngine on a Cisco IPS]]></title>
-    <link href="http://tunnelsup.github.io/restarting-the-analysisengine-on-a-cisco-ips/"/>
+    <link href="https://www.tunnelsup.com/restarting-the-analysisengine-on-a-cisco-ips/"/>
     <updated>2013-06-11T19:55:00-07:00</updated>
-    <id>http://tunnelsup.github.io/restarting-the-analysisengine-on-a-cisco-ips</id>
+    <id>https://www.tunnelsup.com/restarting-the-analysisengine-on-a-cisco-ips</id>
     <content type="html"><![CDATA[<p>Sometimes the analysis engine goes down on a Cisco IPS (Intrusion Prevention System) or IDS (Intrusion Detection System). In that case the analysis engine can be restarted from the service account by following these steps.</p>
 
 <p><strong>Caution: If you restart the Analysis Engine in an IPS Module which is in a firewall which is acting as the active firewall, this will cause a firewall failover to occur.</strong></p>

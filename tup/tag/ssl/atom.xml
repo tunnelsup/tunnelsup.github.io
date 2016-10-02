@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ssl | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/ssl/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/ssl/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to use Firefox to check if a website uses SSLv3]]></title>
-    <link href="http://tunnelsup.github.io/how-to-use-firefox-to-check-if-a-website-uses-sslv3/"/>
+    <link href="https://www.tunnelsup.com/how-to-use-firefox-to-check-if-a-website-uses-sslv3/"/>
     <updated>2015-07-26T10:57:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-use-firefox-to-check-if-a-website-uses-sslv3</id>
+    <id>https://www.tunnelsup.com/how-to-use-firefox-to-check-if-a-website-uses-sslv3</id>
     <content type="html"><![CDATA[<p>We should all know by now that <a href="https://isc.sans.edu/forums/diary/SSLv3+POODLE+Vulnerability+Official+Release/18827/">SSLv3 is a broken security protocol due to the POODLE vulnerability</a>. Firefox tries to connect to a website using the strongest security that the web server provides. It is possible to change the settings in Firefox to force a less secure connection which can tell us whether SSLv3 is on or not.</p>
 
 <h3>Change the settings</h3>
@@ -52,9 +52,9 @@
   
   <entry>
     <title type="html"><![CDATA[Adding a wildcard SSL certificate to a Cisco ASA]]></title>
-    <link href="http://tunnelsup.github.io/adding-a-wildcard-ssl-certificate-to-a-cisco-asa/"/>
+    <link href="https://www.tunnelsup.com/adding-a-wildcard-ssl-certificate-to-a-cisco-asa/"/>
     <updated>2015-03-05T22:51:00-08:00</updated>
-    <id>http://tunnelsup.github.io/adding-a-wildcard-ssl-certificate-to-a-cisco-asa</id>
+    <id>https://www.tunnelsup.com/adding-a-wildcard-ssl-certificate-to-a-cisco-asa</id>
     <content type="html"><![CDATA[<p>A wildcard SSL certificate is where the SSL certificate is good for both the root domain and all subdomains. If we had a wildcard certificate for example.com it means the certificate will be valid for vpn.example.como, mail.example.com, blog.example.com, and example.com. This differs from a normal SSL certificate that specifically indicates one or more domain names in the subject field. There is another post that covers how to <a href="http://www.tunnelsup.com/adding-an-ssl-certificate-on-an-asa">install a basic SSL certificate on a Cisco ASA</a>.</p>
 
 <p>In this post we will be covering how to install a wildcard certificate on a Cisco ASA.</p>
@@ -159,9 +159,9 @@ cert.pem  cert.p12  privkey.pem
   
   <entry>
     <title type="html"><![CDATA[SSL VPN access is not allowed]]></title>
-    <link href="http://tunnelsup.github.io/ssl-vpn-access-is-not-allowed/"/>
+    <link href="https://www.tunnelsup.com/ssl-vpn-access-is-not-allowed/"/>
     <updated>2013-06-06T22:17:00-07:00</updated>
-    <id>http://tunnelsup.github.io/ssl-vpn-access-is-not-allowed</id>
+    <id>https://www.tunnelsup.com/ssl-vpn-access-is-not-allowed</id>
     <content type="html"><![CDATA[<p>Recently I tried installing WebVPN usability onto a Cisco ASA firewall. When trying to login I received the following error:<br>
 <img src="http://tunnelsup.com/images/sslvpnerror.png" alt="SSL VPN Error IMG" /></p>
 
@@ -221,9 +221,9 @@ Doh! It appears <code>anyconnect-essentials</code> is enabled! Here&rsquo;s the 
   
   <entry>
     <title type="html"><![CDATA[WebVPN or SSL VPN on an ASA]]></title>
-    <link href="http://tunnelsup.github.io/webvpn-or-ssl-vpn-on-an-asa/"/>
+    <link href="https://www.tunnelsup.com/webvpn-or-ssl-vpn-on-an-asa/"/>
     <updated>2010-05-02T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/webvpn-or-ssl-vpn-on-an-asa</id>
+    <id>https://www.tunnelsup.com/webvpn-or-ssl-vpn-on-an-asa</id>
     <content type="html"><![CDATA[<p><img src="/images/webvpn.jpg" alt="WebVPN diagram - IMG" /></p>
 
 <p>WebVPN (or often called SSL VPN) (or sometimes called clientless VPN) is used when someone needs to access a web based application that is on the private network. A web browser is used for all the encryption and authentication.</p>

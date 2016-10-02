@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: eclipse | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/eclipse/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/eclipse/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Troubleshooting AnyConnect and Eclipse IDE]]></title>
-    <link href="http://tunnelsup.github.io/troubleshooting-anyconnect-and-eclipse-ide/"/>
+    <link href="https://www.tunnelsup.com/troubleshooting-anyconnect-and-eclipse-ide/"/>
     <updated>2014-12-04T13:36:00-08:00</updated>
-    <id>http://tunnelsup.github.io/troubleshooting-anyconnect-and-eclipse-ide</id>
+    <id>https://www.tunnelsup.com/troubleshooting-anyconnect-and-eclipse-ide</id>
     <content type="html"><![CDATA[<p>Eclipse is an IDE used to build Android applications. One of our developers was trying to use the CVS connection within Eclipse to push their code to a server over the VPN. However this was failing.</p>
 
 <h2>Problem</h2>

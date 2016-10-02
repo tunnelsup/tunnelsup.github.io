@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: coding | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/coding/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/coding/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to do a Javascript Redirect]]></title>
-    <link href="http://tunnelsup.github.io/how-to-do-a-javascript-redirect/"/>
+    <link href="https://www.tunnelsup.com/how-to-do-a-javascript-redirect/"/>
     <updated>2015-07-23T22:33:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-do-a-javascript-redirect</id>
+    <id>https://www.tunnelsup.com/how-to-do-a-javascript-redirect</id>
     <content type="html"><![CDATA[<p>The best way to do a Javascript redirect is with the following code:</p>
 
 <p>```javascript</p>
@@ -70,9 +70,9 @@ Javascript Redirect Example
   
   <entry>
     <title type="html"><![CDATA[Games to test your coding skills]]></title>
-    <link href="http://tunnelsup.github.io/games-to-test-your-coding-skills/"/>
+    <link href="https://www.tunnelsup.com/games-to-test-your-coding-skills/"/>
     <updated>2015-04-03T23:26:00-07:00</updated>
-    <id>http://tunnelsup.github.io/games-to-test-your-coding-skills</id>
+    <id>https://www.tunnelsup.com/games-to-test-your-coding-skills</id>
     <content type="html"><![CDATA[<p>Ever since I started playing my first video game on a computer I&rsquo;ve been fascinated with using my programming skills to help me achieve victory. Here are some really fun and challenging games that require your programming skills in order to achieve victory.</p>
 
 <h2>Web Based Games</h2>
@@ -131,9 +131,9 @@ Javascript Redirect Example
   
   <entry>
     <title type="html"><![CDATA[Rails ActiveRecord Console Commands]]></title>
-    <link href="http://tunnelsup.github.io/rails-activerecord-console-commands/"/>
+    <link href="https://www.tunnelsup.com/rails-activerecord-console-commands/"/>
     <updated>2015-02-03T20:34:00-08:00</updated>
-    <id>http://tunnelsup.github.io/rails-activerecord-console-commands</id>
+    <id>https://www.tunnelsup.com/rails-activerecord-console-commands</id>
     <content type="html"><![CDATA[<p>It is possible to interact with the database of a Ruby on Rails project from the console. To enter the console execute this command from the command line within your project:</p>
 
 <p><code>rails console</code></p>
@@ -274,9 +274,9 @@ Using the <strong>create</strong> method:</p>
   
   <entry>
     <title type="html"><![CDATA[HTML Entities and URL Escape Codes]]></title>
-    <link href="http://tunnelsup.github.io/html-escape-codes/"/>
+    <link href="https://www.tunnelsup.com/html-escape-codes/"/>
     <updated>2015-02-01T11:29:00-08:00</updated>
-    <id>http://tunnelsup.github.io/html-escape-codes</id>
+    <id>https://www.tunnelsup.com/html-escape-codes</id>
     <content type="html"><![CDATA[<p>HTML escape codes are used in place of a normal character to avoid using illegal characters, ambiguity, or when you want to express the literal character.</p>
 
 <h5>HTML entities</h5>
@@ -1232,9 +1232,9 @@ Using the <strong>create</strong> method:</p>
   
   <entry>
     <title type="html"><![CDATA[Creating a custom 404 page in Heroku and Octopress]]></title>
-    <link href="http://tunnelsup.github.io/creating-a-custom-404-page-in-heroku-and-octopress/"/>
+    <link href="https://www.tunnelsup.com/creating-a-custom-404-page-in-heroku-and-octopress/"/>
     <updated>2015-01-22T21:26:00-08:00</updated>
-    <id>http://tunnelsup.github.io/creating-a-custom-404-page-in-heroku-and-octopress</id>
+    <id>https://www.tunnelsup.com/creating-a-custom-404-page-in-heroku-and-octopress</id>
     <content type="html"><![CDATA[<p>A 404 page not found error occurs when the webserver cannot find the webpage or URL the user requested. Here are some benefits to having an error 404 not found page on your website:</p>
 
 <ul>

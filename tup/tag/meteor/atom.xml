@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: meteor | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/meteor/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/meteor/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Sending Google Analytics data from Meteor.js server side]]></title>
-    <link href="http://tunnelsup.github.io/sending-google-analytics-data-from-meteor-dot-js-server-side/"/>
+    <link href="https://www.tunnelsup.com/sending-google-analytics-data-from-meteor-dot-js-server-side/"/>
     <updated>2015-01-01T15:50:00-08:00</updated>
-    <id>http://tunnelsup.github.io/sending-google-analytics-data-from-meteor-dot-js-server-side</id>
+    <id>https://www.tunnelsup.com/sending-google-analytics-data-from-meteor-dot-js-server-side</id>
     <content type="html"><![CDATA[<p>Recently I&rsquo;ve created a website that responds with HTML and also has an API that responds with JSON data. The website was create in Meteor.js and I wanted to integrate it into Google Analytics. Having it send Google Analytics statistics on the client side was easy and straight forward. However when it came time to send statistics to Google Analytics from the Meteor.js server side of the application I had to spend quite a bit of time finding an answer.</p>
 
 <h2>Use the Google Analytics Measurements Protocol</h2>
@@ -71,9 +71,9 @@ if (Meteor.isServer) {
   
   <entry>
     <title type="html"><![CDATA[Deploying Meteor 1.0 to Heroku]]></title>
-    <link href="http://tunnelsup.github.io/deploying-meteor-1-dot-0-to-heroku/"/>
+    <link href="https://www.tunnelsup.com/deploying-meteor-1-dot-0-to-heroku/"/>
     <updated>2014-12-24T18:44:00-08:00</updated>
-    <id>http://tunnelsup.github.io/deploying-meteor-1-dot-0-to-heroku</id>
+    <id>https://www.tunnelsup.com/deploying-meteor-1-dot-0-to-heroku</id>
     <content type="html"><![CDATA[<p>Heroku doesn&rsquo;t have an official document as of yet for deploying a <a href="http://meteor.com">meteor</a> application on their platform. However meteor does just use node.js under the hood, so a specailly crafted buildpack can actually make it run there&hellip; for the most part.</p>
 
 <h3>Meteor BuildPack Horse</h3>

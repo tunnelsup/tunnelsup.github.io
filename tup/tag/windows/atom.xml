@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: windows | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/windows/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/windows/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Route Add Windows - A Guide to Windows Routing]]></title>
-    <link href="http://tunnelsup.github.io/route-add-windows-a-guide-to-windows-routing/"/>
+    <link href="https://www.tunnelsup.com/route-add-windows-a-guide-to-windows-routing/"/>
     <updated>2016-04-25T08:41:00-07:00</updated>
-    <id>http://tunnelsup.github.io/route-add-windows-a-guide-to-windows-routing</id>
+    <id>https://www.tunnelsup.com/route-add-windows-a-guide-to-windows-routing</id>
     <content type="html"><![CDATA[<p>Sometimes you need to manually add, change, or remove a route on a Windows machine. Here is quick guide to help you accomplish these tasks.</p>
 
 <p>First start by opening a CMD prompt by going to start then typing <code>cmd</code>.</p>
@@ -207,9 +207,9 @@ Example&gt; route ADD 157.0.0.0 MASK 155.0.0.0 157.55.80.1 IF 1
   
   <entry>
     <title type="html"><![CDATA[Delete IPv6 Translation methods for IPv6 in Windows OS]]></title>
-    <link href="http://tunnelsup.github.io/delete-ipv6-translation-methods-for-ipv6/"/>
+    <link href="https://www.tunnelsup.com/delete-ipv6-translation-methods-for-ipv6/"/>
     <updated>2015-09-06T18:12:00-07:00</updated>
-    <id>http://tunnelsup.github.io/delete-ipv6-translation-methods-for-ipv6</id>
+    <id>https://www.tunnelsup.com/delete-ipv6-translation-methods-for-ipv6</id>
     <content type="html"><![CDATA[<p>The Windows operating system likes to turn on the IPV6 transition methods by default. There are some transition methods that don&rsquo;t work like 6to4, ISATPA, and Teredo. If you run ipconfig /all, you&rsquo;ll notice a large list of IPv6-related interfaces that are completely unnecessary and can be disabled. This won&rsquo;t disable IPv6, only the transition methods that aren&rsquo;t needed.</p>
 
 <p>Open a command prompt in Windows and enter the following:</p>
@@ -224,9 +224,9 @@ netsh interface teredo set state type=disabled
   
   <entry>
     <title type="html"><![CDATA[hosts file]]></title>
-    <link href="http://tunnelsup.github.io/hosts-file/"/>
+    <link href="https://www.tunnelsup.com/hosts-file/"/>
     <updated>2015-01-22T20:47:00-08:00</updated>
-    <id>http://tunnelsup.github.io/hosts-file</id>
+    <id>https://www.tunnelsup.com/hosts-file</id>
     <content type="html"><![CDATA[<p>The &lsquo;hosts&rsquo; file is a hostname to IP address map used for local DNS resolution. When a computer needs to talk to another computer it needs to first know the IP address of the second computer. This is where DNS converts a hostname to an IP address.</p>
 
 <h2>DNS Order of Operations</h2>
@@ -288,9 +288,9 @@ netsh interface teredo set state type=disabled
   
   <entry>
     <title type="html"><![CDATA[Using the Windows Command line like a pro]]></title>
-    <link href="http://tunnelsup.github.io/using-the-windows-command-line-like-a-pro/"/>
+    <link href="https://www.tunnelsup.com/using-the-windows-command-line-like-a-pro/"/>
     <updated>2013-06-18T19:17:00-07:00</updated>
-    <id>http://tunnelsup.github.io/using-the-windows-command-line-like-a-pro</id>
+    <id>https://www.tunnelsup.com/using-the-windows-command-line-like-a-pro</id>
     <content type="html"><![CDATA[<p>In this post I will be answering such question as: What is the &lsquo;cat&rsquo; equivalent in Windows? What is the &lsquo;grep&rsquo; equivalent in Windows? Yes that&rsquo;s right, we are visiting the Windows CLI today. The old DOS shell.</p>
 
 <p>These commands all work in Windows 7 and Server 2008; most of them also work in Windows XP.</p>
@@ -431,9 +431,9 @@ System Boot Time:          6/4/2013, 12:53:27 PM</p>
   
   <entry>
     <title type="html"><![CDATA[How to do a Continuous Ping]]></title>
-    <link href="http://tunnelsup.github.io/continuous-ping/"/>
+    <link href="https://www.tunnelsup.com/continuous-ping/"/>
     <updated>2013-06-06T23:29:00-07:00</updated>
-    <id>http://tunnelsup.github.io/continuous-ping</id>
+    <id>https://www.tunnelsup.com/continuous-ping</id>
     <content type="html"><![CDATA[<p>Below are methods to create a continuous ping in different environments.</p>
 
 <p>To learn more about pings see the blog post <a href="http://www.tunnelsup.com/what-is-ping/">What is ping?</a></p>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: mssql | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/mssql/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/mssql/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[MSSQL auto populate creation time]]></title>
-    <link href="http://tunnelsup.github.io/mssql-auto-populate-creation-time/"/>
+    <link href="https://www.tunnelsup.com/mssql-auto-populate-creation-time/"/>
     <updated>2015-10-18T16:06:00-07:00</updated>
-    <id>http://tunnelsup.github.io/mssql-auto-populate-creation-time</id>
+    <id>https://www.tunnelsup.com/mssql-auto-populate-creation-time</id>
     <content type="html"><![CDATA[<p>It&rsquo;s good practice to add a creation time to every record in your database which marks the time and date when the record was created. This is ridiculously easy since it&rsquo;s a feature of MSSQL.</p>
 
 <p>Simply use <code>DATETIME2()</code> type and <code>GETDATE()</code> function.</p>

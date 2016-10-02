@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: cpu | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/cpu/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/cpu/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Troubleshooting high CPU on Juniper SRX Junos devices]]></title>
-    <link href="http://tunnelsup.github.io/troubleshooting-high-cpu-on-juniper-srx-junos-devices/"/>
+    <link href="https://www.tunnelsup.com/troubleshooting-high-cpu-on-juniper-srx-junos-devices/"/>
     <updated>2015-09-30T19:20:00-07:00</updated>
-    <id>http://tunnelsup.github.io/troubleshooting-high-cpu-on-juniper-srx-junos-devices</id>
+    <id>https://www.tunnelsup.com/troubleshooting-high-cpu-on-juniper-srx-junos-devices</id>
     <content type="html"><![CDATA[<p>Occasionally a Juniper SRX device running Junos will have a high CPU. Here are some tips for troubleshooting these incidents.</p>
 
 <h2>Validate</h2>
@@ -160,9 +160,9 @@ Max flow session     : 131072
   
   <entry>
     <title type="html"><![CDATA[Troubleshooting High CPU on a Cisco ASA]]></title>
-    <link href="http://tunnelsup.github.io/troubleshooting-high-cpu-on-a-cisco-asa/"/>
+    <link href="https://www.tunnelsup.com/troubleshooting-high-cpu-on-a-cisco-asa/"/>
     <updated>2014-04-28T19:03:00-07:00</updated>
-    <id>http://tunnelsup.github.io/troubleshooting-high-cpu-on-a-cisco-asa</id>
+    <id>https://www.tunnelsup.com/troubleshooting-high-cpu-on-a-cisco-asa</id>
     <content type="html"><![CDATA[<p>Is your ASA having a High CPU issue? Here&rsquo;s some methods for troubleshooting the issue.</p>
 
 <h2>Find out what process is causing the CPU to be high</h2>

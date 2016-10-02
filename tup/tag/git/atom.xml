@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: git | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/git/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/git/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Git Remote Branches]]></title>
-    <link href="http://tunnelsup.github.io/git-remote-branches/"/>
+    <link href="https://www.tunnelsup.com/git-remote-branches/"/>
     <updated>2014-03-29T11:05:00-07:00</updated>
-    <id>http://tunnelsup.github.io/git-remote-branches</id>
+    <id>https://www.tunnelsup.com/git-remote-branches</id>
     <content type="html"><![CDATA[<p>Git is a powerful document repository and version control system. This page will show you how to handle git remote branches. This page assumes you know the basics of git and you&rsquo;re ready for a slightly more advanced topic. An excellent page to get started with git is <a href="http://rogerdudler.github.io/git-guide/">git &ndash; the simple guide</a>.</p>
 
 <h2>What is a branch?</h2>

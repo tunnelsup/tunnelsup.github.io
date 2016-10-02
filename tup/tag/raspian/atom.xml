@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: raspian | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/raspian/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/raspian/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Raspberry Pi boots into emergency kernel when loading raspian]]></title>
-    <link href="http://tunnelsup.github.io/raspberry-pi-boots-into-emergency-kernel-when-loading-raspian/"/>
+    <link href="https://www.tunnelsup.com/raspberry-pi-boots-into-emergency-kernel-when-loading-raspian/"/>
     <updated>2013-07-20T15:36:00-07:00</updated>
-    <id>http://tunnelsup.github.io/raspberry-pi-boots-into-emergency-kernel-when-loading-raspian</id>
+    <id>https://www.tunnelsup.com/raspberry-pi-boots-into-emergency-kernel-when-loading-raspian</id>
     <content type="html"><![CDATA[<p>Recently I tried updating my Raspian OS on my Pi. After writing the OS to the card and popping it into the Pi, the Pi would only boot into the emergency kernel mode. Basically it dumped me into a very basic shell without the need to login or anything. It gives very limited commands and doesn&rsquo;t really allow for any real operation. Something definitely isn&rsquo;t right.</p>
 
 <h2>The Fix</h2>

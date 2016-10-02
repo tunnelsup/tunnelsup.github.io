@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: security | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/security/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/security/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Online Security Conferences]]></title>
-    <link href="http://tunnelsup.github.io/online-security-conferences/"/>
+    <link href="https://www.tunnelsup.com/online-security-conferences/"/>
     <updated>2016-01-10T08:36:00-08:00</updated>
-    <id>http://tunnelsup.github.io/online-security-conferences</id>
+    <id>https://www.tunnelsup.com/online-security-conferences</id>
     <content type="html"><![CDATA[<p>Every month there are numerous cyber security conferences somewhere in the world. Many of them post their talks on YouTube after the conference. Below is a list of talks from security conferences. It&rsquo;s like attending a free virtual security conference!</p>
 
 <table class="table">

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: backpack | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/backpack/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/backpack/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Contents of a Physical Pen Tester's Backpack]]></title>
-    <link href="http://tunnelsup.github.io/contents-of-a-physical-pen-testers-backpack/"/>
+    <link href="https://www.tunnelsup.com/contents-of-a-physical-pen-testers-backpack/"/>
     <updated>2016-04-26T21:15:00-07:00</updated>
-    <id>http://tunnelsup.github.io/contents-of-a-physical-pen-testers-backpack</id>
+    <id>https://www.tunnelsup.com/contents-of-a-physical-pen-testers-backpack</id>
     <content type="html"><![CDATA[<p>Some companies pay for a security assessment to see if their physical building and office are secure. When they secure a building they want to test it to make sure it&rsquo;s off limits to people who shouldn&rsquo;t be able to get there, such as a datacenter. Sometimes these assessments are to test employees to see if they would let people in areas that they shouldn&rsquo;t have access to, such as a random person walking behind a bank teller.</p>
 
 <p>What do these type of pen testers bring to this type of security assessment? Here&rsquo;s a few different people talking about what they bring.</p>
@@ -29,7 +29,7 @@
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">About to load my new <a href="https://twitter.com/hashtag/VestofD00M?src=hash">#VestofD00M</a> v.7.0 :-) for my engagement in France after I speak at <a href="https://twitter.com/hackinparis">@hackinparis</a> &amp; <a href="https://twitter.com/NuitDuHack">@NuitDuHack</a> <a href="http://t.co/aSGUoOnWZ2">pic.twitter.com/aSGUoOnWZ2</a></p>&mdash; Jayson E. Street (@jaysonstreet) <a href="https://twitter.com/jaysonstreet/status/480780151291383808">June 22, 2014</a></blockquote>
 
 
-<script async src="http://tunnelsup.github.io//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async src="https://www.tunnelsup.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 <p>He talks about the contents in his <a href="https://youtu.be/EzGwO5L9oq4?t=38m3s">DefCon 18 talk</a> and again in his <a href="https://youtu.be/4-qnYaw7VGo?t=30m20s">DefCon 19 talk</a>. Both talks are great to watch in their entirety to get a sense of how Jayson gains access to anything.</p>

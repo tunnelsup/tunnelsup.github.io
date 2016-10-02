@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: email | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/email/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/email/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Configure Ironport to act as a smarthost]]></title>
-    <link href="http://tunnelsup.github.io/configure-ironport-to-act-as-a-smarthost/"/>
+    <link href="https://www.tunnelsup.com/configure-ironport-to-act-as-a-smarthost/"/>
     <updated>2013-06-06T09:41:00-07:00</updated>
-    <id>http://tunnelsup.github.io/configure-ironport-to-act-as-a-smarthost</id>
+    <id>https://www.tunnelsup.com/configure-ironport-to-act-as-a-smarthost</id>
     <content type="html"><![CDATA[<p>Ironport Email Appliance (ESA) can act as a smarthost to relay email outbound to the internet. The trick to doing this is to have two interfaces on the Ironport, one acting as incoming from the internet and one acting as incoming from the exchange server. Here is how to configure the internal interface to relay mail from exchange.</p>
 
 <ol>

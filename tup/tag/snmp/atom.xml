@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: snmp | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/snmp/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/snmp/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to do an SNMP walk]]></title>
-    <link href="http://tunnelsup.github.io/how-to-do-an-snmp-walk/"/>
+    <link href="https://www.tunnelsup.com/how-to-do-an-snmp-walk/"/>
     <updated>2016-08-24T15:53:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-do-an-snmp-walk</id>
+    <id>https://www.tunnelsup.com/how-to-do-an-snmp-walk</id>
     <content type="html"><![CDATA[<p>Sometimes you need to manually SNMP poll a device. Here is how to do that.</p>
 
 <h2>Do an entire pull</h2>
@@ -50,9 +50,9 @@ snmpwalk -v 2c -c publicstring 192.168.1.1 mib-2.47.1.1.1.1.5.7
   
   <entry>
     <title type="html"><![CDATA[Juniper SRX troubleshooting SNMP polling]]></title>
-    <link href="http://tunnelsup.github.io/juniper-srx-troubleshooting-snmp-polling/"/>
+    <link href="https://www.tunnelsup.com/juniper-srx-troubleshooting-snmp-polling/"/>
     <updated>2014-08-26T15:46:00-07:00</updated>
-    <id>http://tunnelsup.github.io/juniper-srx-troubleshooting-snmp-polling</id>
+    <id>https://www.tunnelsup.com/juniper-srx-troubleshooting-snmp-polling</id>
     <content type="html"><![CDATA[<p>Having trouble doing an SNMP walk on a Juniper SRX? Here are some troubleshooting tips to help solve the problem.</p>
 
 <h2>Configure the SRX for SNMP</h2>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: wccp | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/wccp/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/wccp/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Initial configuration of a Cisco ASA and Ironport WSA using WCCP]]></title>
-    <link href="http://tunnelsup.github.io/initial-configuration-of-a-cisco-asa-and-ironport-wsa-using-wccp/"/>
+    <link href="https://www.tunnelsup.com/initial-configuration-of-a-cisco-asa-and-ironport-wsa-using-wccp/"/>
     <updated>2013-04-30T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/initial-configuration-of-a-cisco-asa-and-ironport-wsa-using-wccp</id>
+    <id>https://www.tunnelsup.com/initial-configuration-of-a-cisco-asa-and-ironport-wsa-using-wccp</id>
     <content type="html"><![CDATA[<p>Today we are going to set up a Cisco ASA firewall to send WCCP (port 80) web inspection traffic to a Cisco Ironport WSA (Web Security Appliance).</p>
 
 <p>Suppose the following:</p>

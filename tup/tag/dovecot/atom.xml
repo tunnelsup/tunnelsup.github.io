@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: dovecot | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/dovecot/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/dovecot/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Using salted SHA hashes with Dovecot authentication]]></title>
-    <link href="http://tunnelsup.github.io/using-salted-sha-hashes-with-dovecot-authentication/"/>
+    <link href="https://www.tunnelsup.com/using-salted-sha-hashes-with-dovecot-authentication/"/>
     <updated>2015-02-08T13:25:00-08:00</updated>
-    <id>http://tunnelsup.github.io/using-salted-sha-hashes-with-dovecot-authentication</id>
+    <id>https://www.tunnelsup.com/using-salted-sha-hashes-with-dovecot-authentication</id>
     <content type="html"><![CDATA[<p>I&rsquo;ve finally figured out how to do this. The <a href="http://wiki2.dovecot.org/Authentication/PasswordSchemes">Dovecot documentation</a> is absolutely horrible which is sad because it should be encouraged to always salt your password hashes yet they make it very difficult to figure out.</p>
 
 <p>Dovecot is a IMAP and POP3 plugin for Postfix. Postfix doesn&rsquo;t do authentication on its own so it&rsquo;s often found that SASL authentication gets passed to Dovecot for both IMAP mail checking and creating dynamic relay lists.</p>

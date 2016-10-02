@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: featured | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/featured/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/featured/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Online Security Conferences]]></title>
-    <link href="http://tunnelsup.github.io/online-security-conferences/"/>
+    <link href="https://www.tunnelsup.com/online-security-conferences/"/>
     <updated>2016-01-10T08:36:00-08:00</updated>
-    <id>http://tunnelsup.github.io/online-security-conferences</id>
+    <id>https://www.tunnelsup.com/online-security-conferences</id>
     <content type="html"><![CDATA[<p>Every month there are numerous cyber security conferences somewhere in the world. Many of them post their talks on YouTube after the conference. Below is a list of talks from security conferences. It&rsquo;s like attending a free virtual security conference!</p>
 
 <table class="table">
@@ -559,9 +559,9 @@
   
   <entry>
     <title type="html"><![CDATA[7 Security Podcasts You Should be Listening to]]></title>
-    <link href="http://tunnelsup.github.io/7-security-podcasts-you-should-be-listening-to/"/>
+    <link href="https://www.tunnelsup.com/7-security-podcasts-you-should-be-listening-to/"/>
     <updated>2014-12-13T17:29:00-08:00</updated>
-    <id>http://tunnelsup.github.io/7-security-podcasts-you-should-be-listening-to</id>
+    <id>https://www.tunnelsup.com/7-security-podcasts-you-should-be-listening-to</id>
     <content type="html"><![CDATA[<p>Here&rsquo;s a list of the 7 best security podcasts on network security and hacking.</p>
 
 <h2>Daily Podcasts</h2>
@@ -628,9 +628,9 @@
   
   <entry>
     <title type="html"><![CDATA[Subnet Calculator - IPv4/IPv6]]></title>
-    <link href="http://tunnelsup.github.io/subnet-calculator/"/>
+    <link href="https://www.tunnelsup.com/subnet-calculator/"/>
     <updated>2013-09-02T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/subnet-calculator</id>
+    <id>https://www.tunnelsup.com/subnet-calculator</id>
     <content type="html"><![CDATA[<p>Page has been moved. Please go to <a href="http://www.tunnelsup.com/subnet-calculator"><a href="http://www.tunnelsup.com/subnet-calculator">http://www.tunnelsup.com/subnet-calculator</a></a></p>
 
 <!-- This page exists only so it shows up in the 'all articles' page. Actual page found in source/subnet-calculator/index.html -->
@@ -640,9 +640,9 @@
   
   <entry>
     <title type="html"><![CDATA[Raspberry Pi: Phoning home using a reverse remote ssh tunnel]]></title>
-    <link href="http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/"/>
+    <link href="https://www.tunnelsup.com/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel/"/>
     <updated>2013-05-08T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel</id>
+    <id>https://www.tunnelsup.com/raspberry-pi-phoning-home-using-a-reverse-remote-ssh-tunnel</id>
     <content type="html"><![CDATA[<p><img src="/images/pi6.jpg" alt="Pi IMG" /><br>
 What&rsquo;s this? Just an ordinary powerbrick? Read on to find out why this is an incredibly dangerous thing to see in your office.</p>
 
@@ -708,7 +708,7 @@ ssh -l piUser -p 2222 localhost
 <h1>!/bin/bash</h1>
 
 <p>createTunnel() {
-  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#115;&#101;&#114;&#x76;&#x65;&#114;&#85;&#x73;&#101;&#x72;&#x40;&#x32;&#53;&#46;&#50;&#53;&#x2e;&#50;&#x35;&#x2e;&#x32;&#53;">&#x73;&#101;&#114;&#118;&#101;&#114;&#85;&#115;&#x65;&#114;&#x40;&#50;&#53;&#46;&#50;&#53;&#x2e;&#50;&#53;&#46;&#50;&#53;</a>
+  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x73;&#x65;&#x72;&#x76;&#x65;&#114;&#85;&#x73;&#x65;&#x72;&#64;&#x32;&#x35;&#x2e;&#x32;&#x35;&#46;&#50;&#53;&#46;&#x32;&#53;">&#x73;&#101;&#x72;&#x76;&#x65;&#x72;&#85;&#115;&#x65;&#x72;&#x40;&#50;&#53;&#46;&#50;&#x35;&#x2e;&#x32;&#53;&#x2e;&#x32;&#x35;</a>
   if [[ $? -eq 0 ]]; then</p>
 
 <pre><code>echo Tunnel to jumpbox created successfully
@@ -781,9 +781,9 @@ To troubleshoot any problems in this you can view the tunnel.log file.</p>
   
   <entry>
     <title type="html"><![CDATA[XBee S2 Quick Reference Guide/Cheat Sheet and Video Tutorials to Getting Started]]></title>
-    <link href="http://tunnelsup.github.io/xbee-guide/"/>
+    <link href="https://www.tunnelsup.com/xbee-guide/"/>
     <updated>2012-11-30T00:00:00-08:00</updated>
-    <id>http://tunnelsup.github.io/xbee-guide</id>
+    <id>https://www.tunnelsup.com/xbee-guide</id>
     <content type="html"><![CDATA[<p>When I first got started with XBee I had a hard time getting the right information to help me on the projects I was working on. I put my project on hold and spent a few months simply trying to understand XBee specifically using it with arduino. Below is a cheat sheet or quick reference guide that I use now to reference whenever I&rsquo;m working on a project. It has pretty much all of the information I need to effectively use the XBee in whatever project I&rsquo;m working on.</p>
 
 <p><img class="center" src="/images/xbee.png">

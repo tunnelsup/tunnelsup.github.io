@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: nsrp | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/nsrp/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/nsrp/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Juniper Netscreen troubleshooting NSRP and HA]]></title>
-    <link href="http://tunnelsup.github.io/juniper-netscreen-troubleshooting-nsrp-and-ha/"/>
+    <link href="https://www.tunnelsup.com/juniper-netscreen-troubleshooting-nsrp-and-ha/"/>
     <updated>2014-08-26T15:47:00-07:00</updated>
-    <id>http://tunnelsup.github.io/juniper-netscreen-troubleshooting-nsrp-and-ha</id>
+    <id>https://www.tunnelsup.com/juniper-netscreen-troubleshooting-nsrp-and-ha</id>
     <content type="html"><![CDATA[<p>Some basic commands to help troubleshoot NSRP (failover/high availability) with Juniper Netscreen SSG devices.</p>
 
 <h3>Review the NSRP configuration</h3>

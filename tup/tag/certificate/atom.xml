@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: certificate | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/certificate/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/certificate/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Adding a wildcard SSL certificate to a Cisco ASA]]></title>
-    <link href="http://tunnelsup.github.io/adding-a-wildcard-ssl-certificate-to-a-cisco-asa/"/>
+    <link href="https://www.tunnelsup.com/adding-a-wildcard-ssl-certificate-to-a-cisco-asa/"/>
     <updated>2015-03-05T22:51:00-08:00</updated>
-    <id>http://tunnelsup.github.io/adding-a-wildcard-ssl-certificate-to-a-cisco-asa</id>
+    <id>https://www.tunnelsup.com/adding-a-wildcard-ssl-certificate-to-a-cisco-asa</id>
     <content type="html"><![CDATA[<p>A wildcard SSL certificate is where the SSL certificate is good for both the root domain and all subdomains. If we had a wildcard certificate for example.com it means the certificate will be valid for vpn.example.como, mail.example.com, blog.example.com, and example.com. This differs from a normal SSL certificate that specifically indicates one or more domain names in the subject field. There is another post that covers how to <a href="http://www.tunnelsup.com/adding-an-ssl-certificate-on-an-asa">install a basic SSL certificate on a Cisco ASA</a>.</p>
 
 <p>In this post we will be covering how to install a wildcard certificate on a Cisco ASA.</p>
@@ -122,9 +122,9 @@ cert.pem  cert.p12  privkey.pem
   
   <entry>
     <title type="html"><![CDATA[Adding an SSL certificate on an ASA]]></title>
-    <link href="http://tunnelsup.github.io/adding-an-ssl-certificate-on-an-asa/"/>
+    <link href="https://www.tunnelsup.com/adding-an-ssl-certificate-on-an-asa/"/>
     <updated>2012-08-16T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/adding-an-ssl-certificate-on-an-asa</id>
+    <id>https://www.tunnelsup.com/adding-an-ssl-certificate-on-an-asa</id>
     <content type="html"><![CDATA[<p>This tutorial is to show you how to install a HTTPS/SSL certificate on an ASA. This is often used when WebVPN or AnyConnect is configured which uses SSL. Without a certificate installed the users is given warnings and errors about a missing or invalid certificate.</p>
 
 <p>This has nothing to do with authentication. It&rsquo;s simply the https certificate which is needed for a secure communication to be set up.</p>

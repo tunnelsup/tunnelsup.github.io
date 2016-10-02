@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: misc | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/misc/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/misc/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -14,10 +14,36 @@
 
   
   <entry>
+    <title type="html"><![CDATA[How to remove meta data from a PDF document]]></title>
+    <link href="https://www.tunnelsup.com/how-to-remove-meta-data-from-a-pdf-document/"/>
+    <updated>2016-09-29T23:02:00-07:00</updated>
+    <id>https://www.tunnelsup.com/how-to-remove-meta-data-from-a-pdf-document</id>
+    <content type="html"><![CDATA[<p>Some PDF documents contain meta data which may contain the user&rsquo;s name that made it, the company they work for, their address, and more. This is sort of like exif data on an image. It&rsquo;s a good idea to sanitize any PDF before posting it to the Internet. To remove this personal data from a PDF do the following.</p>
+
+<ol>
+<li><p>Open Document in Adobe Acrobat
+You&rsquo;ll need Acrobat and not simply Acrobat Reader. This tutorial used Adobe Acrobat XI.</p></li>
+<li><p>Click the Tools Button
+On the top right corner of the PDF click the Tools button.<br>
+<img src="/images/pdf-meta1.PNG"></p></li>
+<li><p>Click Sanitize
+At the bottom of the tools is a Protection menu, expand it, and find the sanitize option.<br>
+<img src="/images/pdf-meta2.PNG"></p></li>
+<li><p>Confirm Sanitization
+A popup box shows up and lets you verify what will be sanitized. <br>
+<img src="/images/pdf-meta3.PNG"></p></li>
+</ol>
+
+
+<p>You&rsquo;ll then be prompted to save the sanitized document.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[How to set a static IP on Mac OSX]]></title>
-    <link href="http://tunnelsup.github.io/how-to-set-a-static-ip-on-mac-osx/"/>
+    <link href="https://www.tunnelsup.com/how-to-set-a-static-ip-on-mac-osx/"/>
     <updated>2016-09-22T21:28:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-set-a-static-ip-on-mac-osx</id>
+    <id>https://www.tunnelsup.com/how-to-set-a-static-ip-on-mac-osx</id>
     <content type="html"><![CDATA[<p>Are you using a Macbook Pro or Macbook Air and want to know how to show the change the interface to use a static IP? Follow the steps below to complete this.</p>
 
 <h2>1. Go to Preferences</h2>
@@ -45,9 +71,9 @@
   
   <entry>
     <title type="html"><![CDATA[Using For and While Loops in Python]]></title>
-    <link href="http://tunnelsup.github.io/using-for-and-while-loops-in-python/"/>
+    <link href="https://www.tunnelsup.com/using-for-and-while-loops-in-python/"/>
     <updated>2016-09-20T17:48:00-07:00</updated>
-    <id>http://tunnelsup.github.io/using-for-and-while-loops-in-python</id>
+    <id>https://www.tunnelsup.com/using-for-and-while-loops-in-python</id>
     <content type="html"><![CDATA[<p>Here are some tools to use to do loops in the Python language.</p>
 
 <h2>The While Loop</h2>
@@ -170,9 +196,9 @@ for fruit in inventory:</p>
   
   <entry>
     <title type="html"><![CDATA[Using Regular Expressions in Python]]></title>
-    <link href="http://tunnelsup.github.io/using-regular-expressions-in-python/"/>
+    <link href="https://www.tunnelsup.com/using-regular-expressions-in-python/"/>
     <updated>2016-09-14T21:44:00-07:00</updated>
-    <id>http://tunnelsup.github.io/using-regular-expressions-in-python</id>
+    <id>https://www.tunnelsup.com/using-regular-expressions-in-python</id>
     <content type="html"><![CDATA[<p>If you need to do pattern matching on a string within Python, using a regular expression will be the best way to do it. Here are some basic examples to help you with this.</p>
 
 <h2>Import Library</h2>
@@ -317,9 +343,9 @@ print(scrubbed_phone_numbers)
   
   <entry>
     <title type="html"><![CDATA[How to set a static IP in linux]]></title>
-    <link href="http://tunnelsup.github.io/how-to-set-a-static-ip-in-linux/"/>
+    <link href="https://www.tunnelsup.com/how-to-set-a-static-ip-in-linux/"/>
     <updated>2016-09-12T16:32:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-set-a-static-ip-in-linux</id>
+    <id>https://www.tunnelsup.com/how-to-set-a-static-ip-in-linux</id>
     <content type="html"><![CDATA[<p>The following will work for any debian base linux distro. That includes <strong>Ubuntu</strong>, <strong>Kali</strong>, <strong>Raspberry Pi (Raspian Jessie)</strong>, <strong>TAILS</strong>, and many more.</p>
 
 <h2>Edit Interface Settings</h2>
@@ -412,41 +438,6 @@ eth0      Link encap:Ethernet  HWaddr d8:eb:97:bd:53:4e</p>
 </code></pre>
 
 <p>```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to do an SNMP walk]]></title>
-    <link href="http://tunnelsup.github.io/how-to-do-an-snmp-walk/"/>
-    <updated>2016-08-24T15:53:00-07:00</updated>
-    <id>http://tunnelsup.github.io/how-to-do-an-snmp-walk</id>
-    <content type="html"><![CDATA[<p>Sometimes you need to manually SNMP poll a device. Here is how to do that.</p>
-
-<h2>Do an entire pull</h2>
-
-<p>To conduct a full SNMP walk and get all OIDs, do the following from a linux command line:</p>
-
-<p><code>
-snmpwalk -v 2c -c publicstring 192.168.1.1
-</code></p>
-
-<p>In the example above we indicate the SNMP version (-v) is 2c, the community string (-c) is publicstring and the IP to SNMP poll is 192.168.1.1.</p>
-
-<p>This will return all OIDs that are pollable on that system.</p>
-
-<h2>Poll a single MIB</h2>
-
-<p>You can add a mib to the end of the snmpwalk command to poll a single mib and get only that result. Here is an example:</p>
-
-<p><code>
-snmpwalk -v 2c -c publicstring 192.168.1.1 mib-2.47.1.1.1.1.5.7
-</code></p>
-
-<p>You can also poll an attribute such as sysDescr like so:</p>
-
-<p><code>
-snmpwalk -v 2c -c publicstring 192.168.1.1 mib-2.47.1.1.1.1.5.7
-</code></p>
 ]]></content>
   </entry>
   

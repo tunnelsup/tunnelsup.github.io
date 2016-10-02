@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: gpio | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/gpio/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/gpio/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Raspberry Pi Zero: Blink an LED using GPIO pins]]></title>
-    <link href="http://tunnelsup.github.io/raspberry-pi-zero-blink-an-led-using-gpio-pins/"/>
+    <link href="https://www.tunnelsup.com/raspberry-pi-zero-blink-an-led-using-gpio-pins/"/>
     <updated>2016-09-14T12:19:00-07:00</updated>
-    <id>http://tunnelsup.github.io/raspberry-pi-zero-blink-an-led-using-gpio-pins</id>
+    <id>https://www.tunnelsup.com/raspberry-pi-zero-blink-an-led-using-gpio-pins</id>
     <content type="html"><![CDATA[<p>Want to use the GPIO pins to blink an LED using a Raspberry Pi Zero? Here&rsquo;s a quick guide to get you started.</p>
 
 <h2>Build the circuit</h2>

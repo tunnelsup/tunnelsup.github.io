@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: encaps | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/encaps/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/encaps/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Cisco VPN troubleshooting - encaps but no decaps]]></title>
-    <link href="http://tunnelsup.github.io/cisco-vpn-troubleshooting-encaps-but-no-decaps/"/>
+    <link href="https://www.tunnelsup.com/cisco-vpn-troubleshooting-encaps-but-no-decaps/"/>
     <updated>2013-03-31T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-vpn-troubleshooting-encaps-but-no-decaps</id>
+    <id>https://www.tunnelsup.com/cisco-vpn-troubleshooting-encaps-but-no-decaps</id>
     <content type="html"><![CDATA[<p>Suppose you are trying to troubleshoot a site to site VPN tunnel that is designed like this:
 <img src="/images/asasitetosite.jpg" alt="ASA Site to site diagram - IMG" /></p>
 

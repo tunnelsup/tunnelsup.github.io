@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: netscreen | TunnelsUP]]></title>
-  <link href="http://tunnelsup.github.io/tup/tag/netscreen/atom.xml" rel="self"/>
-  <link href="http://tunnelsup.github.io/"/>
-  <updated>2016-09-29T22:41:01-07:00</updated>
-  <id>http://tunnelsup.github.io/</id>
+  <link href="https://www.tunnelsup.com/tup/tag/netscreen/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-02T12:55:45-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Juniper Netscreen troubleshooting NSRP and HA]]></title>
-    <link href="http://tunnelsup.github.io/juniper-netscreen-troubleshooting-nsrp-and-ha/"/>
+    <link href="https://www.tunnelsup.com/juniper-netscreen-troubleshooting-nsrp-and-ha/"/>
     <updated>2014-08-26T15:47:00-07:00</updated>
-    <id>http://tunnelsup.github.io/juniper-netscreen-troubleshooting-nsrp-and-ha</id>
+    <id>https://www.tunnelsup.com/juniper-netscreen-troubleshooting-nsrp-and-ha</id>
     <content type="html"><![CDATA[<p>Some basic commands to help troubleshoot NSRP (failover/high availability) with Juniper Netscreen SSG devices.</p>
 
 <h3>Review the NSRP configuration</h3>
@@ -149,9 +149,9 @@ Date       Time     Module Level  Type Description
   
   <entry>
     <title type="html"><![CDATA[Site to Site VPN tunnel config between a Cisco ASA and a Juniper SSG ScreenOS]]></title>
-    <link href="http://tunnelsup.github.io/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos/"/>
+    <link href="https://www.tunnelsup.com/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos/"/>
     <updated>2012-07-06T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos</id>
+    <id>https://www.tunnelsup.com/site-to-site-vpn-tunnel-config-between-a-cisco-asa-and-a-juniper-ssg-screenos</id>
     <content type="html"><![CDATA[<p>Below is a config to create a VPN tunnel between a Cisco ASA (Blue side) to a Juniper SSG ScreenOS (Red Side).</p>
 
 <p>Juniper Settings:</p>
@@ -273,9 +273,9 @@ debug flow basic</p>
   
   <entry>
     <title type="html"><![CDATA[Cisco ASA to Juniper ScreenOS to Juniper JunOS Command Reference Cheat Sheet]]></title>
-    <link href="http://tunnelsup.github.io/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet/"/>
+    <link href="https://www.tunnelsup.com/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet/"/>
     <updated>2012-07-06T00:00:00-07:00</updated>
-    <id>http://tunnelsup.github.io/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet</id>
+    <id>https://www.tunnelsup.com/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet</id>
     <content type="html"><![CDATA[<div>
   <style>
      table.ztab1 {
