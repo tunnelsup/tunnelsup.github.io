@@ -4,7 +4,7 @@
   <title><![CDATA[TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2016-10-02T12:55:45-07:00</updated>
+  <updated>2016-10-04T20:01:52-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,25 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to remove meta data from a Visio document]]></title>
+    <link href="https://www.tunnelsup.com/how-to-remove-meta-data-from-a-visio-document/"/>
+    <updated>2016-10-02T12:59:00-07:00</updated>
+    <id>https://www.tunnelsup.com/how-to-remove-meta-data-from-a-visio-document</id>
+    <content type="html"><![CDATA[<p>If you create a Visio diagram and either save it or convert it to a PDF, it will contain personal meta data in it. It will try to insert your name and company name.  This is sort of like exif data on an image. It&rsquo;s a good idea to sanitize and remove all personal information before sharing it with anyone. To remove this personal data from a Visio document do the following.</p>
+
+<h2>1. Click File > Info > Remove Personal Information</h2>
+
+<p><img src="https://www.tunnelsup.com/images/visio-removemeta1.PNG"></p>
+
+<h2>2. Confirm the Removal</h2>
+
+<p><img src="https://www.tunnelsup.com/images/visio-removemeta2.PNG"></p>
+
+<p>Now when the document is saved and when a PDF is generated, the personal information will not be in the document.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to remove meta data from a PDF document]]></title>
@@ -1145,31 +1164,6 @@ jacks0n <br></p></blockquote>
 <h2>8. Patch Applications</h2>
 
 <p>Applications have bugs. Sometimes these bugs cause the application to crash. If the developers know about the problem they will fix it in the code and release updates on the applications. It&rsquo;s important to keep any internet facing products and applications fully patched so that attackers have less of a chance of finding a bug that causes your application to crash.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Different Types of DoS Attacks]]></title>
-    <link href="https://www.tunnelsup.com/different-types-of-dos-attacks/"/>
-    <updated>2016-05-01T11:06:00-07:00</updated>
-    <id>https://www.tunnelsup.com/different-types-of-dos-attacks</id>
-    <content type="html"><![CDATA[<p>A Denial of Service attack or DoS attack is where the adversary disrupts the target&rsquo;s cyber application. This could be taking down their server, overwhelming a network, or causing a system to break. There a few different ways this can be achieved.</p>
-
-<p>To protect against a DoS you must first understand the multiple types of DoS style attacks.</p>
-
-<h2>Network Volume Based DoS</h2>
-
-<p>A volume based DoS attack occurs when the attacker overwhelms the bandwidth of the target. When the target&rsquo;s bandwidth is completely consumed by the attacker&rsquo;s traffic, legitimate traffic will not get through.</p>
-
-<p>This sometimes occurs accidentally when an unexpected surge of network traffic comes to the servers and they can&rsquo;t handle it.</p>
-
-<h2>Connection Based DoS</h2>
-
-<p>The connection based DoS occurs when the number of connections to a system becomes maxed out at the server or any network device in the path. For instance, if the Apache web server is only configured to accept 25 connections, that can easily be filled which would result with the 26th connection being dropped by the server. If an attacker overwhelms the number of connections, legitimate traffic will not be able to get through.</p>
-
-<h2>Application Based DoS</h2>
-
-<p>Applications being served online aren&rsquo;t always bug free. Without proper implementation of security inside the application, an attacker could manipulate the code to cause the application to crash. Sometimes devices can occur a buffer overflow which could result in a reload or process hang or system crash. If an attacker can cause the targets systems to crash by sending a certain string or input or packet, this would be an application based DoS attack.</p>
 ]]></content>
   </entry>
   

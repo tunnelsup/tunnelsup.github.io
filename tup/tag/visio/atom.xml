@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: visio | TunnelsUP]]></title>
+  <link href="https://www.tunnelsup.com/tup/tag/visio/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-10-04T20:01:52-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to remove meta data from a Visio document]]></title>
+    <link href="https://www.tunnelsup.com/how-to-remove-meta-data-from-a-visio-document/"/>
+    <updated>2016-10-02T12:59:00-07:00</updated>
+    <id>https://www.tunnelsup.com/how-to-remove-meta-data-from-a-visio-document</id>
+    <content type="html"><![CDATA[<p>If you create a Visio diagram and either save it or convert it to a PDF, it will contain personal meta data in it. It will try to insert your name and company name.  This is sort of like exif data on an image. It&rsquo;s a good idea to sanitize and remove all personal information before sharing it with anyone. To remove this personal data from a Visio document do the following.</p>
+
+<h2>1. Click File > Info > Remove Personal Information</h2>
+
+<p><img src="/images/visio-removemeta1.PNG"></p>
+
+<h2>2. Confirm the Removal</h2>
+
+<p><img src="/images/visio-removemeta2.PNG"></p>
+
+<p>Now when the document is saved and when a PDF is generated, the personal information will not be in the document.</p>
+]]></content>
+  </entry>
+  
+</feed>

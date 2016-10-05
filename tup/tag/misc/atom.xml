@@ -4,7 +4,7 @@
   <title><![CDATA[Category: misc | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/misc/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2016-10-02T12:55:45-07:00</updated>
+  <updated>2016-10-04T20:01:52-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,25 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to remove meta data from a Visio document]]></title>
+    <link href="https://www.tunnelsup.com/how-to-remove-meta-data-from-a-visio-document/"/>
+    <updated>2016-10-02T12:59:00-07:00</updated>
+    <id>https://www.tunnelsup.com/how-to-remove-meta-data-from-a-visio-document</id>
+    <content type="html"><![CDATA[<p>If you create a Visio diagram and either save it or convert it to a PDF, it will contain personal meta data in it. It will try to insert your name and company name.  This is sort of like exif data on an image. It&rsquo;s a good idea to sanitize and remove all personal information before sharing it with anyone. To remove this personal data from a Visio document do the following.</p>
+
+<h2>1. Click File > Info > Remove Personal Information</h2>
+
+<p><img src="/images/visio-removemeta1.PNG"></p>
+
+<h2>2. Confirm the Removal</h2>
+
+<p><img src="/images/visio-removemeta2.PNG"></p>
+
+<p>Now when the document is saved and when a PDF is generated, the personal information will not be in the document.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to remove meta data from a PDF document]]></title>
@@ -338,106 +357,6 @@ print(scrubbed_phone_numbers)
 </code></p>
 
 <p>This prints <code>My number is XXX-XXX-XXXX.</code>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to set a static IP in linux]]></title>
-    <link href="https://www.tunnelsup.com/how-to-set-a-static-ip-in-linux/"/>
-    <updated>2016-09-12T16:32:00-07:00</updated>
-    <id>https://www.tunnelsup.com/how-to-set-a-static-ip-in-linux</id>
-    <content type="html"><![CDATA[<p>The following will work for any debian base linux distro. That includes <strong>Ubuntu</strong>, <strong>Kali</strong>, <strong>Raspberry Pi (Raspian Jessie)</strong>, <strong>TAILS</strong>, and many more.</p>
-
-<h2>Edit Interface Settings</h2>
-
-<p>Edit the config:</p>
-
-<p><code>
-sudo vi /etc/network/interfaces
-</code></p>
-
-<p>Find the interface you wish to make static and add the following lines:</p>
-
-<p>```
-auto eth0
-iface eth0 inet static</p>
-
-<pre><code>    address 192.168.1.100
-    network 192.168.1.0
-    netmask 255.255.255.0
-    broadcast 192.168.1.255
-    gateway 192.168.1.1
-</code></pre>
-
-<p>```</p>
-
-<ul>
-<li><code>address</code> is the IP you want to assign this host</li>
-<li><code>network</code> is the network portion of this subnet. It&rsquo;s usually the same as your static IP but ending in <code>.0</code></li>
-<li><code>netmask</code> is the netmask of your subnet. This is usually <code>255.255.255.255</code></li>
-<li><code>broadcast</code> is the broadcast IP of this subnet. It&rsquo;s usually the same as your static IP but ending in <code>.255</code></li>
-<li><code>gateway</code> is the next hop for this system to go. This is usually a router&rsquo;s IP and it must be in the same subnet as the host address.</li>
-</ul>
-
-
-<h2>Configure DNS</h2>
-
-<p>To resolve hostnames to IP addresses you must configure a DNS server. You can do this by editing the following:</p>
-
-<p><code>
-vi /etc/resolv.conf
-</code></p>
-
-<p>Add your DNS servers to this file or use Google&rsquo;s public DNS servers like this:</p>
-
-<p><code>
-nameserver 4.2.2.2
-nameserver 4.2.2.3
-</code></p>
-
-<h2>Restart networking</h2>
-
-<p>To make these change effective you must restart the networking service. That can be done by doing one of the following:</p>
-
-<p><code>
-sudo /etc/init.d/networking restart
-</code></p>
-
-<p>If that doesn&rsquo;t work try:</p>
-
-<p><code>
-sudo /etc/init.d/networking reload
-</code></p>
-
-<p>If that doesn&rsquo;t work try:</p>
-
-<p><code>
-sudo systemctl restart ifup@eth0
-</code></p>
-
-<h2>Check settings</h2>
-
-<p>Now check if the settings took by running the following command:</p>
-
-<p><code>
-ifconfig
-</code></p>
-
-<p>The output looks like this:</p>
-
-<p>```
-eth0      Link encap:Ethernet  HWaddr d8:eb:97:bd:53:4e</p>
-
-<pre><code>      inet addr:192.168.1.100  Bcast:192.168.1.255  Mask:255.255.255.0
-      inet6 addr: fe80::daeb:97ff:febd:534e/64 Scope:Link
-      UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-      RX packets:47436 errors:0 dropped:3117 overruns:0 frame:0
-      TX packets:13017 errors:0 dropped:0 overruns:0 carrier:0
-      collisions:0 txqueuelen:1000
-      RX bytes:5982679 (5.7 MiB)  TX bytes:1837349 (1.7 MiB)
-</code></pre>
-
-<p>```</p>
 ]]></content>
   </entry>
   
