@@ -4,7 +4,7 @@
   <title><![CDATA[Category: esxi | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/esxi/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2016-10-04T20:01:52-07:00</updated>
+  <updated>2016-10-06T08:35:43-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Upgrading ESXi to 5.5 and 6.0 Using a Bootable USB drive and macOS]]></title>
+    <link href="https://www.tunnelsup.com/upgrading-esxi-using-a-bootable-usb-drive-and-macos/"/>
+    <updated>2016-10-04T20:17:00-07:00</updated>
+    <id>https://www.tunnelsup.com/upgrading-esxi-using-a-bootable-usb-drive-and-macos</id>
+    <content type="html"><![CDATA[<p>I&rsquo;m not a VMWare expert so when it came time to upgrade my personal free ESXi host it took me a long time to figure it out. I didn&rsquo;t have any fancy tools or paid licenses to assist which meant it had to be done through a bootable USB drive. I had a really hard time figuring out what to do and then creating a bootable ESXi installation USB and wanted to document this for anyone else struggling.</p>
+
+<h2>Download ESXi</h2>
+
+<p>Even if you&rsquo;re doing an upgrade, you need to download the following:</p>
+
+<p><strong>ESXi ISO image (Includes VMware Tools)</strong></p>
+
+<p><a href="https://my.vmware.com/en/web/vmware/evalcenter?p=free-esxi">https://my.vmware.com/en/web/vmware/evalcenter?p=free-esxi</a></p>
+
+<p>This is a free download from VMWare and on the same page is where your free license key is. Save that since you&rsquo;ll need it after the upgrade. It changes with each upgrade.</p>
+
+<h2>Format the USB drive</h2>
+
+<p>First determine which <code>/dev/driveN</code> your USB drive is plugged in to. You can simply do an <code>ls /dev/disk*</code> before and then again after you plug in the USB drive.</p>
+
+<p>Next, you can format the drive using <code>Disk Utility</code> application that comes with macOS. When you format it, make sure to set the file system to FAT, and if you have the option, write it to the master boot record.</p>
+
+<h2>Create a Bootable USB</h2>
+
+<p>For some reason this part tripped me up a lot. Using a Mac running OSX I was able to get this done using UNetbootin.</p>
+
+<h4><a href="https://unetbootin.github.io">Download UNetbootin</a></h4>
+
+<h4>Choose the ISO Image and USB drive</h4>
+
+<p><img class="center" src="/images/esxi-boot1.png"></p>
+
+<h4>Overwrite menu.c32</h4>
+
+<p>Make sure to choose yes on this option.
+<img class="center" src="/images/esxi-boot2.png"></p>
+
+<h2>Now Upgrade!</h2>
+
+<p>Power down the ESXi host entirely, plug in a monitor and keyboard, and boot to the USB drive you just made. You&rsquo;ll have the option to install fresh or upgrade an existing ESXi installation.</p>
+
+<p>The rest of this process is described in this video. Even though it is a video for 5.5 it is exactly the same for 6.0.</p>
+
+<p><a href="https://www.youtube.com/watch?v=og6PeyXPQ8A">https://www.youtube.com/watch?v=og6PeyXPQ8A</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Networking commands for the VMWare ESXi host command line]]></title>

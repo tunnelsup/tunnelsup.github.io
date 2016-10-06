@@ -4,7 +4,7 @@
   <title><![CDATA[TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2016-10-04T20:01:52-07:00</updated>
+  <updated>2016-10-06T08:35:43-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Upgrading ESXi to 5.5 and 6.0 Using a Bootable USB drive and macOS]]></title>
+    <link href="https://www.tunnelsup.com/upgrading-esxi-using-a-bootable-usb-drive-and-macos/"/>
+    <updated>2016-10-04T20:17:00-07:00</updated>
+    <id>https://www.tunnelsup.com/upgrading-esxi-using-a-bootable-usb-drive-and-macos</id>
+    <content type="html"><![CDATA[<p>I&rsquo;m not a VMWare expert so when it came time to upgrade my personal free ESXi host it took me a long time to figure it out. I didn&rsquo;t have any fancy tools or paid licenses to assist which meant it had to be done through a bootable USB drive. I had a really hard time figuring out what to do and then creating a bootable ESXi installation USB and wanted to document this for anyone else struggling.</p>
+
+<h2>Download ESXi</h2>
+
+<p>Even if you&rsquo;re doing an upgrade, you need to download the following:</p>
+
+<p><strong>ESXi ISO image (Includes VMware Tools)</strong></p>
+
+<p><a href="https://my.vmware.com/en/web/vmware/evalcenter?p=free-esxi">https://my.vmware.com/en/web/vmware/evalcenter?p=free-esxi</a></p>
+
+<p>This is a free download from VMWare and on the same page is where your free license key is. Save that since you&rsquo;ll need it after the upgrade. It changes with each upgrade.</p>
+
+<h2>Format the USB drive</h2>
+
+<p>First determine which <code>/dev/driveN</code> your USB drive is plugged in to. You can simply do an <code>ls /dev/disk*</code> before and then again after you plug in the USB drive.</p>
+
+<p>Next, you can format the drive using <code>Disk Utility</code> application that comes with macOS. When you format it, make sure to set the file system to FAT, and if you have the option, write it to the master boot record.</p>
+
+<h2>Create a Bootable USB</h2>
+
+<p>For some reason this part tripped me up a lot. Using a Mac running OSX I was able to get this done using UNetbootin.</p>
+
+<h4><a href="https://unetbootin.github.io">Download UNetbootin</a></h4>
+
+<h4>Choose the ISO Image and USB drive</h4>
+
+<p><img class="center" src="https://www.tunnelsup.com/images/esxi-boot1.png"></p>
+
+<h4>Overwrite menu.c32</h4>
+
+<p>Make sure to choose yes on this option.
+<img class="center" src="https://www.tunnelsup.com/images/esxi-boot2.png"></p>
+
+<h2>Now Upgrade!</h2>
+
+<p>Power down the ESXi host entirely, plug in a monitor and keyboard, and boot to the USB drive you just made. You&rsquo;ll have the option to install fresh or upgrade an existing ESXi installation.</p>
+
+<p>The rest of this process is described in this video. Even though it is a video for 5.5 it is exactly the same for 6.0.</p>
+
+<p><a href="https://www.youtube.com/watch?v=og6PeyXPQ8A">https://www.youtube.com/watch?v=og6PeyXPQ8A</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to remove meta data from a Visio document]]></title>
@@ -1079,91 +1127,6 @@ jacks0n <br></p></blockquote>
 <h2>More info</h2>
 
 <p>See <code>man watch</code>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[8 Ways to Defend Against Denial of Service Attacks]]></title>
-    <link href="https://www.tunnelsup.com/8-ways-to-defend-against-denial-of-service-attacks/"/>
-    <updated>2016-05-02T15:48:00-07:00</updated>
-    <id>https://www.tunnelsup.com/8-ways-to-defend-against-denial-of-service-attacks</id>
-    <content type="html"><![CDATA[<p>Protecting against Denial of Service attacks is difficult and takes numerous steps to protect the network. Unfortunately, even with all these steps it&rsquo;s still possibly to have a DoS scenario in the network. A large DoS attack is not that hard technically or economically to conduct.</p>
-
-<p>First get to know the <a href="https://www.tunnelsup.com/different-types-of-dos-attacks/">different types of DoS attacks</a>.</p>
-
-<h2>1. Be Nice</h2>
-
-<p>If you&rsquo;re a company that is doing things that makes people angry, you&rsquo;ll be hit by DoS attacks much more frequently than a company that isn&rsquo;t a political lightning rod. Inform your leaders that if you do a specific lawsuit or make a specific stance on something that would elevate the risk of the network and these must be taken into consideration.</p>
-
-<p>In short, don&rsquo;t give someone a reason to DoS you.</p>
-
-<h2>2. Use a CDN for websites</h2>
-
-<p>A content delivery network will offload traffic from your network to the CDN&rsquo;s network. The CDN provider will cache your website and serve any static content it can on it&rsquo;s website for you. This will result in a lot less traffic going to your site. The purpose of a CDN is to both serve your customers quicker by having web servers closer to them, and to help mitigate against DoS attacks since an attack would hit only their website and never yours.</p>
-
-<p>Major CDN providers out there are: Cloudflare, Akamai, and Limelight.</p>
-
-<h2>3. Tune your webserver/application</h2>
-
-<p>By default, Apache has a low number of max connections allowed. You&rsquo;ll want to check all of its settings to make sure it&rsquo;s tuned correctly to your environment. If you want Apache to accept thousands of connections, you&rsquo;ll need a lot of RAM etc. Knowing exactly what these limitations are will help you troubleshoot issues when you are under attack and also be able to let leadership know what you&rsquo;re capable of sustaining. Other applications may have tuning capabilities for number of connections also.</p>
-
-<h2>4. Tune your edge device</h2>
-
-<p>Whether you have a router or firewall on your edge (between your network and the internet), you should tune this to only permit the number of connections your web server or application can permit. The reason for this is because if you&rsquo;ve tuned your web server to only accept conns for the resources it has, sending it more than the max can knock over the server. A firewall is also more efficient and better at blocking traffic than a web server. Get these two devices working in tandem for extra efficiency.</p>
-
-<p>The goal in tuning a firewall is to permit only traffic needed and everything else is blocked. If you have a Cisco ASA on your edge check out this post on <a href="https://www.tunnelsup.com/cisco-asa-best-practices/">Cisco ASA best practices</a>.</p>
-
-<h2>5. Use a load balancer</h2>
-
-<p>A load balancer can offload traffic in ways that are very helpful. It can do many things but the ones that help us here are:</p>
-
-<ul>
-<li>Spread traffic to a farm of web servers</li>
-<li>Completes the TCP handshake before forwarding the traffic to prevent against half open connection overload.</li>
-<li>Can be an SSL termination point to offload encryption computations</li>
-<li>Conduct rate limiting</li>
-</ul>
-
-
-<h2>6. Server hardening</h2>
-
-<p>Besides tuning the application server for connections you&rsquo;ll want to harden it in other ways. Here&rsquo;s some ideas:</p>
-
-<ul>
-<li>Use IPTables to permit only the traffic you expect</li>
-<li>Uninstall services and applications on the server to make it utilize resources more efficiently</li>
-<li>Configure server to auto recover on system failures. Such as reboot if there&rsquo;s a kernel panic.</li>
-<li>Harden the server to be more resilient.</li>
-</ul>
-
-
-<p>Here&rsquo;s some links to help you get started hardening a linux server:</p>
-
-<ul>
-<li><a href="http://www.enigma.id.au/linux_tuning.txt">http://www.enigma.id.au/linux_tuning.txt</a></li>
-<li><a href="http://www.securityfocus.com/infocus/1729">http://www.securityfocus.com/infocus/1729</a></li>
-<li><a href="http://fasterdata.es.net/TCP-tuning/linux.html">http://fasterdata.es.net/TCP-tuning/linux.html</a></li>
-<li><a href="http://fedorahosted.org/ktune/browser/sysctl.ktune">http://fedorahosted.org/ktune/browser/sysctl.ktune</a></li>
-<li><a href="http://www.cymru.com/Documents/ip-stack-tuning.html">http://www.cymru.com/Documents/ip-stack-tuning.html</a></li>
-<li><a href="http://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt">http://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt</a></li>
-<li><a href="http://www.frozentux.net/ipsysctl-tutorial/chunkyhtml/index.html">http://www.frozentux.net/ipsysctl-tutorial/chunkyhtml/index.html</a></li>
-<li><a href="http://knol.google.com/k/linux-performance-tuning-and-measurement">http://knol.google.com/k/linux-performance-tuning-and-measurement</a></li>
-<li><a href="http://www.cyberciti.biz/faq/linux-kernel-tuning-virtual-memory-subsystem/">http://www.cyberciti.biz/faq/linux-kernel-tuning-virtual-memory-subsystem/</a></li>
-<li><a href="http://www.redbooks.ibm.com/abstracts/REDP4285.html">http://www.redbooks.ibm.com/abstracts/REDP4285.html</a></li>
-<li><a href="http://www.speedguide.net/read_articles.php?id=121">http://www.speedguide.net/read_articles.php?id=121</a></li>
-<li><a href="http://lartc.org/howto/lartc.kernel.obscure.html">http://lartc.org/howto/lartc.kernel.obscure.html</a></li>
-</ul>
-
-
-<h2>7. Review Your Analytics and Logs</h2>
-
-<p>You should know what your normal traffic looks like and keep an eye on usage and statistics. I&rsquo;ve seen websites gain popularity and incur a DoS simply because they didn&rsquo;t know they were getting that amount of traffic normally. Knowing what&rsquo;s on your network helps troubleshooting tremendously.</p>
-
-<p>If you&rsquo;re seeing attackers hitting your network with malicious intent, use a firewall to block their connections into your network entirely. Review logs frequently and make adjustments as needed to keep out traffic you don&rsquo;t need.</p>
-
-<h2>8. Patch Applications</h2>
-
-<p>Applications have bugs. Sometimes these bugs cause the application to crash. If the developers know about the problem they will fix it in the code and release updates on the applications. It&rsquo;s important to keep any internet facing products and applications fully patched so that attackers have less of a chance of finding a bug that causes your application to crash.</p>
 ]]></content>
   </entry>
   
