@@ -4,7 +4,7 @@
   <title><![CDATA[TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2016-10-06T22:22:19-07:00</updated>
+  <updated>2016-10-09T21:04:32-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,86 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to Create SSH Tunnels]]></title>
+    <link href="https://www.tunnelsup.com/how-to-create-ssh-tunnels/"/>
+    <updated>2016-10-09T16:38:00-07:00</updated>
+    <id>https://www.tunnelsup.com/how-to-create-ssh-tunnels</id>
+    <content type="html"><![CDATA[<p>Besides sending ssh data, the ssh protocol can tunnel other traffic between two hosts. The most common tunnels are remote and local. Knowing how to spin up an ssh tunnel can help you reach otherwise inaccessible networks and systems.</p>
+
+<p>These examples work from a linux prompt or a macOS terminal. It&rsquo;s possible to do the same thing in Windows using applications like putty or mobaXterm.</p>
+
+<h2>Local ssh Port Forwarding</h2>
+
+<p>You can use a local ssh tunnel when you want to get to a resource that you can&rsquo;t get to directly, but a ssh server that you have access to can. Here are some scenarios.</p>
+
+<h4>Proxy to Remote Server</h4>
+
+<p><img src="https://www.tunnelsup.com/images/ssh-local2.png">
+In the image above, the blue host cannot reach <code>http://192.168.0.3</code> but can ssh to 192.168.0.2. The following ssh command executed on the <strong>blue host</strong> will allow the blue host to reach the red host.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ssh -L 8080:192.168.0.3:80 reduser@192.168.0.2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now the blue host can open a browser, and go to <code>http://localhost:8080</code> and be presented with the webpage hosted on 192.168.0.3.</p>
+
+<h4>Local Port Forward</h4>
+
+<p><img src="https://www.tunnelsup.com/images/ssh-local1.png">
+In the image above, the blue host wants to connect to the red host on port 80 but there&rsquo;s a firewall in between which is denying this. Because the blue host can ssh to the red host, we can create a local port forwarding ssh tunnel to access that port.</p>
+
+<p>The command on the blue host will be:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ssh -L 8080:192.168.0.2:80 reduser@192.168.0.2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now when the blue host opens a browser and goes to <code>http://localhost:8080</code> they will be able to see whatever the red server has at port 80.</p>
+
+<h4>Local Port Forwarding Syntax</h4>
+
+<p>This syntax to create a local ssh port forwarding tunnel is this:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ssh -L &lt;LPORT&gt;:&lt;RHOST&gt;:&lt;RPORT&gt; &lt;GATEWAY&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Remote SSH Port Forwarding</h2>
+
+<p>In this scenario we are creating a reverse ssh tunnel. Here we can initiate an ssh tunnel in one direction, then use that tunnel to create an ssh tunnel back the other way. This may be useful for when you drop a drone computer inside a network and want it to &ldquo;phone home&rdquo;. Then when it phones home, you can connect to it through the established ssh tunnel.</p>
+
+<p><img src="https://www.tunnelsup.com/images/ssh-remote.png">
+We are on the green host and want to ssh to the blue host. However, the firewall blocks this connection directly. Because the blue host can ssh to the green host, we can connect using that, and when the green host wants to ssh back to the blue host, it can ride along this previously established tunnel.</p>
+
+<p>Blue host initiates ssh tunnel like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ssh -R 2222:localhost:22 greenuser@192.168.0.2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This opens port 2222 on the green host, which is then port forwarding that to port 22 on the blue host. So if the green host were to ssh to itself on port 2222 it would then reach the blue host.</p>
+
+<p>Green host can now ssh to blue host like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ssh -p 2222 blueuser@localhost</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Using the -N Option</h2>
+
+<p>When using ssh, you can specify the <code>-N</code> flag which tells ssh you don&rsquo;t need to send any commands over the ssh connection when it&rsquo;s established. This option is often used when making tunnels since often we don&rsquo;t need to actually get a prompt.</p>
+
+<h2>Autossh</h2>
+
+<p>The autossh command is used to add persistence to your tunnels. The job it has is to verify your ssh connection is up, and if it&rsquo;s not, create it.</p>
+
+<p>Here is an autossh command which you may recognize.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>autossh -N -i /home/blueuser/.ssh/id_rsa -R 2222:localhost:22 greenuser@192.168.0.3</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>-i /home/blueuser/.ssh/id_rsa</code> option says to use a certificate to authenticate this ssh connection. Check out this post to <a href="https://www.tunnelsup.com/ssh-without-password/">learn more about ssh certificates</a>.</p>
+
+<p>Now when your tunnel goes down it will automatically try to reconnect and keep trying until it is successful. To make it persistent through a reboot, add the ssh command as a cron job.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Upgrading ESXi to 5.5 and 6.0 Using a Bootable USB drive and macOS]]></title>
@@ -135,7 +215,7 @@ A popup box shows up and lets you verify what will be sanitized. <br>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Metasploit Cheat Sheet]]></title>
+    <title type="html"><![CDATA[Metasploit Cheat Sheet and Video]]></title>
     <link href="https://www.tunnelsup.com/metasploit-cheat-sheet/"/>
     <updated>2016-09-28T10:41:00-07:00</updated>
     <id>https://www.tunnelsup.com/metasploit-cheat-sheet</id>
@@ -143,6 +223,13 @@ A popup box shows up and lets you verify what will be sanitized. <br>
 
 <p><img class="center" src="https://www.tunnelsup.com/images/Metasploit.png">
 Download: <a href="https://www.tunnelsup.com/images/Metasploit.png">[PNG Image]</a> - <a href="https://www.tunnelsup.com/images/Metasploit-CheatSheet.pdf">[PDF File]</a></p>
+
+<h2>Video</h2>
+
+<p>To get started with the cheat sheet I have made an instructional video on using Metasploit.</p>
+
+<iframe width="770" height="460" src="https://www.youtube.com/embed/Y8IwBbJrny4" frameborder="0" allowfullscreen></iframe>
+
 
 <p>If you find any problems with this please leave a comment below and I will update the guide periodically.</p>
 ]]></content>
@@ -1096,37 +1183,6 @@ jacks0n <br></p></blockquote>
 <h2>NSA</h2>
 
 <p>The NSA has some really nice posters but you have to work in industry and send a fax to get a catalog that comes in the mail six months later and then you submit your hand written order via fax AGAIN and then six months later you get a tube with them in it. They are nice but you have to go through a lot of hoops to get them.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Using the Linux Watch Command]]></title>
-    <link href="https://www.tunnelsup.com/using-the-linux-watch-command/"/>
-    <updated>2016-05-05T08:50:00-07:00</updated>
-    <id>https://www.tunnelsup.com/using-the-linux-watch-command</id>
-    <content type="html"><![CDATA[<p>A somewhat lesser known linux command is <code>watch</code>. It will display the output of a regular command and update the screen if that output changes. Here are some helpful use cases.</p>
-
-<h2>Watch for directory contents changing</h2>
-
-<p>Try the command:</p>
-
-<p><code>watch -d ls -la</code></p>
-
-<p>You&rsquo;ll see the output of <code>ls -la</code> and every 2 seconds the screen will refresh if there are any changes. If files grow in size, get removed, or added, you&rsquo;ll see it highlighted on the screen when it happens.</p>
-
-<p>The <code>-d</code> switch will highlight changes for you to make it easier to spot.</p>
-
-<h2>Watch disk space grow or shrink</h2>
-
-<p>Try this command:</p>
-
-<p><code>watch -d df -h</code></p>
-
-<p>You&rsquo;ll see an output of the free disk space in human readable format and if it changes it will update live every 2 seconds.</p>
-
-<h2>More info</h2>
-
-<p>See <code>man watch</code>.</p>
 ]]></content>
   </entry>
   

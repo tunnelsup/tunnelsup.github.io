@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ssh | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/ssh/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2016-10-06T22:22:19-07:00</updated>
+  <updated>2016-10-09T21:04:32-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,88 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to Create SSH Tunnels]]></title>
+    <link href="https://www.tunnelsup.com/how-to-create-ssh-tunnels/"/>
+    <updated>2016-10-09T16:38:00-07:00</updated>
+    <id>https://www.tunnelsup.com/how-to-create-ssh-tunnels</id>
+    <content type="html"><![CDATA[<p>Besides sending ssh data, the ssh protocol can tunnel other traffic between two hosts. The most common tunnels are remote and local. Knowing how to spin up an ssh tunnel can help you reach otherwise inaccessible networks and systems.</p>
+
+<p>These examples work from a linux prompt or a macOS terminal. It&rsquo;s possible to do the same thing in Windows using applications like putty or mobaXterm.</p>
+
+<h2>Local ssh Port Forwarding</h2>
+
+<p>You can use a local ssh tunnel when you want to get to a resource that you can&rsquo;t get to directly, but a ssh server that you have access to can. Here are some scenarios.</p>
+
+<h4>Proxy to Remote Server</h4>
+
+<p><img src="/images/ssh-local2.png">
+In the image above, the blue host cannot reach <code>http://192.168.0.3</code> but can ssh to 192.168.0.2. The following ssh command executed on the <strong>blue host</strong> will allow the blue host to reach the red host.</p>
+
+<p><code>
+ssh -L 8080:192.168.0.3:80 reduser@192.168.0.2
+</code></p>
+
+<p>Now the blue host can open a browser, and go to <code>http://localhost:8080</code> and be presented with the webpage hosted on 192.168.0.3.</p>
+
+<h4>Local Port Forward</h4>
+
+<p><img src="/images/ssh-local1.png">
+In the image above, the blue host wants to connect to the red host on port 80 but there&rsquo;s a firewall in between which is denying this. Because the blue host can ssh to the red host, we can create a local port forwarding ssh tunnel to access that port.</p>
+
+<p>The command on the blue host will be:
+<code>
+ssh -L 8080:192.168.0.2:80 reduser@192.168.0.2
+</code></p>
+
+<p>Now when the blue host opens a browser and goes to <code>http://localhost:8080</code> they will be able to see whatever the red server has at port 80.</p>
+
+<h4>Local Port Forwarding Syntax</h4>
+
+<p>This syntax to create a local ssh port forwarding tunnel is this:</p>
+
+<p><code>
+ssh -L &lt;LPORT&gt;:&lt;RHOST&gt;:&lt;RPORT&gt; &lt;GATEWAY&gt;
+</code></p>
+
+<h2>Remote SSH Port Forwarding</h2>
+
+<p>In this scenario we are creating a reverse ssh tunnel. Here we can initiate an ssh tunnel in one direction, then use that tunnel to create an ssh tunnel back the other way. This may be useful for when you drop a drone computer inside a network and want it to &ldquo;phone home&rdquo;. Then when it phones home, you can connect to it through the established ssh tunnel.</p>
+
+<p><img src="/images/ssh-remote.png">
+We are on the green host and want to ssh to the blue host. However, the firewall blocks this connection directly. Because the blue host can ssh to the green host, we can connect using that, and when the green host wants to ssh back to the blue host, it can ride along this previously established tunnel.</p>
+
+<p>Blue host initiates ssh tunnel like this:
+<code>
+ssh -R 2222:localhost:22 greenuser@192.168.0.2
+</code></p>
+
+<p>This opens port 2222 on the green host, which is then port forwarding that to port 22 on the blue host. So if the green host were to ssh to itself on port 2222 it would then reach the blue host.</p>
+
+<p>Green host can now ssh to blue host like this:
+<code>
+ssh -p 2222 blueuser@localhost
+</code></p>
+
+<h2>Using the -N Option</h2>
+
+<p>When using ssh, you can specify the <code>-N</code> flag which tells ssh you don&rsquo;t need to send any commands over the ssh connection when it&rsquo;s established. This option is often used when making tunnels since often we don&rsquo;t need to actually get a prompt.</p>
+
+<h2>Autossh</h2>
+
+<p>The autossh command is used to add persistence to your tunnels. The job it has is to verify your ssh connection is up, and if it&rsquo;s not, create it.</p>
+
+<p>Here is an autossh command which you may recognize.
+<code>
+autossh -N -i /home/blueuser/.ssh/id_rsa -R 2222:localhost:22 greenuser@192.168.0.3
+</code></p>
+
+<p>The <code>-i /home/blueuser/.ssh/id_rsa</code> option says to use a certificate to authenticate this ssh connection. Check out this post to <a href="/ssh-without-password/">learn more about ssh certificates</a>.</p>
+
+<p>Now when your tunnel goes down it will automatically try to reconnect and keep trying until it is successful. To make it persistent through a reboot, add the ssh command as a cron job.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ssh Remote Host Identification Has Changed]]></title>
@@ -252,7 +334,7 @@ ssh -l piUser -p 2222 localhost
 <h1>!/bin/bash</h1>
 
 <p>createTunnel() {
-  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#115;&#101;&#114;&#118;&#101;&#114;&#x55;&#115;&#x65;&#x72;&#64;&#x32;&#x35;&#x2e;&#50;&#53;&#x2e;&#50;&#x35;&#46;&#50;&#x35;">&#x73;&#x65;&#114;&#118;&#101;&#114;&#85;&#115;&#x65;&#114;&#64;&#x32;&#53;&#46;&#x32;&#53;&#46;&#x32;&#x35;&#46;&#50;&#53;</a>
+  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#115;&#x65;&#x72;&#x76;&#x65;&#114;&#85;&#x73;&#101;&#x72;&#x40;&#50;&#x35;&#46;&#50;&#53;&#46;&#50;&#53;&#x2e;&#50;&#53;">&#115;&#x65;&#114;&#118;&#x65;&#114;&#85;&#115;&#x65;&#114;&#x40;&#x32;&#53;&#46;&#x32;&#53;&#46;&#x32;&#x35;&#x2e;&#50;&#x35;</a>
   if [[ $? -eq 0 ]]; then</p>
 
 <pre><code>echo Tunnel to jumpbox created successfully
@@ -320,49 +402,6 @@ To troubleshoot any problems in this you can view the tunnel.log file.</p>
 <p>I have this plugged into an office somewhere. It looks weird when you stare at it but put it behind a plant and nobody will ever notice it (except the guy who waters the plants).</p>
 
 <p>Once I plugged it in I went back home. Right after the Pi got an IP address it created a tunnel to my home server. When I tried ssh'ing into port 2222 of my home server I was redirected to the Pi. Now I am on a computer in someone elses network. Woohoo! Now I can do remote tech support more effectively.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Cisco IPS - Turning off ssh version 1]]></title>
-    <link href="https://www.tunnelsup.com/cisco-ips-turning-off-ssh-version-1/"/>
-    <updated>2013-04-01T00:00:00-07:00</updated>
-    <id>https://www.tunnelsup.com/cisco-ips-turning-off-ssh-version-1</id>
-    <content type="html"><![CDATA[<p>Vulnerability scanners are reporting that ssh version 1 is on by default for Cisco IPS units. It is fairly simple to turn this off on the IPS if you have service level privilege.</p>
-
-<p>First get into the service level account. This is essentially the linux shell under the IPS.</p>
-
-<p><code>ssh service@x.x.x.x</code></p>
-
-<p>Once you are ssh&rsquo;d in, issue these commands.</p>
-
-<p><code>
-su
-vi /etc/ssh/sshd_config
-</code></p>
-
-<p>Change the line that says:</p>
-
-<p><code>#Protocol 2,1</code></p>
-
-<p>Uncomment it and take out the &lsquo;,1&rsquo; so it looks like this:</p>
-
-<p><code>Protocol 2</code></p>
-
-<p>Save the file and exit out of vi.</p>
-
-<p>Restart the ssh daemon. (Warning: This may cause a failover if these are IPSMs in a failover pair)</p>
-
-<p><code>/etc/init.d/S60ssh restart</code></p>
-
-<p>Now you can test ssh'ing into your device and you should see this error:</p>
-
-<p><code>
-[user@linuxbox1 ~]$ ssh 10.50.50.10 -1
-Protocol major versions differ: 1 vs. 2
-</code></p>
-
-<p>Voila, ssh version 1 is now disabled!</p>
 ]]></content>
   </entry>
   

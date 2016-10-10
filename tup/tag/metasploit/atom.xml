@@ -4,7 +4,7 @@
   <title><![CDATA[Category: metasploit | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/metasploit/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2016-10-06T22:22:19-07:00</updated>
+  <updated>2016-10-09T21:04:32-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Metasploit Cheat Sheet]]></title>
+    <title type="html"><![CDATA[Metasploit Cheat Sheet and Video]]></title>
     <link href="https://www.tunnelsup.com/metasploit-cheat-sheet/"/>
     <updated>2016-09-28T10:41:00-07:00</updated>
     <id>https://www.tunnelsup.com/metasploit-cheat-sheet</id>
@@ -22,6 +22,13 @@
 
 <p><img class="center" src="/images/Metasploit.png">
 Download: <a href="/images/Metasploit.png">[PNG Image]</a> - <a href="/images/Metasploit-CheatSheet.pdf">[PDF File]</a></p>
+
+<h2>Video</h2>
+
+<p>To get started with the cheat sheet I have made an instructional video on using Metasploit.</p>
+
+<iframe width="770" height="460" src="https://www.youtube.com/embed/Y8IwBbJrny4" frameborder="0" allowfullscreen></iframe>
+
 
 <p>If you find any problems with this please leave a comment below and I will update the guide periodically.</p>
 ]]></content>

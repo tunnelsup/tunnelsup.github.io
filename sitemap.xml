@@ -811,7 +811,7 @@
     </url>
     <url>
         <loc>https://www.tunnelsup.com/metasploit-cheat-sheet/</loc>
-        <lastmod>2016-09-29T22:12:03-07:00</lastmod>
+        <lastmod>2016-10-09T16:36:09-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/cisco-asa-command-to-show-listening-ports/</loc>
@@ -830,6 +830,10 @@
         <lastmod>2016-10-05T08:54:09-07:00</lastmod>
     </url>
     <url>
+        <loc>https://www.tunnelsup.com/how-to-create-ssh-tunnels/</loc>
+        <lastmod>2016-10-09T21:03:02-07:00</lastmod>
+    </url>
+    <url>
         <loc>https://www.tunnelsup.com/about/</loc>
         <lastmod>2016-09-29T22:12:03-07:00</lastmod>
     </url>
@@ -839,11 +843,11 @@
     </url>
     <url>
         <loc>https://www.tunnelsup.com/blog/archives/</loc>
-        <lastmod>2016-10-05T08:54:09-07:00</lastmod>
+        <lastmod>2016-10-09T21:03:02-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/cheatsheets/</loc>
-        <lastmod>2016-10-05T08:54:09-07:00</lastmod>
+        <lastmod>2016-10-09T21:03:02-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/config-cleanup.html</loc>
@@ -855,16 +859,16 @@
     </url>
     <url>
         <loc>https://www.tunnelsup.com/go/</loc>
-        <lastmod>2016-10-05T08:54:09-07:00</lastmod>
+        <lastmod>2016-10-09T21:03:02-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/hash-analyzer/</loc>
-        <lastmod>2016-10-05T08:54:09-07:00</lastmod>
+        <lastmod>2016-10-09T21:03:02-07:00</lastmod>
         <priority>1</priority>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/</loc>
-        <lastmod>2016-10-05T08:54:09-07:00</lastmod>
+        <lastmod>2016-10-09T21:03:02-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/kb.html</loc>
@@ -892,7 +896,7 @@
     </url>
     <url>
         <loc>https://www.tunnelsup.com/subnet-calculator/</loc>
-        <lastmod>2016-10-05T08:54:09-07:00</lastmod>
+        <lastmod>2016-10-09T21:03:02-07:00</lastmod>
         <priority>1</priority>
     </url>
     <url>
