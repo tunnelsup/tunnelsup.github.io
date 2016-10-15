@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ssh | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/ssh/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2016-10-09T21:04:32-07:00</updated>
+  <updated>2016-10-15T15:20:45-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -92,6 +92,14 @@ autossh -N -i /home/blueuser/.ssh/id_rsa -R 2222:localhost:22 greenuser@192.168.
 <p>The <code>-i /home/blueuser/.ssh/id_rsa</code> option says to use a certificate to authenticate this ssh connection. Check out this post to <a href="/ssh-without-password/">learn more about ssh certificates</a>.</p>
 
 <p>Now when your tunnel goes down it will automatically try to reconnect and keep trying until it is successful. To make it persistent through a reboot, add the ssh command as a cron job.</p>
+
+<h2>Related Articles</h2>
+
+<ul>
+<li><a href="/how-to-ssh-like-a-pro/">How to ssh like a pro</a></li>
+<li><a href="/ssh-without-password/">How to ssh without a password</a></li>
+</ul>
+
 ]]></content>
   </entry>
   
@@ -186,8 +194,6 @@ scp id_rsa.pub &lt;user&gt;@&lt;yourhost&gt;:.ssh/authorized_keys
 scp id_rsa.pub darcy@192.168.200.1:.ssh/authorized_keys
 </code></p>
 
-<p>Enter the password for that username and your done.</p>
-
 <h3>Testing</h3>
 
 <p>Congrats you&rsquo;ve set up the ssh keys so that you no longer need to use a password when ssh'ing into that system. To test this simply do ssh like normal and it should automatically connect you.</p>
@@ -203,6 +209,25 @@ alias s1='ssh darcy@192.168.200.1'
 </code></p>
 
 <p>Now you simply need to type <code>s1</code> and you&rsquo;ll automatically be logged into that system.</p>
+
+<h3>Troubleshooting</h3>
+
+<p>Verify you have spelled the <code>.ssh</code> and <code>authorized_keys</code> file correctly.</p>
+
+<p>Sometimes permissions needs to be set on the directory and file. Here are the permissions needed to be set.</p>
+
+<p><code>bash
+chmod 700 .ssh
+chmod 600 .ssh/authorized_keys
+</code></p>
+
+<h2>Related Articles</h2>
+
+<ul>
+<li><a href="/how-to-ssh-like-a-pro/">How to ssh like a pro</a></li>
+<li><a href="/how-to-create-ssh-tunnels/">How to create ssh tunnels</a></li>
+</ul>
+
 ]]></content>
   </entry>
   
@@ -261,6 +286,10 @@ Add the following lines at the top of the file:<br>
 <h3>Use keys to login instead of a password</h3>
 
 <p>If you&rsquo;re trying to ssh from one linux machine to another it&rsquo;s possible to use keys for authentication instead of a password. Follow this guide to <a href="/ssh-without-password">ssh without password</a>.</p>
+
+<h3>Port-forwarding and Tunneling</h3>
+
+<p>You can also do <a href="/how-to-create-ssh-tunnels/">port-fowarding and tunneling with ssh</a>.</p>
 ]]></content>
   </entry>
   
@@ -334,7 +363,7 @@ ssh -l piUser -p 2222 localhost
 <h1>!/bin/bash</h1>
 
 <p>createTunnel() {
-  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#115;&#x65;&#x72;&#x76;&#x65;&#114;&#85;&#x73;&#101;&#x72;&#x40;&#50;&#x35;&#46;&#50;&#53;&#46;&#50;&#53;&#x2e;&#50;&#53;">&#115;&#x65;&#114;&#118;&#x65;&#114;&#85;&#115;&#x65;&#114;&#x40;&#x32;&#53;&#46;&#x32;&#53;&#46;&#x32;&#x35;&#x2e;&#50;&#x35;</a>
+  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#x73;&#101;&#x72;&#x76;&#101;&#x72;&#85;&#115;&#x65;&#114;&#64;&#x32;&#x35;&#x2e;&#x32;&#53;&#46;&#x32;&#53;&#46;&#x32;&#53;">&#x73;&#101;&#114;&#118;&#101;&#114;&#85;&#115;&#101;&#x72;&#64;&#x32;&#53;&#46;&#x32;&#x35;&#46;&#50;&#x35;&#x2e;&#x32;&#53;</a>
   if [[ $? -eq 0 ]]; then</p>
 
 <pre><code>echo Tunnel to jumpbox created successfully

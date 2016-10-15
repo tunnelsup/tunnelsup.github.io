@@ -4,7 +4,7 @@
   <title><![CDATA[Category: workflow | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/workflow/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2016-10-09T21:04:32-07:00</updated>
+  <updated>2016-10-15T15:20:45-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -166,6 +166,10 @@ Add the following lines at the top of the file:<br>
 <h3>Use keys to login instead of a password</h3>
 
 <p>If you&rsquo;re trying to ssh from one linux machine to another it&rsquo;s possible to use keys for authentication instead of a password. Follow this guide to <a href="/ssh-without-password">ssh without password</a>.</p>
+
+<h3>Port-forwarding and Tunneling</h3>
+
+<p>You can also do <a href="/how-to-create-ssh-tunnels/">port-fowarding and tunneling with ssh</a>.</p>
 ]]></content>
   </entry>
   

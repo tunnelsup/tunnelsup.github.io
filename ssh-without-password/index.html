@@ -126,8 +126,6 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Enter the password for that username and your done.</p>
-
 <h3>Testing</h3>
 
 <p>Congrats you&rsquo;ve set up the ssh keys so that you no longer need to use a password when ssh&#8217;ing into that system. To test this simply do ssh like normal and it should automatically connect you.</p>
@@ -143,6 +141,25 @@
 
 
 <p>Now you simply need to type <code>s1</code> and you&rsquo;ll automatically be logged into that system.</p>
+
+<h3>Troubleshooting</h3>
+
+<p>Verify you have spelled the <code>.ssh</code> and <code>authorized_keys</code> file correctly.</p>
+
+<p>Sometimes permissions needs to be set on the directory and file. Here are the permissions needed to be set.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='bash'><span class='line'>chmod 700 .ssh
+</span><span class='line'>chmod 600 .ssh/authorized_keys
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Related Articles</h2>
+
+<ul>
+<li><a href="/how-to-ssh-like-a-pro/">How to ssh like a pro</a></li>
+<li><a href="/how-to-create-ssh-tunnels/">How to create ssh tunnels</a></li>
+</ul>
+
 </div>
 
 

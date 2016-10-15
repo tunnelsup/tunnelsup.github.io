@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tunnel | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/tunnel/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2016-10-09T21:04:32-07:00</updated>
+  <updated>2016-10-15T15:20:45-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -92,6 +92,14 @@ autossh -N -i /home/blueuser/.ssh/id_rsa -R 2222:localhost:22 greenuser@192.168.
 <p>The <code>-i /home/blueuser/.ssh/id_rsa</code> option says to use a certificate to authenticate this ssh connection. Check out this post to <a href="/ssh-without-password/">learn more about ssh certificates</a>.</p>
 
 <p>Now when your tunnel goes down it will automatically try to reconnect and keep trying until it is successful. To make it persistent through a reboot, add the ssh command as a cron job.</p>
+
+<h2>Related Articles</h2>
+
+<ul>
+<li><a href="/how-to-ssh-like-a-pro/">How to ssh like a pro</a></li>
+<li><a href="/ssh-without-password/">How to ssh without a password</a></li>
+</ul>
+
 ]]></content>
   </entry>
   
