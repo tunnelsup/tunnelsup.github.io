@@ -665,7 +665,7 @@
     </url>
     <url>
         <loc>https://www.tunnelsup.com/online-security-conferences/</loc>
-        <lastmod>2016-09-29T22:12:03-07:00</lastmod>
+        <lastmod>2016-10-21T19:20:12-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/top-5-reasons-why-you-should-use-private-vpn/</loc>
@@ -838,6 +838,12 @@
         <lastmod>2016-10-15T15:17:03-07:00</lastmod>
     </url>
     <url>
+        <loc>
+            https://www.tunnelsup.com/using-the-built-in-macos-ftp-tftp-sftp-and-http-servers/
+        </loc>
+        <lastmod>2016-10-21T22:32:29-07:00</lastmod>
+    </url>
+    <url>
         <loc>https://www.tunnelsup.com/about/</loc>
         <lastmod>2016-09-29T22:12:03-07:00</lastmod>
     </url>
@@ -847,11 +853,11 @@
     </url>
     <url>
         <loc>https://www.tunnelsup.com/blog/archives/</loc>
-        <lastmod>2016-10-15T15:17:03-07:00</lastmod>
+        <lastmod>2016-10-21T22:32:29-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/cheatsheets/</loc>
-        <lastmod>2016-10-15T15:17:03-07:00</lastmod>
+        <lastmod>2016-10-21T22:32:29-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/config-cleanup.html</loc>
@@ -863,16 +869,16 @@
     </url>
     <url>
         <loc>https://www.tunnelsup.com/go/</loc>
-        <lastmod>2016-10-15T15:17:03-07:00</lastmod>
+        <lastmod>2016-10-21T22:32:29-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/hash-analyzer/</loc>
-        <lastmod>2016-10-15T15:17:03-07:00</lastmod>
+        <lastmod>2016-10-21T22:32:29-07:00</lastmod>
         <priority>1</priority>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/</loc>
-        <lastmod>2016-10-15T15:17:03-07:00</lastmod>
+        <lastmod>2016-10-21T22:32:29-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/kb.html</loc>
@@ -900,7 +906,7 @@
     </url>
     <url>
         <loc>https://www.tunnelsup.com/subnet-calculator/</loc>
-        <lastmod>2016-10-15T15:17:03-07:00</lastmod>
+        <lastmod>2016-10-21T22:32:29-07:00</lastmod>
         <priority>1</priority>
     </url>
     <url>

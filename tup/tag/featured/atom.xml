@@ -4,7 +4,7 @@
   <title><![CDATA[Category: featured | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/featured/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2016-10-15T15:20:45-07:00</updated>
+  <updated>2016-10-21T22:34:43-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -30,9 +30,31 @@
     </thead>
     <tbody>
 
-
-
-
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm_c3MLWH1Cs7YlRyIvmRqzP">GrrCon 2016</a></td>
+            <td>Oct 11, 2016</td>
+            <td>Grand Rapids, MI, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLNhlcxQZJSm_c3MLWH1Cs7YlRyIvmRqzP">Louisville Infosec 2016</a></td>
+            <td>Sep 26, 2016</td>
+            <td>Louisville, KY, USA</td>
+        </tr>
+        <tr>
+            <td><a href="http://www.irongeek.com/i.php?page=videos/derbycon6/mainlist">DerbyCon 6.0</a></td>
+            <td>Sep 25, 2016</td>
+            <td>Louisville, KY, USA</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLjIhlLNy_Y9O62rjwYD48pVER0EVh1-aU">R2Con</a></td>
+            <td>Sep 10, 2016</td>
+            <td>Barcelona, Spain</td>
+        </tr>
+        <tr>
+            <td><a href="https://www.youtube.com/playlist?list=PLljFlTO9rB15Tve-LhV5k_5_0HH37eALe">Security Onion</a></td>
+            <td>Sep 9, 2016</td>
+            <td>Augusta GA, USA</td>
+        </tr>
 
 
         <tr>
@@ -42,13 +64,13 @@
         </tr>
 
         <tr>
-            <td><a href="https://www.youtube.com/playlist?list=PL9fPq3eQfaaAvXV3hJc4yHuNxoviVckoE">DEFCON 24</a></td>
+            <td><a href="https://www.youtube.com/playlist?list=PLwibn_3po6c877wJuZhKfvEPwgalKIVuP">DEFCON 24</a></td>
             <td>Aug 4-7, 2016</td>
             <td>Las Vegas, NV, USA</td>
         </tr>
 
         <tr>
-            <td><a href="https://www.youtube.com/playlist?list=PLH15HpR5qRsXm0-rMacuWBxWcB2fmsmEw">Black Hat 2016</a></td>
+            <td><a href="https://www.youtube.com/playlist?list=PLwibn_3po6c-s5hAGaDnBxnyOoTmADHoQ">Black Hat 2016</a></td>
             <td>July 30 - Aug 4, 2016</td>
             <td>Las Vegas, NV USA</td>
         </tr>
@@ -708,7 +730,7 @@ ssh -l piUser -p 2222 localhost
 <h1>!/bin/bash</h1>
 
 <p>createTunnel() {
-  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#115;&#101;&#x72;&#118;&#x65;&#x72;&#85;&#x73;&#x65;&#x72;&#x40;&#50;&#x35;&#46;&#50;&#x35;&#46;&#x32;&#53;&#46;&#50;&#x35;">&#115;&#x65;&#114;&#x76;&#101;&#x72;&#x55;&#115;&#x65;&#x72;&#64;&#50;&#53;&#x2e;&#50;&#53;&#x2e;&#x32;&#53;&#46;&#x32;&#x35;</a>
+  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x73;&#x65;&#x72;&#x76;&#101;&#x72;&#x55;&#x73;&#101;&#x72;&#64;&#x32;&#x35;&#46;&#x32;&#53;&#x2e;&#x32;&#53;&#46;&#x32;&#x35;">&#x73;&#101;&#x72;&#118;&#x65;&#114;&#x55;&#x73;&#x65;&#114;&#64;&#50;&#x35;&#x2e;&#x32;&#53;&#46;&#50;&#x35;&#46;&#x32;&#x35;</a>
   if [[ $? -eq 0 ]]; then</p>
 
 <pre><code>echo Tunnel to jumpbox created successfully
