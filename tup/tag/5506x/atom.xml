@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 5506x | TunnelsUP]]></title>
+  <link href="https://www.tunnelsup.com/tup/tag/5506x/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2016-11-01T22:44:58-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[ASA5505x Fits In A 5505 Rack Mount]]></title>
+    <link href="https://www.tunnelsup.com/asa5505x-fits-in-a-5505-rack-mount/"/>
+    <updated>2016-11-01T22:30:00-07:00</updated>
+    <id>https://www.tunnelsup.com/asa5505x-fits-in-a-5505-rack-mount</id>
+    <content type="html"><![CDATA[<p>The rack mount kits for a Cisco ASA 5505x (Part number ASA-5506-RACK-MNT=) are going for over $250! That&rsquo;s almost as much as the firewall itself! This is ridiculously high.</p>
+
+<p>But don&rsquo;t panic! You can get an older ASA 5505 rack mount kit and the 5506x will fit inside it. The older ASA 5505 mounts go for $60 or less and seem to be ok. Here are some pics from a recent swap I did.</p>
+
+<p>ASA 5505 in an 5505 rack mount.
+<img src="/images/asarack1.jpg"></p>
+
+<p>ASA 5506x in a 5505 rack mount.
+<img src="/images/asarack2.jpg"></p>
+
+<p>ASA 5506x in a 5505 rack mount.
+<img src="/images/asarack3.jpg"></p>
+
+<p>The one problem here is that the 5506-X is longer than the 5505. This means you may have to secure it using some zip ties or something if you don&rsquo;t want it to slide around every time you put a cable in. In my case I added a few pieces of tape to keep it from moving and it worked great.</p>
+]]></content>
+  </entry>
+  
+</feed>
