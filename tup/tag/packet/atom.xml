@@ -4,7 +4,7 @@
   <title><![CDATA[Category: packet | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/packet/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2016-11-01T22:44:58-07:00</updated>
+  <updated>2017-03-03T20:30:53-08:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -94,6 +94,10 @@ Look carefully here. The header check here is simply <font color="red"><strong
 
 <p>&ldquo;Removing&rdquo; a capture means to delete its contents and the listener from the ASA. To do this, issue this command:<br>
 <code>no capture CAP1</code></p>
+
+<h2>Packet Capture Creator</h2>
+
+<p>With a valid CCO login, you can use the <a href="https://cway.cisco.com/tools/CaptureGenAndAnalyse/">Cisco Packet Capture Config Generator</a> tool.</p>
 ]]></content>
   </entry>
   

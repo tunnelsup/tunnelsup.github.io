@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ra | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/ra/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2016-11-01T22:44:58-07:00</updated>
+  <updated>2017-03-03T20:30:53-08:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -54,7 +54,7 @@ username ra-user password passw0rd priv 1
 crypto ipsec transform-set 3DES esp-3des esp-sha-hmac
 crypto dynamic-map dynmap 10 set transform-set 3DES
 crypto map Outside_Map 500 ipsec-isakmp dynamic dynmap
-crypto map OSC_Outside_Map interface outside
+crypto map Outside_Map interface outside
 crypto isakmp identity address
 crypto isakmp enable outside
 crypto isakmp policy 1

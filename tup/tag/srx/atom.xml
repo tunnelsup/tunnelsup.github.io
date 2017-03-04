@@ -4,7 +4,7 @@
   <title><![CDATA[Category: srx | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/srx/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2016-11-01T22:44:58-07:00</updated>
+  <updated>2017-03-03T20:30:53-08:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,129 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Juniper SRX - ALG and Screen Options]]></title>
+    <link href="https://www.tunnelsup.com/juniper-srx-alg-and-screen-options/"/>
+    <updated>2017-03-03T20:12:00-08:00</updated>
+    <id>https://www.tunnelsup.com/juniper-srx-alg-and-screen-options</id>
+    <content type="html"><![CDATA[<p>What is ALG? What are screen options? When would I use this and why? This post will give you an introduction to these terms.</p>
+
+<p>Screen Options and ALGs are two important security features of an SRX that detect and block abnormal traffic or attacks.</p>
+
+<h2>ALG Application-Level Gateway</h2>
+
+<p>The application-level gateway (ALG) feature of Juniper SRX devices acts as a fixup to certain protocols that need help getting through the firewall. Since the firewall is stateful and restrictive by default, this causes certain protocols to not get through. Think about FTP, where the initial connection comes in on port 21 but then data is transmitted on port 20. Without ALG you would have to open port 20 and 21. With Juniper SRX you can configure a FTP ALG which will know that when a session is built on port 21, build the session for port 20 and 21. This way you only have to open port 21. This is similar to fixups or inspects on a Cisco ASA.</p>
+
+<p>You can see which ALGs are available and enabled with this command:</p>
+
+<p><code>
+srx&gt; show security alg status
+ALG Status :
+  DNS      : Enabled
+  FTP      : Enabled
+  H323     : Enabled
+  MGCP     : Enabled
+  MSRPC    : Enabled
+  PPTP     : Enabled
+  RSH      : Enabled
+  RTSP     : Enabled
+  SCCP     : Enabled
+  SIP      : Enabled
+  SQL      : Enabled
+  SUNRPC   : Enabled
+  TALK     : Enabled
+  TFTP     : Enabled
+</code></p>
+
+<p>There are a few ALGs enabled by default. To see these (an configuration examples), use this hidden command:</p>
+
+<p><code>show configuration groups junos-defaults security alg</code></p>
+
+<p>To create new ALGs put them in the <code>edit security alg</code> section of the config.</p>
+
+<p>To apply a new ALG, add it to the application in the <code>edit application application</code> section of the config.</p>
+
+<p>Once the ALG is applied, adjust your policy to use that application. You can then check if your policy is using an ALG with this command:</p>
+
+<p><code>show security policies detail</code></p>
+
+<p>You can see if a session is being hit by an ALG with <code>show security flow session</code>, and if the flow is being impacted by an ALG it will be listed there.</p>
+
+<p>To see a more detailed explanation of what each ALG does, check here: <a href="http://www.juniper.net/documentation/en_US/junos12.1x44/information-products/pathway-pages/security/security-algs-index.html">http://www.juniper.net/documentation/en_US/junos12.1x44/information-products/pathway-pages/security/security-algs-index.html</a></p>
+
+<h2>Screen Options</h2>
+
+<p>Screen options are configurations applied to the firewall which act as a mini-IDS (intrusion detection system). The SRX can detect well established and known attacks such as DoS attacks, Teardrop attacks, fragmented ICMP packets, and more. There are about 30 screen options available. They are:</p>
+
+<ul>
+<li><strong>icmp/flood</strong>                       Configure icmp flood ids option</li>
+<li><strong>icmp/fragment</strong>                    Enable ICMP fragment ids option</li>
+<li><strong>icmp/ip-sweep</strong>                    Configure ip sweep ids option</li>
+<li><strong>icmp/large</strong>                       Enable large ICMP packet (size > 1024) ids option</li>
+<li><strong>icmp/ping-death</strong>                  Enable ping of death ids option</li>
+<li><strong>ip/bad-option</strong>                  Enable ip with bad option ids option</li>
+<li><strong>ip/block-frag</strong>                  Enable ip fragment blocking ids option</li>
+<li><strong>ip/loose-source-route-option</strong>    Enable ip with loose source route ids option</li>
+<li><strong>ip/record-route-option</strong>         Enable ip with record route option ids option</li>
+<li><strong>ip/security-option</strong>             Enable ip with security option ids option</li>
+<li><strong>ip/source-route-option</strong>         Enable ip source route ids option</li>
+<li><strong>ip/spoofing</strong>                    Enable IP address spoofing ids option</li>
+<li><strong>ip/stream-option</strong>               Enable ip with stream option ids option</li>
+<li><strong>ip/strict-source-route-option</strong>    Enable ip with strict source route ids option</li>
+<li><strong>ip/tear-drop</strong>                   Enable tear drop ids option</li>
+<li><strong>ip/timestamp-option</strong>            Enable ip with timestamp option ids option</li>
+<li><strong>ip/unknown-protocol</strong>            Configure unknown protocol ids option</li>
+<li><strong>limit-session</strong>                    Configure connection limits</li>
+<li><strong>tcp/fin-no-ack</strong>                  Enable Fin bit with no ACK bit ids option</li>
+<li><strong>tcp/land</strong>                        Enable land attack ids option</li>
+<li><strong>tcp/port-scan</strong>                   Configure port scan ids option</li>
+<li><strong>tcp/syn-ack-ack-proxy</strong>           Enable syn-ack-ack proxy ids option</li>
+<li><strong>tcp/syn-fin</strong>                     Enable SYN and FIN bits set attack ids option</li>
+<li><strong>tcp/syn-flood</strong>                   Enable SYN flood ids option</li>
+<li><strong>tcp/syn-frag</strong>                    Enable SYN fragment ids option</li>
+<li><strong>tcp/tcp-no-flag</strong>                 Enable TCP packet without flag ids option</li>
+<li><strong>tcp/winnuke</strong>                     Enable winnuke attack ids option</li>
+<li><strong>udp/flood</strong>                       Configure udp flood ids option</li>
+</ul>
+
+
+<p>Some of these screen options are configured by default. To see which screen options are configured, look at the config here:</p>
+
+<p><code>show configuration security screen</code></p>
+
+<p>You can then see if the screen option is applied anywhere by doing:</p>
+
+<p><code>show security zones</code></p>
+
+<p>If it&rsquo;s applied you&rsquo;ll see it say <strong>Screen:</strong> and the screen policy name.</p>
+
+<h4>Configuring Screen Options</h4>
+
+<p>The best practice is to apply the screen to the least trusted zone. Often it is applied to the untrust zone. Traffic coming <strong>in to</strong> the zone with the screen applied, will be inspected by the screen options. Traffic going out of the zone will not be inspected by the screen.</p>
+
+<p>Let&rsquo;s configure a new screen option to limit the number of connection to a server to only be <strong>1</strong> connection. To configure a new screen option and policy:</p>
+
+<p><code>
+set security screen ids-option UNTRUST-SCREEN limit-session destination-ip-based 1
+set security zones security-zone UNTRUST screen UNTRUST-SCREEN
+</code></p>
+
+<p>This creates the screen policy called &ldquo;UNTRUST-SCREEN&rdquo; which says only allow one connection inbound through the screen.</p>
+
+<p>Then the screen policy is applied to the UNTRUST interface.</p>
+
+<p>Once this is committed you can check the screen status with this command:</p>
+
+<p><code>show security screen statistics zone UNTRUST</code></p>
+
+<p>To check logs you can look at the following output:</p>
+
+<p><code>show log messages | match RT_SCREEN</code></p>
+
+<p>Traffic that hits the screen will show up in the messages log with this string.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Sample Juniper JunOS Config for SRX210]]></title>

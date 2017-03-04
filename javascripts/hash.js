@@ -2,20 +2,22 @@
     Hash Analyzer tool created by TunnelsUp.com
  **************************************************/
 
-// Declare a few globals
-
-
  $(document).ready(function() {
 	$("#analyze").click(function(){
        	// reset vars
        	$(".errorMessage").html("");
        	$(".results").html("");
-
+       	var plussalt = false;
        	var hashtype = 'unknown';
 	    var input = trim(document.analyzer.hash.value);
 	    var charlength = input.length;
 	    // CLASSIFY INPUTS
 	    var bitlength = 0;
+	    var chartype = "Unknown";
+	    if (isb64(input)) {
+			var chartype = 'base64';
+			bitlength = charlength * 6;
+	    }
 	    if (ishex(input)) {
 	    	var chartype = 'hexidecimal';
 	    	bitlength = input.length * 4;
@@ -23,14 +25,38 @@
 
 
 
-
 	    // ANALYZE CLASSIFIED INPUTS
-	    if ((chartype == 'hexidecimal') && (bitlength == 128)) {
- 			hashtype = 'MD5';
+		if ((input.match(/:/g) || []).length == 1) {
+			var saltandhash = input.split(":");
+		    if (ishex(saltandhash[0])) {
+		    	var chartype = 'hexidecimal';
+		    	bitlength = saltandhash[0].length * 4;
+		    	plussalt = true;
+		    }		
+		    if (isb64(saltandhash[0])) {
+		    	var chartype = 'base64';
+		    	bitlength = saltandhash[0].length * 4;
+		    	plussalt = true;		    	
+		    }
+		}
+		if ((input.match(/:/g) || []).length > 1) {
+			hashtype = "NTLM?";
+		}
+		if ((input.startsWith("md5"))) {
+			hashtype = "MD5";
+		}
+	    if ((chartype == 'base64') && (bitlength == 96)) {
+ 			hashtype = 'Cisco ASA or PIX MD5';
+		}	    
+		if ((chartype == 'hexidecimal') && (bitlength == 128)) {
+ 			hashtype = 'MD5 or MD4';
 		}
 	    if ((chartype == 'hexidecimal') && (bitlength == 160)) {
  			hashtype = 'SHA1 (or SHA 128)';
 		}	   
+		if ((chartype == 'hexidecimal') && (bitlength == 224)) {
+ 			hashtype = 'SHA 224';
+		}		
 		if ((chartype == 'hexidecimal') && (bitlength == 256)) {
  			hashtype = 'SHA2-256';
 		}
@@ -41,7 +67,13 @@
  			hashtype = 'SHA2-512';
 		}
 		if ((chartype == 'hexidecimal') && (bitlength == 64)) {
- 			hashtype = 'MySQL < version 4.1';
+ 			hashtype = 'LM or MySQL < version 4.1';
+		}
+		if ((chartype == 'hexidecimal') && (bitlength == 240)) {
+ 			hashtype = 'Oracle 11';
+		}		
+		if (charlength == 13) {
+ 			hashtype = 'DES or 3DES?';
 		}
 		if (charlength == 41) {
 			if (input[0] == "*") {
@@ -72,6 +104,68 @@
 		}
 
 
+		if (input.startsWith("$2a$") || input.startsWith("$2b$") || input.startsWith("$2y$")) {
+			var saltandhash = input.substring(input.lastIndexOf("$") + 1);
+			var thissalt = saltandhash.slice(0, 22);
+			var thishash = saltandhash.slice(22);
+			if (thishash.length == 31) {
+	 			hashtype = 'bcrypt';
+	 			chartype = '$2x$x$ followed by base64';
+	 			bitlength = 184;
+			}
+		} 
+	
+		if ((input.startsWith("$1$")) && (charlength == 34)) {
+			hashtype = "MD5-Crypt";
+			var thissalt = input.slice(3, 11);
+			var thishash = input.slice(12);
+			chartype = "Mostly base64";
+			bitlength = 128;
+		}	
+		if ((input.startsWith("$PHPS$")) && (charlength == 45)) {
+			//$PHPS$327235$afd358dd12afc6c394f309624d5912e7
+			hashtype = "PHP-MD5-Crypt";
+			var thissalt = input.slice(6, 12);
+			var thishash = input.slice(13);
+			chartype = "Mostly hexadecimal";
+			bitlength = 128;
+		}
+		if ((input.startsWith("$6$")) && (charlength == 106)) {
+			//$6$gjxgtlzspT2wzWJW$61tKBfooVrQC6/hYZ3TXKpFuLmNnAHomE/Ccf.dRWDo87W2MeoeOSPGSYNlAGfDwYugiV.KGWJGSEzXEjT4OI0
+			hashtype = "SHA512-Crypt";
+			var thissalt = input.slice(3, 19);
+			var thishash = input.slice(20);
+			chartype = "$6$ followed by base64";
+			bitlength = 512;
+		}		
+		if ((input.startsWith("$md5$rounds="))) {
+			//$md5$rounds=904$BZ6wgh3sv4Q5hmhr$dIc7H0R4s0M0eDkDQEJf31
+			hashtype = "Sun MD5";
+			var thissalt = input.slice(16, 32);
+			var thishash = input.slice(33);
+			chartype = "Mostly base64";
+			bitlength = 128;
+		}
+		if ((input.startsWith("{SSHA}"))) {
+			//{SSHA}u+cwWa3895SQjBcpC5xShYkaYYxNZk1OMWxoQg==
+			hashtype = "Salted SHA";
+			if (isb64(input.slice(6))) {
+				var chartype = 'base64';
+				bitlength = charlength * 6;
+			}
+		}			
+		if ((input.startsWith("{SHA}"))) {
+			//{SHA}raMJLbQTEfVYt9feePKfWKf9H1Q=
+			hashtype = "SHA";
+			if (isb64(input.slice(5))) {
+				var chartype = 'base64';
+				bitlength = charlength * 6;
+			}
+		}		
+
+
+
+
 /*
 chee@beebin:~$ sudo doveadm pw -s MD5    (MD5-Crypt(3) Requires a salt! example below uses 8 byte salt)
 {MD5}$1$8ade6fc1$0MJXOZOOpbQovXtQEyrUP1
@@ -84,18 +178,51 @@ chee@beebin:~$ sudo doveadm pw -s HMAC-MD5
 
 chee@beebin:~$ sudo doveadm pw -s PLAIN-MD5
 {PLAIN-MD5}5f4dcc3b5aa765d61d8327deb882cf99
+
 */
 
 
+
 	    // CREATE OUTPUT
-		var output = '<table class="table table-striped table-hover">'+
-			'<tr><td><strong>Hash type:</strong></td><td>'+hashtype+'</td></tr>'+
+	    if (hashtype != "unknown") {
+	    	var color = "success";
+	    } else {
+	    	var color = "";
+	    }
+	    if (plussalt) {
+	    	hashtype = hashtype + " : plus salt";
+	    }
+		var output = '<table style="table-layout: fixed; width: 100%" class="table table-striped table-hover">'+
+			'<tr><td width="30%"><strong>Hash:</strong></td><td style="word-wrap: break-word">'+input+'</td></tr>'+
+			'<tr class='+color+'><td><strong>Hash type:</strong></td><td>'+hashtype+'</td></tr>'+
 			'<tr><td><strong>Bit length:</strong></td><td>'+bitlength+'</td></tr>	'+			
 			'<tr><td><strong>Character length:</strong></td><td>'+charlength+'</td></tr>	'+			
-			'<tr><td><strong>Character type:</strong></td><td>'+chartype+'</td></tr>'+		
-		'</table>';
+			'<tr><td><strong>Character type:</strong></td><td>'+chartype+'</td></tr>';
+
+		if ((hashtype == "bcrypt") || (hashtype=="MD5-Crypt") || (hashtype=="PHP-MD5-Crypt")) {
+			output = output + '<tr><td><strong>Hash:</strong></td><td>'+thishash+'</td></tr>	'+			
+			'<tr><td><strong>Salt:</strong></td><td>'+thissalt+'</td></tr>';
+
+		}
+
+		output = output + '</table>';
 		$('#results').html(output);
 	});
+
+	// Restrict enter key from submitting form. Instead make it click the calculate button.
+	document.getElementById('form').onsubmit = function () {
+    	$("#analyze").click();
+    	return false;
+	}
+
+	function isb64(hash){
+		try {
+		    return btoa(atob(hash)) == hash;
+		} catch (err) {
+		    return false;
+		}
+
+	}
 
 
 	function ishex(num){ 

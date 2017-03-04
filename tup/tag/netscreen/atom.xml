@@ -4,7 +4,7 @@
   <title><![CDATA[Category: netscreen | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/netscreen/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2016-11-01T22:44:58-07:00</updated>
+  <updated>2017-03-03T20:30:53-08:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -314,6 +314,11 @@ debug flow basic</p>
     <th>Juniper JunOS (SRX)</th>
 </tr>
 
+<tr>
+    <td>enable<br>config t</td>
+    <td></td>
+    <td>start cli<br>configure</td>
+</tr>
 <tr>
     <td>show log</td>
     <td>get event</td>

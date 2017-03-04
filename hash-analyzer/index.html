@@ -96,7 +96,7 @@
 <div class="entry-content"><div id="inputHead"></div>
 <form name="analyzer" id="form">
 	<div class="well">
-		Hash:<br>
+		Enter a hash string to learn more about it:<br>
 		<input type="text" class="formsize" placeholder="ex: 5f4dcc3b5aa765d61d8327deb882cf99" name="hash">
 		<div class="errorMessage"> </div>
 		<button id="analyze" class="button btn-success btn-large" type="button">Analyze</button>
@@ -122,18 +122,24 @@
 	<tr><td>5f4dcc3b5aa765d61d8327deb882cf99</td><td>MD5</td></tr>
 	<tr><td>5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8</td><td>SHA1</td></tr>
 	<tr><td>5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8</td><td>SHA256</td></tr>
-	<tr><td></td><td></td></tr>
-	<tr><td></td><td></td></tr>
-	<tr><td></td><td></td></tr>
-	<tr><td></td><td></td></tr>
-	<tr><td></td><td></td></tr>
-	<tr><td></td><td></td></tr>
+	<tr><td>$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy</td><td>BCRYPT</td></tr>
+	<tr><td>$1$Pl3m5Y95$t3Nk4zEXTCXDP4Vs4cL0p0</td><td>MD5-Crypt</td></tr>
 </table>
 <br>
 
+<h3>Hash Formats</h3>
+<p>
+Hashes are usually use a hexadecimal or base64 charset. 
 
+If a hash has dollar signs &#8220;$&#8221; in it, this is usually a delimiter between the salt and the hash. Example:
+<br>
+<code>$1$Pl3m5Y95$t3Nk4zEXTCXDP4Vs4cL0p0</code>
+<br>
+In this case <code>Pl3m5Y95</code> is the salt and <code>t3Nk4zEXTCXDP4Vs4cL0p0</code> is the hash.
+<br>
+</p>
 <h3>About the Hash Analyzer</h3>
-<p>This tool is used in an attempt to demystify hashing and hashes. If you know what the hash is you can use this tool to examine the details of the hash. The tool can look at the characters that make up the hash to possibly identify which type of hash it is and what it may be used for.</p>
+<p>The aim of this tool is to help identify a hash type. The tool can look at the characters that make up the hash to possibly identify which type of hash it is and what it may be used for.</p>
 
 <p>Hash types this tool can positively identify:</p>
 <ul>
@@ -144,9 +150,25 @@
 	<li>MySQL</li>
 	<li>MD5 Wordpress</li>
 	<li>MD5 phpBB</li>
-CRYPT MD5 MD5-CRYPT SHA SHA1 SHA256 SHA512 SMD5 SSHA SSHA256 SSHA512 PLAIN CLEAR CLEARTEXT PLAIN-TRUNC CRAM-MD5 SCRAM-SHA-1 HMAC-MD5 DIGEST-MD5 PLAIN-MD4 PLAIN-MD5 LDAP-MD5 LANMAN NTLM OTP SKEY RPA SHA256-CRYPT SHA512-CRYPT 
+	<li>BCRYPT</li>
+	<li>MD5-Crypt</li>
+	<li>Oracle</li>
+	<li>SHA-Crypt</li>
+	<li>PHPS</li>
+	<li>and more&#8230;</li>
 
-</ul></div>
+</ul>
+
+
+<h3>More Resources</h3>
+
+There are more hash examples on the hashcat website located here:<br>
+<a href="https://hashcat.net/wiki/doku.php?id=example_hashes">https://hashcat.net/wiki/doku.php?id=example_hashes</a>
+<br><br>
+If you need a bunch of sample hashes you can find a bunch at Kore Logic, click the &#8220;Download the password hash file bundle&#8221;.<br>
+<a href="http://contest-2012.korelogic.com/">http://contest-2012.korelogic.com/</a>
+<br><br>
+Here is an article on <a href="/getting-started-cracking-password-hashes/">how to crack hashes.</div>
 
 
   <footer>
@@ -254,7 +276,7 @@ PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random passw
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Jack - <a href="/about">About This Site</a>
+  Copyright &copy; 2017 - Jack - <a href="/about">About This Site</a>
   ---
   <a href="/links">Links to other useful websites</a>
 </p>

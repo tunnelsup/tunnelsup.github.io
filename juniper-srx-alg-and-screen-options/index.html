@@ -1,0 +1,433 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>Juniper SRX - ALG and Screen Options - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="What is ALG? What are screen options? When would I use this and why? This post will give you an introduction to these terms. Screen Options and ALGs &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="https://www.tunnelsup.com/juniper-srx-alg-and-screen-options">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Juniper SRX - ALG and Screen Options</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2017-03-03T20:12:00-08:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2017</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>What is ALG? What are screen options? When would I use this and why? This post will give you an introduction to these terms.</p>
+
+<p>Screen Options and ALGs are two important security features of an SRX that detect and block abnormal traffic or attacks.</p>
+
+<h2>ALG Application-Level Gateway</h2>
+
+<p>The application-level gateway (ALG) feature of Juniper SRX devices acts as a fixup to certain protocols that need help getting through the firewall. Since the firewall is stateful and restrictive by default, this causes certain protocols to not get through. Think about FTP, where the initial connection comes in on port 21 but then data is transmitted on port 20. Without ALG you would have to open port 20 and 21. With Juniper SRX you can configure a FTP ALG which will know that when a session is built on port 21, build the session for port 20 and 21. This way you only have to open port 21. This is similar to fixups or inspects on a Cisco ASA.</p>
+
+<p>You can see which ALGs are available and enabled with this command:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>srx&gt; show security alg status
+</span><span class='line'>ALG Status :
+</span><span class='line'>  DNS      : Enabled
+</span><span class='line'>  FTP      : Enabled
+</span><span class='line'>  H323     : Enabled
+</span><span class='line'>  MGCP     : Enabled
+</span><span class='line'>  MSRPC    : Enabled
+</span><span class='line'>  PPTP     : Enabled
+</span><span class='line'>  RSH      : Enabled
+</span><span class='line'>  RTSP     : Enabled
+</span><span class='line'>  SCCP     : Enabled
+</span><span class='line'>  SIP      : Enabled
+</span><span class='line'>  SQL      : Enabled
+</span><span class='line'>  SUNRPC   : Enabled
+</span><span class='line'>  TALK     : Enabled
+</span><span class='line'>  TFTP     : Enabled</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are a few ALGs enabled by default. To see these (an configuration examples), use this hidden command:</p>
+
+<p><code>show configuration groups junos-defaults security alg</code></p>
+
+<p>To create new ALGs put them in the <code>edit security alg</code> section of the config.</p>
+
+<p>To apply a new ALG, add it to the application in the <code>edit application application</code> section of the config.</p>
+
+<p>Once the ALG is applied, adjust your policy to use that application. You can then check if your policy is using an ALG with this command:</p>
+
+<p><code>show security policies detail</code></p>
+
+<p>You can see if a session is being hit by an ALG with <code>show security flow session</code>, and if the flow is being impacted by an ALG it will be listed there.</p>
+
+<p>To see a more detailed explanation of what each ALG does, check here: <a href="http://www.juniper.net/documentation/en_US/junos12.1x44/information-products/pathway-pages/security/security-algs-index.html">http://www.juniper.net/documentation/en_US/junos12.1x44/information-products/pathway-pages/security/security-algs-index.html</a></p>
+
+<h2>Screen Options</h2>
+
+<p>Screen options are configurations applied to the firewall which act as a mini-IDS (intrusion detection system). The SRX can detect well established and known attacks such as DoS attacks, Teardrop attacks, fragmented ICMP packets, and more. There are about 30 screen options available. They are:</p>
+
+<ul>
+<li><strong>icmp/flood</strong>                       Configure icmp flood ids option</li>
+<li><strong>icmp/fragment</strong>                    Enable ICMP fragment ids option</li>
+<li><strong>icmp/ip-sweep</strong>                    Configure ip sweep ids option</li>
+<li><strong>icmp/large</strong>                       Enable large ICMP packet (size > 1024) ids option</li>
+<li><strong>icmp/ping-death</strong>                  Enable ping of death ids option</li>
+<li><strong>ip/bad-option</strong>                  Enable ip with bad option ids option</li>
+<li><strong>ip/block-frag</strong>                  Enable ip fragment blocking ids option</li>
+<li><strong>ip/loose-source-route-option</strong>    Enable ip with loose source route ids option</li>
+<li><strong>ip/record-route-option</strong>         Enable ip with record route option ids option</li>
+<li><strong>ip/security-option</strong>             Enable ip with security option ids option</li>
+<li><strong>ip/source-route-option</strong>         Enable ip source route ids option</li>
+<li><strong>ip/spoofing</strong>                    Enable IP address spoofing ids option</li>
+<li><strong>ip/stream-option</strong>               Enable ip with stream option ids option</li>
+<li><strong>ip/strict-source-route-option</strong>    Enable ip with strict source route ids option</li>
+<li><strong>ip/tear-drop</strong>                   Enable tear drop ids option</li>
+<li><strong>ip/timestamp-option</strong>            Enable ip with timestamp option ids option</li>
+<li><strong>ip/unknown-protocol</strong>            Configure unknown protocol ids option</li>
+<li><strong>limit-session</strong>                    Configure connection limits</li>
+<li><strong>tcp/fin-no-ack</strong>                  Enable Fin bit with no ACK bit ids option</li>
+<li><strong>tcp/land</strong>                        Enable land attack ids option</li>
+<li><strong>tcp/port-scan</strong>                   Configure port scan ids option</li>
+<li><strong>tcp/syn-ack-ack-proxy</strong>           Enable syn-ack-ack proxy ids option</li>
+<li><strong>tcp/syn-fin</strong>                     Enable SYN and FIN bits set attack ids option</li>
+<li><strong>tcp/syn-flood</strong>                   Enable SYN flood ids option</li>
+<li><strong>tcp/syn-frag</strong>                    Enable SYN fragment ids option</li>
+<li><strong>tcp/tcp-no-flag</strong>                 Enable TCP packet without flag ids option</li>
+<li><strong>tcp/winnuke</strong>                     Enable winnuke attack ids option</li>
+<li><strong>udp/flood</strong>                       Configure udp flood ids option</li>
+</ul>
+
+
+<p>Some of these screen options are configured by default. To see which screen options are configured, look at the config here:</p>
+
+<p><code>show configuration security screen</code></p>
+
+<p>You can then see if the screen option is applied anywhere by doing:</p>
+
+<p><code>show security zones</code></p>
+
+<p>If it&rsquo;s applied you&rsquo;ll see it say <strong>Screen:</strong> and the screen policy name.</p>
+
+<h4>Configuring Screen Options</h4>
+
+<p>The best practice is to apply the screen to the least trusted zone. Often it is applied to the untrust zone. Traffic coming <strong>in to</strong> the zone with the screen applied, will be inspected by the screen options. Traffic going out of the zone will not be inspected by the screen.</p>
+
+<p>Let&rsquo;s configure a new screen option to limit the number of connection to a server to only be <strong>1</strong> connection. To configure a new screen option and policy:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>set security screen ids-option UNTRUST-SCREEN limit-session destination-ip-based 1
+</span><span class='line'>set security zones security-zone UNTRUST screen UNTRUST-SCREEN</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This creates the screen policy called &ldquo;UNTRUST-SCREEN&rdquo; which says only allow one connection inbound through the screen.</p>
+
+<p>Then the screen policy is applied to the UNTRUST interface.</p>
+
+<p>Once this is committed you can check the screen status with this command:</p>
+
+<p><code>show security screen statistics zone UNTRUST</code></p>
+
+<p>To check logs you can look at the following output:</p>
+
+<p><code>show log messages | match RT_SCREEN</code></p>
+
+<p>Traffic that hits the screen will show up in the messages log with this string.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2017-03-03T20:12:00-08:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2017</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/juniper/'>juniper</a>, <a class='category' href='/tup/tag/junos/'>junos</a>, <a class='category' href='/tup/tag/srx/'>srx</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://www.tunnelsup.com/juniper-srx-alg-and-screen-options/" data-via="tunnelsup" data-counturl="https://www.tunnelsup.com/juniper-srx-alg-and-screen-options/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://www.tunnelsup.com/juniper-srx-alg-and-screen-options/';
+        var disqus_url = 'https://www.tunnelsup.com/juniper-srx-alg-and-screen-options/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>
