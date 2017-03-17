@@ -165,24 +165,6 @@
 
 
 
-
-/*
-chee@beebin:~$ sudo doveadm pw -s MD5    (MD5-Crypt(3) Requires a salt! example below uses 8 byte salt)
-{MD5}$1$8ade6fc1$0MJXOZOOpbQovXtQEyrUP1
-
-chee@beebin:~$ sudo doveadm pw 
-{CRAM-MD5}9186d855e11eba527a7a52ca82b313e180d62234f0acc9051b527243d41e2740
-
-chee@beebin:~$ sudo doveadm pw -s HMAC-MD5
-{HMAC-MD5}9186d855e11eba527a7a52ca82b313e180d62234f0acc9051b527243d41e2740
-
-chee@beebin:~$ sudo doveadm pw -s PLAIN-MD5
-{PLAIN-MD5}5f4dcc3b5aa765d61d8327deb882cf99
-
-*/
-
-
-
 	    // CREATE OUTPUT
 	    if (hashtype != "unknown") {
 	    	var color = "success";
@@ -214,7 +196,6 @@ chee@beebin:~$ sudo doveadm pw -s PLAIN-MD5
     	$("#analyze").click();
     	return false;
 	}
-
 	function isb64(hash){
 		try {
 		    return btoa(atob(hash)) == hash;
@@ -223,8 +204,6 @@ chee@beebin:~$ sudo doveadm pw -s PLAIN-MD5
 		}
 
 	}
-
-
 	function ishex(num){ 
 		var validChar='0123456789ABCDEFabcdef'; 
 		var flag=true; 

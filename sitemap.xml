@@ -102,7 +102,7 @@
         <loc>
             https://www.tunnelsup.com/cisco-asa-to-juniper-ssg-command-reference-cheat-sheet/
         </loc>
-        <lastmod>2017-03-03T20:28:41-08:00</lastmod>
+        <lastmod>2017-03-17T15:58:17-07:00</lastmod>
     </url>
     <url>
         <loc>
@@ -852,6 +852,12 @@
         <lastmod>2017-03-03T20:17:00-08:00</lastmod>
     </url>
     <url>
+        <loc>
+            https://www.tunnelsup.com/juniper-srx-configurations-for-route-based-and-policy-based-vpn/
+        </loc>
+        <lastmod>2017-03-03T20:41:18-08:00</lastmod>
+    </url>
+    <url>
         <loc>https://www.tunnelsup.com/about/</loc>
         <lastmod>2016-09-29T22:12:03-07:00</lastmod>
     </url>
@@ -861,11 +867,11 @@
     </url>
     <url>
         <loc>https://www.tunnelsup.com/blog/archives/</loc>
-        <lastmod>2017-03-03T20:28:41-08:00</lastmod>
+        <lastmod>2017-03-17T15:58:17-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/cheatsheets/</loc>
-        <lastmod>2017-03-03T20:28:41-08:00</lastmod>
+        <lastmod>2017-03-17T15:58:17-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/config-cleanup.html</loc>
@@ -877,16 +883,16 @@
     </url>
     <url>
         <loc>https://www.tunnelsup.com/go/</loc>
-        <lastmod>2017-03-03T20:28:41-08:00</lastmod>
+        <lastmod>2017-03-17T15:58:17-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/hash-analyzer/</loc>
-        <lastmod>2017-03-03T20:28:41-08:00</lastmod>
+        <lastmod>2017-03-17T15:58:17-07:00</lastmod>
         <priority>1</priority>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/</loc>
-        <lastmod>2017-03-03T20:28:41-08:00</lastmod>
+        <lastmod>2017-03-17T15:58:17-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/kb.html</loc>
@@ -914,7 +920,7 @@
     </url>
     <url>
         <loc>https://www.tunnelsup.com/subnet-calculator/</loc>
-        <lastmod>2017-03-03T20:28:41-08:00</lastmod>
+        <lastmod>2017-03-17T15:58:17-07:00</lastmod>
         <priority>1</priority>
     </url>
     <url>

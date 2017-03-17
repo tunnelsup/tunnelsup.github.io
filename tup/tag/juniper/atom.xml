@@ -4,7 +4,7 @@
   <title><![CDATA[Category: juniper | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/juniper/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2017-03-03T20:30:53-08:00</updated>
+  <updated>2017-03-17T15:59:19-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,189 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Juniper SRX Configurations for Route Based and Policy Based VPN]]></title>
+    <link href="https://www.tunnelsup.com/juniper-srx-configurations-for-route-based-and-policy-based-vpn/"/>
+    <updated>2017-03-03T20:32:00-08:00</updated>
+    <id>https://www.tunnelsup.com/juniper-srx-configurations-for-route-based-and-policy-based-vpn</id>
+    <content type="html"><![CDATA[<p>There are two types site-to-site of VPNs on a Juniper SRX, policy based and route based. The policy based puts the traffic in a tunnel that is defined by a policy or ACL. The route based will put all traffic in the tunnel that is routed out a specific interface.</p>
+
+<h2>Route Based VPN</h2>
+
+<p>In this configuration example, our peer is <code>22.22.22.22</code>. Both sides of the tunnel must be configured for route based VPN. To do this, we&rsquo;ll create an interface <code>st0</code> and route traffic into that interface. The SRX will tunnel all traffic going into that interface and send it over the VPN.</p>
+
+<p>```</p>
+
+<h1>Create the interface, add it to a zone, and route traffic to it</h1>
+
+<p>set interfaces st0 unit 0 family inet address 192.168.180.1/32
+set security zones security-zone untrust interfaces st0.0 host-inbound-traffic system-services ike
+set routing-options static route 172.16.100.0/24 next-hop st0.0</p>
+
+<h1>Create the IKE proposal</h1>
+
+<p>set security ike propasal IKE-DH2-MD5-3DES authentication-method pre-shared-keys
+set security ike propasal IKE-DH2-MD5-3DES dh-group group2
+set security ike propasal IKE-DH2-MD5-3DES authentication-algorithm md5
+set security ike propasal IKE-DH2-MD5-3DES encryption-algorithm 3des-cbc
+set security ike propasal IKE-DH2-MD5-3DES lifetime-seconds 86400</p>
+
+<h1>Create the IKE policy</h1>
+
+<p>set security ike policy IKE-POLICY-CHI mode main
+set security ike policy IKE-POLICY-CHI proposals IKE-DH2-MD5-3DES
+set security ike policy IKE-POLICY-CHI pre-shared-key ascii-text mysekr3tkey</p>
+
+<h1>Create the IKE gateway</h1>
+
+<p>set security ike gateway IKE-GATEWAY-CHI ike-policy IKE-POLICY
+set security ike gateway IKE-GATEWAY-CHI address 22.22.22.22
+set security ike gateway IKE-GATEWAY-CHI dead-peer-detection interval 20
+set security ike gateway IKE-GATEWAY-CHI dead-peer-detection threshold 5
+set security ike gateway IKE-GATEWAY-CHI external-interface ge-0/0/1.0</p>
+
+<h1>Create the IPSEC proposals</h1>
+
+<p>set security ipsec proposal IPSEC-ESP-MD5-3DES protocol esp
+set security ipsec proposal IPSEC-ESP-MD5-3DES authentication-algorithm hmac-md5-96
+set security ipsec proposal IPSEC-ESP-MD5-3DES encryption-algorithm 3des-cbc
+set security ipsec proposal IPSEC-ESP-MD5-3DES lifetime-seconds 3200</p>
+
+<h1>Create the IPSEC policy</h1>
+
+<p>set security ipsec policy IPSEC-POLICY-CHI perfect-forward-secrecy keys group2
+set security ipsec policy IPSEC-POLICY-CHI proposals IPSEC-ESP-MD5-3DES</p>
+
+<h1>Create the IPSEC VPN (notice the bind-interface st0.0)</h1>
+
+<p>set security ipsec vpn IPSEC-VPN-CHI bind-interface st0.0
+set security ipsec vpn IPSEC-VPN-CHI ike gateway IKE-GATEWAY-CHI
+set security ipsec vpn IPSEC-VPN-CHI ike ipsec-policy IKE-POLICY-CHI
+set security ipsec vpn IPSEC-VPN-CHI establish-tunnels immediately</p>
+
+<h1>If you have a PAT out the gateway interface then you want to exclude the VPN traffic from being NAT&rsquo;d</h1>
+
+<p>set security nat source rule-set NAT-INTERFACE rule NO-NAT match source-address 192.168.11.0/24
+set security nat source rule-set NAT-INTERFACE rule NO-NAT match destination-address 172.16.100.0/24
+set security nat source rule-set NAT-INTERFACE rule NO-NAT then source-nat off
+```</p>
+
+<h2>Policy Based VPN</h2>
+
+<p>In this type of tunnel, we will define the traffic for the tunnel in a policy. Any traffic that matches the policy will attempt to go over the tunnel. We&rsquo;ll build this tunnel to our peer 22.22.22.22. This peer must also be configured for policy based VPN.</p>
+
+<p>```</p>
+
+<h1>Create the IKE proposal</h1>
+
+<p>set security ike proposal IKE-SHA-AES128-DH1 authentication-method pre-shared-keys
+set security ike proposal IKE-SHA-AES128-DH1 dh-group group2
+set security ike proposal IKE-SHA-AES128-DH1 encryption-algorithm aes-128-cbc
+set security ike proposal IKE-SHA-AES128-DH1 authentication algorithm sha1
+set security ike proposal IKE-SHA-AES128-DH1 lifetime-seconds 86400</p>
+
+<h1>Create the IKE policy</h1>
+
+<p>set security ike policy IKE-POLICY-HQ mode main
+set security ike policy IKE-POLICY-HQ proposals IKE-SHA-AES128-DH1
+set security ike policy IKE-POLICY-HQ pre-shared-key ascii-text s3kreTKey</p>
+
+<h1>Create an IKE gateway</h1>
+
+<p>set security ike gateway IKE-GATEWAY-HQ ike-policy IKE-POLICY-HQ
+set security ike gateway IKE-GATEWAY-HQ address 22.22.22.22
+set security ike gateway IKE-GATEWAY-HQ external-interface ge-0/0/0.0</p>
+
+<h1>Create an IPSec proposal/transform set</h1>
+
+<p>set security ipsec proposal IPSEC-SHA-AES128-ESP encryption-algorithm aes-128-cbc
+set security ipsec proposal IPSEC-SHA-AES128-ESP authentication-algorithm hmac-sha1-96
+set security ipsec proposal IPSEC-SHA-AES128-ESP protocol esp
+set security ipsec proposal IPSEC-SHA-AES128-ESP lifetime-seconds 3600</p>
+
+<h1>Create a IPSec policy</h1>
+
+<p>set security ipsec policy VPN-POLICY-HQ proposals IPSEC-SHA-AES128-ESP</p>
+
+<h1>Create the IPSec VPN</h1>
+
+<p>set security ipsec vpn VPN-HQ ike gateway IKE-GATEWAY-HQ
+set security ipsec vpn VPN-HQ ike ipsec-policy VPN-POLICY-HQ</p>
+
+<h1>Add some networks into the address book</h1>
+
+<p>set security zones security-zone OUTSIDE address-book address NET-REMOTE-VPN 172.16.22.0/24
+set security zones security-zone INSIDE address-book address NET-LOCAL 192.168.11.0/24</p>
+
+<h1>Create the policies to define the interesting traffic</h1>
+
+<p>set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match source-address NET-LOCAL
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match destination-address NET-REMOTE-VPN
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match application any
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT then permit tunnel ipsec-vpn VPN-HQ
+set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT then permit tunnel pair-policy VPN-POLICY-HQ-IN</p>
+
+<p>set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match source-address NET-REMOTE-VPN
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match destination-address NET-LOCAL
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match application any
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN then permit tunnel ipsec-vpn VPN-HQ
+set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN then permit tunnel pair-policy VPN-POLICY-HQ-OUT</p>
+
+<h1>If you have a PAT out the gateway interface then you want to exclude the VPN traffic from being NAT&rsquo;d</h1>
+
+<p>set security nat source rule-set NAT-INTERFACE rule NO-NAT match source-address 192.168.11.0/24
+set security nat source rule-set NAT-INTERFACE rule NO-NAT match destination-address 172.16.22.0/24
+set security nat source rule-set NAT-INTERFACE rule NO-NAT then source-nat off</p>
+
+<h1>My config already had a rule in the rule-set. So I had to move the new rule above the old rule so it processes the no nat first.</h1>
+
+<p>insert source rule-set NAT-INTERFACE rule NO-NAT before rule RULE-NAME
+```</p>
+
+<h3>Troubleshooting</h3>
+
+<p>Enable additional logging to see possibly why a VPN isn&rsquo;t forming:</p>
+
+<p><code>
+set system syslog file kmd-logs daemon info
+set system syslog file kmd-logs match KMD
+</code></p>
+
+<p>Then do <code>show log kdm-logs</code> and you may be able to see at what part the tunnel is failing at.</p>
+
+<p><strong>Traceoptions</strong> is like Cisco&rsquo;s debug commands. You can enable this to see even more logs.</p>
+
+<p>IKE Traceoptions</p>
+
+<p><code>
+set security ike traceoptions flags ike
+set security ike traceoptions file vpn-ike
+</code></p>
+
+<p>Now do <code>show log vpn-ike</code> to see more information on the entire IKE process.</p>
+
+<p>Show commands:</p>
+
+<p><code>show security ike associations</code></p>
+
+<p><code>show security ipsec statistics</code></p>
+
+<h3>Additional Resources</h3>
+
+<p>Troubleshoot a VPN tunnel that is down with this guide:</p>
+
+<p><a href="https://kb.juniper.net/InfoCenter/index?page=content&amp;id=KB10100&amp;actp=search">https://kb.juniper.net/InfoCenter/index?page=content&amp;id=KB10100&amp;actp=search</a></p>
+
+<p>Here is a link to help you build the VPN configuration:</p>
+
+<p><a href="https://www.juniper.net/customers/support/configtools/vpnconfig.html">https://www.juniper.net/customers/support/configtools/vpnconfig.html</a></p>
+
+<p>Reference guide for policy based VPNs:</p>
+
+<p><a href="http://www.juniper.net/techpubs/en_US/junos/topics/example/policy-based-vpn-using-j-series-srx-series-device-configuring.html">http://www.juniper.net/techpubs/en_US/junos/topics/example/policy-based-vpn-using-j-series-srx-series-device-configuring.html</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Juniper SRX - ALG and Screen Options]]></title>
@@ -456,140 +639,6 @@ show chassis craft-interface
 </code></p>
 
 <p>Some models of Juniper SRX have a craft interface. This command will show you the LED status of the front panel.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Juniper Netscreen troubleshooting NSRP and HA]]></title>
-    <link href="https://www.tunnelsup.com/juniper-netscreen-troubleshooting-nsrp-and-ha/"/>
-    <updated>2014-08-26T15:47:00-07:00</updated>
-    <id>https://www.tunnelsup.com/juniper-netscreen-troubleshooting-nsrp-and-ha</id>
-    <content type="html"><![CDATA[<p>Some basic commands to help troubleshoot NSRP (failover/high availability) with Juniper Netscreen SSG devices.</p>
-
-<h3>Review the NSRP configuration</h3>
-
-<p>Here is a config pull from a working HA firewall config.</p>
-
-<p><code>
-netscreen:netscreen-cluster-pri(M)-&gt; get config | i nsrp
-set nsrp cluster id 1
-set nsrp cluster name netscreen-cluster
-set nsrp rto-mirror sync
-set nsrp rto-mirror route
-set nsrp vsd-group id 0 priority 1
-set nsrp vsd-group id 0 preempt
-set nsrp vsd-group id 0 preempt hold-down 20
-set nsrp secondary-path ethernet0/1
-set nsrp monitor interface ethernet0/0
-set nsrp monitor interface ethernet0/1
-set nsrp monitor interface ethernet2/6
-set nsrp monitor interface ethernet2/5
-set nsrp monitor interface ethernet2/4
-set nsrp monitor interface ethernet2/0
-set nsrp monitor interface ethernet2/1
-</code></p>
-
-<h3>Examine the current NSRP state</h3>
-
-<p>Some commands to examine the state of the situation</p>
-
-<p>```
-netscreen:netscreen-pri(M)&ndash;> get nsrp vsd-group all</p>
-
-<p>VSD group info:
-init hold time: 8
-heartbeat lost threshold: 3
-heartbeat interval: 1000(ms)
-master always exist: disabled
-group priority preempt holddown inelig   master       PB other members</p>
-
-<pre><code>0        1 yes           20 no       myself 13691648
-</code></pre>
-
-<p>total number of vsd groups: 1
-Total iteration=16523170,time=603985353,max=119017,min=2779,average=36</p>
-
-<p>vsd group id: 0, member count: 2, master: 13690368</p>
-
-<h2>member information:</h2>
-
-<h2>group  unit_id  state          prio flag rto_peer   hb miss holddown</h2>
-
-<pre><code>0 13691648  primary backup  100    0        0    1    0        3
-0 13690368  master            1    2        0    0    0       20
-</code></pre>
-
-<p>```</p>
-
-<p>Some interesting things to get out of this command:</p>
-
-<p><code>master = myself</code> This is good to know who the current active or master firewall is.</p>
-
-<p><code>member count = 2</code> If this is 2 it means there is another firewall joined to this VSD group.</p>
-
-<p>Another command is simply <code>get nsrp</code>. This will show the <em>which is the HA interface</em>, as well as other information.</p>
-
-<h3>Determine the last time a failover occurred</h3>
-
-<p>The only way to do this is to check the logs.</p>
-
-<p><code>
-netscreen:netscreen-pri(M)-&gt; get event | incl nsrp
-2014-08-25 14:03:39 system crit  00015 NSRP: HA control channel change to
-2014-08-25 14:03:27 system crit  00015 NSRP: HA control channel change to
-2014-08-25 14:01:44 system crit  00015 NSRP: HA control channel change to
-2014-08-25 14:00:53 system crit  00015 NSRP: HA control channel change to
-</code></p>
-
-<p>This only tells half the story. From here we can see that the syslog type is 00015. Let&rsquo;s take a look at the logs filtering on that log type only:</p>
-
-<p>```
-netscreen:netscreen-pri(M)&ndash;> get event type 00015
-get event type 00015
-Date       Time     Module Level  Type Description
-2014-08-25 14:03:39 system crit  00015 NSRP: HA control channel change to</p>
-
-<pre><code>                                   ethernet2.
-</code></pre>
-
-<p>2014-08-25 14:03:27 system crit  00015 NSRP: HA control channel change to</p>
-
-<pre><code>                                   NULL.(disconnected).
-</code></pre>
-
-<p>2014-08-25 14:01:44 system crit  00015 NSRP: HA control channel change to</p>
-
-<pre><code>                                   ethernet2.
-</code></pre>
-
-<p>2014-08-25 14:00:53 system crit  00015 NSRP: HA control channel change to</p>
-
-<pre><code>                                   NULL.(disconnected).
-</code></pre>
-
-<p>2014-08-25 14:00:49 system crit  00015 NSRP: HA control channel change to</p>
-
-<pre><code>                                   ethernet2.
-</code></pre>
-
-<p>2014-08-25 14:00:41 system crit  00015 NSRP: HA control channel change to</p>
-
-<pre><code>                                   NULL.(disconnected).
-</code></pre>
-
-<p>```</p>
-
-<h3>Initiate a manual failover</h3>
-
-<p>Here is the command to conduct a failover. Execute this from the primary firewall:</p>
-
-<p><code>exec nsrp vsd-group 0 mode backup</code></p>
-
-<h3>Additional problems</h3>
-
-<p>From the primary firewall there is not a way to see what the IP is of the backup firewall. The primary firewall will utilize the IP addresses in the config. The one exception to this is the management IP. This is configured seperately on each firewall in the cluster.</p>
-
-<p>There is not a way to view the logs in the backup device from the primary.</p>
 ]]></content>
   </entry>
   

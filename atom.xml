@@ -4,7 +4,7 @@
   <title><![CDATA[TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2017-03-03T20:30:53-08:00</updated>
+  <updated>2017-03-17T15:59:19-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,165 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Juniper SRX Configurations for Route Based and Policy Based VPN]]></title>
+    <link href="https://www.tunnelsup.com/juniper-srx-configurations-for-route-based-and-policy-based-vpn/"/>
+    <updated>2017-03-03T20:32:00-08:00</updated>
+    <id>https://www.tunnelsup.com/juniper-srx-configurations-for-route-based-and-policy-based-vpn</id>
+    <content type="html"><![CDATA[<p>There are two types site-to-site of VPNs on a Juniper SRX, policy based and route based. The policy based puts the traffic in a tunnel that is defined by a policy or ACL. The route based will put all traffic in the tunnel that is routed out a specific interface.</p>
+
+<h2>Route Based VPN</h2>
+
+<p>In this configuration example, our peer is <code>22.22.22.22</code>. Both sides of the tunnel must be configured for route based VPN. To do this, we&rsquo;ll create an interface <code>st0</code> and route traffic into that interface. The SRX will tunnel all traffic going into that interface and send it over the VPN.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'># Create the interface, add it to a zone, and route traffic to it
+</span><span class='line'>set interfaces st0 unit 0 family inet address 192.168.180.1/32
+</span><span class='line'>set security zones security-zone untrust interfaces st0.0 host-inbound-traffic system-services ike
+</span><span class='line'>set routing-options static route 172.16.100.0/24 next-hop st0.0
+</span><span class='line'>
+</span><span class='line'># Create the IKE proposal
+</span><span class='line'>set security ike propasal IKE-DH2-MD5-3DES authentication-method pre-shared-keys
+</span><span class='line'>set security ike propasal IKE-DH2-MD5-3DES dh-group group2
+</span><span class='line'>set security ike propasal IKE-DH2-MD5-3DES authentication-algorithm md5
+</span><span class='line'>set security ike propasal IKE-DH2-MD5-3DES encryption-algorithm 3des-cbc
+</span><span class='line'>set security ike propasal IKE-DH2-MD5-3DES lifetime-seconds 86400
+</span><span class='line'>
+</span><span class='line'># Create the IKE policy
+</span><span class='line'>set security ike policy IKE-POLICY-CHI mode main
+</span><span class='line'>set security ike policy IKE-POLICY-CHI proposals IKE-DH2-MD5-3DES
+</span><span class='line'>set security ike policy IKE-POLICY-CHI pre-shared-key ascii-text mysekr3tkey
+</span><span class='line'>
+</span><span class='line'># Create the IKE gateway
+</span><span class='line'>set security ike gateway IKE-GATEWAY-CHI ike-policy IKE-POLICY
+</span><span class='line'>set security ike gateway IKE-GATEWAY-CHI address 22.22.22.22
+</span><span class='line'>set security ike gateway IKE-GATEWAY-CHI dead-peer-detection interval 20
+</span><span class='line'>set security ike gateway IKE-GATEWAY-CHI dead-peer-detection threshold 5
+</span><span class='line'>set security ike gateway IKE-GATEWAY-CHI external-interface ge-0/0/1.0
+</span><span class='line'>
+</span><span class='line'># Create the IPSEC proposals
+</span><span class='line'>set security ipsec proposal IPSEC-ESP-MD5-3DES protocol esp
+</span><span class='line'>set security ipsec proposal IPSEC-ESP-MD5-3DES authentication-algorithm hmac-md5-96
+</span><span class='line'>set security ipsec proposal IPSEC-ESP-MD5-3DES encryption-algorithm 3des-cbc
+</span><span class='line'>set security ipsec proposal IPSEC-ESP-MD5-3DES lifetime-seconds 3200
+</span><span class='line'>
+</span><span class='line'># Create the IPSEC policy
+</span><span class='line'>set security ipsec policy IPSEC-POLICY-CHI perfect-forward-secrecy keys group2
+</span><span class='line'>set security ipsec policy IPSEC-POLICY-CHI proposals IPSEC-ESP-MD5-3DES
+</span><span class='line'>
+</span><span class='line'># Create the IPSEC VPN (notice the bind-interface st0.0)
+</span><span class='line'>set security ipsec vpn IPSEC-VPN-CHI bind-interface st0.0
+</span><span class='line'>set security ipsec vpn IPSEC-VPN-CHI ike gateway IKE-GATEWAY-CHI
+</span><span class='line'>set security ipsec vpn IPSEC-VPN-CHI ike ipsec-policy IKE-POLICY-CHI
+</span><span class='line'>set security ipsec vpn IPSEC-VPN-CHI establish-tunnels immediately
+</span><span class='line'>
+</span><span class='line'># If you have a PAT out the gateway interface then you want to exclude the VPN traffic from being NAT'd
+</span><span class='line'>set security nat source rule-set NAT-INTERFACE rule NO-NAT match source-address 192.168.11.0/24
+</span><span class='line'>set security nat source rule-set NAT-INTERFACE rule NO-NAT match destination-address 172.16.100.0/24
+</span><span class='line'>set security nat source rule-set NAT-INTERFACE rule NO-NAT then source-nat off</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Policy Based VPN</h2>
+
+<p>In this type of tunnel, we will define the traffic for the tunnel in a policy. Any traffic that matches the policy will attempt to go over the tunnel. We&rsquo;ll build this tunnel to our peer 22.22.22.22. This peer must also be configured for policy based VPN.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'># Create the IKE proposal
+</span><span class='line'>set security ike proposal IKE-SHA-AES128-DH1 authentication-method pre-shared-keys
+</span><span class='line'>set security ike proposal IKE-SHA-AES128-DH1 dh-group group2
+</span><span class='line'>set security ike proposal IKE-SHA-AES128-DH1 encryption-algorithm aes-128-cbc
+</span><span class='line'>set security ike proposal IKE-SHA-AES128-DH1 authentication algorithm sha1
+</span><span class='line'>set security ike proposal IKE-SHA-AES128-DH1 lifetime-seconds 86400
+</span><span class='line'>
+</span><span class='line'># Create the IKE policy
+</span><span class='line'>set security ike policy IKE-POLICY-HQ mode main
+</span><span class='line'>set security ike policy IKE-POLICY-HQ proposals IKE-SHA-AES128-DH1
+</span><span class='line'>set security ike policy IKE-POLICY-HQ pre-shared-key ascii-text s3kreTKey
+</span><span class='line'>
+</span><span class='line'># Create an IKE gateway
+</span><span class='line'>set security ike gateway IKE-GATEWAY-HQ ike-policy IKE-POLICY-HQ
+</span><span class='line'>set security ike gateway IKE-GATEWAY-HQ address 22.22.22.22
+</span><span class='line'>set security ike gateway IKE-GATEWAY-HQ external-interface ge-0/0/0.0
+</span><span class='line'>
+</span><span class='line'># Create an IPSec proposal/transform set
+</span><span class='line'>set security ipsec proposal IPSEC-SHA-AES128-ESP encryption-algorithm aes-128-cbc
+</span><span class='line'>set security ipsec proposal IPSEC-SHA-AES128-ESP authentication-algorithm hmac-sha1-96
+</span><span class='line'>set security ipsec proposal IPSEC-SHA-AES128-ESP protocol esp
+</span><span class='line'>set security ipsec proposal IPSEC-SHA-AES128-ESP lifetime-seconds 3600
+</span><span class='line'>
+</span><span class='line'># Create a IPSec policy
+</span><span class='line'>set security ipsec policy VPN-POLICY-HQ proposals IPSEC-SHA-AES128-ESP
+</span><span class='line'>
+</span><span class='line'># Create the IPSec VPN
+</span><span class='line'>set security ipsec vpn VPN-HQ ike gateway IKE-GATEWAY-HQ
+</span><span class='line'>set security ipsec vpn VPN-HQ ike ipsec-policy VPN-POLICY-HQ
+</span><span class='line'>
+</span><span class='line'># Add some networks into the address book
+</span><span class='line'>set security zones security-zone OUTSIDE address-book address NET-REMOTE-VPN 172.16.22.0/24
+</span><span class='line'>set security zones security-zone INSIDE address-book address NET-LOCAL 192.168.11.0/24
+</span><span class='line'>
+</span><span class='line'># Create the policies to define the interesting traffic
+</span><span class='line'>set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match source-address NET-LOCAL
+</span><span class='line'>set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match destination-address NET-REMOTE-VPN
+</span><span class='line'>set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match application any
+</span><span class='line'>set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT then permit tunnel ipsec-vpn VPN-HQ
+</span><span class='line'>set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT then permit tunnel pair-policy VPN-POLICY-HQ-IN
+</span><span class='line'>
+</span><span class='line'>set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match source-address NET-REMOTE-VPN
+</span><span class='line'>set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match destination-address NET-LOCAL
+</span><span class='line'>set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match application any
+</span><span class='line'>set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN then permit tunnel ipsec-vpn VPN-HQ
+</span><span class='line'>set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN then permit tunnel pair-policy VPN-POLICY-HQ-OUT
+</span><span class='line'>
+</span><span class='line'># If you have a PAT out the gateway interface then you want to exclude the VPN traffic from being NAT'd
+</span><span class='line'>set security nat source rule-set NAT-INTERFACE rule NO-NAT match source-address 192.168.11.0/24
+</span><span class='line'>set security nat source rule-set NAT-INTERFACE rule NO-NAT match destination-address 172.16.22.0/24
+</span><span class='line'>set security nat source rule-set NAT-INTERFACE rule NO-NAT then source-nat off
+</span><span class='line'>
+</span><span class='line'># My config already had a rule in the rule-set. So I had to move the new rule above the old rule so it processes the no nat first.
+</span><span class='line'>insert source rule-set NAT-INTERFACE rule NO-NAT before rule RULE-NAME</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Troubleshooting</h3>
+
+<p>Enable additional logging to see possibly why a VPN isn&rsquo;t forming:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>set system syslog file kmd-logs daemon info
+</span><span class='line'>set system syslog file kmd-logs match KMD</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then do <code>show log kdm-logs</code> and you may be able to see at what part the tunnel is failing at.</p>
+
+<p><strong>Traceoptions</strong> is like Cisco&rsquo;s debug commands. You can enable this to see even more logs.</p>
+
+<p>IKE Traceoptions</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>set security ike traceoptions flags ike
+</span><span class='line'>set security ike traceoptions file vpn-ike</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now do <code>show log vpn-ike</code> to see more information on the entire IKE process.</p>
+
+<p>Show commands:</p>
+
+<p><code>show security ike associations</code></p>
+
+<p><code>show security ipsec statistics</code></p>
+
+<h3>Additional Resources</h3>
+
+<p>Troubleshoot a VPN tunnel that is down with this guide:</p>
+
+<p><a href="https://kb.juniper.net/InfoCenter/index?page=content&amp;id=KB10100&amp;actp=search">https://kb.juniper.net/InfoCenter/index?page=content&amp;id=KB10100&amp;actp=search</a></p>
+
+<p>Here is a link to help you build the VPN configuration:</p>
+
+<p><a href="https://www.juniper.net/customers/support/configtools/vpnconfig.html">https://www.juniper.net/customers/support/configtools/vpnconfig.html</a></p>
+
+<p>Reference guide for policy based VPNs:</p>
+
+<p><a href="http://www.juniper.net/techpubs/en_US/junos/topics/example/policy-based-vpn-using-j-series-srx-series-device-configuring.html">http://www.juniper.net/techpubs/en_US/junos/topics/example/policy-based-vpn-using-j-series-srx-series-device-configuring.html</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Juniper SRX - ALG and Screen Options]]></title>
@@ -1207,50 +1366,6 @@ jacks0n <br></p></blockquote>
 <figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>snmpwalk -v 2c -c publicstring 192.168.1.1 mib-2.47.1.1.1.1.5.7</span></code></pre></td></tr></table></div></figure>
 
 
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to show and clear user sessions on a Cisco ASA]]></title>
-    <link href="https://www.tunnelsup.com/how-to-show-and-clear-user-sessions-on-a-cisco-asa/"/>
-    <updated>2016-06-18T16:36:00-07:00</updated>
-    <id>https://www.tunnelsup.com/how-to-show-and-clear-user-sessions-on-a-cisco-asa</id>
-    <content type="html"><![CDATA[<p>Sometimes you need to disconnect someone&rsquo;s ssh session to a Cisco ASA. This may be needed because users haven&rsquo;t logged out properly and have taken up all the sessions allowed.</p>
-
-<h2>Check Usage Limits</h2>
-
-<p>You can check usage limits by seeing how many sessions the ASA <em>thinks</em> are connected.</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>FWL1# show resource usage resource ssh
-</span><span class='line'>Resource                 Current        Peak      Limit        Denied Context
-</span><span class='line'>SSH Server                     5           5          5           109 System</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In this case the ASA can only connect 5 years and it thinks there are 5 sessions open and therefore it cannot connect any more.</p>
-
-<p>There&rsquo;s a bug that doesn&rsquo;t properly release sessions from the ASA. <a href="https://bst.cloudapps.cisco.com/bugsearch/bug/CSCsm68097">https://bst.cloudapps.cisco.com/bugsearch/bug/CSCsm68097</a></p>
-
-<h2>Show current ssh sessions</h2>
-
-<p>To display all ssh sessions connected run this command.</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>FWL1# show ssh sessions                        
-</span><span class='line'>SID Client IP       Version Mode Encryption Hmac     State            Username
-</span><span class='line'>0   10.1.1.21       2.0     IN   aes128-ctr sha1     SessionStarted   james
-</span><span class='line'>                            OUT  aes128-ctr sha1     SessionStarted   james
-</span><span class='line'>2   10.1.1.22       2.0     IN   aes128-ctr sha1     SessionStarted   frank
-</span><span class='line'>                            OUT  aes128-ctr sha1     SessionStarted   frank
-</span><span class='line'>3   10.1.1.20       2.0     IN   aes128-ctr sha1     SessionStarted   henry
-</span><span class='line'>                            OUT  aes128-ctr sha1     SessionStarted   henry
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Disconnect user</h2>
-
-<p>If you want to disconnect user henry, find the SID and use this command:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>FWL1# ssh disconnect 3</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>

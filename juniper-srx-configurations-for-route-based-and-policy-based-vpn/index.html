@@ -1,0 +1,471 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+
+  
+    <title>Juniper SRX Configurations for Route Based and Policy Based VPN - TunnelsUP</title>
+  
+  <!-- <meta name="author" content="Jack"> -->
+
+  
+  <meta name="description" content="There are two types site-to-site of VPNs on a Juniper SRX, policy based and route based. The policy based puts the traffic in a tunnel that is &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="https://www.tunnelsup.com/juniper-srx-configurations-for-route-based-and-policy-based-vpn">
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="TunnelsUP" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"> -->
+<!-- <link href="/stylesheets/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"> -->
+
+
+
+
+
+
+
+
+
+</head>
+
+<body   >
+  <header role="banner" id="logoblock"><a href="/"><span id="title"><span id="title_tunnel">Tunnels</span><span id="title_up">UP</span><span id="title_com">.com</span></span></a>
+<!-- <a href="/"><img class="flex-content" src="/images/tunnelsuplogo.png" alt="TunnelsUp.com" width="527" height="73"></a> -->
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><i class="icon-search"></i></li>
+  
+</ul>
+  
+<form name="search" id="searchform" action="/search/index.html" method="GET">
+  <fieldset role="search">
+    <input type="text" id="st-search-input" name="stq" class="search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/kb.html">Articles</a></li>
+  <li><a href="/tools">Tools</a></li>
+  <li><a href="/cheatsheets">Cheat Sheets</a></li>
+  <li><a href="/video">Videos</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content"> 
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Juniper SRX Configurations for Route Based and Policy Based VPN</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2017-03-03T20:32:00-08:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2017</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>There are two types site-to-site of VPNs on a Juniper SRX, policy based and route based. The policy based puts the traffic in a tunnel that is defined by a policy or ACL. The route based will put all traffic in the tunnel that is routed out a specific interface.</p>
+
+<h2>Route Based VPN</h2>
+
+<p>In this configuration example, our peer is <code>22.22.22.22</code>. Both sides of the tunnel must be configured for route based VPN. To do this, we&rsquo;ll create an interface <code>st0</code> and route traffic into that interface. The SRX will tunnel all traffic going into that interface and send it over the VPN.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'># Create the interface, add it to a zone, and route traffic to it
+</span><span class='line'>set interfaces st0 unit 0 family inet address 192.168.180.1/32
+</span><span class='line'>set security zones security-zone untrust interfaces st0.0 host-inbound-traffic system-services ike
+</span><span class='line'>set routing-options static route 172.16.100.0/24 next-hop st0.0
+</span><span class='line'>
+</span><span class='line'># Create the IKE proposal
+</span><span class='line'>set security ike propasal IKE-DH2-MD5-3DES authentication-method pre-shared-keys
+</span><span class='line'>set security ike propasal IKE-DH2-MD5-3DES dh-group group2
+</span><span class='line'>set security ike propasal IKE-DH2-MD5-3DES authentication-algorithm md5
+</span><span class='line'>set security ike propasal IKE-DH2-MD5-3DES encryption-algorithm 3des-cbc
+</span><span class='line'>set security ike propasal IKE-DH2-MD5-3DES lifetime-seconds 86400
+</span><span class='line'>
+</span><span class='line'># Create the IKE policy
+</span><span class='line'>set security ike policy IKE-POLICY-CHI mode main
+</span><span class='line'>set security ike policy IKE-POLICY-CHI proposals IKE-DH2-MD5-3DES
+</span><span class='line'>set security ike policy IKE-POLICY-CHI pre-shared-key ascii-text mysekr3tkey
+</span><span class='line'>
+</span><span class='line'># Create the IKE gateway
+</span><span class='line'>set security ike gateway IKE-GATEWAY-CHI ike-policy IKE-POLICY
+</span><span class='line'>set security ike gateway IKE-GATEWAY-CHI address 22.22.22.22
+</span><span class='line'>set security ike gateway IKE-GATEWAY-CHI dead-peer-detection interval 20
+</span><span class='line'>set security ike gateway IKE-GATEWAY-CHI dead-peer-detection threshold 5
+</span><span class='line'>set security ike gateway IKE-GATEWAY-CHI external-interface ge-0/0/1.0
+</span><span class='line'>
+</span><span class='line'># Create the IPSEC proposals
+</span><span class='line'>set security ipsec proposal IPSEC-ESP-MD5-3DES protocol esp
+</span><span class='line'>set security ipsec proposal IPSEC-ESP-MD5-3DES authentication-algorithm hmac-md5-96
+</span><span class='line'>set security ipsec proposal IPSEC-ESP-MD5-3DES encryption-algorithm 3des-cbc
+</span><span class='line'>set security ipsec proposal IPSEC-ESP-MD5-3DES lifetime-seconds 3200
+</span><span class='line'>
+</span><span class='line'># Create the IPSEC policy
+</span><span class='line'>set security ipsec policy IPSEC-POLICY-CHI perfect-forward-secrecy keys group2
+</span><span class='line'>set security ipsec policy IPSEC-POLICY-CHI proposals IPSEC-ESP-MD5-3DES
+</span><span class='line'>
+</span><span class='line'># Create the IPSEC VPN (notice the bind-interface st0.0)
+</span><span class='line'>set security ipsec vpn IPSEC-VPN-CHI bind-interface st0.0
+</span><span class='line'>set security ipsec vpn IPSEC-VPN-CHI ike gateway IKE-GATEWAY-CHI
+</span><span class='line'>set security ipsec vpn IPSEC-VPN-CHI ike ipsec-policy IKE-POLICY-CHI
+</span><span class='line'>set security ipsec vpn IPSEC-VPN-CHI establish-tunnels immediately
+</span><span class='line'>
+</span><span class='line'># If you have a PAT out the gateway interface then you want to exclude the VPN traffic from being NAT'd
+</span><span class='line'>set security nat source rule-set NAT-INTERFACE rule NO-NAT match source-address 192.168.11.0/24
+</span><span class='line'>set security nat source rule-set NAT-INTERFACE rule NO-NAT match destination-address 172.16.100.0/24
+</span><span class='line'>set security nat source rule-set NAT-INTERFACE rule NO-NAT then source-nat off</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Policy Based VPN</h2>
+
+<p>In this type of tunnel, we will define the traffic for the tunnel in a policy. Any traffic that matches the policy will attempt to go over the tunnel. We&rsquo;ll build this tunnel to our peer 22.22.22.22. This peer must also be configured for policy based VPN.</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'># Create the IKE proposal
+</span><span class='line'>set security ike proposal IKE-SHA-AES128-DH1 authentication-method pre-shared-keys
+</span><span class='line'>set security ike proposal IKE-SHA-AES128-DH1 dh-group group2
+</span><span class='line'>set security ike proposal IKE-SHA-AES128-DH1 encryption-algorithm aes-128-cbc
+</span><span class='line'>set security ike proposal IKE-SHA-AES128-DH1 authentication algorithm sha1
+</span><span class='line'>set security ike proposal IKE-SHA-AES128-DH1 lifetime-seconds 86400
+</span><span class='line'>
+</span><span class='line'># Create the IKE policy
+</span><span class='line'>set security ike policy IKE-POLICY-HQ mode main
+</span><span class='line'>set security ike policy IKE-POLICY-HQ proposals IKE-SHA-AES128-DH1
+</span><span class='line'>set security ike policy IKE-POLICY-HQ pre-shared-key ascii-text s3kreTKey
+</span><span class='line'>
+</span><span class='line'># Create an IKE gateway
+</span><span class='line'>set security ike gateway IKE-GATEWAY-HQ ike-policy IKE-POLICY-HQ
+</span><span class='line'>set security ike gateway IKE-GATEWAY-HQ address 22.22.22.22
+</span><span class='line'>set security ike gateway IKE-GATEWAY-HQ external-interface ge-0/0/0.0
+</span><span class='line'>
+</span><span class='line'># Create an IPSec proposal/transform set
+</span><span class='line'>set security ipsec proposal IPSEC-SHA-AES128-ESP encryption-algorithm aes-128-cbc
+</span><span class='line'>set security ipsec proposal IPSEC-SHA-AES128-ESP authentication-algorithm hmac-sha1-96
+</span><span class='line'>set security ipsec proposal IPSEC-SHA-AES128-ESP protocol esp
+</span><span class='line'>set security ipsec proposal IPSEC-SHA-AES128-ESP lifetime-seconds 3600
+</span><span class='line'>
+</span><span class='line'># Create a IPSec policy
+</span><span class='line'>set security ipsec policy VPN-POLICY-HQ proposals IPSEC-SHA-AES128-ESP
+</span><span class='line'>
+</span><span class='line'># Create the IPSec VPN
+</span><span class='line'>set security ipsec vpn VPN-HQ ike gateway IKE-GATEWAY-HQ
+</span><span class='line'>set security ipsec vpn VPN-HQ ike ipsec-policy VPN-POLICY-HQ
+</span><span class='line'>
+</span><span class='line'># Add some networks into the address book
+</span><span class='line'>set security zones security-zone OUTSIDE address-book address NET-REMOTE-VPN 172.16.22.0/24
+</span><span class='line'>set security zones security-zone INSIDE address-book address NET-LOCAL 192.168.11.0/24
+</span><span class='line'>
+</span><span class='line'># Create the policies to define the interesting traffic
+</span><span class='line'>set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match source-address NET-LOCAL
+</span><span class='line'>set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match destination-address NET-REMOTE-VPN
+</span><span class='line'>set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT match application any
+</span><span class='line'>set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT then permit tunnel ipsec-vpn VPN-HQ
+</span><span class='line'>set security policies from-zone INSIDE to-zone OUTSIDE policy VPN-POLICY-HQ-OUT then permit tunnel pair-policy VPN-POLICY-HQ-IN
+</span><span class='line'>
+</span><span class='line'>set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match source-address NET-REMOTE-VPN
+</span><span class='line'>set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match destination-address NET-LOCAL
+</span><span class='line'>set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN match application any
+</span><span class='line'>set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN then permit tunnel ipsec-vpn VPN-HQ
+</span><span class='line'>set security policies from-zone OUTSIDE to-zone INSIDE policy VPN-POLICY-HQ-IN then permit tunnel pair-policy VPN-POLICY-HQ-OUT
+</span><span class='line'>
+</span><span class='line'># If you have a PAT out the gateway interface then you want to exclude the VPN traffic from being NAT'd
+</span><span class='line'>set security nat source rule-set NAT-INTERFACE rule NO-NAT match source-address 192.168.11.0/24
+</span><span class='line'>set security nat source rule-set NAT-INTERFACE rule NO-NAT match destination-address 172.16.22.0/24
+</span><span class='line'>set security nat source rule-set NAT-INTERFACE rule NO-NAT then source-nat off
+</span><span class='line'>
+</span><span class='line'># My config already had a rule in the rule-set. So I had to move the new rule above the old rule so it processes the no nat first.
+</span><span class='line'>insert source rule-set NAT-INTERFACE rule NO-NAT before rule RULE-NAME</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Troubleshooting</h3>
+
+<p>Enable additional logging to see possibly why a VPN isn&rsquo;t forming:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>set system syslog file kmd-logs daemon info
+</span><span class='line'>set system syslog file kmd-logs match KMD</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then do <code>show log kdm-logs</code> and you may be able to see at what part the tunnel is failing at.</p>
+
+<p><strong>Traceoptions</strong> is like Cisco&rsquo;s debug commands. You can enable this to see even more logs.</p>
+
+<p>IKE Traceoptions</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>set security ike traceoptions flags ike
+</span><span class='line'>set security ike traceoptions file vpn-ike</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now do <code>show log vpn-ike</code> to see more information on the entire IKE process.</p>
+
+<p>Show commands:</p>
+
+<p><code>show security ike associations</code></p>
+
+<p><code>show security ipsec statistics</code></p>
+
+<h3>Additional Resources</h3>
+
+<p>Troubleshoot a VPN tunnel that is down with this guide:</p>
+
+<p><a href="https://kb.juniper.net/InfoCenter/index?page=content&amp;id=KB10100&amp;actp=search">https://kb.juniper.net/InfoCenter/index?page=content&amp;id=KB10100&amp;actp=search</a></p>
+
+<p>Here is a link to help you build the VPN configuration:</p>
+
+<p><a href="https://www.juniper.net/customers/support/configtools/vpnconfig.html">https://www.juniper.net/customers/support/configtools/vpnconfig.html</a></p>
+
+<p>Reference guide for policy based VPNs:</p>
+
+<p><a href="http://www.juniper.net/techpubs/en_US/junos/topics/example/policy-based-vpn-using-j-series-srx-series-device-configuring.html">http://www.juniper.net/techpubs/en_US/junos/topics/example/policy-based-vpn-using-j-series-srx-series-device-configuring.html</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jack</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2017-03-03T20:32:00-08:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2017</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/tup/tag/juniper/'>juniper</a>, <a class='category' href='/tup/tag/junos/'>junos</a>, <a class='category' href='/tup/tag/srx/'>srx</a>, <a class='category' href='/tup/tag/vpn/'>vpn</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://www.tunnelsup.com/juniper-srx-configurations-for-route-based-and-policy-based-vpn/" data-via="tunnelsup" data-counturl="https://www.tunnelsup.com/juniper-srx-configurations-for-route-based-and-policy-based-vpn/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - Leaderboard Footer */
+google_ad_slot = "4691437304";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+  </footer>
+</article>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </div>
+
+</div>
+
+<aside class="sidebar">
+  
+    <div class="asidesection">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-3148884705608664";
+/* TunnelsUp - sidebar Square */
+google_ad_slot = "7251074508";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div><div class="asidesection">
+<h3>Featured Tool</h3>
+<a href="/subnet-calculator">Subnet Calculator</a><br>
+This subnet calculator is the most simple and user friendly one out there. Give it a try. It might become your favorite. 
+</div>
+<div class="asidesection">
+<h3>Password Generator</h3>
+<img class="left" src="/images/passwordwolf.png" width="50" title="PasswordWolf" alt="PasswordWolf">
+PasswordWolf.com is a fantastic <a href="https://passwordwolf.com/">random password generator.</a> Try it today!
+</div><div class="asidesection">
+ <h3>Support this blog!</h3>
+ <p><a href="/donate.html"><img style="border:0px" src="/images/paypaldonatebutton.gif" alt="donate"></a></p>
+</div><div class="asidesection">
+<h3>Popular Links</h3>
+  <ul id="recent_posts">
+      <li class="post"><a href="/how-to-take-a-screenshot-on-mac-osx/">How to Take a Screenshot Mac OSX</a></li>
+      <li class="post"><a href="/what-is-ping/">What is a Ping?</a></li>
+      <li class="post"><a href="/what-is-a-vpn/">What is a VPN?</a></li>
+      <li class="post"><a href="/what-is-a-firewall/">What is a Firewall?</a></li>
+      <li class="post"><a href="/jquery-checkbox-checked-reading-and-setting/">jQuery Checkbox Checked</a></li>
+  </ul>
+</div>
+<section class="twitterOct">
+	<br>
+  	<a class="twitter-timeline"
+	 data-dnt="true" href="https://twitter.com/tunnelsup" 
+     data-widget-id="736235600487931906">
+     
+     Tweets by @tunnelsup
+  </a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Jack - <a href="/about">About This Site</a>
+  ---
+  <a href="/links">Links to other useful websites</a>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tunnelsup';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'https://www.tunnelsup.com/juniper-srx-configurations-for-route-based-and-policy-based-vpn/';
+        var disqus_url = 'https://www.tunnelsup.com/juniper-srx-configurations-for-route-based-and-policy-based-vpn/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+<!-- <script src="/javascripts/modernizr-2.0.js"></script> -->
+<!-- <script src="/javascripts/jquery.min.js"></script> -->
+<!-- <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script> -->
+<!-- <script src="/javascripts/octopress.js" type="text/javascript"></script> -->
+
+  <script src="/javascripts/all.min.js" type="text/javascript"></script>
+
+
+
+
+
+<script type="text/javascript">
+  $('#searchform').submit(function(event) {
+     window.location.href = "/search/index.html#stq=" + document.search.stq.value;
+     event.preventDefault();
+  });
+</script>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-2202347-5']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+
+
+</body>
+</html>
