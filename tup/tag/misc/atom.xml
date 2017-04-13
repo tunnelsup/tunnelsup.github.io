@@ -4,7 +4,7 @@
   <title><![CDATA[Category: misc | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/misc/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2017-03-17T15:59:19-07:00</updated>
+  <updated>2017-04-12T22:09:42-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,91 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Using The Built-In macOS FTP, TFTP, SFTP, and HTTP Servers]]></title>
+    <link href="https://www.tunnelsup.com/using-the-built-in-macos-ftp-tftp-sftp-and-http-servers/"/>
+    <updated>2016-10-21T22:02:00-07:00</updated>
+    <id>https://www.tunnelsup.com/using-the-built-in-macos-ftp-tftp-sftp-and-http-servers</id>
+    <content type="html"><![CDATA[<p>The macOS and OSX operating systems come with built in FTP, TFTP, SFTP, and HTTP servers. Here is how to enable them and use them.</p>
+
+<h2>FTP Server</h2>
+
+<p>To start an FTP server use this terminal command:</p>
+
+<p><code>
+sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plist
+</code></p>
+
+<p>Users will need to authenticate to the macOS system using standard logins that are already on the macOS. When someone logs in, they will arrive in <code>/Users/&lt;username&gt;/</code>.</p>
+
+<p>To stop the FTP server, run the following:</p>
+
+<p><code>
+sudo launchctl unload -F /System/Library/LaunchDaemons/ftp.plist
+</code></p>
+
+<h2>TFTP Server</h2>
+
+<p><code>
+sudo launchctl load -F /System/Library/LaunchDaemons/tftp.plist
+sudo launchctl start com.apple.tftpd
+</code></p>
+
+<p>The directory that serves files is <code>/private/tftpboot</code>.</p>
+
+<p>To stop the TFTP server, either reboot or use this command:</p>
+
+<p><code>
+sudo launchctl unload -F /System/Library/LaunchDaemons/tftp.plist
+</code></p>
+
+<h2>SFTP Server</h2>
+
+<p>This one is different. Go to system preferences then <code>Sharing</code>. Check the box to enabe <code>Remote Login</code>. Once this is done, other people will be able to ssh and sftp to your macOS system.</p>
+
+<h2>HTTP Server</h2>
+
+<p>Apache comes bundled with macOS. To start it, run this command.</p>
+
+<p><code>
+sudo apachectl start
+</code></p>
+
+<p>By default the files will be served from <code>/Library/WebServer/Documents</code>.</p>
+
+<p>To disable the server, either reboot or do this command:</p>
+
+<p><code>
+sudo apachectl stop
+</code></p>
+
+<h2>Checking Status</h2>
+
+<p>To check to see what&rsquo;s running, run the command:</p>
+
+<p><code>
+netstat -an | grep LISTEN
+</code></p>
+
+<p>This will show you which ports are open on your macOS. For example if you have Apache running, you will see the following:</p>
+
+<p><code>
+tcp46      0      0  *.80                   *.*                    LISTEN
+</code></p>
+
+<ul>
+<li>HTTP = TCP 80</li>
+<li>FTP = TCP 21</li>
+<li>SSH = TCP 22</li>
+<li>SFTP = TCP 22</li>
+<li>TFTP = UDP 69</li>
+</ul>
+
+
+<p>Note that TFTP is on UDP and won&rsquo;t say listen. Just run <code>netstat -an | grep 69</code> to find if it&rsquo;s running.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to Create SSH Tunnels]]></title>
@@ -193,36 +278,6 @@ A popup box shows up and lets you verify what will be sanitized. <br>
 
 
 <p>You&rsquo;ll then be prompted to save the sanitized document.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to set a static IP on Mac OSX]]></title>
-    <link href="https://www.tunnelsup.com/how-to-set-a-static-ip-on-mac-osx/"/>
-    <updated>2016-09-22T21:28:00-07:00</updated>
-    <id>https://www.tunnelsup.com/how-to-set-a-static-ip-on-mac-osx</id>
-    <content type="html"><![CDATA[<p>Are you using a Macbook Pro or Macbook Air and want to know how to show the change the interface to use a static IP? Follow the steps below to complete this.</p>
-
-<h2>1. Go to Preferences</h2>
-
-<p>Click the Apple icon in the top left corner and click System Preferences.</p>
-
-<p><img src="/images/mac-set-ip1.png" alt="Static IP" /><br></p>
-
-<h2>2. Go to Network Settings</h2>
-
-<p>Now find the <code>Network</code> icon and click it.</p>
-
-<p><img src="/images/mac-set-ip2.png" alt="Static IP" /><br></p>
-
-<h2>3. Change the Settings</h2>
-
-<p>Find the interface you want to change the settings on and click it. Then select the interface settings you want to us. To set a static IP select the options <code>Manually</code> and fill in the fields. You can also set it to be DHCP where you&rsquo;ll be assigned an address automatically by a router.
-<img src="/images/mac-set-ip3.png" alt="Static IP" /><br></p>
-
-<p>If you need to change the DNS settings, click <code>advanced</code>.</p>
-
-<p>Once done click apply and your settings should be applied right away.</p>
 ]]></content>
   </entry>
   
