@@ -4,7 +4,7 @@
   <title><![CDATA[Category: opsec | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/opsec/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2017-04-12T22:09:42-07:00</updated>
+  <updated>2017-04-27T20:51:02-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -75,7 +75,7 @@
 
 <p>A lot of these phishing scams use look-alike domain. If you worked at example.com could you recognize the problem in this email header?</p>
 
-<blockquote><p>From: <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#x3a;&#67;&#x45;&#79;&#64;&#101;&#120;&#97;&#109;&#x70;&#x31;&#101;&#x2e;&#99;&#111;&#x6d;">&#x43;&#x45;&#x4f;&#64;&#101;&#120;&#97;&#109;&#112;&#49;&#x65;&#46;&#x63;&#111;&#109;</a></p></blockquote>
+<blockquote><p>From: <a href="&#109;&#97;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#67;&#x45;&#x4f;&#x40;&#101;&#120;&#97;&#x6d;&#x70;&#x31;&#101;&#x2e;&#99;&#111;&#x6d;">&#x43;&#69;&#x4f;&#x40;&#x65;&#120;&#97;&#109;&#112;&#x31;&#101;&#x2e;&#99;&#111;&#109;</a></p></blockquote>
 
 <p>The &ldquo;L&rdquo; was switched with a &ldquo;ONE&rdquo;. This can be incredibly difficult to catch and so look-alike domains have been very effective at tricking people for decades. Here&rsquo;s some tips for combating this.</p>
 
