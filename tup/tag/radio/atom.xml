@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: radio | TunnelsUP]]></title>
+  <link href="https://www.tunnelsup.com/tup/tag/radio/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2017-05-03T11:52:05-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[YAESU-FT60 Cheat Sheet]]></title>
+    <link href="https://www.tunnelsup.com/yaesu-ft60-cheat-sheet/"/>
+    <updated>2017-05-03T11:36:00-07:00</updated>
+    <id>https://www.tunnelsup.com/yaesu-ft60-cheat-sheet</id>
+    <content type="html"><![CDATA[<p>Need a quick handy reference guide for the YAESU FT60 ham radio? Here is a quick reference guide.</p>
+
+<p><img class="center" src="/images/YAESU-FT60.png">
+Download: <a href="/images/YAESU-FT60.png">[PNG Image]</a> - <a href="/images/YAESU-FT60-CheatSheet.pdf">[PDF File]</a></p>
+]]></content>
+  </entry>
+  
+</feed>

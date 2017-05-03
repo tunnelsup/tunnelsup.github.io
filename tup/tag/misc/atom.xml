@@ -4,7 +4,7 @@
   <title><![CDATA[Category: misc | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/misc/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2017-04-27T20:51:02-07:00</updated>
+  <updated>2017-05-03T11:52:05-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Linux TTY and Terminal Commands]]></title>
+    <link href="https://www.tunnelsup.com/linux-tty-and-terminal-commands/"/>
+    <updated>2017-05-03T11:19:00-07:00</updated>
+    <id>https://www.tunnelsup.com/linux-tty-and-terminal-commands</id>
+    <content type="html"><![CDATA[<p>A few notes for using the Linux TTY terminal.</p>
+
+<h2>Switch Terminals</h2>
+
+<p>You can switch TTY terminals by doing:</p>
+
+<p><code>CNTRL</code>+<code>ALT</code>+<code>F#</code></p>
+
+<p>F2 will take you to TTY2, F3 TTY3 etc.</p>
+
+<p>If you are using a Linux GUI, you can still use this combo to switch to the console. To get back to the GUI do <code>CNTRL</code>+<code>ALT</code>+<code>F7</code>.</p>
+
+<h2>Scrolling</h2>
+
+<p>If you need to scroll up or town while at the console, do:</p>
+
+<p><code>SHIFT</code>+<code>PG UP/DOWN</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Using The Built-In macOS FTP, TFTP, SFTP, and HTTP Servers]]></title>
@@ -252,32 +277,6 @@ autossh -N -i /home/blueuser/.ssh/id_rsa -R 2222:localhost:22 greenuser@192.168.
 <p><img src="/images/visio-removemeta2.PNG"></p>
 
 <p>Now when the document is saved and when a PDF is generated, the personal information will not be in the document.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to remove meta data from a PDF document]]></title>
-    <link href="https://www.tunnelsup.com/how-to-remove-meta-data-from-a-pdf-document/"/>
-    <updated>2016-09-29T23:02:00-07:00</updated>
-    <id>https://www.tunnelsup.com/how-to-remove-meta-data-from-a-pdf-document</id>
-    <content type="html"><![CDATA[<p>Some PDF documents contain meta data which may contain the user&rsquo;s name that made it, the company they work for, their address, and more. This is sort of like exif data on an image. It&rsquo;s a good idea to sanitize any PDF before posting it to the Internet. To remove this personal data from a PDF do the following.</p>
-
-<ol>
-<li><p>Open Document in Adobe Acrobat
-You&rsquo;ll need Acrobat and not simply Acrobat Reader. This tutorial used Adobe Acrobat XI.</p></li>
-<li><p>Click the Tools Button
-On the top right corner of the PDF click the Tools button.<br>
-<img src="/images/pdf-meta1.PNG"></p></li>
-<li><p>Click Sanitize
-At the bottom of the tools is a Protection menu, expand it, and find the sanitize option.<br>
-<img src="/images/pdf-meta2.PNG"></p></li>
-<li><p>Confirm Sanitization
-A popup box shows up and lets you verify what will be sanitized. <br>
-<img src="/images/pdf-meta3.PNG"></p></li>
-</ol>
-
-
-<p>You&rsquo;ll then be prompted to save the sanitized document.</p>
 ]]></content>
   </entry>
   

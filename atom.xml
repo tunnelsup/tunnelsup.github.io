@@ -4,7 +4,7 @@
   <title><![CDATA[TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2017-04-27T20:51:02-07:00</updated>
+  <updated>2017-05-03T11:52:05-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,55 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Python Cheat Sheet]]></title>
+    <link href="https://www.tunnelsup.com/python-cheat-sheet/"/>
+    <updated>2017-05-03T11:43:00-07:00</updated>
+    <id>https://www.tunnelsup.com/python-cheat-sheet</id>
+    <content type="html"><![CDATA[<p>Need a quick handy reference guide for using the Python programming language? Here is a quick reference guide.</p>
+
+<p><img class="center" src="https://www.tunnelsup.com/images/PythonCheatSheet.png">
+Download: <a href="https://www.tunnelsup.com/images/PythonCheatSheet.png">[PNG Image]</a> - <a href="https://www.tunnelsup.com/images/Python-CheatSheet.pdf">[PDF File]</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[YAESU-FT60 Cheat Sheet]]></title>
+    <link href="https://www.tunnelsup.com/yaesu-ft60-cheat-sheet/"/>
+    <updated>2017-05-03T11:36:00-07:00</updated>
+    <id>https://www.tunnelsup.com/yaesu-ft60-cheat-sheet</id>
+    <content type="html"><![CDATA[<p>Need a quick handy reference guide for the YAESU FT60 ham radio? Here is a quick reference guide.</p>
+
+<p><img class="center" src="https://www.tunnelsup.com/images/YAESU-FT60.png">
+Download: <a href="https://www.tunnelsup.com/images/YAESU-FT60.png">[PNG Image]</a> - <a href="https://www.tunnelsup.com/images/YAESU-FT60-CheatSheet.pdf">[PDF File]</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Linux TTY and Terminal Commands]]></title>
+    <link href="https://www.tunnelsup.com/linux-tty-and-terminal-commands/"/>
+    <updated>2017-05-03T11:19:00-07:00</updated>
+    <id>https://www.tunnelsup.com/linux-tty-and-terminal-commands</id>
+    <content type="html"><![CDATA[<p>A few notes for using the Linux TTY terminal.</p>
+
+<h2>Switch Terminals</h2>
+
+<p>You can switch TTY terminals by doing:</p>
+
+<p><code>CNTRL</code>+<code>ALT</code>+<code>F#</code></p>
+
+<p>F2 will take you to TTY2, F3 TTY3 etc.</p>
+
+<p>If you are using a Linux GUI, you can still use this combo to switch to the console. To get back to the GUI do <code>CNTRL</code>+<code>ALT</code>+<code>F7</code>.</p>
+
+<h2>Scrolling</h2>
+
+<p>If you need to scroll up or town while at the console, do:</p>
+
+<p><code>SHIFT</code>+<code>PG UP/DOWN</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Juniper SRX Configurations for Route Based and Policy Based VPN]]></title>
@@ -1070,303 +1119,6 @@ Download: <a href="https://www.tunnelsup.com/images/Metasploit.png">[PNG Image]<
 <p><a href="http://pinout.xyz">http://pinout.xyz</a></p>
 
 <p><a href="https://hackr.io/tutorials/python">https://hackr.io/tutorials/python</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to set a static IP in linux]]></title>
-    <link href="https://www.tunnelsup.com/how-to-set-a-static-ip-in-linux/"/>
-    <updated>2016-09-12T16:32:00-07:00</updated>
-    <id>https://www.tunnelsup.com/how-to-set-a-static-ip-in-linux</id>
-    <content type="html"><![CDATA[<p>The following will work for any debian base linux distro. That includes <strong>Ubuntu</strong>, <strong>Kali</strong>, <strong>Raspberry Pi (Raspian Jessie)</strong>, <strong>TAILS</strong>, and many more.</p>
-
-<h2>Edit Interface Settings</h2>
-
-<p>Edit the config:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>sudo vi /etc/network/interfaces</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Find the interface you wish to make static and add the following lines:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>auto eth0
-</span><span class='line'>iface eth0 inet static
-</span><span class='line'>        address 192.168.1.100
-</span><span class='line'>        network 192.168.1.0
-</span><span class='line'>        netmask 255.255.255.0
-</span><span class='line'>        broadcast 192.168.1.255
-</span><span class='line'>        gateway 192.168.1.1</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>address</code> is the IP you want to assign this host</li>
-<li><code>network</code> is the network portion of this subnet. It&rsquo;s usually the same as your static IP but ending in <code>.0</code></li>
-<li><code>netmask</code> is the netmask of your subnet. This is usually <code>255.255.255.255</code></li>
-<li><code>broadcast</code> is the broadcast IP of this subnet. It&rsquo;s usually the same as your static IP but ending in <code>.255</code></li>
-<li><code>gateway</code> is the next hop for this system to go. This is usually a router&rsquo;s IP and it must be in the same subnet as the host address.</li>
-</ul>
-
-
-<h2>Configure DNS</h2>
-
-<p>To resolve hostnames to IP addresses you must configure a DNS server. You can do this by editing the following:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>vi /etc/resolv.conf</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Add your DNS servers to this file or use Google&rsquo;s public DNS servers like this:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>nameserver 4.2.2.2
-</span><span class='line'>nameserver 4.2.2.3</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Restart networking</h2>
-
-<p>To make these change effective you must restart the networking service. That can be done by doing one of the following:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>sudo /etc/init.d/networking restart</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If that doesn&rsquo;t work try:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>sudo /etc/init.d/networking reload</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If that doesn&rsquo;t work try:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>sudo systemctl restart ifup@eth0</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Check settings</h2>
-
-<p>Now check if the settings took by running the following command:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ifconfig</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The output looks like this:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>eth0      Link encap:Ethernet  HWaddr d8:eb:97:bd:53:4e
-</span><span class='line'>          inet addr:192.168.1.100  Bcast:192.168.1.255  Mask:255.255.255.0
-</span><span class='line'>          inet6 addr: fe80::daeb:97ff:febd:534e/64 Scope:Link
-</span><span class='line'>          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-</span><span class='line'>          RX packets:47436 errors:0 dropped:3117 overruns:0 frame:0
-</span><span class='line'>          TX packets:13017 errors:0 dropped:0 overruns:0 carrier:0
-</span><span class='line'>          collisions:0 txqueuelen:1000
-</span><span class='line'>          RX bytes:5982679 (5.7 MiB)  TX bytes:1837349 (1.7 MiB)</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Getting Started Cracking Password Hashes with John the Ripper]]></title>
-    <link href="https://www.tunnelsup.com/getting-started-cracking-password-hashes/"/>
-    <updated>2016-09-08T21:23:00-07:00</updated>
-    <id>https://www.tunnelsup.com/getting-started-cracking-password-hashes</id>
-    <content type="html"><![CDATA[<p>Want to get started with password cracking and not sure where to begin? In this post we&rsquo;ll explore how to get started with it.</p>
-
-<p>Most systems don&rsquo;t store passwords on them. Instead they store hashes of passwords and when authentication takes place, the password is hashes and if the hashes match authentication is successful. Different systems store password hashes in different ways depending on the encryption used.</p>
-
-<p>Password hash cracking usually consists of taking a wordlist, hashing each word and comparing it against the hash you&rsquo;re trying to crack. This is a variation of a dictionary attack because wordlists often are composed of not just dictionary words but also passwords from public password dumps. This type of cracking becomes difficult when hashes are <a href="https://en.wikipedia.org/wiki/Salt_(cryptography">salted</a>).</p>
-
-<p>The tool we are going to use to do our password hashing in this post is called <strong>John the Ripper</strong>. John is a great tool because it&rsquo;s free, fast, and can do both wordlist style attacks and brute force attacks. A brute force attack is where the program will cycle through every possible character combination until it has found a match.</p>
-
-<h2>Setup</h2>
-
-<p>To get setup we&rsquo;ll need some password hashes and John the Ripper.</p>
-
-<h4>Sample Password Hashes</h4>
-
-<p>A group called KoreLogic used to hold DEFCON competitions to see how well people could crack password hashes. Their contest files are still posted on their site and it offers a great sample set of hashes to begin with.</p>
-
-<p>Download the <a href="http://contest-2012.korelogic.com/">password hash file bundle</a> from the KoreLogic 2012 DEFCON challenge.
-Or use this <a href="https://www.tunnelsup.com/images/cmiyc_2012_password_hash_files.tar.bz2">mirror</a>.</p>
-
-<p>Extract the file using this linux command:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>tar jxf cmiyc_2012_password_hash_files.tar.bz2</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This expands into 19 different hashdumps including <code>des</code>, <code>md5</code>, and <code>ntlm</code> type encryption. Each of the 19 files contains thousands of password hashes. This should be a great data set to test our cracking capabilities on.</p>
-
-<h4>John the Ripper</h4>
-
-<p>Next we&rsquo;ll need the cracking tool itself. If you&rsquo;re using Kali Linux, this tool is already installed. Download <a href="http://www.openwall.com/john/">John the Ripper</a> here. In my case I&rsquo;m going to download the free version <code>John the Ripper 1.8.0 (sources, tar.gz, 5.2 MB)</code>.</p>
-
-<p>Once downloaded, extract it with the following linux command:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>tar zxvf john-1.8.0.tar.gz</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then follow the instructions in docs/INSTALL to complete the install.</p>
-
-<h4>Getting a Wordlist</h4>
-
-<p>We&rsquo;ll need a good wordlist to go through to see if any passwords in it, match our hashes.</p>
-
-<ul>
-<li>A basic word list containing 3,559 words can be found bundled in the John the Ripper tarball in the run dir. This is a list of the most common passwords seen in public hash dumps.</li>
-<li>If using Kali linux, a good size wordfile is located at <code>/usr/share/wordlists/rockyou.txt.gz</code>. Unzip it with <code>gunzip</code> and you&rsquo;ve got a good wordfile to workwith.</li>
-<li>A large word list containing 1,493,677,782 words can be found at <a href="https://crackstation.net/buy-crackstation-wordlist-password-cracking-dictionary.htm">crackstation</a>.</li>
-</ul>
-
-
-<p>The size word list you need depends on your needs. If you have a large hashdump, chances are even cracking 5% of the hashes will result in a victory, which may get you admin access. But if you have a only one password hash, you&rsquo;ll need 100% success rate and probably need a bigger wordlist.</p>
-
-<h2>Basic John Usage</h2>
-
-<p>Use John to begin the cracking with this command:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>$ john hashes-3.des.txt
-</span><span class='line'>Loaded 10297 password hashes with 3741 different salts (descrypt, traditional crypt(3) [DES 32/32])</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This simple command does the following:</p>
-
-<ul>
-<li>Detected there are 10,297 password hashes in the file and their salts.</li>
-<li>Auto detected the passwords were DES encrypted</li>
-<li>Will first attempt single crack mode</li>
-<li>Will then attempt to use the built in wordlist (most common passwords) to crack passwords</li>
-<li>Will then go into incremental mode</li>
-</ul>
-
-
-<h2>Checking Status</h2>
-
-<p>While John the Ripper is running, press any key (like enter) to see a status output. Or to check from another terminal you can run <code>john --status</code>.  The output looks like this:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>DES cracking speed: 94g 0:01:08:34 74% 2/3 0.02284g/s 2784p/s 97648c/s 269491C/s day?..Hal?
-</span><span class='line'>1                   2   3          4   5   6          7       8        9         10</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Here is what each section means:</p>
-
-<ol>
-<li>Type of encryption it is trying to crack with</li>
-<li>Number of successful password guesses</li>
-<li>Time elapsed since started</li>
-<li>Percent completed for that pass</li>
-<li>Current pass / number of passes total</li>
-<li>g/s = successful guesses per second</li>
-<li>p/s = passwords tested per second</li>
-<li>c/s = crypts (password hashes) computed per second</li>
-<li>C/s = crypts tested per second (in versions below 1.8.0 this was &ldquo;c/s&rdquo;)</li>
-<li>The current word it&rsquo;s trying.</li>
-</ol>
-
-
-<h2>Passes/Modes</h2>
-
-<p>John has three modes to attempt to crack hashes. If you do not indicate the mode, all 3 will be used and you will see <code>x/3</code> in your status output indicating which mode it&rsquo;s on.</p>
-
-<p>See <a href="http://www.openwall.com/john/doc/MODES.shtml">http://www.openwall.com/john/doc/MODES.shtml</a> for detailed description of each mode.</p>
-
-<h4>(1) Single Crack</h4>
-
-<p>This mode attempts to mangle the username and try it as the password. Example: if the username was &ldquo;jackson&rdquo; it would try the following passwords:</p>
-
-<blockquote><p>jackson <br>
-JACKSON <br>
-jackson1 <br>
-j-ackson <br>
-Jackson= <br>
-jacks0n <br></p></blockquote>
-
-<p>It tries hundreds of variations of the username. It tries this password on all hashes in your file so the more usernames you give it, the greater chance of it finding something in the single crack mode.</p>
-
-<p>This is a great mode to start with because it&rsquo;s the fastest and sometimes works wonderfully.</p>
-
-<p>To just use this mode do the following:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>john --single hashes-3.des.txt</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>(2) Wordlist Mode</h4>
-
-<p>In this mode, John is using a wordlist to hash each word and compare the hash with the password hash. If you do not indicate a wordlist, John will use the one it comes bundled with which has about 3,500 words which are the most common passwords seen in password dumps.</p>
-
-<p>To use try just the wordlist mode do the following:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>john --wordlist=password.lst hashes-3.des.txt</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>(3) Incremental</h4>
-
-<p>Attempts a brute force style attack, trying every combination of characters possible. This type of attempt will never complete because it will just keep trying higher and higher password lengths.</p>
-
-<p>To try just the incremental mode, do this command:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>john --incremental hashes-3.des.txt</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Word mangling rules</h2>
-
-<p>John has the ability to take a wordlist and mangle the words in it to try variations of that word. It will add numbers to the end of the word and try replacing letters with numbers and adding other random symbols. So if the word list contains the word <code>jackson</code>, with <code>rules</code> turned on it would try each of these plus hundreds more.</p>
-
-<blockquote><p>jackson <br>
-JACKSON <br>
-jackson1 <br>
-j-ackson <br>
-Jackson= <br>
-jacks0n <br></p></blockquote>
-
-<p>By simply enabling <code>--rules</code> when invoking John, the mangling rules applied are usually decent. However, you can modify the config file to alter the way the mangling is done. Read here for further information on how to do that:</p>
-
-<p><a href="http://www.openwall.com/john/doc/RULES.shtml">http://www.openwall.com/john/doc/RULES.shtml</a></p>
-
-<p>Additionally you can see what others have used for rules like KoreLogic:</p>
-
-<p><a href="http://contest-2010.korelogic.com/rules.html">http://contest-2010.korelogic.com/rules.html</a></p>
-
-<h2>Final Example</h2>
-
-<p>To use a larger word list, with DES encryption only, and rule mangling turned on, use the following:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>john --format:descrypt --wordlist=crackstation-human-only.txt --rules hashes-3.des.txt</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The best way to get John to run in the background is using the standard linux <code>screen</code> command.</p>
-
-<h2>Resources</h2>
-
-<p><a href="http://www.openwall.com/john/doc/">http://www.openwall.com/john/doc/</a></p>
-
-<p><a href="http://www.openwall.com/john/doc/EXAMPLES.shtml">http://www.openwall.com/john/doc/EXAMPLES.shtml</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to do an SNMP walk]]></title>
-    <link href="https://www.tunnelsup.com/how-to-do-an-snmp-walk/"/>
-    <updated>2016-08-24T15:53:00-07:00</updated>
-    <id>https://www.tunnelsup.com/how-to-do-an-snmp-walk</id>
-    <content type="html"><![CDATA[<p>Sometimes you need to manually SNMP poll a device. Here is how to do that.</p>
-
-<h2>Do an entire pull</h2>
-
-<p>To conduct a full SNMP walk and get all OIDs, do the following from a linux command line:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>snmpwalk -v 2c -c publicstring 192.168.1.1</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In the example above we indicate the SNMP version (-v) is 2c, the community string (-c) is publicstring and the IP to SNMP poll is 192.168.1.1.</p>
-
-<p>This will return all OIDs that are pollable on that system.</p>
-
-<h2>Poll a single MIB</h2>
-
-<p>You can add a mib to the end of the snmpwalk command to poll a single mib and get only that result. Here is an example:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>snmpwalk -v 2c -c publicstring 192.168.1.1 mib-2.47.1.1.1.1.5.7</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can also poll an attribute such as sysDescr like so:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>snmpwalk -v 2c -c publicstring 192.168.1.1 mib-2.47.1.1.1.1.5.7</span></code></pre></td></tr></table></div></figure>
-
-
-
 ]]></content>
   </entry>
   

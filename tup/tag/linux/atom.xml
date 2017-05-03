@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/linux/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2017-04-27T20:51:02-07:00</updated>
+  <updated>2017-05-03T11:52:05-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Linux TTY and Terminal Commands]]></title>
+    <link href="https://www.tunnelsup.com/linux-tty-and-terminal-commands/"/>
+    <updated>2017-05-03T11:19:00-07:00</updated>
+    <id>https://www.tunnelsup.com/linux-tty-and-terminal-commands</id>
+    <content type="html"><![CDATA[<p>A few notes for using the Linux TTY terminal.</p>
+
+<h2>Switch Terminals</h2>
+
+<p>You can switch TTY terminals by doing:</p>
+
+<p><code>CNTRL</code>+<code>ALT</code>+<code>F#</code></p>
+
+<p>F2 will take you to TTY2, F3 TTY3 etc.</p>
+
+<p>If you are using a Linux GUI, you can still use this combo to switch to the console. To get back to the GUI do <code>CNTRL</code>+<code>ALT</code>+<code>F7</code>.</p>
+
+<h2>Scrolling</h2>
+
+<p>If you need to scroll up or town while at the console, do:</p>
+
+<p><code>SHIFT</code>+<code>PG UP/DOWN</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to set a static IP in linux]]></title>
@@ -430,46 +455,6 @@ Host key verification failed.
 <p>Now try your ssh session again and you should no longer be getting the error.</p>
 
 <p>If there is a problem with a the <code>known_hosts</code> file getting screwed up it is safe to delete the <code>known_hosts</code> file entirely. It will also delete any of your saved ssh keys but you will simply be prompted to accept them next time you ssh to something.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to change the output color when using ls in bash]]></title>
-    <link href="https://www.tunnelsup.com/how-to-change-the-output-color-when-using-ls-in-bash/"/>
-    <updated>2015-02-14T16:34:00-08:00</updated>
-    <id>https://www.tunnelsup.com/how-to-change-the-output-color-when-using-ls-in-bash</id>
-    <content type="html"><![CDATA[<p>Sometimes when using Linux in bash or zsh you may have a hard time seeing directories. If you have ANSI colors turned on and your terminal background color is black seeing the directories is hard. That is because the directory color is dark blue by default. The fix to this is to change the dircolors which uses an environmental variable <code>$LS_COLORS</code>.</p>
-
-<h3>Change the dir color</h3>
-
-<p>The fix is as simple as doing this:</p>
-
-<p><code>
-LS_COLORS="$LS_COLORS:di=01;33"
-</code></p>
-
-<p>This sets the color to bold yellow.</p>
-
-<h5>Make it a default setting.</h5>
-
-<p>If you want this to be there the next time you login just add it to your shell rc file like <code>.bashrc</code> or <code>.zshrc</code>. You can do that one of two ways.</p>
-
-<p>Either append the line at the end of your file like: <br>
-<code>echo 'LS_COLORS="$LS_COLORS:di=01;33"' &gt;&gt; .bashrc</code></p>
-
-<p>Or add the line in manually by using a text editor like <code>nano</code> or <code>vi</code> and add the line <code>LS_COLORS="$LS_COLORS:di=01;33"</code> to the bottom of the file.</p>
-
-<p>Once the line is added to the file then restart the shell by logging out and logging in again and your new colors should be there.</p>
-
-<h3>Change other file type colors</h3>
-
-<p>Try using the command <code>dircolors</code> to see your current settings.</p>
-
-<p>You can also use the command <code>dircolors -p</code> to see the default settings.</p>
-
-<h3>Other color options</h3>
-
-<p>This webpage goes over <a href="http://misc.flogisoft.com/bash/tip_colors_and_formatting">bash colors</a> in depth. You can replace the <code>00;93</code> in the example above with another color of your choice.</p>
 ]]></content>
   </entry>
   
