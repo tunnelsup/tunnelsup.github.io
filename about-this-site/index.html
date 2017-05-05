@@ -14,7 +14,7 @@
   <!-- <meta name="author" content="Jack"> -->
 
   
-  <meta name="description" content="About TunnelsUp May 17th, 2013 Jan 1 2010 the site was initially launched using WordPress because it was simple and fast to get started. As I &hellip;">
+  <meta name="description" content="About TunnelsUp May 17th, 2013 Jan 1, 2010 the site was initially launched using WordPress because it was simple and fast to get started. As I &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -88,12 +88,12 @@
 <time datetime="2013-05-17T20:51:00-07:00" pubdate data-updated="true">May 17<span>th</span>, 2013</time></p>
   </header>
   
-  <p>Jan 1 2010 the site was initially launched using WordPress because it was simple and fast to get started. As I started building more tools it became harder to incorporate them into the blog. I was losing control of the site! Updates began to be increasingly harder. I was concerned about security (xss, csrf, brute force dictionary attack). It was also time for a complete redesign of the site. So it was perfect timing to use Octopress.</p>
+  <p>Jan 1, 2010 the site was initially launched using WordPress because it was simple and fast to get started. As I started building more tools it became harder to incorporate them into the blog. I was losing control of the site! Updates began to be increasingly harder. I was concerned about security (xss, csrf, brute force dictionary attack). It was also time for a complete redesign of the site. So it was perfect timing to use Octopress.</p>
 
 <p>Reasons why I think Octopress was the perfect choice:</p>
 
 <ul>
-<li>I&rsquo;m now using Heroku to host. This is a cool site that I had heard a lot about and wanted to use more. I am using a free account which means I was able to cancel my old hosting provider.</li>
+<li>I switched to using Heroku to host. I wanted to learn how to use this hosting provider. I am using a free account which means I was able to cancel my old hosting provider.</li>
 <li>There is no admin access to the site. That is, there is no way for a person to login to tunnelsup.com. The comments are all handled by disqus which is handled entirely by their site and not mine. What this means is that there is virtually no foothold for someone to enter my site to deface it. This means security just got a lot tighter which makes me a lot happier especially since I&rsquo;m a security engineer!</li>
 <li>The migration from Wordpress to Octopress was really quite simple. I brought disqus (for the comments) and swiftype (for the search results) with me which both had no problem with the move.</li>
 <li>I liked the look and feel of Octopress right out of the box. Very little customization was done to the theme.</li>
@@ -103,11 +103,9 @@
 
 <p>I also wanted a redesign to make it more of a knowledgebase and less of a blog. In May 2013 I switched the site to use <a href="http://octopress.org">Octopress</a>, which is a Ruby blogging framework that uses Jekyll. It&rsquo;s a very fun blogging platform that suits me because it&rsquo;s for hackers (people who like to take things apart). I like having more control over what&rsquo;s going on and wanted to get better at ruby.</p>
 
-<p>The site is hosted at <a href="https://www.heroku.com/">Heroku</a> because that&rsquo;s cool.</p>
-
 <p>Here are some of the things I did to get things the way I wanted.</p>
 
-<p>Most of the links worked when migrating from wordpress. They were exactly the same. Some weren&rsquo;t though. I used an <a href="https://github.com/tsmango/jekyll_alias_generator">Alias Generator Plugin</a> to pick up any missing pieces. For instance, my if my old site used about.html but the new one is just about/ then in the about page I would say it can also listen for about.html. This actually generates an about.html page which has a redirect to the actual page.</p>
+<p>Most of the links worked when migrating from wordpress. They were exactly the same. Some weren&rsquo;t though. I used an <a href="https://github.com/tsmango/jekyll_alias_generator">Alias Generator Plugin</a> to pick up any missing pieces. For instance, my if my old site used about.html but the new one is just /about/ then in the about page I would say it can also listen for about.html. This actually generates an about.html page which has a redirect to the actual page.</p>
 
 <p>To get the &ldquo;tags&rdquo; to work I am basically using the categories but simply having the url be &ldquo;tag&rdquo;. There&rsquo;s no point in having categories and tags now is there?</p>
 
