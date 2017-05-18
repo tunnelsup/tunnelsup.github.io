@@ -4,7 +4,7 @@
   <title><![CDATA[Category: upgrade | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/upgrade/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2017-05-05T11:46:09-07:00</updated>
+  <updated>2017-05-17T23:33:25-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,102 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to Upgrade a Cisco ASA Firewall]]></title>
+    <link href="https://www.tunnelsup.com/how-to-upgrade-a-cisco-asa-firewall/"/>
+    <updated>2017-05-17T22:40:00-07:00</updated>
+    <id>https://www.tunnelsup.com/how-to-upgrade-a-cisco-asa-firewall</id>
+    <content type="html"><![CDATA[<p>To upgrade the OS of a Cisco ASA firewall follow these basic steps:</p>
+
+<ol>
+<li>Download Software</li>
+<li>Get Software on ASA</li>
+<li>Verify Software</li>
+<li>Configure ASA</li>
+<li>Reboot ASA</li>
+</ol>
+
+
+<h3>Download Software</h3>
+
+<p>The general suggestion is to run the latest version of ASA OS version that the ASA supports. The OS image contains the entire OS. There are no such things as patches or updates. You download a whole new OS to be installed. Because of this there usually isn&rsquo;t a need to do a stepped upgrade. The only time you need to do a <a href="/cisco-asa-upgrade-path/">stepped upgrade is when you&rsquo;re upgrading from a very old version (pre 9.1)</a> and want the config to be migrated for you.</p>
+
+<p>Go to the downloads section of Cisco.com (requires Cisco login with valid support contract): <a href="https://software.cisco.com/download">https://software.cisco.com/download/</a></p>
+
+<p><strong>ASA Without FirePower IPS</strong></p>
+
+<p>Navigate to <strong>Security</strong> > <strong>Firewalls</strong> > <strong>Adaptive Security Appliace (ASA)</strong> > <strong>ASA Model</strong> > <strong>Software on Chassis</strong> > <strong>Adaptive Security Appliance (ASA) Software</strong>.</p>
+
+<p><strong>ASA With FirePower IPS</strong></p>
+
+<p>Navigate to <strong>Security</strong> > <strong>Firewalls</strong> > <strong>Next-Generation Firewalls (NGFW)</strong> > <strong>ASA 5500-X with FirePOWER Services</strong> > <strong>Model of ASA</strong> > <strong>Adaptive Security Appliance (ASA) Software</strong></p>
+
+<blockquote><p>When downloading the software, hover over the image on the downloads page to see the Checksum. Copy this checksum as we&rsquo;ll use it to verify the image later.</p></blockquote>
+
+<h4>Understanding Versions</h4>
+
+<p>Unlike a Cisco Router image, the ASA image contains all features and requires additional licenses to unlock the features. This makes choosing the image a lot easier but makes handling licensing harder.</p>
+
+<p>The OS image file will look like one of these 3:</p>
+
+<p><code>asa933-7-lfbff-k8.SPA</code><br>
+<code>asa924-5-smp-K8.bin</code><br>
+<code>asa924-5-k8.bin</code></p>
+
+<p>The numbers indicate the version. For instance the first file here is for ASA OS Version 9.3(3)7.</p>
+
+<p>The <code>lfbff</code> and <code>SPA</code> indicates it has FirePower IPS included in the image and this image is digitally signed which makes it tamper resistant.</p>
+
+<p>The <code>smp</code> indicates the image is for a multi-core ASA (check how many cores using show ver).</p>
+
+<p>The 3rd one is for old ASAs that have a single core.</p>
+
+<p>The <code>k8</code> tag indicates this image supports DES encryption. With a license, you can make the ASA support AES and 3DES.</p>
+
+<p>These images aren&rsquo;t tied to a model number, so the image downloaded for a 5512x can also be used on a 5516x.</p>
+
+<h2>Get Software on ASA</h2>
+
+<p>Once you have downloaded the image, upload it to the ASA.</p>
+
+<p>Upload the image to an http or ftp server and copy the image to the ASA from the ASA command line with one of these commands:</p>
+
+<p><code>copy http flash</code></p>
+
+<p><code>copy ftp flash</code></p>
+
+<p><code>copy tftp flash</code></p>
+
+<p>You can also use a USB flash drive to put the image on and insert it into the ASA.</p>
+
+<p><code>dir /all</code> will show you all the files on all disks</p>
+
+<p><code>copy disk1:/filename flash</code></p>
+
+<p>It is also possible to upload the image using the ASDM.</p>
+
+<h2>Verify Software</h2>
+
+<p>Now that the software is on the ASA you want to verify it got there without any errors. To do this, use the <code>verify</code> CLI command:</p>
+
+<p><code>verify disk0:/asaxxxxxxxx.xxx</code></p>
+
+<p>Now compare the checksum output to the checksum you saw on the downloads page from Cisco.com. If they match then this image is not corrupt.</p>
+
+<h2>Configure ASA</h2>
+
+<p>Apply the image to the ASA with the <code>boot system</code> command like this:</p>
+
+<p><code>boot system disk0:/asa962-13-lfbff-k8.SPA</code></p>
+
+<p>This will tell the ASA to boot to that image the next time there is a reboot.</p>
+
+<h2>Reboot ASA</h2>
+
+<p>Lastly, reboot the ASA. When it comes back up, check the version doing a <code>show ver</code>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Upgrade a Cisco PIX 506E to run 7.1 PIX code]]></title>
