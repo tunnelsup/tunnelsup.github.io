@@ -4,7 +4,7 @@
   <title><![CDATA[TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2017-05-17T23:33:25-07:00</updated>
+  <updated>2017-05-23T21:34:21-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,77 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA Drop Reason: Unexpected-Packet]]></title>
+    <link href="https://www.tunnelsup.com/cisco-asa-drop-reason-unexpected-packet/"/>
+    <updated>2017-05-23T21:05:00-07:00</updated>
+    <id>https://www.tunnelsup.com/cisco-asa-drop-reason-unexpected-packet</id>
+    <content type="html"><![CDATA[<p>Today I was trying to send management traffic over a VPN tunnel to a Cisco ASA that terminated the tunnel. I ran into some problems doing this and I want to document my troubleshooting steps.</p>
+
+<h3>Config</h3>
+
+<p>Before attempting to ssh to the ASA I made sure that ssh to the ASA worked when coming from the inside of the network.</p>
+
+<p>Then I applied the config:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ssh 10.0.0.0 255.0.0.0 INSIDE
+</span><span class='line'>management-access INSIDE</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Even though we are coming from the OUTSIDE, when it comes over the VPN tunnel we can get into the ASA through the INSIDE interface. Going over the VPN tunnel for ssh is more secure than doing it directly over the Internet. This also means you&rsquo;ll be sshing to the IP that is on the INSIDE of your ASA.</p>
+
+<h3>Errors</h3>
+
+<p>Well this didn&rsquo;t work and to see the drop reason we can do a asp-drop capture like this:</p>
+
+<p><code>cap cap1 type asp-drop all</code></p>
+
+<p>Then I looked at the cap including just the IP I was after and saw this:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ASA5508# sh cap cap1 | i 192.168.128.5
+</span><span class='line'>   9: 17:40:03.527957       10.50.101.6 &gt; 192.168.128.5: icmp: echo request Drop-reason: (unexpected-packet) Unexpected packet
+</span><span class='line'>  10: 17:40:03.641858       10.2.11.50.49955 &gt; 192.168.128.5.161:  udp 75 Drop-reason: (unexpected-packet) Unexpected packet
+</span><span class='line'>  17: 17:40:05.520206       10.50.101.6 &gt; 192.168.128.5: icmp: echo request
+</span><span class='line'>  24: 17:40:07.320402       10.2.11.50 &gt; 192.168.128.5: icmp: echo request Drop-reason: (unexpected-packet) Unexpected packet
+</span><span class='line'>  58: 17:40:22.546907       10.50.101.6.1030 &gt; 192.168.128.5.22: S 1027314954:1027314954(0) win 4128 &lt;mss 536&gt; Drop-reason: (unexpected-packet) Unexpected packet
+</span><span class='line'>  64: 17:40:24.540224       10.50.101.6.1030 &gt; 192.168.128.5.22: S 1027314954:1027314954(0) win 4128 &lt;mss 536&gt; Drop-reason: (unexpected-packet) Unexpected packet
+</span><span class='line'>  67: 17:40:25.106302       10.2.11.50.39489 &gt; 192.168.128.5.161:  udp 41 Drop-reason: (unexpected-packet) Unexpected packet
+</span><span class='line'>  77: 17:40:28.541292       10.50.101.6.1030 &gt; 192.168.128.5.22: S 1027314954:1027314954(0) win 4128 &lt;mss 536&gt; Drop-reason: (unexpected-packet) Unexpected packet
+</span><span class='line'>  84: 17:40:30.111276       10.2.11.50.39489 &gt; 192.168.128.5.161:  udp 41 Drop-reason: (unexpected-packet) Unexpected packet</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we have narrowed down this issue to be a drop reason of &ldquo;unexpected-packet&rdquo;.</p>
+
+<h3>Fix</h3>
+
+<p><a href="http://www.cisco.com/c/en/us/td/docs/security/asa/asa-command-reference/show_asp_drop/show_asp_drop.html">Cisco Writes:</a></p>
+
+<blockquote><p>Unexpected-Packet occurs when the appliance in transparent mode receives a non-IP packet, destined to its MAC address, but there is no corresponding service running on the appliance to process the packet.</p></blockquote>
+
+<p>But in my case this is neither a non-IP packet, nor is this firewall in transparent mode. So because Cisco is flat out wrong here, a blog post was obligatory.</p>
+
+<p>We actually need to take a look at our <strong>NAT</strong> commands. Specifically adding the <code>route-lookup</code> option to our NAT.</p>
+
+<p>My <strong>NONAT</strong> statement looked like this:</p>
+
+<p><code>nat (INSIDE,any) source static LOCAL-NETS LOCAL-NETS destination static REMOTE-NETS REMOTE-NETS</code></p>
+
+<p>This was changed to become:</p>
+
+<p><code>nat (INSIDE,any) source static LOCAL-NETS LOCAL-NETS destination static REMOTE-NETS REMOTE-NETS route-lookup</code></p>
+
+<p>After that, the ssh worked.</p>
+
+<h3>Reason</h3>
+
+<p><a href="http://www.cisco.com/c/en/us/td/docs/security/asa/asa-command-reference/I-R/cmdref2/n.html">Cisco Writes the route-lookup command:</a></p>
+
+<blockquote><p>For identity NAT in routed mode, determines the egress interface using a route lookup instead of using the interface specified in the NAT command. If you do not specify interfaces in the NAT command, a route lookup is used by default.</p></blockquote>
+
+<p>That means, if you have <code>any</code> in your NAT statement, the ASA isn&rsquo;t sure what interface to route the packet to (yes, even though the ASA HAS this IP on it&rsquo;s interface). By adding <code>route-lookup</code> the ASA decides to check the routing table to determine what interface to send the packet to.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to Upgrade a Cisco ASA Firewall]]></title>
@@ -1008,148 +1079,6 @@ Download: <a href="https://www.tunnelsup.com/images/Metasploit.png">[PNG Image]<
 </span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;We have &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">inventory</span><span class="p">[</span><span class="n">fruit</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39; &#39;</span> <span class="o">+</span> <span class="n">fruit</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Using Regular Expressions in Python]]></title>
-    <link href="https://www.tunnelsup.com/using-regular-expressions-in-python/"/>
-    <updated>2016-09-14T21:44:00-07:00</updated>
-    <id>https://www.tunnelsup.com/using-regular-expressions-in-python</id>
-    <content type="html"><![CDATA[<p>If you need to do pattern matching on a string within Python, using a regular expression will be the best way to do it. Here are some basic examples to help you with this.</p>
-
-<h2>Import Library</h2>
-
-<p>To use any of the regular expressions you&rsquo;ll need to add this library:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>import re</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Regex Compiler</h2>
-
-<p>Create the regex object using the <code>compile()</code> method.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">phone_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\d\d\d-\d\d\d-\d\d\d\d&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This creates or defines the regex object which we can then use against a string.</p>
-
-<p>The <code>r</code> here indicates a raw string.</p>
-
-<p>I recommend building and testing your regex with a tool like <a href="http://regexpal.com.">http://regexpal.com.</a></p>
-
-<h2>Matching Regex Objects</h2>
-
-<p>Once the regex object is defined you can use the <code>search()</code> method like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">phone_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\d\d\d-\d\d\d-\d\d\d\d&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">search_results</span> <span class="o">=</span> <span class="n">phone_regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;My number is 310-429-4019.&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The results of this are:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="s">&#39;Results: &#39;</span> <span class="o">+</span> <span class="n">search_results</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
-</span><span class='line'><span class="n">Results</span><span class="p">:</span> <span class="mi">310</span><span class="o">-</span><span class="mi">429</span><span class="o">-</span><span class="mi">4019</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The <code>search()</code> method will return the <strong>first</strong> match it finds in the string.</p>
-
-<p>The results are stored in the <code>group()</code> method of your variable.</p>
-
-<h2>Using Parenthesis to Form Groups</h2>
-
-<p>If you need to match on a larger string but want to only extract a portion of the string, you can use parenthesis to make more groups.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">phone_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;(\d\d\d)-(\d\d\d-\d\d\d\d)&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">search_results</span> <span class="o">=</span> <span class="n">phone_regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;Call me at 310-429-4019.&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This has created 4 groups shown here:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="s">&#39;Results: &#39;</span> <span class="o">+</span> <span class="n">search_results</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
-</span><span class='line'><span class="n">Results</span><span class="p">:</span> <span class="mi">310</span><span class="o">-</span><span class="mi">429</span><span class="o">-</span><span class="mi">4019</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="s">&#39;Results: &#39;</span> <span class="o">+</span> <span class="n">search_results</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-</span><span class='line'><span class="n">Results</span><span class="p">:</span> <span class="mi">310</span><span class="o">-</span><span class="mi">429</span><span class="o">-</span><span class="mi">4019</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="s">&#39;Results: &#39;</span> <span class="o">+</span> <span class="n">search_results</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-</span><span class='line'><span class="n">Results</span><span class="p">:</span> <span class="mi">310</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="s">&#39;Results: &#39;</span> <span class="o">+</span> <span class="n">search_results</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-</span><span class='line'><span class="n">Results</span><span class="p">:</span> <span class="mi">429</span><span class="o">-</span><span class="mi">4019</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Without Regex Compile</h2>
-
-<p>An alternative way to do this is to skip the regex <code>compile()</code> method and use this syntax instead:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">my_string</span> <span class="o">=</span> <span class="s">&quot;Name: Fred, Occupation: Bronto Crane Operator&quot;</span>
-</span><span class='line'><span class="n">parse_data</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;Name: (\w*), Occupation: (.*)&#39;</span><span class="p">,</span> <span class="n">my_string</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Results:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">parse_data</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
-</span><span class='line'><span class="n">Name</span><span class="p">:</span> <span class="n">Fred</span><span class="p">,</span> <span class="n">Occupation</span><span class="p">:</span> <span class="n">Bronto</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">parse_data</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-</span><span class='line'><span class="n">Fred</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">parse_data</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-</span><span class='line'><span class="n">Bronto</span> <span class="n">Crane</span> <span class="n">Operator</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Ignore Case</h2>
-
-<p>Use the <code>re.IGNORECASE</code> option to ignore capitalization. Example:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">fred_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;fred&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
-</span><span class='line'><span class="n">search_results</span> <span class="o">=</span> <span class="n">fred_regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;His name is Fred.&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This produces the following results:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">search_results</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
-</span><span class='line'><span class="n">Fred</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Pro Tip: You can use the shortcut <code>re.I</code> instead of <code>re.IGNORECASE</code>.</p>
-
-<h2>Using findall()</h2>
-
-<p>While the <code>search()</code> method finds the first occurrence, the <code>findall()</code> method returns every occurrence.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">phone_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\d\d\d-\d\d\d-\d\d\d\d&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">search_results</span> <span class="o">=</span> <span class="n">phone_regex</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">&#39;You can call me at 310-429-4019 or 310-777-4777.&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This turns the <code>search_results</code> variable into a list and has the following results:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">search_results</span><span class="p">)</span>
-</span><span class='line'><span class="p">[</span><span class="s">&#39;310-429-4019&#39;</span><span class="p">,</span> <span class="s">&#39;310-777-4777&#39;</span><span class="p">]</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">search_results</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</span><span class='line'><span class="mi">310</span><span class="o">-</span><span class="mi">429</span><span class="o">-</span><span class="mi">4019</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">search_results</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-</span><span class='line'><span class="mi">310</span><span class="o">-</span><span class="mi">777</span><span class="o">-</span><span class="mi">4777</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Substituting Using a Regex</h2>
-
-<p>You can use the <code>sub()</code> method to substitute a string matching a regex. Example:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">phone_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\d\d\d-\d\d\d-\d\d\d\d&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">scrubbed_phone_numbers</span> <span class="o">=</span> <span class="n">phone_regex</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;XXX-XXX-XXXX&#39;</span><span class="p">,</span> <span class="s">&#39;My number is 310-429-4019.&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="n">scrubbed_phone_numbers</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This prints <code>My number is XXX-XXX-XXXX.</code>.</p>
 ]]></content>
   </entry>
   

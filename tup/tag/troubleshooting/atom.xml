@@ -4,7 +4,7 @@
   <title><![CDATA[Category: troubleshooting | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/troubleshooting/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2017-05-17T23:33:25-07:00</updated>
+  <updated>2017-05-23T21:34:21-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,79 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA Drop Reason: Unexpected-Packet]]></title>
+    <link href="https://www.tunnelsup.com/cisco-asa-drop-reason-unexpected-packet/"/>
+    <updated>2017-05-23T21:05:00-07:00</updated>
+    <id>https://www.tunnelsup.com/cisco-asa-drop-reason-unexpected-packet</id>
+    <content type="html"><![CDATA[<p>Today I was trying to send management traffic over a VPN tunnel to a Cisco ASA that terminated the tunnel. I ran into some problems doing this and I want to document my troubleshooting steps.</p>
+
+<h3>Config</h3>
+
+<p>Before attempting to ssh to the ASA I made sure that ssh to the ASA worked when coming from the inside of the network.</p>
+
+<p>Then I applied the config:</p>
+
+<p><code>
+ssh 10.0.0.0 255.0.0.0 INSIDE
+management-access INSIDE
+</code></p>
+
+<p>Even though we are coming from the OUTSIDE, when it comes over the VPN tunnel we can get into the ASA through the INSIDE interface. Going over the VPN tunnel for ssh is more secure than doing it directly over the Internet. This also means you&rsquo;ll be sshing to the IP that is on the INSIDE of your ASA.</p>
+
+<h3>Errors</h3>
+
+<p>Well this didn&rsquo;t work and to see the drop reason we can do a asp-drop capture like this:</p>
+
+<p><code>cap cap1 type asp-drop all</code></p>
+
+<p>Then I looked at the cap including just the IP I was after and saw this:</p>
+
+<p><code>
+ASA5508# sh cap cap1 | i 192.168.128.5
+   9: 17:40:03.527957       10.50.101.6 &gt; 192.168.128.5: icmp: echo request Drop-reason: (unexpected-packet) Unexpected packet
+  10: 17:40:03.641858       10.2.11.50.49955 &gt; 192.168.128.5.161:  udp 75 Drop-reason: (unexpected-packet) Unexpected packet
+  17: 17:40:05.520206       10.50.101.6 &gt; 192.168.128.5: icmp: echo request
+  24: 17:40:07.320402       10.2.11.50 &gt; 192.168.128.5: icmp: echo request Drop-reason: (unexpected-packet) Unexpected packet
+  58: 17:40:22.546907       10.50.101.6.1030 &gt; 192.168.128.5.22: S 1027314954:1027314954(0) win 4128 &lt;mss 536&gt; Drop-reason: (unexpected-packet) Unexpected packet
+  64: 17:40:24.540224       10.50.101.6.1030 &gt; 192.168.128.5.22: S 1027314954:1027314954(0) win 4128 &lt;mss 536&gt; Drop-reason: (unexpected-packet) Unexpected packet
+  67: 17:40:25.106302       10.2.11.50.39489 &gt; 192.168.128.5.161:  udp 41 Drop-reason: (unexpected-packet) Unexpected packet
+  77: 17:40:28.541292       10.50.101.6.1030 &gt; 192.168.128.5.22: S 1027314954:1027314954(0) win 4128 &lt;mss 536&gt; Drop-reason: (unexpected-packet) Unexpected packet
+  84: 17:40:30.111276       10.2.11.50.39489 &gt; 192.168.128.5.161:  udp 41 Drop-reason: (unexpected-packet) Unexpected packet
+</code></p>
+
+<p>Now we have narrowed down this issue to be a drop reason of &ldquo;unexpected-packet&rdquo;.</p>
+
+<h3>Fix</h3>
+
+<p><a href="http://www.cisco.com/c/en/us/td/docs/security/asa/asa-command-reference/show_asp_drop/show_asp_drop.html">Cisco Writes:</a></p>
+
+<blockquote><p>Unexpected-Packet occurs when the appliance in transparent mode receives a non-IP packet, destined to its MAC address, but there is no corresponding service running on the appliance to process the packet.</p></blockquote>
+
+<p>But in my case this is neither a non-IP packet, nor is this firewall in transparent mode. So because Cisco is flat out wrong here, a blog post was obligatory.</p>
+
+<p>We actually need to take a look at our <strong>NAT</strong> commands. Specifically adding the <code>route-lookup</code> option to our NAT.</p>
+
+<p>My <strong>NONAT</strong> statement looked like this:</p>
+
+<p><code>nat (INSIDE,any) source static LOCAL-NETS LOCAL-NETS destination static REMOTE-NETS REMOTE-NETS</code></p>
+
+<p>This was changed to become:</p>
+
+<p><code>nat (INSIDE,any) source static LOCAL-NETS LOCAL-NETS destination static REMOTE-NETS REMOTE-NETS route-lookup</code></p>
+
+<p>After that, the ssh worked.</p>
+
+<h3>Reason</h3>
+
+<p><a href="http://www.cisco.com/c/en/us/td/docs/security/asa/asa-command-reference/I-R/cmdref2/n.html">Cisco Writes the route-lookup command:</a></p>
+
+<blockquote><p>For identity NAT in routed mode, determines the egress interface using a route lookup instead of using the interface specified in the NAT command. If you do not specify interfaces in the NAT command, a route lookup is used by default.</p></blockquote>
+
+<p>That means, if you have <code>any</code> in your NAT statement, the ASA isn&rsquo;t sure what interface to route the packet to (yes, even though the ASA HAS this IP on it&rsquo;s interface). By adding <code>route-lookup</code> the ASA decides to check the routing table to determine what interface to send the packet to.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Cisco ASA command to show listening ports]]></title>
@@ -186,96 +259,6 @@ ethanalyzer local interface inband write MYCAPTURE.pcap display-filter ip.src==1
 
 <p>Using the “monitor capture” command on IOS devices<br>
 <a href="http://www.cisco.com/en/US/docs/ios-xml/ios/epc/command/monitor_capture_through_show_monitor_capture.html">http://www.cisco.com/en/US/docs/ios-xml/ios/epc/command/monitor_capture_through_show_monitor_capture.html</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Cisco ASA Troubleshooting Intermittent Connectivity Issues]]></title>
-    <link href="https://www.tunnelsup.com/cisco-asa-troubleshooting-intermittent-connectivity-issues/"/>
-    <updated>2015-11-11T22:19:00-08:00</updated>
-    <id>https://www.tunnelsup.com/cisco-asa-troubleshooting-intermittent-connectivity-issues</id>
-    <content type="html"><![CDATA[<p>Normally a Cisco ASA firewall either permits or denies traffic. It&rsquo;s very rare that traffic works sometimes but not all the time. Here are some troubleshooting tips for when the ASA is causing intermittent or sporadic connectivity issues.</p>
-
-<h2>Embryonic Connections issues</h2>
-
-<p>Check the <a href="/understanding-cisco-asa-connection-flags/">show conn</a> output to see if there are a lot of half opened or embryonic connections.</p>
-
-<p>Is the number of embryonic connections very high? This could be filling up the max connection table on the ASA or on the destination system.</p>
-
-<p>You can set the max embryonic connections with this:</p>
-
-<p><code>
-access-list 140 extended permit tcp any host 192.168.1.50 eq www
-!
-class-map protect
- description Protect web server from attacks
- match access-list 140
-!
-policy-map interface_policy
- class protect
-  set connection embryonic-conn-max 100 per-client-max 25
-!
-service-policy interface_policy interface outside
-</code></p>
-
-<p>This sets a maximum amount of connections to 192.168.1.50 on port 80 to be 100 connections total and 25 per source IP. The <code>per-client-max 25</code> statement is optional at the end of the <code>set connection</code> command.</p>
-
-<h2>Check bandwidth</h2>
-
-<p>If the bandwidth of an interface is hitting the max capacity it will drop packets.</p>
-
-<p>Use the <code>show traffic</code> command to verify no interface is nearing the limit.</p>
-
-<p>Look at <code>show int</code> and confirm the BW setting, and duplex settings are correct.</p>
-
-<h2>Check CPU</h2>
-
-<p>If the CPU reaches 100% it will start dropping packets.</p>
-
-<p><a href="/troubleshooting-high-cpu-on-a-cisco-asa">Troubleshoot any high CPU issues.</a></p>
-
-<h2>Check interface and memory statistics</h2>
-
-<p><a href="/understanding-cisco-asa-interface-counters-and-statistics/">Check interface statistics</a> and look for any dropped packet counters rising.</p>
-
-<p>Check the <a href="/cisco-asa-understanding-the-show-blocks-command/">show blocks</a> for memory usage issues.</p>
-
-<p>Some notes on packets, performance, and memory:</p>
-
-<blockquote><p>If ingress FIFO (queue) is full, frames are dropped</p>
-
-<ul>
-<li>No free slots in RX ring (CPU/memory bound)</li>
-<li>Unable to acquire bus (used by another component)</li>
-<li>“No buffer” on memory move errors, “overruns” on FIFO drops</li>
-</ul>
-
-
-<p>FIFO is not affected by packet rates, but RX rings are</p>
-
-<ul>
-<li>Fixed memory block size regardless of actual frame size</li>
-<li>Ingress packet bursts may cause congestion even at low bits/sec</li>
-</ul>
-
-
-<p>Fixed bus overhead for memory transfers</p>
-
-<ul>
-<li>30% or 80% bus efficiency for 64 or 1400 byte packets</li>
-<li>Maximize frame size and minimize rate for best efficiency</li>
-</ul>
-
-
-<p>Overruns on all interfaces may mean several things</p>
-
-<ul>
-<li>Interface oversubscription</li>
-<li>CPU oversubscription on a single core system</li>
-<li>Uneven CPU load distribution on a multi-core system</li>
-<li>Memory block exhaustion</li>
-</ul>
-</blockquote>
 ]]></content>
   </entry>
   

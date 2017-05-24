@@ -4,7 +4,7 @@
   <title><![CDATA[Category: cisco | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/cisco/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2017-05-17T23:33:25-07:00</updated>
+  <updated>2017-05-23T21:34:21-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,79 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA Drop Reason: Unexpected-Packet]]></title>
+    <link href="https://www.tunnelsup.com/cisco-asa-drop-reason-unexpected-packet/"/>
+    <updated>2017-05-23T21:05:00-07:00</updated>
+    <id>https://www.tunnelsup.com/cisco-asa-drop-reason-unexpected-packet</id>
+    <content type="html"><![CDATA[<p>Today I was trying to send management traffic over a VPN tunnel to a Cisco ASA that terminated the tunnel. I ran into some problems doing this and I want to document my troubleshooting steps.</p>
+
+<h3>Config</h3>
+
+<p>Before attempting to ssh to the ASA I made sure that ssh to the ASA worked when coming from the inside of the network.</p>
+
+<p>Then I applied the config:</p>
+
+<p><code>
+ssh 10.0.0.0 255.0.0.0 INSIDE
+management-access INSIDE
+</code></p>
+
+<p>Even though we are coming from the OUTSIDE, when it comes over the VPN tunnel we can get into the ASA through the INSIDE interface. Going over the VPN tunnel for ssh is more secure than doing it directly over the Internet. This also means you&rsquo;ll be sshing to the IP that is on the INSIDE of your ASA.</p>
+
+<h3>Errors</h3>
+
+<p>Well this didn&rsquo;t work and to see the drop reason we can do a asp-drop capture like this:</p>
+
+<p><code>cap cap1 type asp-drop all</code></p>
+
+<p>Then I looked at the cap including just the IP I was after and saw this:</p>
+
+<p><code>
+ASA5508# sh cap cap1 | i 192.168.128.5
+   9: 17:40:03.527957       10.50.101.6 &gt; 192.168.128.5: icmp: echo request Drop-reason: (unexpected-packet) Unexpected packet
+  10: 17:40:03.641858       10.2.11.50.49955 &gt; 192.168.128.5.161:  udp 75 Drop-reason: (unexpected-packet) Unexpected packet
+  17: 17:40:05.520206       10.50.101.6 &gt; 192.168.128.5: icmp: echo request
+  24: 17:40:07.320402       10.2.11.50 &gt; 192.168.128.5: icmp: echo request Drop-reason: (unexpected-packet) Unexpected packet
+  58: 17:40:22.546907       10.50.101.6.1030 &gt; 192.168.128.5.22: S 1027314954:1027314954(0) win 4128 &lt;mss 536&gt; Drop-reason: (unexpected-packet) Unexpected packet
+  64: 17:40:24.540224       10.50.101.6.1030 &gt; 192.168.128.5.22: S 1027314954:1027314954(0) win 4128 &lt;mss 536&gt; Drop-reason: (unexpected-packet) Unexpected packet
+  67: 17:40:25.106302       10.2.11.50.39489 &gt; 192.168.128.5.161:  udp 41 Drop-reason: (unexpected-packet) Unexpected packet
+  77: 17:40:28.541292       10.50.101.6.1030 &gt; 192.168.128.5.22: S 1027314954:1027314954(0) win 4128 &lt;mss 536&gt; Drop-reason: (unexpected-packet) Unexpected packet
+  84: 17:40:30.111276       10.2.11.50.39489 &gt; 192.168.128.5.161:  udp 41 Drop-reason: (unexpected-packet) Unexpected packet
+</code></p>
+
+<p>Now we have narrowed down this issue to be a drop reason of &ldquo;unexpected-packet&rdquo;.</p>
+
+<h3>Fix</h3>
+
+<p><a href="http://www.cisco.com/c/en/us/td/docs/security/asa/asa-command-reference/show_asp_drop/show_asp_drop.html">Cisco Writes:</a></p>
+
+<blockquote><p>Unexpected-Packet occurs when the appliance in transparent mode receives a non-IP packet, destined to its MAC address, but there is no corresponding service running on the appliance to process the packet.</p></blockquote>
+
+<p>But in my case this is neither a non-IP packet, nor is this firewall in transparent mode. So because Cisco is flat out wrong here, a blog post was obligatory.</p>
+
+<p>We actually need to take a look at our <strong>NAT</strong> commands. Specifically adding the <code>route-lookup</code> option to our NAT.</p>
+
+<p>My <strong>NONAT</strong> statement looked like this:</p>
+
+<p><code>nat (INSIDE,any) source static LOCAL-NETS LOCAL-NETS destination static REMOTE-NETS REMOTE-NETS</code></p>
+
+<p>This was changed to become:</p>
+
+<p><code>nat (INSIDE,any) source static LOCAL-NETS LOCAL-NETS destination static REMOTE-NETS REMOTE-NETS route-lookup</code></p>
+
+<p>After that, the ssh worked.</p>
+
+<h3>Reason</h3>
+
+<p><a href="http://www.cisco.com/c/en/us/td/docs/security/asa/asa-command-reference/I-R/cmdref2/n.html">Cisco Writes the route-lookup command:</a></p>
+
+<blockquote><p>For identity NAT in routed mode, determines the egress interface using a route lookup instead of using the interface specified in the NAT command. If you do not specify interfaces in the NAT command, a route lookup is used by default.</p></blockquote>
+
+<p>That means, if you have <code>any</code> in your NAT statement, the ASA isn&rsquo;t sure what interface to route the packet to (yes, even though the ASA HAS this IP on it&rsquo;s interface). By adding <code>route-lookup</code> the ASA decides to check the routing table to determine what interface to send the packet to.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to Upgrade a Cisco ASA Firewall]]></title>
@@ -212,175 +285,6 @@ SID Client IP       Version Mode Encryption Hmac     State            Username
 <p><code>
 FWL1# ssh disconnect 3
 </code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Starter Config for Cisco ASA 5506]]></title>
-    <link href="https://www.tunnelsup.com/starter-config-for-cisco-asa-5506/"/>
-    <updated>2016-04-16T22:46:00-07:00</updated>
-    <id>https://www.tunnelsup.com/starter-config-for-cisco-asa-5506</id>
-    <content type="html"><![CDATA[<p>Are you trying to set up a Cisco ASA 5506 for the first time and want to see a sample config to get you started? Well then here&rsquo;s a good template to get started with. A 5506 is often intended for a small office or home office. In our scenario there is no DMZ and we are connecting to a cable modem using DHCP.</p>
-
-<p>Here is a basic template you can use to get started with quickly. These commands will work with any ASA version 8.3 and up. I would say this will work with any ASA version 7.2 and up, except the NAT command and DHCP commands would not work.
-```
-!
-hostname My-Firewall
-enable password mysekretspecialenablepassw0rd
-!
-interface GigabitEthernet1/1
- nameif OUTSIDE
- security-level 0
- ip address dhcp setroute
-!
-interface GigabitEthernet1/2
- nameif INSIDE
- security-level 100
- ip address 192.168.55.1 255.255.255.0
-!
-interface GigabitEthernet1/3
- shutdown
- no nameif
- no security-level
- no ip address
-!
-interface GigabitEthernet1/4
- shutdown
- no nameif
- no security-level
- no ip address
-!
-interface GigabitEthernet1/5
- shutdown
- no nameif
- no security-level
- no ip address
-!
-interface GigabitEthernet1/6
- shutdown
- no nameif
- no security-level
- no ip address
-!
-interface GigabitEthernet1/7
- shutdown
- no nameif
- no security-level
- no ip address
-!
-interface GigabitEthernet1/8
- shutdown
- no nameif
- no security-level
- no ip address
-!
-interface Management1/1
- management-only
- no nameif
- no security-level
- no ip address
-!
-ftp mode passive
-clock timezone PDT -7
-object-group network OBJ-INSIDE-NETWORKS
- network-object 192.168.55.0 255.255.255.0
- network-object 192.168.56.0 255.255.255.0
-access-list ACL-OUTSIDE-IN extended permit icmp any any echo-reply
-access-list ACL-OUTSIDE-IN extended deny ip any any
-access-list ACL-INSIDE-IN extended permit ip object-group OBJ-INSIDE-NETWORKS any
-access-list ACL-INSIDE-IN extended deny ip any any
-pager lines 24
-logging enable
-logging timestamp
-logging monitor notifications
-logging buffered notifications
-logging asdm informational
-mtu OUTSIDE 1500
-mtu INSIDE 1500
-icmp unreachable rate-limit 1 burst-size 1
-no asdm history enable
-arp timeout 14400
-no arp permit-nonconnected
-nat (INSIDE,OUTSIDE) source dynamic any interface description Main PAT
-access-group ACL-OUTSIDE-IN in interface OUTSIDE
-access-group ACL-INSIDE-IN in interface INSIDE</p>
-
-<p>route INSIDE 192.168.56.0 255.255.255.0 192.168.55.2 1
-timeout xlate 3:00:00
-timeout pat-xlate 0:00:30
-timeout conn 1:00:00 half-closed 0:10:00 udp 0:02:00 icmp 0:00:02
-timeout sunrpc 0:10:00 h323 0:05:00 h225 1:00:00 mgcp 0:05:00 mgcp-pat 0:05:00
-timeout sip 0:30:00 sip_media 0:02:00 sip-invite 0:03:00 sip-disconnect 0:02:00
-timeout sip-provisional-media 0:02:00 uauth 0:05:00 absolute
-timeout tcp-proxy-reassembly 0:01:00
-timeout floating-conn 0:00:00
-user-identity default-domain LOCAL
-aaa authentication ssh console LOCAL
-aaa authentication enable console LOCAL
-aaa authentication http console LOCAL
-no snmp-server location
-no snmp-server contact
-service sw-reset-button
-crypto ipsec security-association pmtu-aging infinite
-crypto ca trustpool policy
-telnet timeout 5
-no ssh stricthostkeycheck
-ssh 0.0.0.0 0.0.0.0 INSIDE
-ssh timeout 60
-ssh key-exchange group dh-group1-sha1
-console timeout 0
-dhcpd auto_config OUTSIDE
-!
-dhcpd address 192.168.55.50-192.168.55.150 INSIDE
-dhcpd enable INSIDE
-!
-threat-detection basic-threat
-threat-detection statistics access-list
-no threat-detection statistics tcp-intercept
-dynamic-access-policy-record DfltAccessPolicy
-username johndoe password oVIhyCAOOHIOur6g encrypted privilege 15
-!
-class-map inspection_default
- match default-inspection-traffic
-!
-!
-policy-map type inspect dns preset_dns_map
- parameters
-  message-length maximum client auto
-  message-length maximum 512
-policy-map global_policy
- class inspection_default
-  inspect dns preset_dns_map
-  inspect ftp
-  inspect h323 h225
-  inspect h323 ras
-  inspect rsh
-  inspect rtsp
-  inspect esmtp
-  inspect sqlnet
-  inspect skinny<br/>
-  inspect sunrpc
-  inspect xdmcp
-  inspect sip<br/>
-  inspect netbios
-  inspect tftp
-  inspect ip-options
-!
-service-policy global_policy global
-prompt hostname context
-```</p>
-
-<h3>Breakdown of commands</h3>
-
-<ol>
-<li><p>Set the interface configuration. In this template Gig1/1 is OUTSIDE and Gig1/2 is INSIDE. The OUTSIDE route is not only DHCP but I want it to be the default route. That&rsquo;s why the <code>setroute</code> command is there. The INSIDE interface has a static IP. Security level on the outside or untrusted network should always be higher than the inside or trusted network.</p></li>
-<li><p>Create a NAT. In the template above there&rsquo;s only one PAT. This is important so all outgoing traffic can go through the firewall and get NAT&rsquo;d to the outside IP of the firewall.</p></li>
-<li><p>Set any routes. In the example above we have the 192.168.56.0/24 network on the inside so we made a route for it. If there are no extra networks on the inside then we don&rsquo;t need this.</p></li>
-<li><p>Set the ACLs. This is important to configure so it stops all incoming attacks to your network. The example above permits only ICMP (ping) replies and then denies everything else on the outside interface. Because a firewall is stateful, it will remember and permit any traffic originating from the inside and permit it back in. Essentially the template configuration let&rsquo;s you go out to the internet, but doesn&rsquo;t let any unwanted traffic in. I like to set the inside interface to only permit what I know exists inside my network. This is why the inside ACL permits only the inside networks.</p></li>
-<li><p>Create a username and set the AAA configuration. In this case we created a johndoe username and set the <code>ssh</code> and <code>aaa</code> commands. This creates a user, configures logon settings, and permits ssh capabilities to the firewalls. You may want to lookup how to set up ssh for your ASA since you need to generate keys to do so.</p></li>
-<li><p>Create a DHCP server (Optional). If you need to dynamically give DHCP addresses to hosts connecting to the ASA you can configure DHCP on the ASA to handle this. These commands are in the template. The <code>auto_config</code> command should pull any domain info and DNS servers out of the outside interface that uses DHCP to get it&rsquo;s information. If it doesn&rsquo;t then you can manually set the DNS server using <code>dhcpd dns 4.2.2.2</code>.</p></li>
-</ol>
-
 ]]></content>
   </entry>
   
