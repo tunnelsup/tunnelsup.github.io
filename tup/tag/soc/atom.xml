@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: soc | TunnelsUP]]></title>
+  <link href="https://www.tunnelsup.com/tup/tag/soc/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2017-05-25T08:42:29-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[When is a company ready for a SOC?]]></title>
+    <link href="https://www.tunnelsup.com/when-is-a-company-ready-for-a-soc/"/>
+    <updated>2017-05-25T08:29:00-07:00</updated>
+    <id>https://www.tunnelsup.com/when-is-a-company-ready-for-a-soc</id>
+    <content type="html"><![CDATA[<p>More and more companies are deciding to outsource their information security to another company. A Managed Security Service Provider (MSSP) is exactly that, a company that will handle the security of another company. Some MSSPs provide Security Operation Center as a service. This is the fastest and cheapest way to get a SOC. To build a SOC from scratch requires a lot of time, tools, and people. But when is a company ready to get a SOC?</p>
+
+<h3>3 Main Types of Threats</h3>
+
+<p>To understand when a SOC is needed, we must understand what types of threats there are.</p>
+
+<p><strong>Generic</strong> threats are those of the &ldquo;spray and pray&rdquo; type. Imagine a vulnerability scanner, scanning the entire Internet. Imagine global worms like the WCRY (WannaCry) ransomware. These adversaries are just looking for any vulnerability on any systems in any part of the world.</p>
+
+<p><strong>Targeted</strong> threats are attacks against a specific target or software. This may be someone who&rsquo;s goal is to damage a specific company and they will scan/social engineer/attack any open portal the company has exposed to the public. Another type of targeted attack is against specific software, like specifically looking for WordPress sites and attempting to infect those only.</p>
+
+<p><strong>Persistent</strong> threats or otherwise known as Advanced Persistent Threat (APT) is when a highly skilled person or group is using numerous resources to infiltrate a company&rsquo;s network. Picture a tactical team of hackers with a specific mission who has access to unknown vulnerabilities (0 days) or a large pool of manpower, or a large pool of money dedicated all to a single attack. Not many groups have the resources to conduct an APT. Usually when a hacker group is conducting an APT it is for specific reasons such as political.</p>
+
+<h3>Defending Against These Attacks</h3>
+
+<p>Now that we have classified the 3 main types of attacks we can look at ways to defend against each of them.</p>
+
+<p>To defend against a <strong>Generic</strong> attack, an organization should deploy best practices for securing a network. This includes not exposing unneeded ports to the Internet, patching systems, and hardening all devices.</p>
+
+<p>To defend against a <strong>Targeted</strong> attack, an organization should architect the network with security first. This includes segmenting VLANs, denying remote logins to administrator and root, deploying firewalls, IPS units, load balancers, antivirus solutions, and setup loggers and data collectors. Create rules on loggers and data collectors that notify sys admins when a security incident has occurred in the network. In this approach we now consider the network to be fully secured and every effort put in place to stay secured.</p>
+
+<p>To defend against a <strong>Persistent</strong> attack, an organization should be monitoring their logs, snmp traps, netflow, and sometimes full packet captures, 24/7/365 with humans and systems doing the monitoring. That is, the use of a SIEM along with technicians watching the SIEM 24 hours a day. Once an incident is detected, action should then be taken to mitigate the attack. This is called a <strong>SOC</strong>. The theory here is that an APT is usually done by humans who are extremely skilled at exploiting systems, so the defending team needs to also have humans who are skilled at detecting when a system is being exploited. No longer will passive defenses work such as firewalls and IPS units during an APT. Active defenses such as responding to the first sign of an attack are how to defend against this type of attack. Besides having a SOC to detect against these threats, an organization may have additional DFIR teams (Digital Forensics &amp; Incident Response) which can determine the who/what/why/how of an attack.</p>
+
+<h3>Conclusion</h3>
+
+<p>Before an organization decides to get a SOC, they should decide what types of attacks they will be facing and why. Everyone is victim to generic attacks, and most companies face a targeted attack on a regular basis. APTs are more rare and doesn&rsquo;t target every organization but takes the most amount of resources to defend against.</p>
+
+<p>Information Security should already be a major focus on a company before they get a SOC. The network should be architected with security first and systems should already be hardened to their best effort. A SOC will spot many security issues and if the admins aren&rsquo;t already capable of securing systems they may not put a lot of focus on recommendations or findings from the SOC. If leadership has already been encouraging admins to focus on security then when SOC alerts come in, the admins should be ready to resolve the issues. It would be a waste of money to create a SOC only to ignore the alerts they report on.</p>
+
+<p>SOCs can also interact with such teams like Malware Investigators, Digital Forensics team, Incident Responders and Threat Intelligence teams. These are obviously even more specialized teams that a company can to make responding to incidents faster, more efficient, and more accurate. These teams can sniff out where the malware came from, who did the attack, what data was leaked from the system and so on. If the organization doesn&rsquo;t care to have this information, and simply rather remove the malware and move on, then these teams aren&rsquo;t needed.</p>
+]]></content>
+  </entry>
+  
+</feed>
