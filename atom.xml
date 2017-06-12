@@ -4,7 +4,7 @@
   <title><![CDATA[TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2017-05-25T08:42:29-07:00</updated>
+  <updated>2017-06-11T23:20:40-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to edit iptables so it persists through reboot CentOS]]></title>
+    <link href="https://www.tunnelsup.com/how-to-edit-iptables-so-it-persists-through-reboot-centos/"/>
+    <updated>2017-06-11T23:13:00-07:00</updated>
+    <id>https://www.tunnelsup.com/how-to-edit-iptables-so-it-persists-through-reboot-centos</id>
+    <content type="html"><![CDATA[<p>Usually iptables are controlled by the <strong>root</strong> user or someone with <strong>sudoer</strong> privs.</p>
+
+<p>You can check what iptables rules there are using:</p>
+
+<p><code>iptables -L -n</code></p>
+
+<p>That lists all the rules, and doesn&rsquo;t resolve port names or IP addresses.</p>
+
+<p>To edit the rules, edit the following file:</p>
+
+<p><code>/etc/sysconfig/iptables</code></p>
+
+<p>Then you can reload those rules by doing the following:</p>
+
+<p><code>/etc/init.d/iptables restart</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[When is a company ready for a SOC?]]></title>
@@ -976,42 +999,6 @@ Download: <a href="https://www.tunnelsup.com/images/Metasploit.png">[PNG Image]<
 <p>If you need to change the DNS settings, click <code>advanced</code>.</p>
 
 <p>Once done click apply and your settings should be applied right away.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to see the routing table on Mac OSX]]></title>
-    <link href="https://www.tunnelsup.com/how-to-see-the-routing-table-on-mac-osx/"/>
-    <updated>2016-09-20T20:39:00-07:00</updated>
-    <id>https://www.tunnelsup.com/how-to-see-the-routing-table-on-mac-osx</id>
-    <content type="html"><![CDATA[<p>Do you have a Macbook Pro or Macbook Air and want to know how to show the routes it has in the routing table? Are you looking for the Windows command <strong>route print</strong> equivalent in OSX? This post is for you.</p>
-
-<h2>Show Routes</h2>
-
-<p>This is the command to show routes on a Mac OSX:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>netstat -rn</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The <code>-r</code> flag means to show routes.</p>
-
-<p>The <code>-n</code> flag means to not resolve IPs to hostnames.</p>
-
-<p>Here is an example output of the command:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>$ netstat -rn
-</span><span class='line'>Routing tables
-</span><span class='line'>
-</span><span class='line'>Internet:
-</span><span class='line'>Destination        Gateway            Flags        Refs      Use   Netif Expire
-</span><span class='line'>default            192.168.20.1       UGSc           39        0     en0
-</span><span class='line'>127.0.0.1          127.0.0.1          UH              3    11132     lo0
-</span><span class='line'>192.168.20/24      link#4             UCS             8        0     en0
-</span><span class='line'>192.168.20.1       0:1f:ca:88:96:8c   UHLWIir        40       22     en0   1025
-</span><span class='line'>192.168.20.255     ff:ff:ff:ff:ff:ff  UHLWbI          0        8     en0</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In the case above, the default gateway of this Mac is 192.168.20.1. Meaning all routes are pointing to that system.</p>
 ]]></content>
   </entry>
   

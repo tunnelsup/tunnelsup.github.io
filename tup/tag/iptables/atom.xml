@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: iptables | TunnelsUP]]></title>
+  <link href="https://www.tunnelsup.com/tup/tag/iptables/atom.xml" rel="self"/>
+  <link href="https://www.tunnelsup.com/"/>
+  <updated>2017-06-11T23:20:40-07:00</updated>
+  <id>https://www.tunnelsup.com/</id>
+  <author>
+    <name><![CDATA[Jack]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to edit iptables so it persists through reboot CentOS]]></title>
+    <link href="https://www.tunnelsup.com/how-to-edit-iptables-so-it-persists-through-reboot-centos/"/>
+    <updated>2017-06-11T23:13:00-07:00</updated>
+    <id>https://www.tunnelsup.com/how-to-edit-iptables-so-it-persists-through-reboot-centos</id>
+    <content type="html"><![CDATA[<p>Usually iptables are controlled by the <strong>root</strong> user or someone with <strong>sudoer</strong> privs.</p>
+
+<p>You can check what iptables rules there are using:</p>
+
+<p><code>iptables -L -n</code></p>
+
+<p>That lists all the rules, and doesn&rsquo;t resolve port names or IP addresses.</p>
+
+<p>To edit the rules, edit the following file:</p>
+
+<p><code>/etc/sysconfig/iptables</code></p>
+
+<p>Then you can reload those rules by doing the following:</p>
+
+<p><code>/etc/init.d/iptables restart</code></p>
+]]></content>
+  </entry>
+  
+</feed>

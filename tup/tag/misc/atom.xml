@@ -4,7 +4,7 @@
   <title><![CDATA[Category: misc | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/misc/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2017-05-25T08:42:29-07:00</updated>
+  <updated>2017-06-11T23:20:40-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to edit iptables so it persists through reboot CentOS]]></title>
+    <link href="https://www.tunnelsup.com/how-to-edit-iptables-so-it-persists-through-reboot-centos/"/>
+    <updated>2017-06-11T23:13:00-07:00</updated>
+    <id>https://www.tunnelsup.com/how-to-edit-iptables-so-it-persists-through-reboot-centos</id>
+    <content type="html"><![CDATA[<p>Usually iptables are controlled by the <strong>root</strong> user or someone with <strong>sudoer</strong> privs.</p>
+
+<p>You can check what iptables rules there are using:</p>
+
+<p><code>iptables -L -n</code></p>
+
+<p>That lists all the rules, and doesn&rsquo;t resolve port names or IP addresses.</p>
+
+<p>To edit the rules, edit the following file:</p>
+
+<p><code>/etc/sysconfig/iptables</code></p>
+
+<p>Then you can reload those rules by doing the following:</p>
+
+<p><code>/etc/init.d/iptables restart</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Linux TTY and Terminal Commands]]></title>
@@ -258,25 +281,6 @@ autossh -N -i /home/blueuser/.ssh/id_rsa -R 2222:localhost:22 greenuser@192.168.
 <p>The rest of this process is described in this video. Even though it is a video for 5.5 it is exactly the same for 6.0.</p>
 
 <p><a href="https://www.youtube.com/watch?v=og6PeyXPQ8A">https://www.youtube.com/watch?v=og6PeyXPQ8A</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to remove meta data from a Visio document]]></title>
-    <link href="https://www.tunnelsup.com/how-to-remove-meta-data-from-a-visio-document/"/>
-    <updated>2016-10-02T12:59:00-07:00</updated>
-    <id>https://www.tunnelsup.com/how-to-remove-meta-data-from-a-visio-document</id>
-    <content type="html"><![CDATA[<p>If you create a Visio diagram and either save it or convert it to a PDF, it will contain personal meta data in it. It will try to insert your name and company name.  This is sort of like exif data on an image. It&rsquo;s a good idea to sanitize and remove all personal information before sharing it with anyone. To remove this personal data from a Visio document do the following.</p>
-
-<h2>1. Click File > Info > Remove Personal Information</h2>
-
-<p><img src="/images/visio-removemeta1.PNG"></p>
-
-<h2>2. Confirm the Removal</h2>
-
-<p><img src="/images/visio-removemeta2.PNG"></p>
-
-<p>Now when the document is saved and when a PDF is generated, the personal information will not be in the document.</p>
 ]]></content>
   </entry>
   

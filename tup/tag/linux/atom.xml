@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/linux/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2017-05-25T08:42:29-07:00</updated>
+  <updated>2017-06-11T23:20:40-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to edit iptables so it persists through reboot CentOS]]></title>
+    <link href="https://www.tunnelsup.com/how-to-edit-iptables-so-it-persists-through-reboot-centos/"/>
+    <updated>2017-06-11T23:13:00-07:00</updated>
+    <id>https://www.tunnelsup.com/how-to-edit-iptables-so-it-persists-through-reboot-centos</id>
+    <content type="html"><![CDATA[<p>Usually iptables are controlled by the <strong>root</strong> user or someone with <strong>sudoer</strong> privs.</p>
+
+<p>You can check what iptables rules there are using:</p>
+
+<p><code>iptables -L -n</code></p>
+
+<p>That lists all the rules, and doesn&rsquo;t resolve port names or IP addresses.</p>
+
+<p>To edit the rules, edit the following file:</p>
+
+<p><code>/etc/sysconfig/iptables</code></p>
+
+<p>Then you can reload those rules by doing the following:</p>
+
+<p><code>/etc/init.d/iptables restart</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Linux TTY and Terminal Commands]]></title>
@@ -398,63 +421,6 @@ This command will look at the payload data of a pcap file with a source IP of 10
 
 <p><code>cat hint.txt | sed 's/\s/\n/g' | awk '!(NR%3)' | tr -d ' \t\n\r\f' | ./unhex</code>
 The input file is a hex dump. Put every word on a new line, print every 3rd word, remove all whitespace, convert hex to ascii. This essentially keeps every 3rd hex char and drops everything else.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ssh Remote Host Identification Has Changed]]></title>
-    <link href="https://www.tunnelsup.com/ssh-remote-host-identification-has-changed/"/>
-    <updated>2015-02-28T20:41:00-08:00</updated>
-    <id>https://www.tunnelsup.com/ssh-remote-host-identification-has-changed</id>
-    <content type="html"><![CDATA[<p>Sometimes when you are trying to do ssh from a linux machine you may see this message:</p>
-
-<p><code>
-user@server:~$ ssh -l user 192.168.1.1
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
-Someone could be eavesdropping on you right now (man-in-the-middle attack)!
-It is also possible that a host key has just been changed.
-The fingerprint for the RSA key sent by the remote host is
-7f:9a:dc:fd:c8:a2:0b:be:c7:b1:39:5c:fe:a6:a3:2d.
-Please contact your system administrator.
-Add correct host key in /Users/user/.ssh/known_hosts to get rid of this message.
-Offending RSA key in /Users/user/.ssh/known_hosts:5
-RSA host key for 192.168.1.1 has changed and you have requested strict checking.
-Host key verification failed.
-</code></p>
-
-<h2>Host key verification failed</h2>
-
-<p>When you see the message above it indicates that the ssh key found in your known_hosts file has a different key than the system you are trying to ssh into. This usually happens if the destination changes but the IP remains the same. For instance if this IP is a router on the network that you&rsquo;ve ssh&rsquo;d into before and the router gets replaced with a new one, the new router will have a different ssh key. The message indicates exactly which file and even what line the ssh key is located in.</p>
-
-<p>If you trust the destination you are trying to get to is the right one the best way to fix this is to go delete the offending ssh key.</p>
-
-<p>Use your favorite text editor such as vi or nano and edit the file. Here we&rsquo;ll use vi:<br>
-<code>vi /Users/user/.ssh/known_hosts</code></p>
-
-<p>The location of this file will be in the error message you received earlier.</p>
-
-<p>Then you can either search for the the IP of the system you&rsquo;re trying to ssh into like:<br>
-<code>/192.168.1.1</code></p>
-
-<p>Or go directly to the line that it indicated in the error message:<br>
-<code>:5</code></p>
-
-<p>The line should look something like this:</p>
-
-<p><code>
-192.168.1.1 ssh-rsa AAAAB3NzaC1yc2EAwgYKwAAqBe9mgpPGQDJRBEHv2mjuZn1e1v9GPKoNL+09zX0khWtayio5Oa6Y0BcTBeHBmCWMilqsrZIAvetB5nmcQeWkjX5fcgZsztl1ro3oenxQd0PQIO0WA6A79zsL36A25iwgVkFq2IFscYWoJ7b005ja6GJAAmjAANff8XFdgZR8+DP23EMTM11pIsK2w==
-</code></p>
-
-<p>Delete the line save and quit.<br>
-<code>dd</code><br>
-<code>wq</code></p>
-
-<p>Now try your ssh session again and you should no longer be getting the error.</p>
-
-<p>If there is a problem with a the <code>known_hosts</code> file getting screwed up it is safe to delete the <code>known_hosts</code> file entirely. It will also delete any of your saved ssh keys but you will simply be prompted to accept them next time you ssh to something.</p>
 ]]></content>
   </entry>
   
