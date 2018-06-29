@@ -4,7 +4,7 @@
   <title><![CDATA[Category: misc | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/misc/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2018-06-04T10:16:37-07:00</updated>
+  <updated>2018-06-29T13:35:45-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,72 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Highlights from DEFCON 25]]></title>
+    <link href="https://www.tunnelsup.com/highlights-from-defcon-25/"/>
+    <updated>2017-08-09T12:55:00-07:00</updated>
+    <id>https://www.tunnelsup.com/highlights-from-defcon-25</id>
+    <content type="html"><![CDATA[<p>DEFCON 25 is now over. The largest hacking conference in the world continues to grow larger each year. Previous years there were 18-22,000 attendees. This year over 23,000 people made it to Ceasars Palace for the talks, workshops, parties, and social activities.</p>
+
+<p>Here are some notable highlights from the event.</p>
+
+<h2>On Lockdown</h2>
+
+<p>When DEFCON rolls into town, some shops close their shutters to avoid potential threats. In previous years we&rsquo;ve seen the neon signs become blue screened, and many other pranks and shenanigans. This year we saw this.</p>
+
+<p><img src="https://www.tunnelsup.com/images/defcon25-2.png">
+<img src="https://www.tunnelsup.com/images/defcon25-1.png"></p>
+
+<p>It doesn&rsquo;t seem like UPS gets it.</p>
+
+<h2>Voting machines not as secure as you think.</h2>
+
+<p>The big news this event is the voting machines. A total of 30 different voting machines were brought to the conference to test their security, and hilarity ensued.</p>
+
+<p>The machines were put on the network and people were encouraged to attack them through the network. In the first 90 minutes, the first voting machine was popped. And soon additional voting machines were also found to have weak security.</p>
+
+<p>It seems these machines weren&rsquo;t updated with patches and had additional weak security controls. When one attendee got into a machine they found the machine was still holding 650,000 voter names and votes. This was a machine that was purchased on ebay. So not only are the machine weak the data on them isn&rsquo;t being looked after properly. Another machine was found to be able to remotely change the votes on the system by a hacker.</p>
+
+<p>Many attendees were saying the slot machines in the casino&rsquo;s are more secure than the voting machines we use to run our democratic way of life. And this is true. The slot machines undergo strict audits, not only by the game makers, but also by the gaming board. Slot machines have a long history of being secure and bug free. We all hope this is an eye opener for voting machine companies and government to take the security of these more seriously.</p>
+
+<p><a href="https://gizmodo.com/personal-info-of-650-000-voters-discovered-on-poll-mach-1797438462">Further reading >></a></p>
+
+<h2>Is a Car Wash Secure?</h2>
+
+<p>Security researchers Billy Rios of WhiteScope Security and Jonathan Butts of QED Secure Solutions gave a talk that demonstrates how they can remotely take over a car wash. In this demonstration they were able to close the bay doors of the car wash and change the behavior of the spray jets. They did this through a network based attack where they could have been on the other side of the globe.</p>
+
+<p>One reason someone might want to do this is to physically harm or trap a person in a car wash. By letting the bay doors down at the right time it can smash the car and driver which can severely impact the car and driver.</p>
+
+<p>To be safe, maybe avoid car washes that have automatic bay doors that can trap you inside.</p>
+
+<p><a href="https://nypost.com/2017/08/01/hackers-are-now-targeting-car-washes/amp/">Further reading >></a></p>
+
+<h2>Work Badges Easily Cloned</h2>
+
+<p>At DEFCON 18 I first saw someone close a security badge. The ones you might get at work, or give you access to a gated community or something. The equipment then was clunky and slow. You needed to be almost touching the badge and it would take a while.</p>
+
+<p>The technology has improved tremendously for cloning these badges. A talk was given by Dennis Maldonado that demonstrated he can read the data of a badge from 2 feet away and then send that another 30 feet away to be processed.</p>
+
+<p>He was able to take it a step further and make the whole thing trigger from his Pebble watch and an Android app.</p>
+
+<p>To avoid being attacked like this and having your badge cloned without you knowing it, keep it in a safe place when not using it and consider using and RF blocker wallet to store it in.</p>
+
+<p><a href="https://mashable.com/2017/07/27/rfid-cloning-made-easy-defcon/#u5CjK3MdRPq4">Further reading >></a></p>
+
+<h2>Safe Cracking Robot</h2>
+
+<p>Sparkfun founder Nathan Seidle built a combination lock cracking robot.</p>
+
+<p><img src="https://www.tunnelsup.com/images/defcon25-3.png"></p>
+
+<p>To demonstrate it, he bought a safe from Home Depot, attached his robot to it, and within 30 minutes the robot cracked the safe. The robot would rotate the knob back and forth feeling for just the right tension to open the safe. It needed to try numerous combinations to finally get it, but it was able to do it rapidly enough to be able to demonstrate it live on stage.</p>
+
+<p>This certainly makes the future of safes and locks an interesting concept. This is something you might see in a sci fi movie, and is now becoming a reality.</p>
+
+<p><a href="https://mashable.com/2017/07/28/safe-cracking-robot-defcon/#Dd6Zbft5RgqP">Further reading>></a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to edit iptables so it persists through reboot CentOS]]></title>
@@ -233,54 +299,6 @@ autossh -N -i /home/blueuser/.ssh/id_rsa -R 2222:localhost:22 greenuser@192.168.
 <li><a href="/ssh-without-password/">How to ssh without a password</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Upgrading ESXi to 5.5 and 6.0 Using a Bootable USB drive and macOS]]></title>
-    <link href="https://www.tunnelsup.com/upgrading-esxi-using-a-bootable-usb-drive-and-macos/"/>
-    <updated>2016-10-04T20:17:00-07:00</updated>
-    <id>https://www.tunnelsup.com/upgrading-esxi-using-a-bootable-usb-drive-and-macos</id>
-    <content type="html"><![CDATA[<p>I&rsquo;m not a VMWare expert so when it came time to upgrade my personal free ESXi host it took me a long time to figure it out. I didn&rsquo;t have any fancy tools or paid licenses to assist which meant it had to be done through a bootable USB drive. I had a really hard time figuring out what to do and then creating a bootable ESXi installation USB and wanted to document this for anyone else struggling.</p>
-
-<h2>Download ESXi</h2>
-
-<p>Even if you&rsquo;re doing an upgrade, you need to download the following:</p>
-
-<p><strong>ESXi ISO image (Includes VMware Tools)</strong></p>
-
-<p><a href="https://my.vmware.com/en/web/vmware/evalcenter?p=free-esxi">https://my.vmware.com/en/web/vmware/evalcenter?p=free-esxi</a></p>
-
-<p>This is a free download from VMWare and on the same page is where your free license key is. Save that since you&rsquo;ll need it after the upgrade. It changes with each upgrade.</p>
-
-<h2>Format the USB drive</h2>
-
-<p>First determine which <code>/dev/driveN</code> your USB drive is plugged in to. You can simply do an <code>ls /dev/disk*</code> before and then again after you plug in the USB drive.</p>
-
-<p>Next, you can format the drive using <code>Disk Utility</code> application that comes with macOS. When you format it, make sure to set the file system to FAT, and if you have the option, write it to the master boot record.</p>
-
-<h2>Create a Bootable USB</h2>
-
-<p>For some reason this part tripped me up a lot. Using a Mac running OSX I was able to get this done using UNetbootin.</p>
-
-<h4><a href="https://unetbootin.github.io">Download UNetbootin</a></h4>
-
-<h4>Choose the ISO Image and USB drive</h4>
-
-<p><img class="center" src="/images/esxi-boot1.png"></p>
-
-<h4>Overwrite menu.c32</h4>
-
-<p>Make sure to choose yes on this option.
-<img class="center" src="/images/esxi-boot2.png"></p>
-
-<h2>Now Upgrade!</h2>
-
-<p>Power down the ESXi host entirely, plug in a monitor and keyboard, and boot to the USB drive you just made. You&rsquo;ll have the option to install fresh or upgrade an existing ESXi installation.</p>
-
-<p>The rest of this process is described in this video. Even though it is a video for 5.5 it is exactly the same for 6.0.</p>
-
-<p><a href="https://www.youtube.com/watch?v=og6PeyXPQ8A">https://www.youtube.com/watch?v=og6PeyXPQ8A</a></p>
 ]]></content>
   </entry>
   
