@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ssh tunnel | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/ssh-tunnel/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2019-01-15T19:55:07-08:00</updated>
+  <updated>2019-07-27T13:02:47-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -83,7 +83,7 @@ ssh -l piUser -p 2222 localhost
 <h1>!/bin/bash</h1>
 
 <p>createTunnel() {
-  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#x3a;&#x73;&#x65;&#x72;&#118;&#101;&#114;&#x55;&#x73;&#x65;&#114;&#x40;&#x32;&#53;&#46;&#50;&#x35;&#46;&#50;&#53;&#46;&#50;&#53;">&#115;&#x65;&#114;&#x76;&#x65;&#x72;&#x55;&#x73;&#101;&#114;&#64;&#x32;&#53;&#x2e;&#50;&#53;&#46;&#x32;&#53;&#46;&#50;&#53;</a>
+  /usr/bin/ssh -N -R 2222:localhost:22 <a href="&#109;&#x61;&#105;&#108;&#116;&#x6f;&#58;&#115;&#101;&#114;&#118;&#101;&#114;&#85;&#x73;&#x65;&#x72;&#x40;&#x32;&#53;&#46;&#50;&#x35;&#46;&#50;&#53;&#46;&#50;&#53;">&#x73;&#x65;&#114;&#x76;&#x65;&#114;&#x55;&#115;&#101;&#x72;&#64;&#x32;&#x35;&#46;&#x32;&#x35;&#x2e;&#50;&#53;&#x2e;&#50;&#53;</a>
   if [[ $? -eq 0 ]]; then</p>
 
 <pre><code>echo Tunnel to jumpbox created successfully
