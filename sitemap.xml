@@ -416,10 +416,6 @@
         <lastmod>2016-09-29T22:12:03-07:00</lastmod>
     </url>
     <url>
-        <loc>https://www.tunnelsup.com/personal-setup-of-my-macbook/</loc>
-        <lastmod>2016-09-29T22:12:03-07:00</lastmod>
-    </url>
-    <url>
         <loc>https://www.tunnelsup.com/setting-up-postgres-on-mac-osx/</loc>
         <lastmod>2016-09-29T22:12:03-07:00</lastmod>
     </url>
@@ -898,6 +894,16 @@
         <lastmod>2018-07-20T16:53:33-07:00</lastmod>
     </url>
     <url>
+        <loc>
+            https://www.tunnelsup.com/everything-you-need-to-know-about-websites-port-scanning-you/
+        </loc>
+        <lastmod>2020-05-25T10:49:13-07:00</lastmod>
+    </url>
+    <url>
+        <loc>https://www.tunnelsup.com/portscanning/</loc>
+        <lastmod>2020-05-25T12:21:28-07:00</lastmod>
+    </url>
+    <url>
         <loc>https://www.tunnelsup.com/video/</loc>
         <lastmod>2016-09-29T22:12:03-07:00</lastmod>
     </url>
@@ -907,11 +913,11 @@
     </url>
     <url>
         <loc>https://www.tunnelsup.com/</loc>
-        <lastmod>2018-07-20T16:53:33-07:00</lastmod>
+        <lastmod>2020-05-25T12:21:28-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/go/</loc>
-        <lastmod>2018-07-20T16:53:33-07:00</lastmod>
+        <lastmod>2020-05-25T12:21:28-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/about-this-site/</loc>
@@ -931,7 +937,7 @@
     </url>
     <url>
         <loc>https://www.tunnelsup.com/blog/archives/</loc>
-        <lastmod>2018-07-20T16:53:33-07:00</lastmod>
+        <lastmod>2020-05-25T12:21:28-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/search/</loc>
@@ -943,7 +949,7 @@
     </url>
     <url>
         <loc>https://www.tunnelsup.com/hash-analyzer/</loc>
-        <lastmod>2018-07-20T16:53:33-07:00</lastmod>
+        <lastmod>2020-05-25T12:21:28-07:00</lastmod>
         <priority>1</priority>
     </url>
     <url>
@@ -952,12 +958,12 @@
     </url>
     <url>
         <loc>https://www.tunnelsup.com/subnet-calculator/</loc>
-        <lastmod>2018-07-20T16:53:33-07:00</lastmod>
+        <lastmod>2020-05-25T12:21:28-07:00</lastmod>
         <priority>1</priority>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/cheatsheets/</loc>
-        <lastmod>2018-07-20T16:53:33-07:00</lastmod>
+        <lastmod>2020-05-25T12:21:28-07:00</lastmod>
     </url>
     <url>
         <loc>https://www.tunnelsup.com/robots.txt</loc>

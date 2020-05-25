@@ -4,7 +4,7 @@
   <title><![CDATA[TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2020-05-14T10:48:14-07:00</updated>
+  <updated>2020-05-25T12:23:49-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -12,6 +12,193 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Everything You Need to Know About Websites Port Scanning You]]></title>
+    <link href="https://www.tunnelsup.com/portscanning/"/>
+    <updated>2020-05-25T10:49:00-07:00</updated>
+    <id>https://www.tunnelsup.com/portscanning</id>
+    <content type="html"><![CDATA[<p>Some websites can and do port scan you when you visit their site. This is sneaky and creepy behavior and I want to tell you about it.</p>
+
+<h2>What it looks like</h2>
+
+<p>First of all this is not your run of the mill port scanning. This isn&rsquo;t someone firing off a bunch of packets at you on different ports looking to see what you have open. No this is all done in the browser through javascript, where a website is instructing <em>your computer</em> to port scan itself, then report the results to the website.</p>
+
+<p>Today I loaded up Microsoft Edge browser (version 44), enabled developer tools, looked at the network traffic and visited eBay.com. This is what I saw.</p>
+
+<p><img src="https://www.tunnelsup.com/images/portscan1.jpg" alt="eBay Port Scan" /></p>
+
+<p>As you can see the website has triggered a series of GET requests to 127.0.0.1 on 14 different ports. 127.0.0.1 is the loopback address of every computer in the world. If try to connect to that IP you will always be connecting the computer you are on. So when you visit the website, it instructs your computer, to check if these 14 ports are open, on your own computer.</p>
+
+<p>These ports are:</p>
+
+<table class="table"><tbody><tr><th>Program</th>
+<th>Name</th>
+<th>Port</th>
+</tr><tr><td><strong>Unknown</strong></td>
+<td>REF</td>
+<td>63333</td>
+</tr><tr><td><strong>VNC</strong></td>
+<td>VNC</td>
+<td>5900</td>
+</tr><tr><td><strong>VNC</strong></td>
+<td>VNC</td>
+<td>5901</td>
+</tr><tr><td><strong>VNC</strong></td>
+<td>VNC</td>
+<td>5902</td>
+</tr><tr><td><strong>VNC</strong></td>
+<td>VNC</td>
+<td>5903</td>
+</tr><tr><td><strong>Remote Desktop Protocol</strong></td>
+<td>RDP</td>
+<td>3389</td>
+</tr><tr><td><strong>Aeroadmin</strong></td>
+<td>ARO</td>
+<td>5950</td>
+</tr><tr><td><strong>Ammyy Admin</strong></td>
+<td>AMY</td>
+<td>5931</td>
+</tr><tr><td><strong>TeamViewer</strong></td>
+<td>TV0</td>
+<td>5939</td>
+</tr><tr><td><strong>TeamViewer</strong></td>
+<td>TV1</td>
+<td>6039</td>
+</tr><tr><td><strong>TeamViewer</strong></td>
+<td>TV2</td>
+<td>5944</td>
+</tr><tr><td><strong>TeamViewer</strong></td>
+<td>TV2</td>
+<td>6040</td>
+</tr><tr><td><strong>Anyplace Control</strong></td>
+<td>APC</td>
+<td>5279</td>
+</tr><tr><td><strong>AnyDesk</strong></td>
+<td>ANY</td>
+<td>7070</td>
+</tr></tbody></table>
+
+
+<p>By the way, thank you to Charlie Belmer for his blog post <a href="https://nullsweep.com/why-is-this-website-port-scanning-me/">Why Is This Website Port Scanning Me</a> which introduced me to this problem, and I only caught that post through this <a href="https://news.ycombinator.com/item?id=23246170">Hacker News</a> posting.</p>
+
+<p>Also if you want to test this on your own, be aware that eBay only does this on the first visit to the website.</p>
+
+<h2>How to Block This</h2>
+
+<p>Ok first, strait up, this is creepy and I think it&rsquo;s invasive. I do not want to allow websites to do this to my computer. It&rsquo;s bypassing all the network security I have put in place. It bypasses my firewall, my AV, and my Pi Hole. Because the website instructed my computer to conduct these scans, and it&rsquo;s not coming from the internet.</p>
+
+<p>So how do you stop it?</p>
+
+<p>There are two browser extension that seem to do pretty good at stopping this:</p>
+
+<p><a href="https://privacybadger.org/">Privacy Badger</a> and <a href="https://getublock.com/">uBlock Origin</a>.</p>
+
+<p>But some browser block this behavior by default too. Brave and Opera seem to block this by default.</p>
+
+<p>Users have reported to me that they see this scanning behavior is permitted in Chrome, Firefox, and Edge when they have no extensions enabled.</p>
+
+<p>Also it&rsquo;s worth noting that the <a href="https://trac.torproject.org/projects/tor/ticket/10419">tor browser blocks this</a> specifically.</p>
+
+<h2>eBay is not the only ones doing this</h2>
+
+<p>After <a href="https://twitter.com/JackRhysider/status/1264415919691841536">raising these concerns on Twitter</a> I started getting information from people far and wide. I quickly learned that eBay is using a solution called <a href="https://risk.lexisnexis.com/products/threatmetrix">Threat Metrix</a> to conduct this. And <a href="https://www.featuredcustomers.com/vendor/threatmetrix/customers">here&rsquo;s a client list</a>.</p>
+
+<p><img src="https://www.tunnelsup.com/images/portscan2.jpg" alt="Port Scan Info" /></p>
+
+<p>Some big names on this list. GoPro, WePay, Netflix, Visa, Yandex, TripAdvisor, and a bunch of dating sites and finance sites. I visited 5 of these sites and watched the network traffic and didn&rsquo;t see the same scanning behavior. But perhaps it only happens when you login or when you go to purchase something. So potentially all of these have the technology to do this to their customers.</p>
+
+<p>But wait. That&rsquo;s just one vendor. One solution. Surely they have competitors right? Here&rsquo;s a report from <a href="https://solutionsreview.com/identity-management/key-findings-gartner-market-guide-identity-proofing-corroboration/">Gartner regarding Identity Proofing</a>.</p>
+
+<p>In this there are a list of Recommended Vendors.</p>
+
+<blockquote><p>Gartner named Acuant, BioCatch, Buguroo, Emailage, Experian, EZMCOM, Fraud.net, IBM Trusteer, ID Analytics, IdentityMind, IDology, iovation, Jumio, Kount, LexisNexis Risk Solutions, Mitek, Nuance, NuData Security (A Mastercard Company), Pindrop, SecuredTorch, ThreatMetrix (A LexisNexis Risk Solutions COmpany), TransUnion, TRUSTID, and Whitepages Pro as Representative Vendors in the market.</p></blockquote>
+
+<p>ThreatMetrix is in there. But there are so many more, even IBM has a solution to do this.</p>
+
+<p>But whoa. This suddenly became a huge market. This means that there are likely a lot of websites doing this.</p>
+
+<p>But wait, this isn&rsquo;t new either. <a href="https://www.reddit.com/r/AskNetsec/comments/4j0nas/why_is_facebook_checking_my_open_ports/">Facebook was scanning their visitors back in 2016</a>.</p>
+
+<h2>So why are they port scanning us?</h2>
+
+<p>I think the easiest way to explain this is to look at ThreatMetrix&rsquo;s feature list. Here&rsquo;s a snippet from <a href="https://risk.lexisnexis.com/products/threatmetrix">their website</a>.</p>
+
+<ul>
+<li><strong>Context-based information</strong> detects bot attacks to perform behavioral analysis of users during periods of normal operation and compares such data to that gathered during an attack, enabling the ability to differentiate between a human and a bot the moment they login/transact.</li>
+<li><strong>Deep connection analysis</strong> technologies detect the use of technologies such as hidden proxies and VPNs and allow the bank to see the true IP address, geolocation and other attributes of each event, backed by global identity data over time.</li>
+<li><strong>Malware protection</strong> helps businesses mitigate the risk by being protected from Man-In-The-Browser (MITB), Remote Access Trojan (RAT), high velocity/frequency bot attacks to low-and- slow attacks mimicking legitimate customer behavior, ransomware, key logging attempts, etc.</li>
+<li><strong>Trust Tags</strong> enable businesses to define, categorize, tag and differentiate between good and bad users, devices, locations or personas.</li>
+<li><strong>SmartID</strong> identifies returning users that wipe cookies, use private browsing, and change other parameters to bypass traditional device fingerprinting tools. This improves returning user detection and reduces false positives.</li>
+<li><strong>TrueIP</strong> accurately detects the use of location and identity cloaking services, such as hidden proxies and VPNs, allowing your business to see the true IP address, geolocation and other attributes of each transaction.</li>
+</ul>
+
+
+<p>Whoa nelly those are some impressive features! Ok let&rsquo;s break this down. Obviously the port scan is only a part of the solution. But combine that with other data collected on the user, then cross reference that with other data and these companies can develop a rich understanding of the user. The more the company knows about the user the better they can serve the user. Or track the user. Or deliver custom ads for the user. In some ways the user benefits but in many ways the user is losing a lot of privacy.</p>
+
+<p>But fraud reduction seems to be the big reason why websites are doing this. If you noticed, all the ports scanned are related to remote access to a computer. There are a lot of scams where an attacker will take control of the victims computer, then try to buy something on Amazon or send money from the victim&rsquo;s bank to the attacker&rsquo;s bank. Websites have seen a lot of chargebacks, saying they didn&rsquo;t buy something that was purchased on their account. When the website tracks this purchase it shows it was from the same browser the user usually uses, the same IP everything. But the computer was remotely controlled. So by checking if any ports are open which would indicate the computer is being remotely controlled, this can help websites combat unauthorized purchases.</p>
+
+<p>Besides helping victims stay safe from this kind of attack, websites have also seen fraudsters purchase server space in the cloud then use that server to try different usernames and passwords with. Because the fraudster can just cancel their cloud server and get a new one and the website can&rsquo;t track them. So this is another reason why websites want to know if their visitors are being remotely controlled.</p>
+
+<h2>Is this illegal?</h2>
+
+<p>Ah the burning debate. Recently NordVPN Tweeted this:</p>
+
+<p><img src="https://www.tunnelsup.com/images/portscan3.jpg" width="300px"></p>
+
+<p>And a lot of the InfoSec community piled on NordVPN for saying such ridiculous things. I think we didn&rsquo;t understand that this kind of javascript browser local port scanning is even a thing. So it made no sense to us that a browser extension can block this. But also with companies like Shodan.io who portscan the entire internet legally, everyone was saying port scanning is not illegal. I mean if you open port 80 on your server and someone checks to see if it&rsquo;s open, that&rsquo;s perfectly legal. This Tweet resulted in a lot of people calling NordVPN bad names. So did NordVPN say anything wrong here?</p>
+
+<p>To begin with this kind of port scanning is totally different than what Shodan is doing. Shodan is going to every IP on the <strong>public internet</strong> and checking what ports are open. But what eBay is doing is port scanning my PC in my private network in my home. Which is behind a firewall, and it&rsquo;s a restricted network! It&rsquo;s the difference between someone driving by my home, and looking to see if I left my front door open vs someone coming INTO my home, and checking if my bedroom door is open. I can&rsquo;t control what goes on outside my house and I get it&rsquo;s public space. But I do not authorize anyone to port scan computers inside my house! So at least to me I do not consent to this, and this is not ok with me.</p>
+
+<p>Let&rsquo;s take a look at this Tweet from <strong>2018</strong>.</p>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Halifax Bank are illegally carrying out a local port scan, checking for open VNC/RDP ports. Without consent, this breaches CMA. They disagree, 3 solicitors agree.<br><br>Is anyone brave enough to take this on?<br><br>cc <a href="https://twitter.com/BBCTech?ref_src=twsrc%5Etfw">@BBCTech</a> <a href="https://twitter.com/ruskin147?ref_src=twsrc%5Etfw">@ruskin147</a> <a href="https://twitter.com/jleyden?ref_src=twsrc%5Etfw">@jleyden</a> <a href="https://twitter.com/Chrisitv?ref_src=twsrc%5Etfw">@Chrisitv</a> <a href="https://twitter.com/kevinpashby?ref_src=twsrc%5Etfw">@kevinpashby</a> <a href="https://twitter.com/dangoodin001?ref_src=twsrc%5Etfw">@dangoodin001</a> <a href="https://t.co/BSAwXWzTKb">pic.twitter.com/BSAwXWzTKb</a></p>&mdash; Paul Moore 🇬🇧 (@Paul_Reviews) <a href="https://twitter.com/Paul_Reviews/status/1025445964910350336?ref_src=twsrc%5Etfw">August 3, 2018</a></blockquote>
+
+
+<p> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<p>Back in 2018 Paul saw that halifax.co.uk was port scanning his PC when he visited it. Paul believes this is a direct violation of the <a href="https://www.legislation.gov.uk/ukpga/1990/18/contents">Computer Misuse Act in the UK</a>. And right in section 1 part 1 a it says:</p>
+
+<blockquote><p>A person is guilty of an offense if—he causes a computer to perform any function with intent to secure access to any program or data held in any computer</p></blockquote>
+
+<p>That is quite a broad statement! It&rsquo;s saying anyone who accesses any secure data on a computer is guilty of the CMA. This is a double edge sword. On one hand yes this does mean that accessing information about what ports I have on my personal computer is illegal, but on the other hand, you can use this to convict anyone. This is just way too broad to be used as a basis for anything!</p>
+
+<p>So I think a judge will then have to look for intent. Does ThreatMetrix have <em>intent</em> on doing something malicious or harmful with the secure data they acquired through this scan? At the surface, no. They are doing this to improve customer experience and combat fraud. But what if they are negligent with their own security and get breached and now a ton of personal data about me is leaked. I did not opt in to give this data to ThreatMetrix. So if they are negligent with my data then yes absolutely they can be fined and face punishments by a court.</p>
+
+<p>This is one of those situations that this has gone right up to the edge of the line on whether it&rsquo;s legal or not. It&rsquo;s a gray area. And in this case it seems to be used for good (although I don&rsquo;t approve), but what happens when websites adopt this technology with malicious intent? Then this port scanning behavior will become criminal activity.</p>
+
+<p>A journalist at Forbes <a href="https://www.forbes.com/sites/daveywinder/2020/05/25/did-you-know-ebay-is-probing-your-computer-heres-how-to-stop-it-windows-privacy-chrome-firefox-web-browser/#16ca00e93a92">reached out to eBay</a> for a comment and they said:</p>
+
+<blockquote><p>&ldquo;Our customers’ privacy and data remain a top priority. We are committed to creating an experience on our sites and services that is safe, secure, and trustworthy.&rdquo;</p></blockquote>
+
+<p>And that makes sense. They are doing this to improve security of eBay&rsquo;s assets, but it&rsquo;s at the expense of giving personal information of users to ThreatMetrix. So is the gain better than the loss?</p>
+
+<p>This also doesn&rsquo;t seem to be adhering to GDPR data privacy regulations. So this probably in direct violation of that at the minimum.</p>
+
+<p>Lastly you should take a look at this. <a href="https://pastebin.com/RjDeDJZq">Here is a sample of data</a> that ThreatMetrix collects on each visitor to the site through their js tracking tools.</p>
+
+<p>This reminds me of <a href="https://panopticlick.eff.org/">Panopticlick</a>. If you run the test and click show additional data, you&rsquo;ll see how much info a website can collect on you. I ran it, and my browser data was completely unique compared to the hundreds of thousands of others who ran it. Meaning all this data my browser gave the websites means they can track me even if refuse to allow cookies and other tracking methods.</p>
+
+<p>If I had more time I would try playing with the javascript to see if I could get it to port scan other devices in my local network. Because I think that would be going over the line on legalities. I&rsquo;m not a lawyer so I don&rsquo;t know. But what I&rsquo;ve seen from court history is that it&rsquo;s not the law that matters, it&rsquo;s whoever has the better lawyer that wins.</p>
+
+<p>So maybe we owe NordVPN an apology for piling on them like that. They have removed their Tweet due to the enormous backlash they got. They weren&rsquo;t saying that a VPN can fix it, instead they were <a href="https://nordvpn.com/blog/use-these-browser-extensions-for-your-privacy/">linking to a blog post showing what browser extensions can help keep you more secure</a>, which is a fine blog post. Those extensions do block this port scanning. I don&rsquo;t think they deserved the backlash they got from that Tweet. This is a real problem and quite possibly illegal if not now, then it will be soon when someone abuses this.</p>
+
+<h2>Wait, technically, how is this possible?</h2>
+
+<p>Ya good question. Well for this I defer to Dan Nemec who breaks down the javascript involved.</p>
+
+<p><a href="https://blog.nem.ec/2020/05/24/ebay-port-scanning/">https://blog.nem.ec/2020/05/24/ebay-port-scanning/</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Everything You Need to Know About Websites Port Scanning You]]></title>
+    <link href="https://www.tunnelsup.com/everything-you-need-to-know-about-websites-port-scanning-you/"/>
+    <updated>2020-05-25T10:49:00-07:00</updated>
+    <id>https://www.tunnelsup.com/everything-you-need-to-know-about-websites-port-scanning-you</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The Malicious Use of Artificial Intelligence in Cybersecurity]]></title>
@@ -1022,55 +1209,6 @@ A popup box shows up and lets you verify what will be sanitized. <br>
 
 
 <p>You&rsquo;ll then be prompted to save the sanitized document.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Cisco ASA command to show listening ports]]></title>
-    <link href="https://www.tunnelsup.com/cisco-asa-command-to-show-listening-ports/"/>
-    <updated>2016-09-29T15:05:00-07:00</updated>
-    <id>https://www.tunnelsup.com/cisco-asa-command-to-show-listening-ports</id>
-    <content type="html"><![CDATA[<p>Do you wish there was a <code>netstat</code> command for a Cisco ASA? Are you looking to see what ports the ASA has open and is listening on? Try this command:</p>
-
-<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ASA5506# sh asp table socket
-</span><span class='line'>
-</span><span class='line'>Protocol  Socket    State      Local Address        Foreign Address
-</span><span class='line'>SSL       0001ebf8  LISTEN     172.16.3.1:443       0.0.0.0:*
-</span><span class='line'>TCP       000216f8  LISTEN     172.16.3.1:22        0.0.0.0:*
-</span><span class='line'>TCP       370c1d68  LISTEN     99.99.99.99:22       0.0.0.0:*
-</span><span class='line'>TCP       3712d678  ESTAB      172.16.3.1:22        172.16.2.3:50233</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This command displays all of the ports that are open and established on the ASA.</p>
-
-<p>The <code>state</code> indicates whether the port is listening or established.</p>
-
-<p>The <code>local address</code> says which IP it&rsquo;s listening on. In the example above, 99.99.99.99 is the outside interface and the 172.16.3.1 is the inside interface.</p>
-
-<p>The <code>foreign address</code> will show up when someone connects to that port. In this case I was ssh&rsquo;d into the firewall coming from 172.16.2.3.</p>
-
-<p>The output above should be a direct reflection of the <code>ssh</code>, <code>telnet</code>, and <code>http</code> commands in the ASA.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Metasploit Cheat Sheet and Video]]></title>
-    <link href="https://www.tunnelsup.com/metasploit-cheat-sheet/"/>
-    <updated>2016-09-28T10:41:00-07:00</updated>
-    <id>https://www.tunnelsup.com/metasploit-cheat-sheet</id>
-    <content type="html"><![CDATA[<p>Need a quick handy reference guide for Metasploit? I&rsquo;ve put together a bunch of the most common commands in a cheat sheet style for quick reference.</p>
-
-<p><img class="center" src="https://www.tunnelsup.com/images/Metasploit.png">
-Download: <a href="https://www.tunnelsup.com/images/Metasploit.png">[PNG Image]</a> - <a href="https://www.tunnelsup.com/images/Metasploit-CheatSheet.pdf">[PDF File]</a></p>
-
-<h2>Video</h2>
-
-<p>To get started with the cheat sheet I have made an instructional video on using Metasploit.</p>
-
-<iframe width="770" height="460" src="https://www.youtube.com/embed/Y8IwBbJrny4" frameborder="0" allowfullscreen></iframe>
-
-
-<p>If you find any problems with this please leave a comment below and I will update the guide periodically.</p>
 ]]></content>
   </entry>
   
