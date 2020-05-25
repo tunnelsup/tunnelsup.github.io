@@ -4,7 +4,7 @@
   <title><![CDATA[Category: misc | TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/tup/tag/misc/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2020-05-25T12:23:49-07:00</updated>
+  <updated>2020-05-25T12:26:29-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Everything You Need to Know About Websites Port Scanning You]]></title>
-    <link href="https://www.tunnelsup.com/portscanning/"/>
+    <link href="https://www.tunnelsup.com/browser-portscanning/"/>
     <updated>2020-05-25T10:49:00-07:00</updated>
-    <id>https://www.tunnelsup.com/portscanning</id>
+    <id>https://www.tunnelsup.com/browser-portscanning</id>
     <content type="html"><![CDATA[<p>Some websites can and do port scan you when you visit their site. This is sneaky and creepy behavior and I want to tell you about it.</p>
 
 <h2>What it looks like</h2>
@@ -164,6 +164,8 @@
 <p>That is quite a broad statement! It&rsquo;s saying anyone who accesses any secure data on a computer is guilty of the CMA. This is a double edge sword. On one hand yes this does mean that accessing information about what ports I have on my personal computer is illegal, but on the other hand, you can use this to convict anyone. This is just way too broad to be used as a basis for anything!</p>
 
 <p>So I think a judge will then have to look for intent. Does ThreatMetrix have <em>intent</em> on doing something malicious or harmful with the secure data they acquired through this scan? At the surface, no. They are doing this to improve customer experience and combat fraud. But what if they are negligent with their own security and get breached and now a ton of personal data about me is leaked. I did not opt in to give this data to ThreatMetrix. So if they are negligent with my data then yes absolutely they can be fined and face punishments by a court.</p>
+
+<p>Halifax bank, which is owned by Lloyds Banking Group, which is a listed as client of ThreatMetrix, was never brought to court for this and continues to use this software.</p>
 
 <p>This is one of those situations that this has gone right up to the edge of the line on whether it&rsquo;s legal or not. It&rsquo;s a gray area. And in this case it seems to be used for good (although I don&rsquo;t approve), but what happens when websites adopt this technology with malicious intent? Then this port scanning behavior will become criminal activity.</p>
 

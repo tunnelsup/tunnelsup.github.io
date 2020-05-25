@@ -4,7 +4,7 @@
   <title><![CDATA[TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2020-05-25T12:23:49-07:00</updated>
+  <updated>2020-05-25T12:26:29-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Everything You Need to Know About Websites Port Scanning You]]></title>
-    <link href="https://www.tunnelsup.com/portscanning/"/>
+    <link href="https://www.tunnelsup.com/browser-portscanning/"/>
     <updated>2020-05-25T10:49:00-07:00</updated>
-    <id>https://www.tunnelsup.com/portscanning</id>
+    <id>https://www.tunnelsup.com/browser-portscanning</id>
     <content type="html"><![CDATA[<p>Some websites can and do port scan you when you visit their site. This is sneaky and creepy behavior and I want to tell you about it.</p>
 
 <h2>What it looks like</h2>
@@ -165,6 +165,8 @@
 
 <p>So I think a judge will then have to look for intent. Does ThreatMetrix have <em>intent</em> on doing something malicious or harmful with the secure data they acquired through this scan? At the surface, no. They are doing this to improve customer experience and combat fraud. But what if they are negligent with their own security and get breached and now a ton of personal data about me is leaked. I did not opt in to give this data to ThreatMetrix. So if they are negligent with my data then yes absolutely they can be fined and face punishments by a court.</p>
 
+<p>Halifax bank, which is owned by Lloyds Banking Group, which is a listed as client of ThreatMetrix, was never brought to court for this and continues to use this software.</p>
+
 <p>This is one of those situations that this has gone right up to the edge of the line on whether it&rsquo;s legal or not. It&rsquo;s a gray area. And in this case it seems to be used for good (although I don&rsquo;t approve), but what happens when websites adopt this technology with malicious intent? Then this port scanning behavior will become criminal activity.</p>
 
 <p>A journalist at Forbes <a href="https://www.forbes.com/sites/daveywinder/2020/05/25/did-you-know-ebay-is-probing-your-computer-heres-how-to-stop-it-windows-privacy-chrome-firefox-web-browser/#16ca00e93a92">reached out to eBay</a> for a comment and they said:</p>
@@ -188,15 +190,6 @@
 <p>Ya good question. Well for this I defer to Dan Nemec who breaks down the javascript involved.</p>
 
 <p><a href="https://blog.nem.ec/2020/05/24/ebay-port-scanning/">https://blog.nem.ec/2020/05/24/ebay-port-scanning/</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Everything You Need to Know About Websites Port Scanning You]]></title>
-    <link href="https://www.tunnelsup.com/everything-you-need-to-know-about-websites-port-scanning-you/"/>
-    <updated>2020-05-25T10:49:00-07:00</updated>
-    <id>https://www.tunnelsup.com/everything-you-need-to-know-about-websites-port-scanning-you</id>
-    <content type="html"><![CDATA[
 ]]></content>
   </entry>
   
@@ -1209,6 +1202,34 @@ A popup box shows up and lets you verify what will be sanitized. <br>
 
 
 <p>You&rsquo;ll then be prompted to save the sanitized document.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA command to show listening ports]]></title>
+    <link href="https://www.tunnelsup.com/cisco-asa-command-to-show-listening-ports/"/>
+    <updated>2016-09-29T15:05:00-07:00</updated>
+    <id>https://www.tunnelsup.com/cisco-asa-command-to-show-listening-ports</id>
+    <content type="html"><![CDATA[<p>Do you wish there was a <code>netstat</code> command for a Cisco ASA? Are you looking to see what ports the ASA has open and is listening on? Try this command:</p>
+
+<figure class='code'><div class="highlight"><table><tr></pre></td><td class='code'><pre><code class=''><span class='line'>ASA5506# sh asp table socket
+</span><span class='line'>
+</span><span class='line'>Protocol  Socket    State      Local Address        Foreign Address
+</span><span class='line'>SSL       0001ebf8  LISTEN     172.16.3.1:443       0.0.0.0:*
+</span><span class='line'>TCP       000216f8  LISTEN     172.16.3.1:22        0.0.0.0:*
+</span><span class='line'>TCP       370c1d68  LISTEN     99.99.99.99:22       0.0.0.0:*
+</span><span class='line'>TCP       3712d678  ESTAB      172.16.3.1:22        172.16.2.3:50233</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This command displays all of the ports that are open and established on the ASA.</p>
+
+<p>The <code>state</code> indicates whether the port is listening or established.</p>
+
+<p>The <code>local address</code> says which IP it&rsquo;s listening on. In the example above, 99.99.99.99 is the outside interface and the 172.16.3.1 is the inside interface.</p>
+
+<p>The <code>foreign address</code> will show up when someone connects to that port. In this case I was ssh&rsquo;d into the firewall coming from 172.16.2.3.</p>
+
+<p>The output above should be a direct reflection of the <code>ssh</code>, <code>telnet</code>, and <code>http</code> commands in the ASA.</p>
 ]]></content>
   </entry>
   
