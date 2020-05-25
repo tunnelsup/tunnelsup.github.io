@@ -4,7 +4,7 @@
   <title><![CDATA[TunnelsUP]]></title>
   <link href="https://www.tunnelsup.com/atom.xml" rel="self"/>
   <link href="https://www.tunnelsup.com/"/>
-  <updated>2020-05-25T12:26:29-07:00</updated>
+  <updated>2020-05-25T15:55:39-07:00</updated>
   <id>https://www.tunnelsup.com/</id>
   <author>
     <name><![CDATA[Jack]]></name>
@@ -106,7 +106,7 @@
 
 <p><img src="https://www.tunnelsup.com/images/portscan2.jpg" alt="Port Scan Info" /></p>
 
-<p>Some big names on this list. GoPro, WePay, Netflix, Visa, Yandex, TripAdvisor, and a bunch of dating sites and finance sites. I visited 5 of these sites and watched the network traffic and didn&rsquo;t see the same scanning behavior. But perhaps it only happens when you login or when you go to purchase something. So potentially all of these have the technology to do this to their customers.</p>
+<p>Some big names on this list. GoPro, WePay, Netflix, Visa, Yandex, TripAdvisor, and a bunch of dating sites and finance sites. I visited 5 of these sites and watched the network traffic and didn&rsquo;t see the same scanning behavior. But I guess ThreatMetrix doesn&rsquo;t just offer scanning like this, but has other features too. So who knows what they are doing here. Perhaps extra identity proofing happens only when you login or when you go to purchase something. So potentially all of these have the technology to do this to their customers.</p>
 
 <p>But wait. That&rsquo;s just one vendor. One solution. Surely they have competitors right? Here&rsquo;s a report from <a href="https://solutionsreview.com/identity-management/key-findings-gartner-market-guide-identity-proofing-corroboration/">Gartner regarding Identity Proofing</a>.</p>
 
@@ -114,7 +114,7 @@
 
 <blockquote><p>Gartner named Acuant, BioCatch, Buguroo, Emailage, Experian, EZMCOM, Fraud.net, IBM Trusteer, ID Analytics, IdentityMind, IDology, iovation, Jumio, Kount, LexisNexis Risk Solutions, Mitek, Nuance, NuData Security (A Mastercard Company), Pindrop, SecuredTorch, ThreatMetrix (A LexisNexis Risk Solutions COmpany), TransUnion, TRUSTID, and Whitepages Pro as Representative Vendors in the market.</p></blockquote>
 
-<p>ThreatMetrix is in there. But there are so many more, even IBM has a solution to do this.</p>
+<p>ThreatMetrix is in there. But there are so many more. Not all of these do in browser port scanning. But some certainly do.</p>
 
 <p>But whoa. This suddenly became a huge market. This means that there are likely a lot of websites doing this.</p>
 
@@ -139,6 +139,8 @@
 <p>But fraud reduction seems to be the big reason why websites are doing this. If you noticed, all the ports scanned are related to remote access to a computer. There are a lot of scams where an attacker will take control of the victims computer, then try to buy something on Amazon or send money from the victim&rsquo;s bank to the attacker&rsquo;s bank. Websites have seen a lot of chargebacks, saying they didn&rsquo;t buy something that was purchased on their account. When the website tracks this purchase it shows it was from the same browser the user usually uses, the same IP everything. But the computer was remotely controlled. So by checking if any ports are open which would indicate the computer is being remotely controlled, this can help websites combat unauthorized purchases.</p>
 
 <p>Besides helping victims stay safe from this kind of attack, websites have also seen fraudsters purchase server space in the cloud then use that server to try different usernames and passwords with. Because the fraudster can just cancel their cloud server and get a new one and the website can&rsquo;t track them. So this is another reason why websites want to know if their visitors are being remotely controlled.</p>
+
+<p>Here&rsquo;s one article I found which says <a href="https://more.talktalk.co.uk/news/2019/09/22/lloyds-banks-fraud-detection-system-the-rat-sniffs-out-scammers">Lloyd&rsquo;s Bank has a technology to sniff out scammers</a>. It says it has a &ldquo;new high-tech defence system&rdquo; to do this. I have a strong sense that this is the use of ThreatMetrix or a competitor. And what&rsquo;s funny is this is on TalkTalk&rsquo;s website, which has <a href="https://darknetdiaries.com/episode/4/">historically been hit hard by scammers</a> who call up TalkTalk customers and con them out of money.</p>
 
 <h2>Is this illegal?</h2>
 
@@ -190,6 +192,10 @@
 <p>Ya good question. Well for this I defer to Dan Nemec who breaks down the javascript involved.</p>
 
 <p><a href="https://blog.nem.ec/2020/05/24/ebay-port-scanning/">https://blog.nem.ec/2020/05/24/ebay-port-scanning/</a></p>
+
+<p>There is also an interesting <a href="https://www.bleepingcomputer.com/news/security/ebay-port-scans-visitors-computers-for-remote-access-programs/">article by Bleeping Computer</a> on this.</p>
+
+<p>Lastly, a lively <a href="https://news.ycombinator.com/item?id=23246170">conversation took place on Hacker News</a> regarding this too.</p>
 ]]></content>
   </entry>
   
