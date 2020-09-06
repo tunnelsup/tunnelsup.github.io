@@ -8,8 +8,10 @@
        	$(".errorMessage").html("");
        	$(".results").html("");
        	var plussalt = false;
+       	var salt = "Not Found";
        	var hashtype = 'unknown';
-	    var input = trim(document.analyzer.hash.value);
+	    var input = sanitize(document.analyzer.hash.value)
+
 	    var charlength = input.length;
 	    // CLASSIFY INPUTS
 	    var bitlength = 0;
@@ -26,18 +28,24 @@
 
 
 	    // ANALYZE CLASSIFIED INPUTS
+
+	    //split any that have a single colon and process
 		if ((input.match(/:/g) || []).length == 1) {
 			var saltandhash = input.split(":");
+			salt = saltandhash[1];
+			plussalt = true;
+			input = saltandhash[0];
+			charlength = input.length;
+
+			if (isb64(saltandhash[0])) {
+				chartype = 'base64';
+				bitlength = saltandhash[0].length * 6;
+			}
 		    if (ishex(saltandhash[0])) {
-		    	var chartype = 'hexidecimal';
+		    	chartype = 'hexidecimal';
 		    	bitlength = saltandhash[0].length * 4;
-		    	plussalt = true;
+
 		    }		
-		    if (isb64(saltandhash[0])) {
-		    	var chartype = 'base64';
-		    	bitlength = saltandhash[0].length * 4;
-		    	plussalt = true;		    	
-		    }
 		}
 		if ((input.match(/:/g) || []).length > 1) {
 			hashtype = "NTLM?";
@@ -176,6 +184,7 @@
 	    }
 		var output = '<table style="table-layout: fixed; width: 100%" class="table table-striped table-hover">'+
 			'<tr><td width="30%"><strong>Hash:</strong></td><td style="word-wrap: break-word">'+input+'</td></tr>'+
+			'<tr><td><strong>Salt:</strong></td><td>'+salt+'</td></tr>'+
 			'<tr class='+color+'><td><strong>Hash type:</strong></td><td>'+hashtype+'</td></tr>'+
 			'<tr><td><strong>Bit length:</strong></td><td>'+bitlength+'</td></tr>	'+			
 			'<tr><td><strong>Character length:</strong></td><td>'+charlength+'</td></tr>	'+			
@@ -184,7 +193,6 @@
 		if ((hashtype == "bcrypt") || (hashtype=="MD5-Crypt") || (hashtype=="PHP-MD5-Crypt")) {
 			output = output + '<tr><td><strong>Hash:</strong></td><td>'+thishash+'</td></tr>	'+			
 			'<tr><td><strong>Salt:</strong></td><td>'+thissalt+'</td></tr>';
-
 		}
 
 		output = output + '</table>';
@@ -229,5 +237,19 @@
 	function trim(stringToTrim) {
 		stringToTrim = stringToTrim.replace(/\s+/g, " ");
 		return stringToTrim.replace(/^\s+|\s+$/g,"");
+	}
+	function sanitize(string) {
+	  const map = {
+	      '&': '&amp;',
+	      '<': '&lt;',
+	      '>': '&gt;',
+	      '"': '&quot;',
+	      "'": '&#x27;',
+	      "/": '&#x2F;',
+	  };
+	  const reg = /[&<>"'/]/ig;
+	  string = trim(string);
+
+	  return string.replace(reg, (match)=>(map[match]));
 	}
  });
