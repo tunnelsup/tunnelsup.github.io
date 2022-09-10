@@ -8,7 +8,8 @@ Disallow: /images/XBee-Quick-Reference-Guide.pdf
 Disallow: /images/ASALicensingCheatSheet.pdf
 Disallow: /images/Metasploit-CheatSheet.pdf
 Disallow: /images/YAESUFT60-CheatSheet.pdf
-
+User-agent: HypeStat
+Disallow: /
 
 
 Sitemap: https://www.tunnelsup.com/sitemap.xml 
